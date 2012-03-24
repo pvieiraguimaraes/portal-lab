@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE facelet-taglib PUBLIC "-//Sun Microsystems, Inc.//DTD Facelet Taglib 1.0//EN"
+	"http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
+<facelet-taglib>
+	<namespace>http://facelets.portalvirtual.com</namespace>
+	<tag>
+		<tag-name>deleteDialog</tag-name>
+		<source>../components/deleteDialog.xhtml</source>
+	</tag>
+	<tag>
+		<tag-name>selectOneSearchField</tag-name>
+		<source>../components/selectSearchField.xhtml</source>
+	</tag>
+	<tag>
+		<tag-name>formCRUD</tag-name>
+		<source>../components/formularioCRUD.xhtml</source>
+	</tag>
+</facelet-taglib>
