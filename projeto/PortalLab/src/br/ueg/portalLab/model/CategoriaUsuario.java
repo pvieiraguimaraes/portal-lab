@@ -1,0 +1,94 @@
+package br.ueg.portalLab.model;
+
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
+
+import br.ueg.portalLab.util.annotation.Attribute;
+
+@javax.persistence.Entity
+@SuppressWarnings("serial")
+@Table(name="categoria_usuario")
+public class CategoriaUsuario extends Entity {
+
+	@Id()
+	@GeneratedValue
+	//@OneToMany(targetEntity = Filo.class, mappedBy = "reino")
+	@Column(name = "id_categoria")
+	private long id;
+	@Column(name = "nome")
+	@Attribute(Required = true, SearchField = true)
+	private String nome;
+	
+	@Column(name = "cpf_obrigatorio")
+	@Attribute(Required = true, SearchField = false)
+	private boolean isCPFObrigatorio;
+	
+	@Column(name = "observacoes")
+	@Attribute(Required = false, SearchField = true)
+	private String observacoes;
+	
+	
+	
+	public long getId() {
+		return this.id;
+	}
+
+	@Override
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public boolean isCPFObrigatorio() {
+		return isCPFObrigatorio;
+	}
+	
+	//Metodo para compatibilizar com o funcionamento do mapto
+	//TODO mudar o parsettoEntity
+	public boolean getIsCPFObrigatorio(){
+		return this.isCPFObrigatorio();
+	}
+
+	public void setCPFObrigatorio(boolean isCPFObrigatorio) {
+		this.isCPFObrigatorio = isCPFObrigatorio;
+	}
+/*	//metodo para compatiblizar como funcionamento do nosso framework
+	//TODO modificar para trabalhar corretamente.
+	public void setIsCPFObrigatorio(boolean isCPFObrigatorio){
+		this.setCPFObrigatorio(isCPFObrigatorio);
+	}*/
+	//metodo utilizado para 
+	public void setIsCPFObrigatorio(Boolean isCPFObrigatorio){
+		this.setCPFObrigatorio(isCPFObrigatorio.booleanValue());
+	}
+
+	public String getObservacoes() {
+		return observacoes;
+	}
+
+	public void setObservacoes(String observacoes) {
+		this.observacoes = observacoes;
+	}
+	
+/*	public String getTabela(){
+		return this.tabela;
+	}
+	public void setTabela(String tabela){
+		this.tabela = tabela;
+	}
+	*/
+	
+}
