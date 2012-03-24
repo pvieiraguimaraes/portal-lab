@@ -61,6 +61,6 @@
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="java-output-path" value="/PortalLab2/build/classes"/>
-        <property name="context-root" value="PortalLab2"/>
+        <property name="context-root" value="PortalLab"/>
     </wb-module>
 </project-modules>
