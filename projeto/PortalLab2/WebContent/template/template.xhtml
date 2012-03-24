@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+<h:head>
+	<link rel="stylesheet" type="text/css" href="../css/template.css" />
+	<title>
+		<ui:insert name="title">Teste</ui:insert>
+	</title>
+</h:head>
+
+<h:body>
+
+	<h:panelGrid >
+		<ui:insert name="top">TOP</ui:insert>
+		<h:panelGrid columns="2" columnClasses="barColumn, contextColumn">
+			<h:column >
+				<ui:insert name="menuBar">
+					<p:menu>
+						<p:submenu label="#{msg.template_register}">
+							<p:menuitem url="#{pageContext.servletContext.contextPath}/pages/CadReino.jsf" value="${msg.reino_reinoColumn}"/>
+							<p:menuitem url="#{pageContext.servletContext.contextPath}/pages/CadFilo.jsf" value="#{msg.filo_filoColumn}"/>
+							<p:menuitem url="#{pageContext.servletContext.contextPath}/pages/CadClasse.jsf" value="#{msg.classe_classeColumn}"/>
+							<p:menuitem url="#{pageContext.servletContext.contextPath}/pages/TipoDeMontagem.jsf" value="#{msg.tipodemontagem_tipodemontagemColumn}"/>
+							<p:menuitem url="#{pageContext.servletContext.contextPath}/pages/Datum.jsf" value="#{msg.datum_datumColumn}"/>
+							<p:menuitem url="#{pageContext.servletContext.contextPath}/pages/Fenologia.jsf" value="#{msg.fenologia_fenologiaColumn}"/>
+							<p:menuitem url="#{pageContext.servletContext.contextPath}/pages/CadCategoriaUsuario.jsf" value="#{msg.categoriausuario_nomeColumn}"/>
+							<p:menuitem url="#{pageContext.servletContext.contextPath}/pages/teste.jsf" value="teste de componente"/>
+						</p:submenu>
+					</p:menu>
+				</ui:insert>
+			</h:column>
+			<h:column>
+				<ui:insert name="context">CONTEXT</ui:insert>
+			</h:column>
+		</h:panelGrid>
+	</h:panelGrid>
+	
+</h:body>
+
+</html>
