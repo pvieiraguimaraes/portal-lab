@@ -132,11 +132,6 @@ public abstract class GenericMB<E extends Entity> {
 		return listingControl.doAction(null, null);
 	}
 
-	/**
-	 * Metódo que inicializa a entidade
-	 */
-	protected abstract E initializeEntity();
-
 	public List<ManagedBeanField> getListColumns() {
 		List<ManagedBeanField> list = new ArrayList<ManagedBeanField>();
 		
@@ -166,6 +161,25 @@ public abstract class GenericMB<E extends Entity> {
 		}
 		
 		return list;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public abstract Class getEntityClass();
+
+	@SuppressWarnings("unchecked")
+	protected E initializeEntity() {
+		E retorno = null;
+		try {
+			retorno =  (E) getEntityClass().newInstance();
+			
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return retorno;
 	}
 
 }
