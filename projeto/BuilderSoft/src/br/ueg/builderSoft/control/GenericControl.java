@@ -15,7 +15,7 @@ import br.ueg.builderSoft.util.control.MessagesControl;
 import br.ueg.builderSoft.util.control.SubController;
 import br.ueg.builderSoft.util.control.ValidatorControl;
 import br.ueg.builderSoft.util.reflection.Reflection;
-import br.ueg.builderSoft.view.managed.MB;
+import br.ueg.builderSoft.view.managed.GenericMB;
 
 /**
  * Controlador principal, onde contém a lista de outros controladores
@@ -31,9 +31,9 @@ public class GenericControl <E extends Entity> {
 	private ValidatorControl validator;
 	private ListingControl<E> listingControl;
 	private List<SubController> subControllers;
-	private MB<E> view;
+	private GenericMB<E> view;
 	
-	public GenericControl(MessagesControl pMessages, ListingControl<E> pListing, MB<E> pView) {
+	public GenericControl(MessagesControl pMessages, ListingControl<E> pListing, GenericMB<E> pView) {
 		this.listingControl = pListing;
 		this.messages = pMessages;
 		this.validator = new ValidatorControl(this.messages);
@@ -147,7 +147,7 @@ public class GenericControl <E extends Entity> {
 	 * @param entity
 	 * @param vMB
 	 */
-	public void mapManagerBeanToEntity(E entity, MB<E> vMB){ 
+	public void mapManagerBeanToEntity(E entity, GenericMB<E> vMB){ 
 		
 		for (Class<?> reflectedClass = vMB.getClass(); reflectedClass != null; reflectedClass = reflectedClass.getSuperclass()) {
 			Field[] fields = reflectedClass.getDeclaredFields();
