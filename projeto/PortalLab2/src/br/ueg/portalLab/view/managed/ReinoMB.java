@@ -38,9 +38,8 @@ public class ReinoMB extends MB<Reino>{
 		this.fldReino = fldReino;
 	}
 
-	@Override
-	protected Reino initializeEntity() {
-		return new Reino();
+	public Class getEntityClass() {
+		return Reino.class;
 	}
 	
 	//TODO Fazer alterações no .xhtml

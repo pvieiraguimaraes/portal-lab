@@ -13,7 +13,7 @@ public class DatumMB extends TabelasBasicasMB {
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public Class getTabelaBasica() {
+	public Class getEntityClass() {
 		return Datum.class; 
 	}
 	

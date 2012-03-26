@@ -26,11 +26,6 @@ public class ClasseMB extends MB<Classe> {
 		super();
 	}
 
-	@Override
-	protected Classe initializeEntity() {
-		return new Classe();
-	}
-
 	public List<Filo> getFilos() {
 		return filos;
 	}
@@ -42,6 +37,10 @@ public class ClasseMB extends MB<Classe> {
 	
 	public void listFilo (ActionEvent event) {
 		//filos = localControl.getListAll(new Filo());
+	}
+
+	public Class getEntityClass() {
+		return Classe.class;
 	}
 	
 	//pesquisar de como fazer comboBox dinâmico
