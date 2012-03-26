@@ -12,7 +12,7 @@ public class FenologiaMB extends TabelasBasicasMB {
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public Class getTabelaBasica() {
+	public Class getEntityClass() {
 		return Fenologia.class; 
 	}
 	

@@ -65,7 +65,7 @@ public class CategoriaUsuarioMB extends TabelaMB {
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public Class getTabelaBasica() {
+	public Class getEntityClass() {
 		return CategoriaUsuario.class; 
 	}
 

@@ -12,7 +12,7 @@ public class TipoDeMontagemMB extends TabelasBasicasMB {
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public Class getTabelaBasica() {
+	public Class getEntityClass() {
 		return TipoDeMontagem.class; 
 	}
 	
