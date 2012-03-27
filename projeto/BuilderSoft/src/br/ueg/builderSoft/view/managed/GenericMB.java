@@ -17,7 +17,7 @@ import br.ueg.builderSoft.util.reflection.Reflection;
  *
  * @param <E>
  */
-public abstract class GenericMB<E extends Entity> {
+public abstract class GenericMB<E extends Entity> implements IGenericMB<E> {
 
 	protected GenericControl<E> control;
 	@AttributeView(key = "id", isEntityValue = true, entityType = Long.class, isVisible = false, caption = "mb_idColumn")
@@ -48,67 +48,83 @@ public abstract class GenericMB<E extends Entity> {
 		this.control = control;
 	}
 
-	/**
-	 * @return the fldId
+	/* (non-Javadoc)
+	 * @see br.ueg.builderSoft.view.managed.IGenericMB#getFldId()
 	 */
+	@Override
 	public long getFldId() {
 		return fldId;
 	}
 
-	/**
-	 * @param fldId the fldId to set
+	/* (non-Javadoc)
+	 * @see br.ueg.builderSoft.view.managed.IGenericMB#setFldId(long)
 	 */
+	@Override
 	public void setFldId(long fldId) {
 		this.fldId = fldId;
 	}
 
-	/**
-	 * @return the fldBusca
+	/* (non-Javadoc)
+	 * @see br.ueg.builderSoft.view.managed.IGenericMB#getFldBusca()
 	 */
+	@Override
 	public String getFldBusca() {
 		return fldBusca;
 	}
 
-	/**
-	 * @param fldBusca the fldBusca to set
+	/* (non-Javadoc)
+	 * @see br.ueg.builderSoft.view.managed.IGenericMB#setFldBusca(java.lang.String)
 	 */
+	@Override
 	public void setFldBusca(String fldBusca) {
 		this.fldBusca = fldBusca;
 	}
 
+	/* (non-Javadoc)
+	 * @see br.ueg.builderSoft.view.managed.IGenericMB#getListEntity()
+	 */
+	@Override
 	public List<E> getListEntity() {
 		return listEntity;
 	}
 
+	/* (non-Javadoc)
+	 * @see br.ueg.builderSoft.view.managed.IGenericMB#setListEntity(java.util.List)
+	 */
+	@Override
 	public void setListEntity(List<E> listEntity) {
 		this.listEntity = listEntity;
 	}
 
-	/**
-	 * @param listingControl the listingControl to set
+	/* (non-Javadoc)
+	 * @see br.ueg.builderSoft.view.managed.IGenericMB#setListingControl(br.ueg.builderSoft.util.control.ListingControl)
 	 */
+	@Override
 	public void setListingControl(ListingControl<E> listingControl) {
 		this.listingControl = listingControl;
 	}
 
-	/**
-	 * @return the listingControl
+	/* (non-Javadoc)
+	 * @see br.ueg.builderSoft.view.managed.IGenericMB#getListingControl()
 	 */
+	@Override
 	public ListingControl<E> getListingControl() {
 		return listingControl;
 	}
 	//Fim dos getters and Setters
 
-	/**
-	 * @return the selectedEntity
+	/* (non-Javadoc)
+	 * @see br.ueg.builderSoft.view.managed.IGenericMB#getSelectedEntity()
 	 */
+	@Override
 	public E getSelectedEntity() {
 		return selectedEntity;
 	}
 
-	/**
-	 * @param selectedEntity the selectedEntity to set
+	/* (non-Javadoc)
+	 * @see br.ueg.builderSoft.view.managed.IGenericMB#setSelectedEntity(E)
 	 */
+	@Override
 	public void setSelectedEntity(E selectedEntity) {
 		this.selectedEntity = selectedEntity;
 	}
@@ -124,14 +140,18 @@ public abstract class GenericMB<E extends Entity> {
 			}
 	}
 
-	/**
-	 * Método que verifica se já há uma listagem ou não
-	 * @return true se há uma listagem, ou false caso contrário
+	/* (non-Javadoc)
+	 * @see br.ueg.builderSoft.view.managed.IGenericMB#isListing()
 	 */
+	@Override
 	public boolean isListing() {
 		return listingControl.doAction(null, null);
 	}
 
+	/* (non-Javadoc)
+	 * @see br.ueg.builderSoft.view.managed.IGenericMB#getListColumns()
+	 */
+	@Override
 	public List<ManagedBeanField> getListColumns() {
 		List<ManagedBeanField> list = new ArrayList<ManagedBeanField>();
 		
@@ -163,6 +183,10 @@ public abstract class GenericMB<E extends Entity> {
 		return list;
 	}
 
+	/* (non-Javadoc)
+	 * @see br.ueg.builderSoft.view.managed.IGenericMB#getEntityClass()
+	 */
+	@Override
 	@SuppressWarnings("rawtypes")
 	public abstract Class getEntityClass();
 

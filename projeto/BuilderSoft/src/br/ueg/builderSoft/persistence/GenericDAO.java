@@ -1,6 +1,7 @@
 package br.ueg.builderSoft.persistence;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -52,6 +53,9 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 			Criteria criteria = this.hibernateTemplate.getSessionFactory().openSession().createCriteria(entity.getClass()).add(Restrictions.like(entity.getSearchColumnEntity(entity).get(i), "%"+value+"%"));
 			searchs.addAll(criteria.list());
 		}
+		HashSet<E> h = new HashSet<E>(searchs);
+		searchs.clear();
+		searchs.addAll(h);
 		return searchs;
 	}
 
