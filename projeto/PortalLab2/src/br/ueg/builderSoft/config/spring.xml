@@ -27,6 +27,7 @@
     			<value>br.ueg.portalLab.model.CategoriaUsuario</value>
     			<value>br.ueg.portalLab.model.NivelGeografico</value>
     			<value>br.ueg.portalLab.model.ItemGeografico</value>
+    			<value>br.ueg.portalLab.model.Coletor</value>
     		</list>
     	</property>
     	<property name="hibernateProperties">
