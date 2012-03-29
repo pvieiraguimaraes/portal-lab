@@ -28,6 +28,7 @@
     			<value>br.ueg.portalLab.model.NivelGeografico</value>
     			<value>br.ueg.portalLab.model.ItemGeografico</value>
     			<value>br.ueg.portalLab.model.Coletor</value>
+    			<value>br.ueg.portalLab.model.MetodoColeta</value>
     		</list>
     	</property>
     	<property name="hibernateProperties">
