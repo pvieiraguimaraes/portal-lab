@@ -12,8 +12,9 @@ public class ColetorMB extends TabelasBasicasMB {
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public Class getTabelaBasica() {
-		return Coletor.class; 
+	public Class getEntityClass() {
+		// TODO Auto-generated method stub
+		return Coletor.class;
 	}
 	
 	
