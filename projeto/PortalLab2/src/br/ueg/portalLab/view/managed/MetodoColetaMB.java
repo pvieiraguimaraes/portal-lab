@@ -12,9 +12,11 @@ public class MetodoColetaMB extends TabelasBasicasMB {
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public Class getTabelaBasica() {
-		return MetodoColeta.class; 
+	public Class getEntityClass() {
+		// TODO Auto-generated method stub
+		return MetodoColeta.class;
 	}
+
 	
 	
 }

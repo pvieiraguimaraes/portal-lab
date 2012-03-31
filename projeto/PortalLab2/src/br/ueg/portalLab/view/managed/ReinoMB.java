@@ -22,6 +22,7 @@ public class ReinoMB extends MB<Reino>{
 	public ReinoMB() {
 		super();
 		this.control.setControl(new TesteControl<Reino>(this.control));
+		this.getControl().doAction("LIST", initializeEntity());
 	}
 
 	/**
