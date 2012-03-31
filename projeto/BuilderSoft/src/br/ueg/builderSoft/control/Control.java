@@ -172,7 +172,7 @@ public class Control<E extends Entity>{
 			List<Object> atributes = new ArrayList<Object>();
 			atributes.add((E) this.mapFields.get("entity"));
 			if (!subControllers.get(ControllerType.VALIDATOR).doAction(atributes, action)) {
-				subControllers.get(ControllerType.MESSAGES).doAction(atributes, "cancel");//TODO verificar era action eu troceu por cancel(Guiliano) Acho que não precisa dessa mensagem aqui
+				//subControllers.get(ControllerType.MESSAGES).doAction(atributes, "cancel");//TODO verificar era action eu troceu por cancel(Guiliano) Acho que não precisa dessa mensagem aqui
 				return false;
 			}
 		}
