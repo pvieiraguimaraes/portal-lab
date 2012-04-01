@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre6">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v7.0">
+		<attributes>
+			<attribute name="owner.project.facets" value="jst.web"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/ejb3-persistence.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/hibernate-annotations.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/hibernate-commons-annotations.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/hibernate-core.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/hibernate-entitymanager.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/hibernate-tools.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/hibernate3.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/jsf-api.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/org.springframework.asm-3.0.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/org.springframework.beans-3.0.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/org.springframework.context-3.0.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/org.springframework.core-3.0.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/org.springframework.expression-3.0.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/org.springframework.jdbc-3.0.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/org.springframework.orm-3.0.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/org.springframework.transaction-3.0.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/org.springframework.web-3.0.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/sqljdbc4.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/zcommon.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/zel.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/zhtml.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/zk.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/zkbind.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/zkplus.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/zkspring-core-3.0.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/zkspring-webflow-3.0.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/zul.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/zweb.jar"/>
+	<classpathentry kind="output" path="build/classes"/>
+</classpath>

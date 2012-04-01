@@ -1,0 +1,17 @@
+@CHARSET "ISO-8859-1";
+html {
+	height: 100%;
+}
+body  {
+	margin: 1px;
+	height: 100%;
+	background: #ddd;
+	margin-left: 5%;
+	margin-right: 5%;
+	}
+.barColumn {
+	width: 30%;
+}
+.contextColumn {
+	width: 70%;
+}

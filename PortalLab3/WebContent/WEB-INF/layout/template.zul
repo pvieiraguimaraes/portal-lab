@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?page title="Sistema de Catalogação da Biodiversidade do Cerrado"?>
+
+<zk xmlns:n="native">
+	<div id="message"/>
+	<style src="/css/default.css" />
+	<div sclass="topo-banner" width="100%">
+		<image src="/imagens/banner_top.png" />
+	</div>
+	<borderlayout height="500px">
+		<west title="Menu" maxsize="300" width="180px" splittable="true" collapsible="true">
+			<div>O menu pode ser aqui</div>
+		</west>
+		<center>
+			<div id="content" self="@{insert(content)}" sclass="content" />
+		</center>
+	</borderlayout>
+	<separator height="4px"></separator>
+	<div sclass="mo_footer">
+		Copyright 2012 UEG. All rights reserved.
+	</div>
+</zk>
