@@ -18,7 +18,7 @@
 	    <vlayout>
 	       <div id="divFields"></div>
 	        <hlayout>
-	            <button label="Salvar" hflex="1" > <attribute name="onClick">
+	            <button id="formCrudWindowBtnSave" label="Salvar" hflex="1" > <attribute name="onClick">
 	            controller.doAction("SAVE");
 	            </attribute>
 	            </button>
