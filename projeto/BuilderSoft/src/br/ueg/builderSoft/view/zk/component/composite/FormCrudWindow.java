@@ -8,6 +8,7 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zkplus.databind.AnnotateDataBinder;
+import org.zkoss.zul.Button;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Window;
 
@@ -27,12 +28,22 @@ public class FormCrudWindow extends Window implements IFormWindow {
 
 	@Wire
 	private Div divFields;
+	
+	@Wire
+	private Window crudFormWindow;
+	
+	@Wire
+	private Button formCrudWindowBtnSave;
 
 
 	private String titulo = "Manutenção";
+	
+	private CrudWindow crudWindow;
+	
+	private boolean canSave;
 
 	public FormCrudWindow() {
-		Executions.createComponents("/WEB-INF/builderSoft/components/FormCrudWindow.zul", this, null);
+		Executions.createComponents("~./builderSoft/components/FormCrudWindow.zul", this, null);
 		processRecursive(this,this);
 	}
 	
@@ -51,14 +62,24 @@ public class FormCrudWindow extends Window implements IFormWindow {
 	public void setComposer(ComposerController<?> composer) {
 		this.composer = composer;
 		
-		setTitle(composer.getUseCase());
+		initFormCrudWindow(composer);
+		
+	}
+
+	/**
+	 * Faz a inicialização do compoente de FormCrudWindow
+	 * @param composer
+	 */
+	private void initFormCrudWindow(ComposerController<?> composer) {
+		if(this.crudWindow!=null)
+			setTitle(this.crudWindow.getTitulo());
 		
 		if(composer.getForm()!=null)
 			composer.getForm().setParent(divFields);
-			// new AnnotateDataBinder(divForm).loadAll();
 
 			composer.getComponent().setAttribute("formCrudWindow", this);
-		
+			
+		this.formCrudWindowBtnSave.setVisible(this.isCanSave());
 	}
 
 	public ComposerController<?> getComposer() {
@@ -71,5 +92,33 @@ public class FormCrudWindow extends Window implements IFormWindow {
 
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
+	}
+
+	/**
+	 * @return the crudWindow
+	 */
+	public CrudWindow getCrudWindow() {
+		return crudWindow;
+	}
+
+	/**
+	 * @param crudWindow the crudWindow to set
+	 */
+	public void setCrudWindow(CrudWindow crudWindow) {
+		this.crudWindow = crudWindow;
+	}
+
+	/**
+	 * @return the canSave
+	 */
+	public boolean isCanSave() {
+		return canSave;
+	}
+
+	/**
+	 * @param canSave the canSave to set
+	 */
+	public void setCanSave(boolean canSave) {
+		this.canSave = canSave;
 	}
 }

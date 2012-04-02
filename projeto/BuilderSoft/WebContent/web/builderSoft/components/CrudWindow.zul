@@ -37,9 +37,9 @@
 								</listhead>
 								<listitem self="@{each=entity}" id="divListitem">
 									<attribute name="onDoubleClick">
-											if(builderSoftCrudWindow.isCrudUpdateEnable()){
+											
 												controller.editEntity();
-											}
+											
 									</attribute>	
 									<listcell>
 										
@@ -71,7 +71,7 @@
 					</vlayout>
 				</center>
 			</borderlayout>
-			<formCrudWindow id="editFormCrudWindow"  apply="${controller}"  title="coisa"    border="normal" > 
+			<formCrudWindow id="editFormCrudWindow"  apply="${controller}" crudWindow = "${arg.crudWindow}" border="normal" > 
  		</formCrudWindow> 
 	</window>			 	
 

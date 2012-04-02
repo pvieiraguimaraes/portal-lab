@@ -39,6 +39,7 @@ public class CrudWindow extends Window implements IFormWindow{
 	@Wire
 	private Div divResult;
 
+	@SuppressWarnings("unused")
 	@Wire
 	private Div divForm;
 	
@@ -87,10 +88,11 @@ public class CrudWindow extends Window implements IFormWindow{
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("crudWindow", this);
 				
-		crudWindowComponent = Executions.createComponents("/WEB-INF/builderSoft/components/CrudWindow.zul", this, params);		
+		crudWindowComponent = Executions.createComponents("~./builderSoft/components/CrudWindow.zul", this, params); 		 
 		//Selectors.wireComponents(this, this, false);
 		//Selectors.wireEventListeners(this, this);
 		
+
 		processRecursive(crudWindowComponent,this);
 				
 		
@@ -132,7 +134,7 @@ public class CrudWindow extends Window implements IFormWindow{
 		}
 		
 		composer.setEditForm(this.editFormCrudWindow);
-		composer.setUseCase(getTitulo());
+		//composer.setUseCase(getTitulo());
 
 		
 		if (composer.getSearchForm() != null) {
@@ -150,6 +152,10 @@ public class CrudWindow extends Window implements IFormWindow{
 		initCrudOpeartion();
 		
 		updateComponents();
+		
+		editFormCrudWindow.setCanSave(this.isCrudUpdateEnable());
+		
+		
 
 			//composer.getForm().setParent(divForm);
 			// new AnnotateDataBinder(divForm).loadAll();
@@ -161,6 +167,7 @@ public class CrudWindow extends Window implements IFormWindow{
 	 * Metodo utilizado para pegar as operações do crudOperation e configurar os botões
 	 */
 	private void updateComponents() {
+		
 		crudWindowBtnNew.setVisible(this.crudCreateEnable);
 		crudWindowBtnEdit.setVisible(this.crudUpdateEnable);
 		crudWindowBtnDelete.setVisible(this.crudDeleteEnable);
