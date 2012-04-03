@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
@@ -65,9 +66,21 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 		List<E> searchs = new ArrayList<E>();
 		for (int i = 0; i < entity.getSearchColumnTable(entity).size(); i++) {
 			String hql = "from " + entity.getClass().getSimpleName() + " where "+ entity.getSearchColumnTable(entity).get(i) +" like '%"+value+"%'";
-			searchs.addAll(this.hibernateTemplate.find(hql));
+			Query qry = this.hibernateTemplate.getSessionFactory().openSession().createQuery(hql);
+			searchs.addAll(qry.list());
 		}
 		return searchs;
+	}
+	
+	/**
+	 * Executa uma Query livre.
+	 * @param qry
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<E> findByHQL(String qry){
+		Query vQry = this.hibernateTemplate.getSessionFactory().openSession().createQuery(qry);
+		return vQry.list();
 	}
 
 	@SuppressWarnings("unchecked")

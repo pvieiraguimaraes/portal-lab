@@ -1,17 +1,31 @@
 package br.ueg.builderSoft.view.zk.component.composite;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.zkoss.util.resource.Labels;
 import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zkplus.databind.AnnotateDataBinder;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Column;
+import org.zkoss.zul.Columns;
 import org.zkoss.zul.Div;
+import org.zkoss.zul.Grid;
+import org.zkoss.zul.Label;
+import org.zkoss.zul.Listcell;
+import org.zkoss.zul.Row;
+import org.zkoss.zul.Rows;
+import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
+import br.ueg.builderSoft.util.reflection.Reflection;
+import br.ueg.builderSoft.view.managed.ManagedBeanField;
 import br.ueg.builderSoft.view.zk.composer.ComposerController;
 
 
@@ -74,12 +88,66 @@ public class FormCrudWindow extends Window implements IFormWindow {
 		if(this.crudWindow!=null)
 			setTitle(this.crudWindow.getTitulo());
 		
-		if(composer.getForm()!=null)
+		if(composer.getForm()!=null){
 			composer.getForm().setParent(divFields);
+		}else{
+			buildDivFieldsFromEntity(composer);
+		}
 
 			composer.getComponent().setAttribute("formCrudWindow", this);
 			
 		this.formCrudWindowBtnSave.setVisible(this.isCanSave());
+	}
+
+	private void buildDivFieldsFromEntity(ComposerController<?> composer) {
+		List<Component> list =  new ArrayList<Component>(divFields.getChildren());
+		for(Component c : list){
+			c.detach();
+		}
+		AnnotateDataBinder binder = new AnnotateDataBinder(crudFormWindow);
+		
+		Grid g = new Grid();
+			Columns c = new Columns();
+				Column col1 = new Column();col1.setWidth("120px");
+				Column col2 = new Column();col2.setAlign("left");
+				c.appendChild(col1);
+				c.appendChild(col2);
+			Rows r = new Rows();
+			for (ManagedBeanField field : composer.getListColumns()) {
+				if (field.isVisible()) {
+					Row row = new Row();					
+					row.appendChild(new Label(Labels.getLabel(field.getFieldCaption())));
+					Textbox t = new Textbox();
+					binder.addBinding(t, "value", "@{controller."+field.getFieldName()+"}");
+//					try {
+//						t.setRawValue(Reflection.getFieldValue(composer, field.getFieldName()));
+//					} catch (WrongValueException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					} catch (SecurityException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					} catch (IllegalArgumentException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					} catch (NoSuchMethodException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					} catch (IllegalAccessException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					} catch (InvocationTargetException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+					row.appendChild(t);
+					r.appendChild(row);
+				}
+			}
+			g.appendChild(r);
+			binder.loadAll();
+		this.divFields.appendChild(g);
+		
 	}
 
 	public ComposerController<?> getComposer() {

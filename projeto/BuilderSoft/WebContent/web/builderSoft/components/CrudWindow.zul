@@ -29,7 +29,7 @@
 							<listbox model="@{controller.listEntity}"
 								selectedItem="@{controller.selectedEntity}" vflex="true" hflex="true"
 								onSelect="@{controller.selectEntity}"
-								mold="paging" pageSize="9"
+								mold="paging" pageSize="9" id="divListBox"
 								>
 								<listhead id="divListhead">									
 									<listheader label="Operações" align="center"
