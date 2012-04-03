@@ -1,0 +1,15 @@
+<?page title="Manutenção de Tipo de Montagem" contentType="text/html;charset=UTF-8"?>
+
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/WEB-INF/layout/template.zul"?>
+<?component name="crudWindow" class="br.ueg.builderSoft.view.zk.component.composite.CrudWindow" ?>
+
+
+<zk xmlns:w="http://www.zkoss.org/2005/zk/client">
+
+
+<crudWindow self="@{define(content)}" id="crudTipoDeMontagem" apply="${tipoDeMontagemComposer}"  titulo="Manter Tipo de Montagem" composer="@{controller}">
+	</crudWindow>
+	
+	
+</zk>
