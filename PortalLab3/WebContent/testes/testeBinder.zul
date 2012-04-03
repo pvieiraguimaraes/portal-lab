@@ -1,0 +1,62 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" ?>
+<window id="mainwin" style="padding: 25px;"> 
+	<zscript> 
+		public class Person {
+			private String firstName;
+			private String lastName;
+
+			public Person(String fn, String ln) {
+				setFirstName(fn);
+				setLastName(ln);
+			}
+
+			public String getFirstName() {
+				return firstName;
+			}
+			public void setFirstName(String fn) {
+				firstName = fn;
+			}
+
+			public String getLastName() {
+				return lastName;
+			}
+			public void setLastName(String ln) {
+				lastName = ln;
+			}
+
+		}
+		
+		List persons = new ArrayList();	
+		persons.add(new Person("David", "Coverdale"));
+		persons.add(new Person("Doug", "Aldrich"));
+		persons.add(new Person("Reb", "Beach"));
+		persons.add(new Person("Michael", "Devin"));
+		persons.add(new Person("Brian", "Tichy"));
+		
+		Listbox listbox = new Listbox();
+		mainwin.appendChild(listbox);
+		Listitem listitem = new Listitem();
+		listbox.appendChild(listitem);
+		
+		Listcell listcell1 = new Listcell();
+		listitem.appendChild(listcell1);
+		Listcell listcell2 = new Listcell();
+		listitem.appendChild(listcell2);
+
+		Textbox myTextbox = new Textbox();
+		mainwin.appendChild(new Separator());
+		mainwin.appendChild(myTextbox);
+
+		AnnotateDataBinder binder = new AnnotateDataBinder(mainwin); 
+		binder.addBinding(listbox, "model", "persons"); 
+		binder.addBinding(listbox, "selectedItem", "selected"); 
+		
+		binder.addBinding(listitem, "each", "person");
+		binder.addBinding(listcell1, "label", "person.firstName");
+		binder.addBinding(listcell2, "label", "person.lastName");
+		
+		binder.addBinding(myTextbox, "value", "selected.firstName");
+		
+		binder.loadAll();
+	</zscript>
+</window>

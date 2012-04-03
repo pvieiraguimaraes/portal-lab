@@ -9,11 +9,12 @@ import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.util.annotation.AttributeView;
 import br.ueg.builderSoft.util.constant.ComponentType;
 import br.ueg.builderSoft.view.zk.composer.ComposerController;
+import br.ueg.builderSoft.view.zk.composer.TabelaComposerController;
 import br.ueg.portalLab.model.CategoriaUsuario;
 
 @Component
 @Scope("desktop")
-public class CategoriaUsuarioComposer extends ComposerController<Entity> {
+public class CategoriaUsuarioComposer extends TabelaComposerController<Entity> {
 	
 	
 	@AttributeView(key = "nome", isEntityValue = true, entityType = String.class, isVisible=true, caption="categoriausuario_nomeColumn")
@@ -24,11 +25,7 @@ public class CategoriaUsuarioComposer extends ComposerController<Entity> {
 	
 	@AttributeView(key = "observacoes", isEntityValue = true, entityType = String.class, isVisible=true, caption="categoriausuario_observacoesColumn")
 	private String fldObservacoes;
-	
-	
-	//para acesso ao formulário de edição
-		@Wire
-		protected Window crudFormWindow;
+			
 
 	/**
 	 * 
@@ -41,15 +38,6 @@ public class CategoriaUsuarioComposer extends ComposerController<Entity> {
 		return CategoriaUsuario.class; 
 	}
 
-	@Override
-	public Window getEditForm() {
-		return this.crudFormWindow;
-	}
-
-	@Override
-	public void setEditForm(Window form) {
-		this.crudFormWindow  =  form;
-	}
 	
 	public String getFldNome() {
 		return fldNome;

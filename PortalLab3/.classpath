@@ -41,5 +41,6 @@
 	<classpathentry kind="lib" path="/BuilderSoft/lib/zkspring-webflow-3.0.jar"/>
 	<classpathentry kind="lib" path="/BuilderSoft/lib/zul.jar"/>
 	<classpathentry kind="lib" path="/BuilderSoft/lib/zweb.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/antlr-2.7.5.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
