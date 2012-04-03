@@ -391,6 +391,20 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 			this.component = component;
 		}
 
+		/**
+		 * @return the binder
+		 */
+		public AnnotateDataBinder getBinder() {
+			return binder;
+		}
+
+		/**
+		 * @param binder the binder to set
+		 */
+		public void setBinder(AnnotateDataBinder binder) {
+			this.binder = binder;
+		}
+
 		public void hideEditForm(){
 			getEditForm().setVisible(false);
 		}

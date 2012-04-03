@@ -1,3 +1,4 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" ?>
 <zk>
 <window id="crudFormWindow"  border="none" width="460px" xmlns:c="client"
 					closable="false"  action="show: slideDown;hide: slideUp" apply="${controller}" sizable="false">
