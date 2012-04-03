@@ -1,7 +1,7 @@
 <?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" ?>
 <window id="mainwin" style="padding: 25px;"> 
 	<zscript> 
-		public class Person {
+		class Person {
 			private String firstName;
 			private String lastName;
 
@@ -32,6 +32,8 @@
 		persons.add(new Person("Reb", "Beach"));
 		persons.add(new Person("Michael", "Devin"));
 		persons.add(new Person("Brian", "Tichy"));
+		Person p1 = new Person("guiliNO","asd");
+		Person px = new Person("guiliNOXXX","asdXXXX");
 		
 		Listbox listbox = new Listbox();
 		mainwin.appendChild(listbox);
@@ -46,17 +48,42 @@
 		Textbox myTextbox = new Textbox();
 		mainwin.appendChild(new Separator());
 		mainwin.appendChild(myTextbox);
+		
+		
 
-		AnnotateDataBinder binder = new AnnotateDataBinder(mainwin); 
-		binder.addBinding(listbox, "model", "persons"); 
-		binder.addBinding(listbox, "selectedItem", "selected"); 
 		
-		binder.addBinding(listitem, "each", "person");
-		binder.addBinding(listcell1, "label", "person.firstName");
-		binder.addBinding(listcell2, "label", "person.lastName");
+		class Teste{
+			private Person p;
+			private Window w;
+			public Teste(Person p, Window w){
+				this.p = p;
+				this.w = w;
+			}
+			public void bind(Person p2){
+			
+				AnnotateDataBinder binder = new AnnotateDataBinder(this.w);
+				Textbox myTextbox2 = new Textbox();
+				Person xx = this.p;
+				binder.bindBean("xx",p2);
+				w.appendChild(myTextbox2);
+				binder.addBinding(myTextbox2, "value","xx.firstName");	
+				binder.addBinding(listbox, "model", "persons"); 
+				binder.addBinding(listbox, "selectedItem", "selected"); 
+				
+				binder.addBinding(listitem, "each", "person");
+				binder.addBinding(listcell1, "label", "person.firstName");
+				binder.addBinding(listcell2, "label", "person.lastName");
+				
+				binder.addBinding(myTextbox, "value", "selected.firstName");
+				binder.loadAll();
+			}
+		}
 		
-		binder.addBinding(myTextbox, "value", "selected.firstName");
+
+		 
 		
-		binder.loadAll();
+
+		new Teste(p1,mainwin).bind(px);
+		
 	</zscript>
 </window>
