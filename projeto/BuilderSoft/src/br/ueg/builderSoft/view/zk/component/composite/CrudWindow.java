@@ -326,7 +326,7 @@ public class CrudWindow extends Window implements IFormWindow {
 				if (field.isVisible()) {
 					Listheader l = new Listheader(Labels.getLabel(field
 							.getFieldCaption()));
-					l.setSort("auto(" + field.getFieldName() + ")");
+					l.setSort("auto(" + field.getKey() + ")");
 					this.divListhead.appendChild(l);
 				}
 			}
