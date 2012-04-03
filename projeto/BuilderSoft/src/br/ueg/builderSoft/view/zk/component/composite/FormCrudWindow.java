@@ -98,57 +98,71 @@ public class FormCrudWindow extends Window implements IFormWindow {
 			
 		this.formCrudWindowBtnSave.setVisible(this.isCanSave());
 	}
-
+	
+	private Grid g=null;
+	private AnnotateDataBinder binder=null;
 	private void buildDivFieldsFromEntity(ComposerController<?> composer) {
-		List<Component> list =  new ArrayList<Component>(divFields.getChildren());
-		for(Component c : list){
-			c.detach();
-		}
-		AnnotateDataBinder binder = new AnnotateDataBinder(crudFormWindow);
+//		AnnotateDataBinder binder = new AnnotateDataBinder(crudFormWindow);
+//		binder.bindBean("controller2", composer);
 		
-		Grid g = new Grid();
-			Columns c = new Columns();
-				Column col1 = new Column();col1.setWidth("120px");
-				Column col2 = new Column();col2.setAlign("left");
-				c.appendChild(col1);
-				c.appendChild(col2);
-			Rows r = new Rows();
-			for (ManagedBeanField field : composer.getListColumns()) {
-				if (field.isVisible()) {
-					Row row = new Row();					
-					row.appendChild(new Label(Labels.getLabel(field.getFieldCaption())));
-					Textbox t = new Textbox();
-					binder.addBinding(t, "value", "@{controller."+field.getFieldName()+"}");
-//					try {
-//						t.setRawValue(Reflection.getFieldValue(composer, field.getFieldName()));
-//					} catch (WrongValueException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					} catch (SecurityException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					} catch (IllegalArgumentException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					} catch (NoSuchMethodException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					} catch (IllegalAccessException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					} catch (InvocationTargetException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-					row.appendChild(t);
-					r.appendChild(row);
-				}
+		if(divFields.getChildren().size()==0) {
+			List<Component> list =  new ArrayList<Component>(divFields.getChildren());
+			for(Component c : list){
+				c.detach();
 			}
-			g.appendChild(r);
-			binder.loadAll();
-		this.divFields.appendChild(g);
-		
+			
+			g = new Grid();
+			
+			binder = new AnnotateDataBinder(g);
+			binder.bindBean("controller2", composer);
+				Columns c = new Columns();
+					Column col1 = new Column();col1.setWidth("120px");
+					Column col2 = new Column();col2.setAlign("left");
+					c.appendChild(col1);
+					c.appendChild(col2);
+				Rows r = new Rows();
+				Textbox t;
+				for (ManagedBeanField field : composer.getListColumns()) {
+					if (field.isVisible()) {
+						Row row = new Row();					
+						row.appendChild(new Label(Labels.getLabel(field.getFieldCaption())));
+						t = new Textbox();
+						String fieldName = "controller2."+field.getFieldName()+"";
+						binder.addBinding(t, "value", fieldName );
+	//					try {
+	//						t.setRawValue(Reflection.getFieldValue(composer, field.getFieldName()));
+	//					} catch (WrongValueException e) {
+	//						// TODO Auto-generated catch block
+	//						e.printStackTrace();
+	//					} catch (SecurityException e) {
+	//						// TODO Auto-generated catch block
+	//						e.printStackTrace();
+	//					} catch (IllegalArgumentException e) {
+	//						// TODO Auto-generated catch block
+	//						e.printStackTrace();
+	//					} catch (NoSuchMethodException e) {
+	//						// TODO Auto-generated catch block
+	//						e.printStackTrace();
+	//					} catch (IllegalAccessException e) {
+	//						// TODO Auto-generated catch block
+	//						e.printStackTrace();
+	//					} catch (InvocationTargetException e) {
+	//						// TODO Auto-generated catch block
+	//						e.printStackTrace();
+	//					}
+						row.appendChild(t);
+						r.appendChild(row);
+					}
+				}
+				g.appendChild(r);
+				this.divFields.appendChild(g);
+				//binder.loadAll();
+		}
+			binder.loadComponent(g);
+			//binder.saveAll();
 	}
+	
+
 
 	public ComposerController<?> getComposer() {
 		return composer;
