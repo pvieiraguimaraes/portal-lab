@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -228,8 +229,19 @@ public class GenericControl <E extends Entity> {
 				try {
 					Object fieldValue = Reflection.getFieldValue(selectedEntity, fieldName);
 					Class reflectedView = this.view.getClass();
-					Method method = reflectedView.getMethod("setFld" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1), fieldType);
-					method.invoke(this.view, fieldValue);
+					String methodName = "setFld" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+					Method methods[] = reflectedView.getMethods();
+					boolean exists = false;
+					for(Method tempMethod :Arrays.asList(methods)){
+						if( tempMethod.getName().equals(methodName) ) {
+							exists = true;
+							break;
+						}
+					}
+					if(exists){
+						Method method = reflectedView.getMethod("setFld" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1), fieldType);
+						method.invoke(this.view, fieldValue);
+					}
 				} catch (SecurityException e) {
 					result = false;
 					e.printStackTrace();
