@@ -67,6 +67,8 @@ public class CrudWindow extends Window implements IFormWindow {
 	
 	@Wire
 	private Listbox divListBox;
+	
+	private String listBoxSize="9";
 
 	private String titulo = "Manutenção";
 
@@ -161,6 +163,11 @@ public class CrudWindow extends Window implements IFormWindow {
 		// new AnnotateDataBinder(divForm).loadAll();
 
 		composer.getComponent().setAttribute("builderSoftCrudWindow", this);
+		
+		
+		this.crudWindow.setWidth(this.getWidth());
+		this.crudWindow.setHeight(this.getHeight());
+		this.divListBox.setPageSize(Integer.parseInt(this.getListBoxSize()));
 	}
 
 	/**
@@ -452,6 +459,14 @@ public class CrudWindow extends Window implements IFormWindow {
 	 */
 	public void setCrudDeleteEnable(boolean crudDeleteEnable) {
 		this.crudDeleteEnable = crudDeleteEnable;
+	}
+
+	public String getListBoxSize() {
+		return listBoxSize;
+	}
+
+	public void setListBoxSize(String listboxSize) {
+		this.listBoxSize = listboxSize;
 	}
 
 }
