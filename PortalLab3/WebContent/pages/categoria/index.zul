@@ -21,11 +21,11 @@
 	                    <textbox value="@{controller.fldNome}" maxlength="50" width = "98%"/>                    
 	                </row>
 	                <row>
-	                	<label value="Data de Início"/>
+	                	<label value="CPF é Obrigatório"/>
 	                	<checkbox checked="@{controller.fldIsCPFObrigatorio}"/>
 	                </row>
 	                <row>
-	                	<label value="Data de Termíno"/>
+	                	<label value="Observações"/>
 	                	<textbox value="@{controller.fldObservacoes}" />
 	                </row>
 	            </rows>
