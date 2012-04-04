@@ -6,16 +6,9 @@
 	<div id="message"/>
 	<style src="/css/default.css" />
 	<div sclass="topo-banner" width="100%">
-		<image src="/imagens/banner_top.png" />
+		<image src="/imagens/topo_banner.png" />
 	</div>
-	<borderlayout height="500px">
-		<west title="Menu" maxsize="300" width="180px" splittable="true" collapsible="true">
-			<div>O menu pode ser aqui</div>
-		</west>
-		<center>
-			<div id="content" self="@{insert(content)}" sclass="content" />
-		</center>
-	</borderlayout>
+	<div id="content" self="@{insert(content)}" sclass="content" />
 	<separator height="4px"></separator>
 	<div sclass="mo_footer">
 		Copyright 2012 UEG. All rights reserved.
