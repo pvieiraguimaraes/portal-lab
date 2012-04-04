@@ -6,7 +6,7 @@
 	<div id="message"/>
 	<style src="/css/default.css" />
 	<div sclass="topo-banner" width="100%">
-		<image src="/imagens/topo_banner.png" />
+		<image src="/images/topo_banner.png" />
 	</div>
 	<div id="content" self="@{insert(content)}" sclass="content" />
 	<separator height="4px"></separator>
