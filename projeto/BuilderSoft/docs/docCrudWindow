@@ -8,6 +8,14 @@ Atributos Suportados:
 ** Tipo: 		br.ueg.builderSoft.view.zk.composer.ComposerController
 ** Definição 	--> Componser(MB) que será utilizado para manipular as chamadas deve ser um composer que extende o br.ueg.builderSoft.view.zk.composer.ComposerController
 
+*  listBoxSize
+** Tipo:		String
+** Definição	--> Indica quantos linhas devem ser utilizadas antes de ter a barra de paginação
+
+* height
+** Tipo:		String
+** Definição	--> Indica o tamanho da janela(geralmente em px) 
+
 * crudOperation 
 ** Tipo: String
 ** Valor padrão	--> "create,read,update,delete"

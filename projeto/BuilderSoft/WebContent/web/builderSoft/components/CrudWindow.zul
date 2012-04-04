@@ -27,9 +27,9 @@
 					<vlayout>
 						<div id="divResult2">
 							<listbox model="@{controller.listEntity}"
-								selectedItem="@{controller.selectedEntity}" vflex="true" hflex="true"
+								selectedItem="@{controller.selectedEntity}" 
 								onSelect="@{controller.selectEntity}"
-								mold="paging" pageSize="9" id="divListBox"
+								mold="paging" id="divListBox" pageSize="${arg.crudWindow.listBoxSize}"
 								>
 								<listhead id="divListhead">									
 									<listheader label="Operações" align="center"
