@@ -8,7 +8,7 @@
 <zk xmlns:w="http://www.zkoss.org/2005/zk/client">
 
 
-<crudWindow self="@{define(content)}" id="crudUsuarioCategoria" apply="${categoriaUsuarioComposer}"  titulo="Manter Usuário Categoria" composer="@{controller}">
+<crudWindow self="@{define(content)}" id="crudUsuarioCategoria" apply="${categoriaUsuarioComposer}"   listBoxSize="8"  height="450px" titulo="Manter Usuário Categoria" composer="@{controller}">
 		<div id="form">
 			<grid>
 	            <columns>

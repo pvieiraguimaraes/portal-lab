@@ -8,7 +8,7 @@
 <zk xmlns:w="http://www.zkoss.org/2005/zk/client">
 
 
-<crudWindow self="@{define(content)}" id="crudTipoDeMontagem" apply="${tipoDeMontagemComposer}"  titulo="Manter Tipo de Montagem" composer="@{controller}">
+<crudWindow self="@{define(content)}" id="crudTipoDeMontagem" apply="${tipoDeMontagemComposer}" listBoxSize="8"  height="450px" titulo="Manter Tipo de Montagem" composer="@{controller}">
 	</crudWindow>
 	
 	

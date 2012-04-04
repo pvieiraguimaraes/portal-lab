@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/WEB-INF/layout/template.zul"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?page title="Cadastros básicos" contentType="text/html;charset=UTF-8"?>
+
+<zk>
+<tabbox self="@{define(content)}" id="tb" height="550px" orient="vertical">
+    <tabs id="tabs" width="150px">
+        <tab id="cadEspecime" 	label="Cadastro de Espécimes" />
+        <tab id="cadTabBasicas" label="Manter Tabelas Básicas" />
+        <tab id="cadManterUsua" label="Manter Usuários" />
+    </tabs>
+    <tabpanels>
+        <tabpanel>Em Construção</tabpanel>
+        <tabpanel>
+        	<tabbox id="tbCadBasicos">
+        		<tabs id="tabsCadBasicos">
+        			<tab id="tabColeta" 	label="Coleta"/>
+        			<tab id="tabGeografia"	label="Geografia"/>
+        			<tab id="tabTaxonoia"	label="Taxonomia" />
+        		</tabs>
+        		<tabpanels>
+        			<tabpanel>
+        				<separator height="20px"></separator>
+        				<tabbox id="tbCadColeta">
+			        		<tabs id="tabsCadColeta">
+			        			<tab id="tabCadTipoDeMontagem" 			label="Tipo de Montagem"/>
+			        			<tab id="tabCadCategoria" 				label="Categoria de Usuário"/>
+			        			<tab id="tabCadDatum"					label="Datum" />
+			        			<tab id="tabCadFenologia"				label="Fenologia" />
+			        			<tab id="tabCadEstagioDesenvolvimento"	label="Estágio de Desenvolvimento" />
+			        		</tabs>
+			        		<tabpanels>
+			        			<tabpanel>
+			        				<include id="incCadTipoDeMontagem" src="/pages/tipodemontagem/"/>
+			        			</tabpanel>
+			        			<tabpanel>
+			        				<include id="incCadCategoria" src="/pages/categoria/"/>
+			        			</tabpanel>
+			        			<tabpanel>
+			        				<include id="incCadDatum" src="/pages/datum/"/>
+			        			</tabpanel>
+			        			<tabpanel>
+			        				<include id="incCadFenologia" src="/pages/fenologia/"/>
+			        			</tabpanel>
+			        			<tabpanel>
+			        				<include id="incCadEstagioDesenvolvimento" src="/pages/estagiodesenvolvimento/"/>
+			        			</tabpanel>
+			        		</tabpanels>
+			        	</tabbox> 
+        			</tabpanel>
+        			<tabpanel>
+        				Em contrução geografia
+        			</tabpanel>
+        			<tabpanel>
+        				Em construção Taxonomia
+        			</tabpanel>
+        		</tabpanels>
+        	</tabbox> 
+        </tabpanel>
+        <tabpanel>Em Construção</tabpanel>
+    </tabpanels>
+</tabbox>
+</zk>
