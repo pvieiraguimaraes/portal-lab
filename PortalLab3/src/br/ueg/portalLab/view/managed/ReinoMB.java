@@ -16,7 +16,7 @@ public class ReinoMB extends MB<Reino>{
 	 * e trata ele/ e entrega ele para o control específico 
 	 */
 	
-	@AttributeView(key = "reino", isEntityValue = true, entityType = String.class, isVisible=true, caption="reino_reinoColumn")
+	@AttributeView(key = "reino", isEntityValue = true, fieldType = String.class, isVisible=true, caption="reino_reinoColumn")
 	private String fldReino;
 
 	public ReinoMB() {

@@ -41,6 +41,7 @@
     			<value>br.ueg.portalLab.model.Coletor</value>
     			<value>br.ueg.portalLab.model.MetodoColeta</value>
     			<value>br.ueg.portalLab.model.EstagioDesenvolvimento</value>
+    			<value>br.ueg.portalLab.model.MassaDAgua</value>
     		</list>
     	</property>
     	<property name="hibernateProperties">
