@@ -18,6 +18,7 @@
         			<tab id="tabColeta" 	label="Coleta"/>
         			<tab id="tabGeografia"	label="Geografia"/>
         			<tab id="tabTaxonoia"	label="Taxonomia" />
+        			<tab id="tabDiversos"	label="Diversas" />
         		</tabs>
         		<tabpanels>
         			<tabpanel><!--  ##Inicio Cadastro Básicos  -->
@@ -28,14 +29,12 @@
 			        			<tab id="tabCadTipoDeMontagem" 			label="Tipo de Montagem"/>
 			        			<tab id="tabCadFenologia"				label="Fenologia" />
 			        			<tab id="tabCadEstagioDesenvolvimento"	label="Estágio de Desenvolvimento" />
-			        			<tab id="tabCadCategoria" 				label="Categoria de Usuário"/>			        			
 			        		</tabs>
 			        		<tabpanels>
 			        			<tabpanel><include id="incCadMetodo" src="/pages/metodo/"/></tabpanel>
 			        			<tabpanel><include id="incCadTipoDeMontagem" src="/pages/tipodemontagem/"/></tabpanel>
 			        			<tabpanel><include id="incCadFenologia" src="/pages/fenologia/"/></tabpanel>
 			        			<tabpanel><include id="incCadEstagioDesenvolvimento" src="/pages/estagiodesenvolvimento/"/></tabpanel>
-			        			<tabpanel><include id="incCadCategoria" src="/pages/categoria/"/></tabpanel>
 			        		</tabpanels>
 			        	</tabbox> 
         			</tabpanel>
@@ -52,8 +51,21 @@
 			        		</tabpanels>
 			        	</tabbox> 
         			</tabpanel>
-        			<tabpanel>
-        				Em construção Taxonomia
+        			<tabpanel>asd</tabpanel>
+       				<tabpanel><!--  ##Inicio Cadastro Básicos  -->
+        				<separator height="20px"></separator>
+        				<tabbox id="tbCadDiversa">
+			        		<tabs id="tabsCadDiversa">
+			        			<tab id="tabCadCategoria" 				label="Categoria de Usuário"/>
+			        			<tab id="tabCadLaboratorio"				label="Laboratório"/>
+			        			<tab id="tabCadGrupoEnderecoFisico"		label="Grupo de Endereço Físico"/>				        			
+			        		</tabs>
+			        		<tabpanels>
+			        			<tabpanel><include id="incCadCategoria" src="/pages/categoria/"/></tabpanel>
+			        			<tabpanel><include id="incCadLaboratorio" src="/pages/laboratorio/"/></tabpanel>
+			        			<tabpanel><include id="incCadGrupoEnderecoFisico" src="/pages/grupoenderecofisico/"/></tabpanel>
+			        		</tabpanels>
+			        	</tabbox> 
         			</tabpanel>
         		</tabpanels>
         	</tabbox> 
