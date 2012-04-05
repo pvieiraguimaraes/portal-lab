@@ -42,6 +42,8 @@
     			<value>br.ueg.portalLab.model.MetodoColeta</value>
     			<value>br.ueg.portalLab.model.EstagioDesenvolvimento</value>
     			<value>br.ueg.portalLab.model.MassaDAgua</value>
+    			<value>br.ueg.portalLab.model.Laboratorio</value>
+    			<value>br.ueg.portalLab.model.GrupoEnderecoFisico</value>
     		</list>
     	</property>
     	<property name="hibernateProperties">
