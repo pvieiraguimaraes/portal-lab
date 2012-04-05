@@ -20,37 +20,37 @@
         			<tab id="tabTaxonoia"	label="Taxonomia" />
         		</tabs>
         		<tabpanels>
-        			<tabpanel>
+        			<tabpanel><!--  ##Inicio Cadastro Básicos  -->
         				<separator height="20px"></separator>
         				<tabbox id="tbCadColeta">
 			        		<tabs id="tabsCadColeta">
+			        			<tab id="tabCadMetodo" 					label="Método"/>
 			        			<tab id="tabCadTipoDeMontagem" 			label="Tipo de Montagem"/>
-			        			<tab id="tabCadCategoria" 				label="Categoria de Usuário"/>
-			        			<tab id="tabCadDatum"					label="Datum" />
 			        			<tab id="tabCadFenologia"				label="Fenologia" />
 			        			<tab id="tabCadEstagioDesenvolvimento"	label="Estágio de Desenvolvimento" />
+			        			<tab id="tabCadCategoria" 				label="Categoria de Usuário"/>			        			
 			        		</tabs>
 			        		<tabpanels>
-			        			<tabpanel>
-			        				<include id="incCadTipoDeMontagem" src="/pages/tipodemontagem/"/>
-			        			</tabpanel>
-			        			<tabpanel>
-			        				<include id="incCadCategoria" src="/pages/categoria/"/>
-			        			</tabpanel>
-			        			<tabpanel>
-			        				<include id="incCadDatum" src="/pages/datum/"/>
-			        			</tabpanel>
-			        			<tabpanel>
-			        				<include id="incCadFenologia" src="/pages/fenologia/"/>
-			        			</tabpanel>
-			        			<tabpanel>
-			        				<include id="incCadEstagioDesenvolvimento" src="/pages/estagiodesenvolvimento/"/>
-			        			</tabpanel>
+			        			<tabpanel><include id="incCadMetodo" src="/pages/metodo/"/></tabpanel>
+			        			<tabpanel><include id="incCadTipoDeMontagem" src="/pages/tipodemontagem/"/></tabpanel>
+			        			<tabpanel><include id="incCadFenologia" src="/pages/fenologia/"/></tabpanel>
+			        			<tabpanel><include id="incCadEstagioDesenvolvimento" src="/pages/estagiodesenvolvimento/"/></tabpanel>
+			        			<tabpanel><include id="incCadCategoria" src="/pages/categoria/"/></tabpanel>
 			        		</tabpanels>
 			        	</tabbox> 
         			</tabpanel>
-        			<tabpanel>
-        				Em contrução geografia
+        			<tabpanel><!--  ##Inicio Cadastro Geografia  -->
+        				<separator height="20px"></separator>
+        				<tabbox id="tbCadGeografia">
+			        		<tabs id="tabsCadGeografia">
+			        			<tab id="tabCadMassaDAgua" 				label="Massa D'Agua"/>
+			        			<tab id="tabCadDatum"		 			label="Datum"/>
+			        		</tabs>
+			        		<tabpanels>
+			        			<tabpanel><include id="incCadMassaDAgua" src="/pages/massadagua/"/> </tabpanel>
+			        			<tabpanel><include id="incCadDatum" src="/pages/datum/"/></tabpanel>
+			        		</tabpanels>
+			        	</tabbox> 
         			</tabpanel>
         			<tabpanel>
         				Em construção Taxonomia

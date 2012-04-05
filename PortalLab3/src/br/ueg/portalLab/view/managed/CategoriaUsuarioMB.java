@@ -13,13 +13,13 @@ import br.ueg.builderSoft.view.managed.TabelaMB;
 @SessionScoped
 public class CategoriaUsuarioMB extends TabelaMB {
 	
-	@AttributeView(key = "nome", isEntityValue = true, entityType = String.class, isVisible=true, caption="categoriausuario_nomeColumn")
+	@AttributeView(key = "nome", isEntityValue = true, fieldType = String.class, isVisible=true, caption="categoriausuario_nomeColumn")
 	private String fldNome;
 	
-	@AttributeView(key = "isCPFObrigatorio", isEntityValue = true, entityType = Boolean.class, isVisible=true, caption="categoriausuario_cpfObrigatorioColumn", component=ComponentType.RADIO_BUTTON)
+	@AttributeView(key = "isCPFObrigatorio", isEntityValue = true, fieldType = Boolean.class, isVisible=true, caption="categoriausuario_cpfObrigatorioColumn", component=ComponentType.RADIO_BUTTON)
 	private boolean fldIsCPFObrigatorio;
 	
-	@AttributeView(key = "observacoes", isEntityValue = true, entityType = String.class, isVisible=true, caption="categoriausuario_observacoesColumn")
+	@AttributeView(key = "observacoes", isEntityValue = true, fieldType = String.class, isVisible=true, caption="categoriausuario_observacoesColumn")
 	private String fldObservacoes;
 	
 
