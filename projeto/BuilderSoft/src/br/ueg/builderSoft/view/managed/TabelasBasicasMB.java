@@ -4,7 +4,7 @@ import br.ueg.builderSoft.util.annotation.AttributeView;
 
 public abstract class TabelasBasicasMB extends TabelaMB {
 
-	@AttributeView(key = "descricao", isEntityValue = true, entityType = String.class, caption="tb_descricaoColumn")
+	@AttributeView(key = "descricao", isEntityValue = true, fieldType = String.class, caption="tb_descricaoColumn")
 	private String fldDescricao;
 	
 		

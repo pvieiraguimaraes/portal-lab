@@ -20,7 +20,7 @@ import br.ueg.builderSoft.util.reflection.Reflection;
 public abstract class GenericMB<E extends Entity> implements IGenericMB<E> {
 
 	protected GenericControl<E> control;
-	@AttributeView(key = "id", isEntityValue = true, entityType = Long.class, isVisible = false, caption = "mb_idColumn")
+	@AttributeView(key = "id", isEntityValue = true, fieldType = Long.class, isVisible = false, caption = "mb_idColumn")
 	protected long fldId;
 	protected List<E> listEntity;
 	@AttributeView(key = "searchValue")
@@ -151,6 +151,7 @@ public abstract class GenericMB<E extends Entity> implements IGenericMB<E> {
 	/* (non-Javadoc)
 	 * @see br.ueg.builderSoft.view.managed.IGenericMB#getListColumns()
 	 */
+	//TODO atualizar para ficar igual ao do ZK
 	@Override
 	public List<ManagedBeanField> getListColumns() {
 		List<ManagedBeanField> list = new ArrayList<ManagedBeanField>();
@@ -165,7 +166,7 @@ public abstract class GenericMB<E extends Entity> implements IGenericMB<E> {
 						String fieldName = field.getName();
 						//Class fieldType = field.getAnnotation(br.ueg.portalLab.util.annotation.AttributeView.class).entityType();
 						String vCaption = field.getAnnotation(br.ueg.builderSoft.util.annotation.AttributeView.class).caption();
-						String vEntityType = Reflection.getClassName(field.getAnnotation(br.ueg.builderSoft.util.annotation.AttributeView.class).entityType());
+						String vEntityType = Reflection.getClassName(field.getAnnotation(br.ueg.builderSoft.util.annotation.AttributeView.class).fieldType());
 						boolean vIsVisible = field.getAnnotation(br.ueg.builderSoft.util.annotation.AttributeView.class).isVisible();
 						int vComponent = field.getAnnotation(br.ueg.builderSoft.util.annotation.AttributeView.class).component();
 						if (field.getAnnotation(br.ueg.builderSoft.util.annotation.AttributeView.class).isEntityValue()) {
