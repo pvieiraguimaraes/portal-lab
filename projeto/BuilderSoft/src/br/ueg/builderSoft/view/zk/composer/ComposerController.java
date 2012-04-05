@@ -39,7 +39,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 
 	protected GenericControl<E> control;
 	
-	@AttributeView(key = "id", isEntityValue = true, entityType = Long.class, isVisible = false, caption = "mb_idColumn")
+	@AttributeView(key = "id", isEntityValue = true, fieldType = Long.class, isVisible = false, caption = "mb_idColumn")
 	protected long fldId;
 	
 	protected List<E> listEntity;
@@ -272,11 +272,17 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 						String vKey = field.getAnnotation(br.ueg.builderSoft.util.annotation.AttributeView.class).key();
 						String fieldName = field.getName();
 						//Class fieldType = field.getAnnotation(br.ueg.portalLab.util.annotation.AttributeView.class).entityType();
-						String vCaption = field.getAnnotation(br.ueg.builderSoft.util.annotation.AttributeView.class).caption();
-						String vEntityType = Reflection.getClassName(field.getAnnotation(br.ueg.builderSoft.util.annotation.AttributeView.class).entityType());
+						String vCaption = field.getAnnotation(br.ueg.builderSoft.util.annotation.AttributeView.class).caption();						
+						String vEntityType = Reflection.getClassName(field.getAnnotation(br.ueg.builderSoft.util.annotation.AttributeView.class).fieldType());
 						boolean vIsVisible = field.getAnnotation(br.ueg.builderSoft.util.annotation.AttributeView.class).isVisible();
 						int vComponent = field.getAnnotation(br.ueg.builderSoft.util.annotation.AttributeView.class).component();
+
 						if (field.getAnnotation(br.ueg.builderSoft.util.annotation.AttributeView.class).isEntityValue()) {
+							String vEntityCaption = Reflection.getClassName(getEntityClass()).toLowerCase().concat("_").concat(vKey).concat("Column"); 
+							boolean existCaption = ((MessagesControl) this.getControl().getController(ControllerType.MESSAGES)).existsMessage(vEntityCaption);
+							if(existCaption){
+								 vCaption = vEntityCaption;
+							}
 							list.add(new ManagedBeanField(vKey, fieldName, vCaption,vEntityType, vIsVisible, vComponent));
 						}
 					

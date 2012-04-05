@@ -6,7 +6,7 @@ import br.ueg.builderSoft.util.annotation.AttributeView;
 @SuppressWarnings("serial")
 public abstract class TabelaBasicaComposerController<E extends Entity> extends TabelaComposerController<E> {
 
-	@AttributeView(key = "descricao", isEntityValue = true, entityType = String.class, caption="tb_descricaoColumn")
+	@AttributeView(key = "descricao", isEntityValue = true, fieldType = String.class, caption="tb_descricaoColumn")
 	private String fldDescricao;
 	
 		

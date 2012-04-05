@@ -1,8 +1,15 @@
 package br.ueg.builderSoft.util.control;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
 import java.util.Locale;
+import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
+import java.util.ResourceBundle.Control;
 
 import br.ueg.builderSoft.util.constant.MessagesType;
 
@@ -18,7 +25,7 @@ public abstract class MessagesControl implements SubController{
 
 	public MessagesControl() {
 		messages = ResourceBundle.getBundle(
-				"br/ueg/builderSoft/config/messages", this.getLocale());
+				"br/ueg/builderSoft/config/messages", this.getLocale(), new UTF8Control());
 	}
 
 	@Override
@@ -40,6 +47,20 @@ public abstract class MessagesControl implements SubController{
 	 */
 	protected String getMessage(String typeMessage) {
 		return messages.getString(typeMessage);
+	}
+	
+	public boolean existsMessage(String typeMessage){
+		boolean exist = false;
+		try{			
+			messages.getString(typeMessage);
+			exist = true;
+		}catch (Exception e) {
+
+		}
+		return exist;
+	}
+	public boolean existsErrorMessage(String typeMessage){
+		return this.existsMessage("erro_".concat(typeMessage));
 	}
 
 	/**
@@ -88,5 +109,39 @@ public abstract class MessagesControl implements SubController{
 	 *            corresponde ao tipo de mensagem (ícone da mensagem)
 	 */
 	public abstract void addMessage(String message, int type);
+	
+	class UTF8Control extends Control {
+	    public ResourceBundle newBundle
+	        (String baseName, Locale locale, String format, ClassLoader loader, boolean reload)
+	            throws IllegalAccessException, InstantiationException, IOException
+	    {
+	        // The below is a copy of the default implementation.
+	        String bundleName = toBundleName(baseName, locale);
+	        String resourceName = toResourceName(bundleName, "properties");
+	        ResourceBundle bundle = null;
+	        InputStream stream = null;
+	        if (reload) {
+	            URL url = loader.getResource(resourceName);
+	            if (url != null) {
+	                URLConnection connection = url.openConnection();
+	                if (connection != null) {
+	                    connection.setUseCaches(false);
+	                    stream = connection.getInputStream();
+	                }
+	            }
+	        } else {
+	            stream = loader.getResourceAsStream(resourceName);
+	        }
+	        if (stream != null) {
+	            try {
+	                // Only this line is changed to make it to read properties files as UTF-8.
+	                bundle = new PropertyResourceBundle(new InputStreamReader(stream, "UTF-8"));
+	            } finally {
+	                stream.close();
+	            }
+	        }
+	        return bundle;
+	    }
+	}
 
 }

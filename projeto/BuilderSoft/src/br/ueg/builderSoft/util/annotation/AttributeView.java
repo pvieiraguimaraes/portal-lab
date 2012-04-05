@@ -35,11 +35,11 @@ public @interface AttributeView {
 	 */
 	String caption() default  "";
 	/**
-	 * Tipo da entidade
+	 * Tipo do field da entidade
 	 * @return Class da entidade (int, String, etc)
 	 */
 	@SuppressWarnings("rawtypes")
-	Class entityType() default Object.class;
+	Class fieldType() default Object.class;
 	/**
 	 * Tipo de componente que o representará no formulário
 	 * @return ComponentType (inteiro) do componente

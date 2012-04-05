@@ -157,7 +157,7 @@ public class GenericControl <E extends Entity> {
 					try {
 						Object fieldValue = Reflection.getFieldValue(vMB, field.getName());
 						String fieldName = field.getAnnotation(br.ueg.builderSoft.util.annotation.AttributeView.class).key();
-						Class fieldType = field.getAnnotation(br.ueg.builderSoft.util.annotation.AttributeView.class).entityType();
+						Class fieldType = field.getAnnotation(br.ueg.builderSoft.util.annotation.AttributeView.class).fieldType();
 						if (field.getAnnotation(br.ueg.builderSoft.util.annotation.AttributeView.class).isEntityValue()) {
 							Reflection.setFieldValue(entity, fieldName, fieldValue, fieldType);
 						}
