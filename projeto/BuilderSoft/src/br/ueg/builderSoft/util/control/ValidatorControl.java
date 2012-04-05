@@ -33,14 +33,14 @@ public class ValidatorControl implements SubController{
 	 */
 	public boolean validate(Entity entity) {
 		boolean isValide = true;
-		
+		String classeName =  Reflection.getClassName(entity.getClass()).toLowerCase();
 		for (Class<?> reflectedClass = entity.getClass(); reflectedClass != null; reflectedClass = reflectedClass.getSuperclass()) {//adicionado para verificar com herança		
 			Field[] fields = reflectedClass.getDeclaredFields();
 			for (Field currentField:fields) {
 				try {
 					if (currentField.getAnnotation(Attribute.class).Required()) {
 						Object fieldValue = Reflection.getFieldValue(entity, currentField.getName());
-						String bundleErroColumn = Reflection.getClassName(reflectedClass).toLowerCase().concat("_").concat(currentField.getName());
+						String bundleErroColumn =classeName.concat("_").concat(currentField.getName());
 						if (fieldValue == null || fieldValue.equals("")) {
 							isValide = false;
 							messagesControl.addMessageError(bundleErroColumn);
