@@ -39,7 +39,6 @@ public class NivelGeografico extends Entity {
 	private Boolean obrigatorio;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nivelGeografico")// mappedBy indica o atributo da entidade many
-	//@LazyCollection(value = LazyCollectionOption.FALSE) 
 	@JoinColumn(name="id_nigeo_itgeo", nullable=true)
 	private Set<ItemGeografico> listItensGeograficos;
 

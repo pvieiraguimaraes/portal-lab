@@ -57,11 +57,13 @@
         				<tabbox id="tbCadDiversa">
 			        		<tabs id="tabsCadDiversa">
 			        			<tab id="tabCadCategoria" 				label="Categoria de Usuário"/>
+			        			<tab id="tabCadUsuario"					label="Usuário" />
 			        			<tab id="tabCadLaboratorio"				label="Laboratório"/>
 			        			<tab id="tabCadGrupoEnderecoFisico"		label="Grupo de Endereço Físico"/>				        			
 			        		</tabs>
 			        		<tabpanels>
 			        			<tabpanel><include id="incCadCategoria" src="/pages/categoria/"/></tabpanel>
+			        			<tabpanel><include id="incCadUsuario" src="/pages/usuario/"/></tabpanel>
 			        			<tabpanel><include id="incCadLaboratorio" src="/pages/laboratorio/"/></tabpanel>
 			        			<tabpanel><include id="incCadGrupoEnderecoFisico" src="/pages/grupoenderecofisico/"/></tabpanel>
 			        		</tabpanels>
