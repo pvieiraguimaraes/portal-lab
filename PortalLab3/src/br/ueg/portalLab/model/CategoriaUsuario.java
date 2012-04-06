@@ -1,8 +1,13 @@
 package br.ueg.portalLab.model;
 
+import java.util.Set;
+
 import javax.persistence.Column;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -20,6 +25,7 @@ public class CategoriaUsuario extends Entity {
 	//@OneToMany(targetEntity = Filo.class, mappedBy = "reino")
 	@Column(name = "id_categoria")
 	private long id;
+	
 	@Column(name = "nome")
 	@Attribute(Required = true, SearchField = true)
 	private String nome;
@@ -32,6 +38,9 @@ public class CategoriaUsuario extends Entity {
 	@Attribute(Required = false, SearchField = true)
 	private String observacoes;
 	
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "categoria")// mappedBy indica o atributo da entidade many
+	private Set<Usuario> listUsuarios;
 	
 	
 	public long getId() {
