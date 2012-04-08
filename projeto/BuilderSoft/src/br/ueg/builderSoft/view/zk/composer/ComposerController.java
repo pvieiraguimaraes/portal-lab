@@ -2,7 +2,10 @@ package br.ueg.builderSoft.view.zk.composer;
 
 import java.awt.TrayIcon.MessageType;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.zkoss.bind.annotation.BindingParam;
@@ -16,6 +19,7 @@ import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.databind.AnnotateDataBinder;
+import org.zkoss.zkplus.databind.BindingListModelList;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Listhead;
 import org.zkoss.zul.Listitem;
@@ -337,7 +341,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 		//@Command
 		//@NotifyChange({ "listEntity", "vm" })
 		public void doAction(@BindingParam("action") String action) {
-			binder.saveAll();
+			binder.saveAll();	
 			if (control.doAction(action, initializeEntity())) {
 				verifyListing(action);
 				hideEditForm();
@@ -476,5 +480,55 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 		public void addMessage(String message){
 			((MessagesControl) this.control.getController(ControllerType.MESSAGES)).addMessage(message, MessagesType.INFO);
 		}
-	
+		
+		/**
+		 * @param field nome do atributo que contem a entidade extrangeira(chave estrangeir)
+		 * @return
+		 */
+		@SuppressWarnings("unchecked")
+		public BindingListModelList<Entity> getFKEntityModel(String field) {
+			
+
+			Entity fkEntity=null;
+			try {
+				fkEntity = (Entity) Reflection.getFieldClass(this, field).newInstance();
+			} catch (SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NoSuchMethodException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InstantiationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			BindingListModelList<Entity> categoriaUsuarioModel;
+			ArrayList<Entity> listFKEntity;
+			if(fkEntity!=null){
+				 listFKEntity = (ArrayList<Entity>) this.control.getControl().getListFKEntity(fkEntity);
+				
+				Collections.sort( listFKEntity, new Comparator<Entity>(){
+				    public int compare( Entity e1, Entity e2 ) {
+				      return e1.compare(e2);
+				    }
+				  });
+			}else{
+				listFKEntity = new ArrayList<Entity>();
+			}
+		
+			categoriaUsuarioModel = new BindingListModelList<Entity>(listFKEntity,true);
+			
+			
+			return categoriaUsuarioModel;
+		}
 }

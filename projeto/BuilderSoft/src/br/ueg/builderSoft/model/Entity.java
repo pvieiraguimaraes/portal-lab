@@ -109,4 +109,28 @@ public abstract class Entity implements Serializable {
 	public String getName(){
 		return Reflection.getClassName(this.getClass());
 	}
+	
+	/**
+	 * Faz a compração entre duas entidades retorna 0 se for igual
+	 * <0 se a entidade passada for menor
+	 * >0 se a entidade passada for maior 
+	 * @param e Entity -> entidade para ser comparada
+	 * @return 9999 se ocorreu algum erro
+	 */
+	public int compare(Entity e){
+		if (this == e)
+			return 0;
+		if (e == null)
+			return 9999;
+		if (getClass() != e.getClass()) 
+			return 9999;
+		Entity other = (Entity) e;
+		return this.getColumnCompare().compareToIgnoreCase(other.getColumnCompare());
+	}
+	/**
+	 * @return retorna a string utilizada para comprarar as entidades para efeito de ordenação.
+	 */
+	protected String getColumnCompare(){
+		return String.valueOf(getId());
+	}
 }
