@@ -45,19 +45,39 @@
 	                	<textbox value="@{controller.fldSenha}" maxlength="20" width = "98%"/>
 	                </row>
 	                <row>
-	                	<label value="Categoria" />	                	
-	                	<combobox id="cmbProgramado" model="@{controller.ListCategoriaUsuario}" selectedItem="@{controller.fldCategoria}"
-	                	autocomplete="true" autodrop="true" mold="rounded" buttonVisible="true">
-					        <comboitem self="@{each=categoria}" label="@{categoria.nome}" value="@{categoria}"/>
-					    </combobox>
+	                	<label value="Categoria" />
+	                	<combobox name="cmdProgramado"
+	                		id="cmbProgramado" 
+	                		model="@{controller.ListCategoriaUsuario}" 
+	                		selectedItem="@{controller.fldCategoria}"
+	                		autodrop="true"
+	                		
+	                		>
+	                		<comboitem self="@{each=categoria}" label="@{categoria.nome}" value="@{categoria}"/>	
+	                	</combobox>
 	                </row>
+<!-- 	                <row> -->
+<!-- 	                	<label value="Categoria teste" /> -->
+<!--  	                	dessa forma não precisa mecher no composer, mas não atualiza d  -->
+<!-- 	                	<combobox name="cmdProgramado2" -->
+<!-- 	                		id="cmbProgramado2"  -->
+<!-- 	                		model="${usuarioComposer.getFKEntityModel('fldCategoria')}"  -->
+<!-- 	                		selectedItem="@{controller.fldCategoria}" -->
+<!-- 	                		autodrop="true" -->
+	                		
+<!-- 	                		> -->
+<!-- 	                		<comboitem self="@{each=categoria}" label="@{categoria.nome}" value="@{categoria}"/>	 -->
+<!-- 	                	</combobox> -->
+	                	
+<!-- 	                </row> -->
+	                
 	            </rows>
 	        </grid>
 		</div>
 		<div id="result">
 			<listbox>
 				<listhead id="listhead">
-					<listheader label="${c:l('usuario_nomeColumn')}" align="left" sort="auto(nome)"  />
+					<listheader label="${c:l('usuario_nomeColumn')}" align="left" sort="auto"  />
 					<listheader label="CPF" align="left" sort="auto(CPF)" 	width="100px" />
 					<listheader label="Email" align="left"					width="100px" />
 					<listheader label="Categoria" align="left" sort="auto(Categoria)" />				

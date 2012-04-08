@@ -39,10 +39,6 @@ public class CategoriaUsuario extends Entity {
 	private String observacoes;
 	
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "categoria")// mappedBy indica o atributo da entidade many
-	private Set<Usuario> listUsuarios;
-	
-	
 	public long getId() {
 		return this.id;
 	}
@@ -90,13 +86,10 @@ public class CategoriaUsuario extends Entity {
 	public void setObservacoes(String observacoes) {
 		this.observacoes = observacoes;
 	}
-	
-/*	public String getTabela(){
-		return this.tabela;
+
+	@Override
+	public String getColumnCompare(){
+		return this.getNome();
 	}
-	public void setTabela(String tabela){
-		this.tabela = tabela;
-	}
-	*/
 	
 }

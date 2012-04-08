@@ -2,19 +2,17 @@ package br.ueg.portalLab.view.composer;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.zkoss.zk.ui.select.annotation.Wire;
-import org.zkoss.zul.Window;
 
-import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.util.annotation.AttributeView;
 import br.ueg.builderSoft.util.constant.ComponentType;
-import br.ueg.builderSoft.view.zk.composer.ComposerController;
 import br.ueg.builderSoft.view.zk.composer.TabelaComposerController;
+import br.ueg.portalLab.control.UsuarioControl;
 import br.ueg.portalLab.model.CategoriaUsuario;
+import br.ueg.portalLab.model.Usuario;
 
 @Component
 @Scope("desktop")
-public class CategoriaUsuarioComposer extends TabelaComposerController<Entity> {
+public class CategoriaUsuarioComposer extends TabelaComposerController<CategoriaUsuario> {
 	
 	
 	@AttributeView(key = "nome", isEntityValue = true, fieldType = String.class, isVisible=true, caption="categoriausuario_nomeColumn")
@@ -26,6 +24,7 @@ public class CategoriaUsuarioComposer extends TabelaComposerController<Entity> {
 	@AttributeView(key = "observacoes", isEntityValue = true, fieldType = String.class, isVisible=true, caption="categoriausuario_observacoesColumn")
 	private String fldObservacoes;
 			
+
 
 	/**
 	 * 

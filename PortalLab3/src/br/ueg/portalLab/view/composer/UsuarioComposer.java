@@ -1,24 +1,21 @@
 package br.ueg.portalLab.view.composer;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-import org.zkoss.zk.ui.select.annotation.Wire;
-import org.zkoss.zul.ListModel;
-import org.zkoss.zul.SimpleListModel;
-import org.zkoss.zul.Window;
+import org.zkoss.zkplus.databind.BindingListModelList;
 
 import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.util.annotation.AttributeView;
 import br.ueg.builderSoft.util.constant.ComponentType;
-import br.ueg.builderSoft.view.zk.composer.ComposerController;
 import br.ueg.builderSoft.view.zk.composer.TabelaComposerController;
-import br.ueg.portalLab.control.TesteControl;
 import br.ueg.portalLab.control.UsuarioControl;
 import br.ueg.portalLab.model.CategoriaUsuario;
-import br.ueg.portalLab.model.Reino;
 import br.ueg.portalLab.model.Usuario;
 
-@Component
+@org.springframework.stereotype.Component
 @Scope("desktop")
 public class UsuarioComposer extends TabelaComposerController<Usuario> {
 	
@@ -50,25 +47,15 @@ public class UsuarioComposer extends TabelaComposerController<Usuario> {
 	@AttributeView(key = "categoria", isEntityValue = true, fieldType = CategoriaUsuario.class, isVisible=true, caption="usuario_categoriaColumn")
 	private CategoriaUsuario fldCategoria;
 			
-
-	private UsuarioControl<Usuario> usuarioControl ;
+	public UsuarioComposer(){
+		super();
+		this.control.setControl(new UsuarioControl<Usuario>(this.control));
+	}
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6642681501922054728L;
 	
-	public UsuarioComposer() {
-		super();
-		usuarioControl = new UsuarioControl<Usuario>(this.control);
-		this.control.setControl(usuarioControl);
-		
-	}
-	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public ListModel<CategoriaUsuario> getListCategoriaUsuario(){
-		SimpleListModel model = new SimpleListModel(this.usuarioControl.getListCategoriaUsuario().toArray());
-		return model;
-	}
 
 	@SuppressWarnings("rawtypes")
 	@Override
@@ -154,5 +141,8 @@ public class UsuarioComposer extends TabelaComposerController<Usuario> {
 
 	public void setFldCategoria(CategoriaUsuario fldCategoria) {
 		this.fldCategoria = fldCategoria;
+	}
+	public BindingListModelList<Entity> getListCategoriaUsuario(){
+		return this.getFKEntityModel("fldCategoria");
 	}
 }
