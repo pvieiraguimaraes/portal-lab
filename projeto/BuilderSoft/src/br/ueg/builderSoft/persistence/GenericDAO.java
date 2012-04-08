@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.LogicalExpression;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
@@ -50,10 +52,30 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 	@Override
 	public List<E> findByCriteria(E entity, String value) {
 		List<E> searchs = new ArrayList<E>();
-		for (int i = 0; i < entity.getSearchColumnTable(entity).size(); i++) {
-			Criteria criteria = this.hibernateTemplate.getSessionFactory().openSession().createCriteria(entity.getClass()).add(Restrictions.like(entity.getSearchColumnEntity(entity).get(i), "%"+value+"%"));
-			searchs.addAll(criteria.list());
+		Criteria criteria = this.hibernateTemplate.getSessionFactory().openSession().createCriteria(entity.getClass());
+		int numFilters =  entity.getSearchColumnTable(entity).size();
+		Criterion conds[] = new Criterion[numFilters];
+		for (int i = 0; i < numFilters; i++) {
+			conds[i] = Restrictions.like(entity.getSearchColumnEntity(entity).get(i), "%"+value+"%");						
 		}
+		LogicalExpression orExp=null;
+		
+		if(numFilters>1){
+			orExp = null;
+			for(int i = 1 ; i<numFilters;i++ ){
+				if(orExp==null){
+					orExp = Restrictions.or(conds[0], conds[1]);
+				}else{
+					orExp = Restrictions.or(orExp, conds[i]);
+				}
+			}
+			criteria.add(orExp);
+		}else{
+			criteria.add(conds[0]);
+		}
+		
+		
+		searchs.addAll(criteria.list());
 		HashSet<E> h = new HashSet<E>(searchs);
 		searchs.clear();
 		searchs.addAll(h);

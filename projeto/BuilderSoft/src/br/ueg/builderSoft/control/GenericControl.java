@@ -52,6 +52,10 @@ public class GenericControl <E extends Entity> {
 		this.control = control;
 	}
 	
+	public Control<E> getControl() {
+		return control;
+	}
+
 	/**
 	 * Método que adiciona os subControladores básicos, já instanciados, a lista dos mesmos
 	 */
@@ -239,7 +243,7 @@ public class GenericControl <E extends Entity> {
 						}
 					}
 					if(exists){
-						Method method = reflectedView.getMethod("setFld" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1), fieldType);
+						Method method = reflectedView.getMethod(methodName, fieldType);
 						method.invoke(this.view, fieldValue);
 					}
 				} catch (SecurityException e) {
@@ -276,6 +280,38 @@ public class GenericControl <E extends Entity> {
 			}
 		}
 		return result;
+	}
+
+	public ValidatorControl getValidator() {
+		return validator;
+	}
+
+	public void setValidator(ValidatorControl validator) {
+		this.validator = validator;
+	}
+
+	public MessagesControl getMessages() {
+		return messages;
+	}
+
+	public void setMessages(MessagesControl messages) {
+		this.messages = messages;
+	}
+
+	public List<SubController> getSubControllers() {
+		return subControllers;
+	}
+
+	public void setSubControllers(List<SubController> subControllers) {
+		this.subControllers = subControllers;
+	}
+
+	public ListingControl<E> getListingControl() {
+		return listingControl;
+	}
+
+	public void setListingControl(ListingControl<E> listingControl) {
+		this.listingControl = listingControl;
 	}
 
 }

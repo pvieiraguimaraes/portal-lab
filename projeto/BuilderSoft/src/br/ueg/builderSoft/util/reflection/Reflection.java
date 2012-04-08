@@ -23,8 +23,15 @@ public class Reflection {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static Object getFieldValue(Object entity, String fieldName) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
 		Class entityClass = entity.getClass();
-		Method method = entityClass.getMethod("get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1));
-		return method.invoke(entity);
+		Method method = entityClass.getMethod("get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1));		
+		Object retorno = method.invoke(entity);
+		return retorno;
+	}
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public static Class getFieldClass(Object entity, String fieldName)throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+		Class entityClass = entity.getClass();
+		Method method = entityClass.getMethod("get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1));		
+		return method.getReturnType();		
 	}
 	/**
 	 * Método que executa o método get*Field* por reflection.

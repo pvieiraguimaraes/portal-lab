@@ -92,7 +92,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/zcommon.jar" sourcepath="C:/Users/guiliano.AEE/Desktop/temp/projetos/zk-src-6.0.0.zip">
+	<classpathentry kind="lib" path="lib/zcommon.jar" sourcepath="C:/Users/Guiliano/Desktop/temp/zk/zk-src-6.0.1-FL-2012-03-21.zip">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -117,7 +117,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/zkplus.jar" sourcepath="C:/Users/guiliano.AEE/Desktop/temp/projetos/zk-src-6.0.0.zip">
+	<classpathentry kind="lib" path="lib/zkplus.jar" sourcepath="C:/Users/Guiliano/Desktop/temp/zk/zk-src-6.0.1-FL-2012-03-21.zip">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -132,7 +132,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/zul.jar" sourcepath="C:/Users/guiliano.AEE/Desktop/temp/projetos/zk-src-6.0.1-FL-2012-03-21.zip">
+	<classpathentry kind="lib" path="lib/zul.jar" sourcepath="C:/Users/Guiliano/Desktop/temp/zk/zk-src-6.0.1-FL-2012-03-21.zip">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -147,12 +147,17 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v7.0">
+	<classpathentry kind="lib" path="lib/jta-1.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.jetty.runtimeTarget/Jetty v8.1">
 		<attributes>
 			<attribute name="owner.project.facets" value="jst.utility"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre6">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>

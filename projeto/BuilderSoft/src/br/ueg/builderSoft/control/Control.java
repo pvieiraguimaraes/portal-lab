@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.hibernate.ejb.event.EntityCallbackHandler;
+
 
 
 import br.ueg.builderSoft.model.Entity;
@@ -35,6 +37,28 @@ public class Control<E extends Entity>{
 	public Control(GenericControl<E> pGenericControl) {
 		this.persistence = (GenericDAO<E>) SpringFactory.getInstance().getBean("genericDAO", GenericDAO.class);
 		this.gControl = pGenericControl;
+	}
+	
+	/**
+	 * Metodo utilizado para buscar um lista de entidade baseado no tipo da entidade passada
+	 * @param entity
+	 * @return retorna uma lista de entity 
+	 */
+	public List<Entity> getListFKEntity(Entity entity){
+		GenericDAO<Entity> genericDAO = SpringFactory.getInstance().getBean("genericDAO", GenericDAO.class);		
+		return genericDAO.getList(entity);		
+	}
+	
+	/**
+	 * Metodo utilizado para buscar uma lista de entidade baseado no tipo da entidade passada
+	 * usando o searchValue para filtrar os resultados
+	 * @param entity
+	 * @param searchValue
+	 * @return
+	 */
+	public List<Entity> getListFKEntity(Entity entity, String searchValue){
+		GenericDAO<Entity> genericDAO = SpringFactory.getInstance().getBean("genericDAO", GenericDAO.class);		
+		return genericDAO.findByCriteria(entity,searchValue);
 	}
 	
 	/**
@@ -82,6 +106,7 @@ public class Control<E extends Entity>{
 			persistence.delete((E) this.mapFields.get("selectedEntity"));
 			return true;
 		}  catch (Exception e) {
+			//TODO fazer o tratamento para dizer o motivo
 			((MessagesControl) subControlers.get(ControllerType.MESSAGES)).addMessageError("CantDelete");
 			return false;
 		}

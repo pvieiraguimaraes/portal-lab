@@ -15,7 +15,7 @@ import br.ueg.builderSoft.util.reflection.Reflection;
  */
 public class ValidatorControl implements SubController{
 	
-	private MessagesControl messagesControl;
+	protected MessagesControl messagesControl;
 	/*
 	 * Criar um arraylist de classes de validação, onde o mesmo
 	 * pode ser adicionado pelo mb ou control
