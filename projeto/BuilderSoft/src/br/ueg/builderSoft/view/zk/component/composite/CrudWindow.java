@@ -240,6 +240,7 @@ public class CrudWindow extends Window implements IFormWindow {
 	class CrudWindowListItemRenderer implements ListitemRenderer {
 
 		private ComposerController<?> composer;
+		@SuppressWarnings("unused")
 		private Listbox divListBox;
 		private Listcell cellOper;
 

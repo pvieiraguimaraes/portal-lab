@@ -1,6 +1,5 @@
 package br.ueg.builderSoft.view.zk.composer;
 
-import java.awt.TrayIcon.MessageType;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -9,12 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.zkoss.bind.annotation.BindingParam;
-import org.zkoss.bind.annotation.Command;
-import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.Components;
-import org.zkoss.zk.ui.ext.AfterCompose;
 import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
@@ -24,7 +18,6 @@ import org.zkoss.zul.Div;
 import org.zkoss.zul.Listhead;
 import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Window;
-
 
 import br.ueg.builderSoft.control.GenericControl;
 import br.ueg.builderSoft.model.Entity;
@@ -485,7 +478,6 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 		 * @param field nome do atributo que contem a entidade extrangeira(chave estrangeir)
 		 * @return
 		 */
-		@SuppressWarnings("unchecked")
 		public BindingListModelList<Entity> getFKEntityModel(String field) {
 			
 

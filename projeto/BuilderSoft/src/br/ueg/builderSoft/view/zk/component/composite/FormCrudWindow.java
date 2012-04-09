@@ -1,14 +1,11 @@
 package br.ueg.builderSoft.view.zk.component.composite;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.zkoss.util.resource.Labels;
-import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
-import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zkplus.databind.AnnotateDataBinder;
@@ -18,13 +15,11 @@ import org.zkoss.zul.Columns;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Grid;
 import org.zkoss.zul.Label;
-import org.zkoss.zul.Listcell;
 import org.zkoss.zul.Row;
 import org.zkoss.zul.Rows;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
-import br.ueg.builderSoft.util.reflection.Reflection;
 import br.ueg.builderSoft.view.managed.ManagedBeanField;
 import br.ueg.builderSoft.view.zk.composer.ComposerController;
 
@@ -43,6 +38,7 @@ public class FormCrudWindow extends Window implements IFormWindow {
 	@Wire
 	private Div divFields;
 	
+	@SuppressWarnings("unused")
 	@Wire
 	private Window crudFormWindow;
 	
@@ -96,7 +92,7 @@ public class FormCrudWindow extends Window implements IFormWindow {
 
 			composer.getComponent().setAttribute("formCrudWindow", this);
 			
-		this.formCrudWindowBtnSave.setVisible(this.isCanSave());
+		this.formCrudWindowBtnSave.setVisible(this.isCanSave()); 
 	}
 	
 	private Grid g=null;
@@ -129,27 +125,6 @@ public class FormCrudWindow extends Window implements IFormWindow {
 						t = new Textbox();
 						String fieldName = "controller2."+field.getFieldName()+"";
 						binder.addBinding(t, "value", fieldName );
-	//					try {
-	//						t.setRawValue(Reflection.getFieldValue(composer, field.getFieldName()));
-	//					} catch (WrongValueException e) {
-	//						// TODO Auto-generated catch block
-	//						e.printStackTrace();
-	//					} catch (SecurityException e) {
-	//						// TODO Auto-generated catch block
-	//						e.printStackTrace();
-	//					} catch (IllegalArgumentException e) {
-	//						// TODO Auto-generated catch block
-	//						e.printStackTrace();
-	//					} catch (NoSuchMethodException e) {
-	//						// TODO Auto-generated catch block
-	//						e.printStackTrace();
-	//					} catch (IllegalAccessException e) {
-	//						// TODO Auto-generated catch block
-	//						e.printStackTrace();
-	//					} catch (InvocationTargetException e) {
-	//						// TODO Auto-generated catch block
-	//						e.printStackTrace();
-	//					}
 						row.appendChild(t);
 						r.appendChild(row);
 					}
