@@ -41,4 +41,16 @@ public interface IListingControl <E extends Entity> extends SubController{
 	 * @return the listFk
 	 */
 	public List getListFk();
+
+	/** 
+	 * @return
+	 * Retorna o valor a ser feito a busca
+	 */
+	public Object getSearchValue();
+
+	/**
+	 * Indica se o control está litando.
+	 * @return
+	 */
+	public boolean isSearch();
 }

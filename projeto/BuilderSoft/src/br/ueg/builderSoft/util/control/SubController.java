@@ -1,6 +1,6 @@
 package br.ueg.builderSoft.util.control;
 
-import java.util.List;
+import java.util.HashMap;
 
 /**
  * Interface dos subControladores
@@ -15,6 +15,6 @@ public interface SubController {
 	 * @param action
 	 * @return 
 	 */
-	public boolean doAction(List<Object> atributes, String action);
+	public boolean doAction(HashMap<String, Object> mapFields, String action);
 
 }

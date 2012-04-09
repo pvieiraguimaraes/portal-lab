@@ -2,6 +2,8 @@ package br.ueg.builderSoft.util.control;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import br.ueg.builderSoft.model.Entity;
@@ -16,13 +18,24 @@ import br.ueg.builderSoft.util.reflection.Reflection;
 public class ValidatorControl implements SubController{
 	
 	protected MessagesControl messagesControl;
+	
+	private int orderValidate = 0;
+	
+	private List<String> actionsToValidate = new ArrayList<String>();
 	/*
 	 * Criar um arraylist de classes de validação, onde o mesmo
 	 * pode ser adicionado pelo mb ou control
 	 */
 	
-	public ValidatorControl(MessagesControl pMessagesControl) {
+	public ValidatorControl(MessagesControl pMessagesControl, int orderValidate){
 		this.messagesControl = pMessagesControl;
+		this.orderValidate = orderValidate;
+		this.actionsToValidate.add("SAVE");
+	}
+	public ValidatorControl(MessagesControl pMessagesControl, int orderValidate, List<String> actionsToValidate){
+		this.messagesControl = pMessagesControl;
+		this.orderValidate = orderValidate;
+		this.setActionsToValidate(actionsToValidate);
 	}
 	
 	/**
@@ -105,12 +118,43 @@ public class ValidatorControl implements SubController{
 	}
 	
 	@Override
-	public boolean doAction(List<Object> atributes, String action) {
+	public boolean doAction(HashMap<String, Object> mapFields, String action) {
 		if (action.equalsIgnoreCase("SEARCH")) {
-			return validateSearch((Entity) atributes.get(0));
+			return validateSearch((Entity) mapFields.get("entity"));
 		} else {
-			return validate((Entity) atributes.get(0));
+			return validate((Entity) mapFields.get("entity")); 
 		}
 	}
+
+	/**
+	 * @return the orderValidate
+	 */
+	public int getOrderValidate() {
+		return orderValidate;
+	}
+
+	/**
+	 * @param orderValidate the orderValidate to set
+	 */
+	public void setOrderValidate(int orderValidate) {
+		this.orderValidate = orderValidate;
+	}
+	/**
+	 * @return the actionsToValidate
+	 */
+	public List<String> getActionsToValidate() {
+		return actionsToValidate;
+	}
+	/**
+	 * @param actionsToValidate the actionsToValidate to set
+	 */
+	public void setActionsToValidate(List<String> actionsToValidate) {
+		this.actionsToValidate = actionsToValidate;
+	}
+	
+	public boolean isValidateAction(String action){		
+		if(actionsToValidate!=null && actionsToValidate.contains(action)) return true;
+		return false;
+	} 
 
 }
