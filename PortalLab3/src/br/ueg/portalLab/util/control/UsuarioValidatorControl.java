@@ -1,6 +1,7 @@
 package br.ueg.portalLab.util.control;
 
 import java.util.HashMap;
+import java.util.List;
 
 import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.util.control.MessagesControl;
@@ -9,10 +10,14 @@ import br.ueg.portalLab.model.Usuario;
 
 public class UsuarioValidatorControl extends ValidatorControl {
 
-	public UsuarioValidatorControl(MessagesControl pMessagesControl, int orderValidate) {
-		super(pMessagesControl,orderValidate);
-		
+
+	public UsuarioValidatorControl(MessagesControl pMessagesControl, int orderValidate, List<String> actionsToValidate) {
+		super(pMessagesControl, orderValidate, actionsToValidate);
 	}
+	public UsuarioValidatorControl(MessagesControl pMessagesControl, int orderValidate) {
+		super(pMessagesControl, orderValidate);
+	}
+	
 	@Override
 	public boolean doAction(HashMap<String, Object> mapFields, String action) {
 		
