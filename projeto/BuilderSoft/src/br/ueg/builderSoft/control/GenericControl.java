@@ -41,7 +41,7 @@ public class GenericControl <E extends Entity> {
 		
 		this.subControllerManager.addController(pListing);
 		this.subControllerManager.addController(pMessages);
-		this.subControllerManager.addController(new ValidatorControl(pMessages,0,Arrays.asList("SAVE")));
+		this.subControllerManager.addController((SubController)new ValidatorControl(pMessages,0,Arrays.asList("SAVE")));
 		
 		this.control = new Control<E>(this);
 		this.view = pView;
