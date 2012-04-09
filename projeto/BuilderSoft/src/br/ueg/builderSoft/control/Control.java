@@ -7,6 +7,7 @@ import java.util.List;
 import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.persistence.GenericDAO;
 import br.ueg.builderSoft.util.constant.ControllerType;
+import br.ueg.builderSoft.util.control.AbstractValidatorControl;
 import br.ueg.builderSoft.util.control.ListingControl;
 import br.ueg.builderSoft.util.control.MessagesControl;
 import br.ueg.builderSoft.util.control.SubController;
@@ -214,8 +215,8 @@ public class Control<E extends Entity>{
 	 */
 	public boolean doAnyAction(SubControllerManager<E> subControllersManager, String action) {
 		boolean validatorSucess = true;
-		List<ValidatorControl> validator = subControllersManager.getValidatorControls(action);			
-		for(ValidatorControl vc: validator){
+		List<AbstractValidatorControl> validator = subControllersManager.getValidatorControls(action);			
+		for(AbstractValidatorControl vc: validator){
 			if(!vc.doAction(this.mapFields, action) && validatorSucess == true)
 				validatorSucess = false; 
 		}			

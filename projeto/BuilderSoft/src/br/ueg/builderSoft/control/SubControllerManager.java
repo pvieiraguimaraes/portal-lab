@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import br.ueg.builderSoft.model.Entity;
+import br.ueg.builderSoft.util.control.AbstractValidatorControl;
 import br.ueg.builderSoft.util.control.IListingControl;
 import br.ueg.builderSoft.util.control.MessagesControl;
 import br.ueg.builderSoft.util.control.SubController;
@@ -74,17 +75,17 @@ public class SubControllerManager<E extends Entity> {
 		return (IListingControl<E>) this.getController(IListingControl.class);
 	} 
 	
-	public List<ValidatorControl> getValidatorControls(String action){
-		List<ValidatorControl> validators= new ArrayList<ValidatorControl>();
+	public List<AbstractValidatorControl> getValidatorControls(String action){
+		List<AbstractValidatorControl> validators= new ArrayList<AbstractValidatorControl>();
 		
 		for (int i = 0; i < subControllers.size(); i++) {
 			SubController subController = subControllers.get(i);
-			if (ValidatorControl.class.isInstance(subController)  && (((ValidatorControl)subController).isValidateAction(action)) ) {
-				validators.add((ValidatorControl) subController);
+			if (AbstractValidatorControl.class.isInstance(subController)  && (((AbstractValidatorControl)subController).isValidateAction(action)) ) {
+				validators.add((AbstractValidatorControl) subController);
 			}
 		}
-		Collections.sort(validators, new Comparator<ValidatorControl>(){
-			    public int compare( ValidatorControl v1, ValidatorControl v2 ) {
+		Collections.sort(validators, new Comparator<AbstractValidatorControl>(){
+			    public int compare( AbstractValidatorControl v1, AbstractValidatorControl v2 ) {
 			      return v1.getOrderValidate()-v2.getOrderValidate();
 			    }
 			  });
