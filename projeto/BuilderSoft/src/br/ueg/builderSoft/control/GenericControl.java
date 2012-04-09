@@ -11,6 +11,7 @@ import java.util.List;
 import javax.persistence.JoinColumn;
 
 import br.ueg.builderSoft.model.Entity;
+import br.ueg.builderSoft.util.control.IListingControl;
 import br.ueg.builderSoft.util.control.ListingControl;
 import br.ueg.builderSoft.util.control.MessagesControl;
 import br.ueg.builderSoft.util.control.SubController;
@@ -28,20 +29,23 @@ import br.ueg.builderSoft.view.managed.IGenericMB;
 public class GenericControl <E extends Entity> {
 
 	private Control<E> control;
-	private MessagesControl messages;
-	private ValidatorControl validator;
-	private ListingControl<E> listingControl;
-	private List<SubController> subControllers;
+//	private MessagesControl messages;
+//	private ValidatorControl validator;
+//	private ListingControl<E> listingControl;
+	private SubControllerManager subControllerManager;
 	private IGenericMB<E> view;
 	
-	public GenericControl(MessagesControl pMessages, ListingControl<E> pListing, IGenericMB<E> pView) {
-		this.listingControl = pListing;
-		this.messages = pMessages;
-		this.validator = new ValidatorControl(this.messages);
-		this.subControllers = new ArrayList<SubController>();
+	public GenericControl(MessagesControl pMessages, ListingControl<E> pListing, IGenericMB<E> pView) {	
+		
+		this.subControllerManager = new SubControllerManager<E>();
+		
+		this.subControllerManager.addController(pListing);
+		this.subControllerManager.addController(pMessages);
+		this.subControllerManager.addController(new ValidatorControl(pMessages,0,Arrays.asList("SAVE")));
+		
 		this.control = new Control<E>(this);
 		this.view = pView;
-		populeControllers();
+
 	}
 	
 	/**
@@ -56,48 +60,21 @@ public class GenericControl <E extends Entity> {
 		return control;
 	}
 
-	/**
-	 * Método que adiciona os subControladores básicos, já instanciados, a lista dos mesmos
-	 */
-	private void populeControllers() {
-		subControllers.add(validator);//0
-		subControllers.add(listingControl);//1
-		subControllers.add(messages);//2
-	}
+	
 	
 	/**
 	 * Adiciona um subControlador a lista dos mesmos
 	 * @param object
 	 */
 	public void addController(SubController object) {
-		subControllers.add(object);
+		this.subControllerManager.addController(object);
+	}
+	public SubController getController(Class pClass) {
+		return this.subControllerManager.getController(pClass);
 	}
 	
-	/**
-	 * Método que retorna um subControlador da lista por índice
-	 * @param índice
-	 * @return subControlador correspondente ao índice
-	 */
-	public SubController getController(int index) {
-		return subControllers.get(index);
-	}
 	
-	/**
-	 * Método que retorna um subControlador da lista se tiver a mesma assinatura que a classe
-	 * enviado por parâmetro
-	 * @param pClass, .class que deseja analisar se contém na lista.
-	 * @return o subControlador desejado ou null caso não seja encontrado.
-	 */
-	public SubController getController(Class<SubController> pClass) {
-		SubController result = null;
-		for (int i = 0; i < subControllers.size(); i++) {
-			if (subControllers.get(i).getClass() == pClass) {
-				result = subControllers.get(i);
-				break;
-			}
-		}
-		return result;
-	}
+	
 
 	/**
 	 * Método que faz qualquer ação vinda da visão por reflection
@@ -109,11 +86,11 @@ public class GenericControl <E extends Entity> {
 		this.mapManagerBeanToEntity(entity, this.view);
 		HashMap<String, Object> map = this.createMapFields(entity);
 		this.control.setMapFields(map);
-		if (control.doAnyAction(this.subControllers, action)) {
+		if (control.doAnyAction(this.subControllerManager, action)) {
 			Class reflectedClass = control.getClass();
 			try {
-				Method method = reflectedClass.getMethod("action" + action.substring(0, 1).toUpperCase() + action.substring(1).toLowerCase(), new Class[]{List.class});
-				result = (Boolean) method.invoke(control, subControllers);
+				Method method = reflectedClass.getMethod("action" + action.substring(0, 1).toUpperCase() + action.substring(1).toLowerCase(), SubControllerManager.class);
+				result = (Boolean) method.invoke(control, this.subControllerManager);
 			} catch (SecurityException e) {
 				e.printStackTrace();
 			} catch (NoSuchMethodException e) {
@@ -128,19 +105,20 @@ public class GenericControl <E extends Entity> {
 		} 
 		if (result) {
 			if (!action.equalsIgnoreCase("ASSOCIATE"))
-				this.messages.doAction(null, "success");
+				this.subControllerManager.getMessagesControl().doAction(null, "success");
 			if (!action.equalsIgnoreCase("LIST") && !action.equalsIgnoreCase("SEARCH")) {
 				map = new HashMap<String, Object>();
-				map.put("searchValue", this.listingControl.getSearchValue());
+				IListingControl<E> listingControl = (IListingControl<E>) this.subControllerManager.getListingControl();
+				map.put("searchValue", listingControl.getSearchValue());
 				map.put("entity", entity);
 				this.control.setMapFields(map);
-				if (this.listingControl.isSearch()) {
-					this.control.actionSearch(this.subControllers);
+				if (listingControl.isSearch()) {
+					this.control.actionSearch(this.subControllerManager);
 				} else 
-					this.control.actionList(this.subControllers);
+					this.control.actionList(this.subControllerManager);
 			}
 		} else {
-			messages.doAction(null, "cancel");
+			this.subControllerManager.getMessagesControl().doAction(null, "cancel");
 			result = false;
 		}
 		return result;
@@ -276,42 +254,10 @@ public class GenericControl <E extends Entity> {
 			JoinColumn columnJoined = actual.getAnnotation(JoinColumn.class);
 			if (columnJoined != null) {
 				result = true;
-				control.listFK(actual.getClass(), subControllers); 
+				control.listFK(actual.getClass(), subControllerManager); 
 			}
 		}
 		return result;
-	}
-
-	public ValidatorControl getValidator() {
-		return validator;
-	}
-
-	public void setValidator(ValidatorControl validator) {
-		this.validator = validator;
-	}
-
-	public MessagesControl getMessages() {
-		return messages;
-	}
-
-	public void setMessages(MessagesControl messages) {
-		this.messages = messages;
-	}
-
-	public List<SubController> getSubControllers() {
-		return subControllers;
-	}
-
-	public void setSubControllers(List<SubController> subControllers) {
-		this.subControllers = subControllers;
-	}
-
-	public ListingControl<E> getListingControl() {
-		return listingControl;
-	}
-
-	public void setListingControl(ListingControl<E> listingControl) {
-		this.listingControl = listingControl;
 	}
 
 }

@@ -10,6 +10,7 @@ import br.ueg.builderSoft.util.constant.ControllerType;
 import br.ueg.builderSoft.util.control.ListingControl;
 import br.ueg.builderSoft.util.control.MessagesControl;
 import br.ueg.builderSoft.util.control.SubController;
+import br.ueg.builderSoft.util.control.ValidatorControl;
 import br.ueg.builderSoft.util.sets.SpringFactory;
 
 @SuppressWarnings("unchecked")
@@ -69,16 +70,25 @@ public class Control<E extends Entity>{
 	 * para salvar, caso seja a ação de atualizar, chama o método responsável para isso.
 	 * @param Lista de sub-controladores.
 	 */
-	public boolean actionSave(List<SubController> subControlers) {
+	public boolean actionSave(SubControllerManager<E> subControllerManager) {
 		E entity = (E) this.mapFields.get("entity");
 		if (entity.getId() == 0) {
 			boolean result = false;
-			if (persistence.save(entity) != 0) {
-				result = true;
-			} 
+			try{
+				if (persistence.save(entity) != 0) {
+					result = true;
+				} 
+			}catch(org.springframework.dao.DataIntegrityViolationException e){
+				e.printStackTrace();
+				subControllerManager.getMessagesControl().addMessageError("violacaoDeIntegridade");
+				result = false;
+			}catch (Exception e) {
+				e.printStackTrace();
+				result = false;
+			}
 			return result;
 		} else {
-			return actionUpdate(subControlers);
+			return actionUpdate(subControllerManager);
 		}
 	}
 	
@@ -87,9 +97,23 @@ public class Control<E extends Entity>{
 	 * para a ação.
 	 * @param Lista de sub-controladores.
 	 */
-	private boolean actionUpdate(List<SubController> subControlers) {
-		persistence.update((E) this.mapFields.get("entity"));
-		return true;
+	private boolean actionUpdate(SubControllerManager<E> subControllerManager) {
+		E entity = (E) this.mapFields.get("entity");
+
+		boolean result = false;
+		try{
+			persistence.update(entity);
+			result = true;			
+		}catch(org.springframework.dao.DataIntegrityViolationException e){
+			e.printStackTrace();
+			subControllerManager.getMessagesControl().addMessageError("violacaoDeIntegridade");
+			result = false;
+		}catch (Exception e) {
+			e.printStackTrace();
+			result = false;
+		}
+		return result;
+
 	}
 	
 	/**
@@ -97,13 +121,13 @@ public class Control<E extends Entity>{
 	 * para a ação.
 	 * @param Lista de sub-controladores.
 	 */
-	public boolean actionDelete(List<SubController> subControlers) {
+	public boolean actionDelete(SubControllerManager<E> subControllerManager) {
 		try {
 			persistence.delete((E) this.mapFields.get("selectedEntity"));
 			return true;
 		}  catch (Exception e) {
 			//TODO fazer o tratamento para dizer o motivo
-			((MessagesControl) subControlers.get(ControllerType.MESSAGES)).addMessageError("CantDelete");
+			subControllerManager.getMessagesControl().addMessageError("CantDelete");
 			return false;
 		}
 	}
@@ -113,14 +137,14 @@ public class Control<E extends Entity>{
 	 * para a ação. É uma busca usando Criteria
 	 * @param Lista de sub-controladores.
 	 */
-	public boolean actionFindByCriteria(List<SubController> subControlers) {//TODO: reescrever
+	public boolean actionFindByCriteria(SubControllerManager<E> subControllerManager) {//TODO: reescrever
 		if ( this.mapFields.get("searchValue") != null && ! ((String) this.mapFields.get("searchValue")).isEmpty()) {
-			ListingControl<E> listingControl = ((ListingControl<E>) subControlers.get(ControllerType.LISTING));
+			ListingControl<E> listingControl = (ListingControl<E>) subControllerManager.getListingControl();
 			listingControl.setList(persistence.findByCriteria((E) this.mapFields.get("entity"),   (String) this.mapFields.get("searchValue")));
 			listingControl.setListing(true);
 			return true;
 		} else {
-			((MessagesControl) subControlers.get(ControllerType.MESSAGES)).addMessageError("Busca");
+			subControllerManager.getMessagesControl().addMessageError("Busca");
 			return false;
 		}
 	}
@@ -130,14 +154,14 @@ public class Control<E extends Entity>{
 	 * para a ação. É uma busca usando HQL
 	 * @param Lista de sub-controladores.
 	 */
-	public boolean actionFindByHQL(List<SubController> subControlers) {//TODO: reescrever
+	public boolean actionFindByHQL(SubControllerManager<E> subControllerManager) {//TODO: reescrever
 		if (this.mapFields.get("searchValue") != null && !((String) this.mapFields.get("searchValue")).isEmpty()) {
-			ListingControl<E> listingControl = ((ListingControl<E>) subControlers.get(ControllerType.LISTING));
+			ListingControl<E> listingControl = (ListingControl<E>) subControllerManager.getListingControl();
 			listingControl.setList(persistence.findByHQL((E) this.mapFields.get("entity"), (String) this.mapFields.get("searchValue")));
 			listingControl.setListing(true);
 			return true;
 		} else {
-			((MessagesControl) subControlers.get(ControllerType.MESSAGES)).addMessageError("Busca");
+			subControllerManager.getMessagesControl().addMessageError("Busca");
 			return false;
 		}
 	}
@@ -147,8 +171,8 @@ public class Control<E extends Entity>{
 	 * para a ação.
 	 * @param Lista de sub-controladores.
 	 */
-	public boolean actionList(List<SubController> subControlers) {
-		ListingControl<E> listingControl = ((ListingControl<E>) subControlers.get(ControllerType.LISTING));
+	public boolean actionList(SubControllerManager<E> subControllerManager) {
+		ListingControl<E> listingControl = (ListingControl<E>) subControllerManager.getListingControl();
 		listingControl.setList(persistence.getList((E) this.mapFields.get("entity")));
 		listingControl.setListing(true);
 		listingControl.setSearch(false);
@@ -162,9 +186,9 @@ public class Control<E extends Entity>{
 	 * @param Lista de subControlers
 	 * @return se a ação foi executada
 	 */
-	public boolean actionSearch(List<SubController> subControlers) {
-		if (actionFindByCriteria(subControlers)) {
-			ListingControl<E> listingControl = ((ListingControl<E>) subControlers.get(ControllerType.LISTING));
+	public boolean actionSearch(SubControllerManager<E> subControllerManager) {
+		if (actionFindByCriteria(subControllerManager)) {
+			ListingControl<E> listingControl = (ListingControl<E>) subControllerManager.getListingControl();
 			listingControl.setSearchValue((String) this.mapFields.get("searchValue"));
 			listingControl.setSearch(true);
 			return true;
@@ -178,8 +202,8 @@ public class Control<E extends Entity>{
 	 * @param Lista de sub-controladores.
 	 */
 	@SuppressWarnings("rawtypes")
-	public boolean listFK(Class entity, List<SubController> subControlers) {
-		((ListingControl<E>) subControlers.get(ControllerType.LISTING)).setListFk(persistence.getListFK(entity));
+	public boolean listFK(Class entity, SubControllerManager subControllerManager) {
+		((ListingControl<E>) subControllerManager.getListingControl()).setListFk(persistence.getListFK(entity));
 		return true;
 	}
 	
@@ -188,19 +212,18 @@ public class Control<E extends Entity>{
 	 * executa as validações e aciona as mensagens caso haja algum erro
 	 * @return true caso tudo esteja validado, false caso contrário.
 	 */
-	public boolean doAnyAction(List<SubController> subControllers, String action) {
-		if (action.equalsIgnoreCase("SAVE")) {
-			List<Object> atributes = new ArrayList<Object>();
-			atributes.add((E) this.mapFields.get("entity"));
-			if (!subControllers.get(ControllerType.VALIDATOR).doAction(atributes, action)) {
-				//subControllers.get(ControllerType.MESSAGES).doAction(atributes, "cancel");//TODO verificar era action eu troceu por cancel(Guiliano) Acho que não precisa dessa mensagem aqui
-				return false;
-			}
-		}
-		return true;
+	public boolean doAnyAction(SubControllerManager<E> subControllersManager, String action) {
+		boolean validatorSucess = true;
+		List<ValidatorControl> validator = subControllersManager.getValidatorControls(action);			
+		for(ValidatorControl vc: validator){
+			if(!vc.doAction(this.mapFields, action) && validatorSucess == true)
+				validatorSucess = false; 
+		}			
+
+		return validatorSucess;
 	}
 	
-	public boolean actionAssociate(List<SubController> subControllers) {
+	public boolean actionAssociate(SubControllerManager<E> subControllersManager) {
 		E selectedEntity = (E) this.mapFields.get("selectedEntity");
 		this.gControl.associateEntityToAttributeView(selectedEntity);
 		return true;

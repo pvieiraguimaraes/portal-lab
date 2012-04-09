@@ -5,6 +5,7 @@ import javax.faces.event.ActionEvent;
 import br.ueg.builderSoft.control.GenericControl;
 import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.util.constant.ControllerType;
+import br.ueg.builderSoft.util.control.IListingControl;
 import br.ueg.builderSoft.util.control.ListingControl;
 import br.ueg.builderSoft.view.control.MessagesWeb;
 
@@ -20,7 +21,7 @@ public abstract class MB<E extends Entity> extends GenericMB<E> {
 	@SuppressWarnings("unchecked")
 	public MB() {
 		control = new GenericControl<E>(new MessagesWeb(), new ListingControl<E>(), this);
-		listingControl = (ListingControl<E>) control.getController(ControllerType.LISTING);
+		listingControl = (ListingControl<E>) control.getController(IListingControl.class);
 		//initializeEntity();
 	}
 

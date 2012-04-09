@@ -24,6 +24,7 @@ import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.util.annotation.AttributeView;
 import br.ueg.builderSoft.util.constant.ControllerType;
 import br.ueg.builderSoft.util.constant.MessagesType;
+import br.ueg.builderSoft.util.control.IListingControl;
 import br.ueg.builderSoft.util.control.ListingControl;
 import br.ueg.builderSoft.util.control.MessagesControl;
 import br.ueg.builderSoft.util.reflection.Reflection;
@@ -77,7 +78,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 	@SuppressWarnings("unchecked")
 	public ComposerController(){
 		control = new GenericControl<E>(new MessagesWebZK(), new ListingControl<E>(), this);
-		listingControl = (ListingControl<E>) control.getController(ControllerType.LISTING);
+		listingControl = (ListingControl<E>) control.getController(IListingControl.class);
 		try {
 			selectedEntity = (E) getEntityClass().newInstance();
 		} catch (InstantiationException e) {
@@ -276,7 +277,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 
 						if (field.getAnnotation(br.ueg.builderSoft.util.annotation.AttributeView.class).isEntityValue()) {
 							String vEntityCaption = Reflection.getClassName(getEntityClass()).toLowerCase().concat("_").concat(vKey).concat("Column"); 
-							boolean existCaption = ((MessagesControl) this.getControl().getController(ControllerType.MESSAGES)).existsMessage(vEntityCaption);
+							boolean existCaption = ((MessagesControl) this.getControl().getController(MessagesControl.class)).existsMessage(vEntityCaption);
 							if(existCaption){
 								 vCaption = vEntityCaption;
 							}
@@ -419,7 +420,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 		public  void editEntity(){
 			this.doAction("ASSOCIATE");
 			binder.loadAll();
-			binder.saveAll();			
+			//binder.saveAll();			
 			this.showEditForm();		
 		}
 
@@ -471,7 +472,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 			this.listitem = listitem;
 		}
 		public void addMessage(String message){
-			((MessagesControl) this.control.getController(ControllerType.MESSAGES)).addMessage(message, MessagesType.INFO);
+			((MessagesControl) this.control.getController(MessagesControl.class)).addMessage(message, MessagesType.INFO);
 		}
 		
 		/**

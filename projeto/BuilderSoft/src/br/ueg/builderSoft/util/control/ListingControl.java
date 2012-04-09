@@ -1,5 +1,6 @@
 package br.ueg.builderSoft.util.control;
 
+import java.util.HashMap;
 import java.util.List;
 
 import br.ueg.builderSoft.model.Entity;
@@ -89,7 +90,7 @@ public class ListingControl<E extends Entity> implements IListingControl<E>{
 	}
 
 	@Override
-	public boolean doAction(List<Object> atributes, String action) {
+	public boolean doAction(HashMap<String, Object> mapFields, String action) {
 		return this.listing;
 	}
 

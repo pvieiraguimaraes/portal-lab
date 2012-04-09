@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.PropertyResourceBundle;
@@ -23,13 +24,14 @@ public abstract class MessagesControl implements SubController{
 
 	private ResourceBundle messages;
 
+
 	public MessagesControl() {
 		messages = ResourceBundle.getBundle(
 				"br/ueg/builderSoft/config/messages", this.getLocale(), new UTF8Control());
 	}
 
 	@Override
-	public boolean doAction(List<Object> atributes, String action) {
+	public boolean doAction(HashMap<String, Object> mapFields, String action) {
 		if (action.equalsIgnoreCase("success")) {
 			addMessageSuccess(action);
 		} else {
@@ -143,5 +145,4 @@ public abstract class MessagesControl implements SubController{
 	        return bundle;
 	    }
 	}
-
 }
