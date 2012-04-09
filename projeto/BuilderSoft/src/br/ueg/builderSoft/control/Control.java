@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.hibernate.ejb.event.EntityCallbackHandler;
-
-
-
 import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.persistence.GenericDAO;
 import br.ueg.builderSoft.util.constant.ControllerType;
