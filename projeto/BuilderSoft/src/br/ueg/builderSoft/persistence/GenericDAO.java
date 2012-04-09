@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.classic.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.LogicalExpression;
 import org.hibernate.criterion.Restrictions;
@@ -25,12 +26,21 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 
 	private HibernateTemplate hibernateTemplate;
 	
+	Session currentSession;
+	
 	/**
 	 * Método para setar o HibernateTemplate, necessário para ser instanciado pelo Spring
 	 * @param hibernateTemplate
 	 */
 	public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
 		this.hibernateTemplate = hibernateTemplate;
+		
+	}
+	public Session getSession(){
+		if(currentSession==null){
+			currentSession = this.hibernateTemplate.getSessionFactory().openSession();
+		}
+		return currentSession;
 	}
 
 	@Override
@@ -52,7 +62,8 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 	@Override
 	public List<E> findByCriteria(E entity, String value) {
 		List<E> searchs = new ArrayList<E>();
-		Criteria criteria = this.hibernateTemplate.getSessionFactory().openSession().createCriteria(entity.getClass());
+		
+		Criteria criteria = this.getSession().createCriteria(entity.getClass());
 		int numFilters =  entity.getSearchColumnTable(entity).size();
 		Criterion conds[] = new Criterion[numFilters];
 		for (int i = 0; i < numFilters; i++) {
@@ -88,7 +99,7 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 		List<E> searchs = new ArrayList<E>();
 		for (int i = 0; i < entity.getSearchColumnTable(entity).size(); i++) {
 			String hql = "from " + entity.getClass().getSimpleName() + " where "+ entity.getSearchColumnTable(entity).get(i) +" like '%"+value+"%'";
-			Query qry = this.hibernateTemplate.getSessionFactory().openSession().createQuery(hql);
+			Query qry = this.getSession().createQuery(hql);
 			searchs.addAll(qry.list());
 		}
 		return searchs;
@@ -101,7 +112,7 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 	 */
 	@SuppressWarnings("unchecked")
 	public List<E> findByHQL(String qry){
-		Query vQry = this.hibernateTemplate.getSessionFactory().openSession().createQuery(qry);
+		Query vQry = this.getSession().createQuery(qry);
 		return vQry.list();
 	}
 
@@ -119,7 +130,7 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 	@SuppressWarnings("unchecked")
 	public E getByID(E entity, Long id){
 		List<E> searchs = new ArrayList<E>();
-		Criteria criteria = this.hibernateTemplate.getSessionFactory().openSession().createCriteria(entity.getClass()).add(Restrictions.idEq(id));
+		Criteria criteria = this.getSession().createCriteria(entity.getClass()).add(Restrictions.idEq(id));
 		searchs = criteria.list();
 		if(searchs.size()>0){
 			return searchs.get(0);
