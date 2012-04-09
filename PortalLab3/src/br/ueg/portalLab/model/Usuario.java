@@ -53,7 +53,7 @@ public class Usuario extends Entity {
 	
 	@ManyToOne(optional = true, fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_categoria", insertable = true, updatable = true, nullable=true)
-	@Attribute(Required = false, SearchField = false)
+	@Attribute(Required = true, SearchField = false)
 	private CategoriaUsuario categoria; 
 	
 	
