@@ -123,6 +123,7 @@ public class FormCrudWindow extends Window implements IFormWindow {
 						Row row = new Row();					
 						row.appendChild(new Label(Labels.getLabel(field.getFieldCaption())));
 						t = new Textbox();
+						t.setWidth("98%");
 						String fieldName = "controller2."+field.getFieldName()+"";
 						binder.addBinding(t, "value", fieldName );
 						row.appendChild(t);
