@@ -6,19 +6,20 @@
 <zk>
 <tabbox self="@{define(content)}" id="tb" height="550px" orient="vertical">
     <tabs id="tabs" width="150px">
-        <tab id="cadEspecime" 	label="Cadastro de Espécimes" />
-        <tab id="cadTabBasicas" label="Manter Tabelas Básicas" />
-        <tab id="cadManterUsua" label="Manter Usuários" />
+        <tab id="cadEspecime" 		label="Cadastro de Espécimes" />
+        <tab id="cadTabBasicas" 	label="Manter Tabelas Básicas" />
+        <tab id="cadManterUsua" 	label="Manter Usuários" />
     </tabs>
     <tabpanels>
         <tabpanel>Em Construção</tabpanel>
         <tabpanel>
         	<tabbox id="tbCadBasicos">
         		<tabs id="tabsCadBasicos">
-        			<tab id="tabColeta" 	label="Coleta"/>
-        			<tab id="tabGeografia"	label="Geografia"/>
-        			<tab id="tabTaxonoia"	label="Taxonomia" />
-        			<tab id="tabDiversos"	label="Diversas" />
+        			<tab id="tabColeta" 		label="Coleta"/>
+        			<tab id="tabGeografia"		label="Geografia"/>
+        			<tab id="tabTaxonoia"		label="Taxonomia" />
+        			<tab id="tabDiversos"		label="Diversas" />
+        			<tab id="tabBibliografia"	label="Bibliografia" />        			
         		</tabs>
         		<tabpanels>
         			<tabpanel><!--  ##Inicio Cadastro Básicos  -->
@@ -29,12 +30,16 @@
 			        			<tab id="tabCadTipoDeMontagem" 			label="Tipo de Montagem"/>
 			        			<tab id="tabCadFenologia"				label="Fenologia" />
 			        			<tab id="tabCadEstagioDesenvolvimento"	label="Estágio de Desenvolvimento" />
+			        			<tab id="tabCadDeterminador"			label="Determinador" />
+			        			<tab id="tabCadColetor"					label="Coletor" />
 			        		</tabs>
 			        		<tabpanels>
 			        			<tabpanel><include id="incCadMetodo" src="/pages/metodo/"/></tabpanel>
 			        			<tabpanel><include id="incCadTipoDeMontagem" src="/pages/tipodemontagem/"/></tabpanel>
 			        			<tabpanel><include id="incCadFenologia" src="/pages/fenologia/"/></tabpanel>
 			        			<tabpanel><include id="incCadEstagioDesenvolvimento" src="/pages/estagiodesenvolvimento/"/></tabpanel>
+			        			<tabpanel><include id="incCadDeterminador" src="/pages/determinador/"/></tabpanel>
+			        			<tabpanel><include id="incCadColetor" src="/pages/coletor/"/></tabpanel>
 			        		</tabpanels>
 			        	</tabbox> 
         			</tabpanel>
@@ -44,10 +49,14 @@
 			        		<tabs id="tabsCadGeografia">
 			        			<tab id="tabCadMassaDAgua" 				label="Massa D'Agua"/>
 			        			<tab id="tabCadDatum"		 			label="Datum"/>
+			        			<tab id="tabCadNivelGeografico"			label="Nível Geográfico"/>
+			        			<tab id="tabCadItemGeografico"			label="Item Geográfico"/>
 			        		</tabs>
 			        		<tabpanels>
 			        			<tabpanel><include id="incCadMassaDAgua" src="/pages/massadagua/"/> </tabpanel>
 			        			<tabpanel><include id="incCadDatum" src="/pages/datum/"/></tabpanel>
+			        			<tabpanel><include id="incCadNivelGeografico" src="/pages/nivelgeografico/"/></tabpanel>
+			        			<tabpanel><include id="incCadItemGeografico" src="/pages/itemgeografico/"/></tabpanel>
 			        		</tabpanels>
 			        	</tabbox> 
         			</tabpanel>
@@ -59,7 +68,7 @@
 			        			<tab id="tabCadCategoria" 				label="Categoria de Usuário"/>
 			        			<tab id="tabCadUsuario"					label="Usuário" />
 			        			<tab id="tabCadLaboratorio"				label="Laboratório"/>
-			        			<tab id="tabCadGrupoEnderecoFisico"		label="Grupo de Endereço Físico"/>				        			
+			        			<tab id="tabCadGrupoEnderecoFisico"		label="Grupo de Endereço Físico"/>
 			        		</tabs>
 			        		<tabpanels>
 			        			<tabpanel><include id="incCadCategoria" src="/pages/categoria/"/></tabpanel>
@@ -69,6 +78,23 @@
 			        		</tabpanels>
 			        	</tabbox> 
         			</tabpanel>
+        			<tabpanel><!--  ##Inicio Cadastro Bibliografia  -->
+        				<separator height="20px"></separator>
+        				<tabbox id="tbCadBibliografia">
+			        		<tabs id="tabsCadBibliografia">
+			        			<tab id="tabCadTipoDeBibliografia"		label="Tipo de Bibliografia"/>
+			        			<tab id="tabCadAutor"					label="Autor"/>
+			        			<tab id="tabCadBibliografia"			label="Bibliografia"/>
+			        			<tab id="tabCadAplicacaoEconomica"		label="Aplicação Econômica"/>
+			        		</tabs>
+			        		<tabpanels>
+			        			<tabpanel><include id="incCadTipoBibliografia" 	src="/pages/tipobibliografia/"/></tabpanel>
+			        			<tabpanel><include id="incCadAutor" 			src="/pages/autor/"/></tabpanel>
+			        			<tabpanel><include id="incCadBibliografia"		src="/pages/bibliografia/"/></tabpanel>
+			        			<tabpanel><include id="incCadAplicacaoEconomica" src="/pages/apliacacaoeconomica/"/></tabpanel>
+			        		</tabpanels>
+			        	</tabbox> 
+        			</tabpanel>        			
         		</tabpanels>
         	</tabbox> 
         </tabpanel>
