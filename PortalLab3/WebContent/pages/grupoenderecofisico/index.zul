@@ -8,7 +8,45 @@
 <zk xmlns:w="http://www.zkoss.org/2005/zk/client">
 
 
-<crudWindow self="@{define(content)}" id="crudGrupoEnderecoFisico" apply="${grupoEnderecoFisicoComposer}"  listBoxSize="8"  height="450px"   titulo="Manter Grupo de Endereço Físico" composer="@{controller}" >
+<crudWindow self="@{define(content)}" id="crudGrupoEnderecoFisico" apply="${grupoEnderecoFisicoComposer}"   listBoxSize="8"  height="450px" titulo="Manter Grupo de Endereço Físico" composer="@{controller}">
+		<div id="form">
+			<grid>
+	            <columns>
+	                <column width="120px" />
+	                <column align="left" />	
+	            </columns>
+	            <rows>
+	            	<row>
+	                	<label value="Laboratório" />
+	                	<combobox name="cmdProgramado"
+	                		id="cmbProgramado" 
+	                		model="@{controller.ListLaboratorio}" 
+	                		selectedItem="@{controller.fldLaboratorio}"
+	                		autodrop="true"
+	                		
+	                		>
+	                		<comboitem self="@{each=laboratorio}" label="@{laboratorio.nome}" value="@{laboratorio}"/>	
+	                	</combobox>
+	                </row>
+	                <row>
+	                    <label value="Nome:" />
+	                    <textbox value="@{controller.fldNome}" maxlength="100" width = "98%"/>                    
+	                </row>	                
+	            </rows>
+	        </grid>
+		</div>
+		<div id="result">
+			<listbox>
+				<listhead id="listhead">
+					<listheader label="Laboratorio" align="left" sort="auto(laboratorio.nome)" />
+					<listheader label="Nome" align="left" sort="auto(nome)"  />
+				</listhead>
+				<listitem id="listitem">
+					<listcell label="@{entity.laboratorio.nome}" />
+					<listcell label="@{entity.nome}" />		
+				</listitem>
+			</listbox>
+		</div>		
 	</crudWindow>
 	
 	

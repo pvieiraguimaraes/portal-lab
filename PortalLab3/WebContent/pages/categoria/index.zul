@@ -26,7 +26,7 @@
 	                </row>
 	                <row>
 	                	<label value="Observações"/>
-	                	<textbox value="@{controller.fldObservacoes}" />
+	                	<textbox rows="3" cols="70" value="@{controller.fldObservacoes}" />
 	                </row>
 	            </rows>
 	        </grid>

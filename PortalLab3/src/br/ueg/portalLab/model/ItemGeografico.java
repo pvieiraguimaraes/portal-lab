@@ -39,9 +39,8 @@ public class ItemGeografico extends Entity {
 	@Attribute(Required = true, SearchField = true)
 	private String nome;
 	
-	@ManyToOne(optional = false, targetEntity = NivelGeografico.class, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_nigeo_itgeo", referencedColumnName = "id_nigeo", insertable = true, updatable = true, nullable=false)
-	@LazyCollection(value = LazyCollectionOption.FALSE) 
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_nigeo_itgeo", insertable = true, updatable = true, nullable=true)
 	@Attribute(Required = true, SearchField = true)
 	private NivelGeografico nivelGeografico;
 	
@@ -49,10 +48,6 @@ public class ItemGeografico extends Entity {
 	@JoinColumn(name = "id_pai_itgeo", insertable = true, updatable = true, nullable=true)
 	private ItemGeografico pai; 
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pai",cascade = CascadeType.ALL)// mappedBy indica o atributo da entidade many
-	//@LazyCollection(value = LazyCollectionOption.FALSE) 
-	//@org.hibernate.annotations.Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
-	private Set<ItemGeografico> filhosItensGeograficos;
 	
 	public ItemGeografico() {}
 	
@@ -102,18 +97,5 @@ public class ItemGeografico extends Entity {
 	public void setPai(ItemGeografico pai) {
 		this.pai = pai;
 	}
-
-
-	public Set<ItemGeografico> getFilhosItensGeograficos() {
-		return filhosItensGeograficos;
-	}
-
-
-	public void setFilhosItensGeograficos(
-			Set<ItemGeografico> filhosItensGeograficos) {
-		this.filhosItensGeograficos = filhosItensGeograficos;
-	}
-
-	
 
 }

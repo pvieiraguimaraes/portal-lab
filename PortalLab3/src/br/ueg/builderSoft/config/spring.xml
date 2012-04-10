@@ -38,6 +38,7 @@
     			<value>br.ueg.portalLab.model.CategoriaUsuario</value>
     			<value>br.ueg.portalLab.model.NivelGeografico</value>
     			<value>br.ueg.portalLab.model.ItemGeografico</value>
+    			<value>br.ueg.portalLab.model.Estacao</value>
     			<value>br.ueg.portalLab.model.Coletor</value>
     			<value>br.ueg.portalLab.model.MetodoColeta</value>
     			<value>br.ueg.portalLab.model.EstagioDesenvolvimento</value>
@@ -45,6 +46,11 @@
     			<value>br.ueg.portalLab.model.Laboratorio</value>
     			<value>br.ueg.portalLab.model.GrupoEnderecoFisico</value>
     			<value>br.ueg.portalLab.model.Usuario</value>
+    			<value>br.ueg.portalLab.model.TipoBibliografia</value>
+    			<value>br.ueg.portalLab.model.Autor</value>
+    			<value>br.ueg.portalLab.model.Bibliografia</value>
+    			<value>br.ueg.portalLab.model.Determinador</value>
+    			<value>br.ueg.portalLab.model.AplicacaoEconomica</value>
     		</list>
     	</property>
     	<property name="hibernateProperties">
