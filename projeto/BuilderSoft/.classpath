@@ -117,7 +117,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/zkplus.jar" sourcepath="C:/Users/Guiliano/Desktop/temp/zk/zk-src-6.0.1-FL-2012-03-21.zip">
+	<classpathentry kind="lib" path="lib/zkplus.jar" sourcepath="C:/Users/guiliano.AEE/Desktop/temp/projetos/zk-src-6.0.1-FL-2012-03-21.zip">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>

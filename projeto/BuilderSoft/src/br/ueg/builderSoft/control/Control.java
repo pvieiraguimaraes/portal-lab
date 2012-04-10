@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import br.ueg.builderSoft.model.Entity;
+import br.ueg.builderSoft.persistence.DataIntegrityViolationException;
 import br.ueg.builderSoft.persistence.GenericDAO;
 import br.ueg.builderSoft.util.constant.ControllerType;
 import br.ueg.builderSoft.util.control.AbstractValidatorControl;
@@ -65,6 +66,10 @@ public class Control<E extends Entity>{
 	public void setMapFields(HashMap<String, Object> mapFields) {
 		this.mapFields = mapFields;
 	}
+	
+	public HashMap<String, Object> getMapFields(){
+		return this.mapFields;
+	}
 
 	/**
 	 * Método que executa a ação de incluir, fazendo as validações e logo depois chama a persitencia
@@ -79,14 +84,10 @@ public class Control<E extends Entity>{
 				if (persistence.save(entity) != 0) {
 					result = true;
 				} 
-			}catch(org.springframework.dao.DataIntegrityViolationException e){
+			}catch(DataIntegrityViolationException e){
 				e.printStackTrace();
-				subControllerManager.getMessagesControl().addMessageError("violacaoDeIntegridade");
-				result = false;
-			}catch(org.springframework.dao.InvalidDataAccessResourceUsageException e){
-				e.printStackTrace();
-				subControllerManager.getMessagesControl().addMessageError("violacaoDeIntegridade");
-				result = false;
+				subControllerManager.getMessagesControl().addMessageError("violacaoDeIntegridade");				
+				result = false;			
 			}catch (Exception e) {
 				e.printStackTrace();
 				result = false;
@@ -109,14 +110,10 @@ public class Control<E extends Entity>{
 		try{
 			persistence.update(entity);
 			result = true;			
-		}catch(org.springframework.dao.DataIntegrityViolationException e){
+		}catch(DataIntegrityViolationException e){
 			e.printStackTrace();
-			subControllerManager.getMessagesControl().addMessageError("violacaoDeIntegridade");
-			result = false;
-		}catch(org.springframework.dao.InvalidDataAccessResourceUsageException e){
-			e.printStackTrace();
-			subControllerManager.getMessagesControl().addMessageError("violacaoDeIntegridade");
-			result = false;
+			subControllerManager.getMessagesControl().addMessageError("violacaoDeIntegridade");				
+			result = false;			
 		}catch (Exception e) {
 			e.printStackTrace();
 			result = false;
@@ -135,7 +132,7 @@ public class Control<E extends Entity>{
 			persistence.delete((E) this.mapFields.get("selectedEntity"));
 			return true;
 		}  catch (Exception e) {
-			//TODO fazer o tratamento para dizer o motivo
+			e.printStackTrace();
 			subControllerManager.getMessagesControl().addMessageError("CantDelete");
 			return false;
 		}

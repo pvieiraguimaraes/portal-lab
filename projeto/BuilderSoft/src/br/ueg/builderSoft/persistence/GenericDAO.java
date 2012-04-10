@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.Transaction;
 import org.hibernate.classic.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.LogicalExpression;
@@ -13,6 +14,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import br.ueg.builderSoft.model.Entity;
+import br.ueg.builderSoft.util.reflection.Reflection;
 
 /**
  * Classe responsável pela persistência, faz o CRUD para qualquer entidade que extenda
@@ -27,6 +29,7 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 	private HibernateTemplate hibernateTemplate;
 	
 	Session currentSession;
+	Transaction currentTransaction;
 	
 	/**
 	 * Método para setar o HibernateTemplate, necessário para ser instanciado pelo Spring
@@ -37,26 +40,87 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 		
 	}
 	public Session getSession(){
-		if(currentSession==null){
+		if(currentSession==null || !currentSession.isOpen()){
 			currentSession = this.hibernateTemplate.getSessionFactory().openSession();
 		}
 		return currentSession;
+	}	
+
+	@Override
+	public long save(E entity) throws Exception {
+		long retorno = 0L;
+		Transaction ta=null;
+		try{
+			ta =this.getSession().beginTransaction();
+			retorno = (Long)this.getSession().save(entity);
+			ta.commit();
+		}catch(org.hibernate.exception.ConstraintViolationException e){
+			e.printStackTrace();
+			if(ta!=null) ta.rollback();
+			this.getSession().close();
+			throw new DataIntegrityViolationException("(1)Violação de Integridade na Entidade:"+Reflection.getClassName(entity.getClass()));			
+		}catch(org.springframework.dao.DataIntegrityViolationException e){
+			e.printStackTrace();
+			if(ta!=null) ta.rollback();
+			this.getSession().close();
+			throw new DataIntegrityViolationException("(2)Violação de Integridade na Entidade:"+Reflection.getClassName(entity.getClass()));
+		}catch(org.springframework.dao.InvalidDataAccessResourceUsageException e){
+			e.printStackTrace();
+			if(ta!=null) ta.rollback();
+			this.getSession().close();
+			throw new DataIntegrityViolationException("(3)Violação de Integridade na Entidade:"+Reflection.getClassName(entity.getClass()));
+		}catch (Exception e) {
+			e.printStackTrace();
+			if(ta!=null) ta.rollback();
+			this.getSession().close();
+			throw new Exception(e.getCause());
+		}
+		this.getSession().flush();
+		getSession().clear();
+		
+		return retorno;
 	}
 
 	@Override
-	public long save(E entity) {
-		return (Long) hibernateTemplate.save(entity);
-	}
-
-	@Override
-	public void update(E entity) {
-		hibernateTemplate.update(entity);
+	public void update(E entity) throws Exception {
+		Transaction ta=null;
+		try{
+			ta =this.getSession().beginTransaction();
+			this.getSession().merge(entity);
+			ta.commit();
+		}catch(org.hibernate.exception.ConstraintViolationException e){
+			e.printStackTrace();
+			if(ta!=null) ta.rollback();
+			this.getSession().close();
+			throw new DataIntegrityViolationException("(1)Violação de Integridade na Entidade:"+Reflection.getClassName(entity.getClass()));			
+		}catch(org.springframework.dao.DataIntegrityViolationException e){
+			e.printStackTrace();
+			if(ta!=null) ta.rollback();
+			this.getSession().close();
+			throw new DataIntegrityViolationException("(2)Violação de Integridade na Entidade:"+Reflection.getClassName(entity.getClass()));
+		}catch(org.springframework.dao.InvalidDataAccessResourceUsageException e){
+			e.printStackTrace();
+			if(ta!=null) ta.rollback();
+			this.getSession().close();
+			throw new DataIntegrityViolationException("(3)Violação de Integridade na Entidade:"+Reflection.getClassName(entity.getClass()));
+		}catch (Exception e) {
+			e.printStackTrace();
+			if(ta!=null) ta.rollback();
+			this.getSession().close();
+			throw new Exception(e.getCause());
+		}
+		this.getSession().flush();
 		getSession().clear();
 	}
 
 	@Override
 	public void delete(E entity) {
-		hibernateTemplate.delete(entity);
+		//hibernateTemplate.delete(entity);
+		Transaction ta =this.getSession().beginTransaction();
+		this.getSession().delete(entity);
+		ta.commit();
+		this.getSession().flush();
+		getSession().clear();
 	}
 
 	@SuppressWarnings("unchecked")
