@@ -17,13 +17,17 @@ public interface IGenericDAO<E extends Entity> {
 	 * Método para salvar
 	 * @param qualquer entidade que extenda Entity
 	 * @return o ID do objeto salvado
+	 * @throws DataIntegrityViolationException 
+	 * @throws Exception 
 	 */
-	public long save(E entity);
+	public long save(E entity) throws DataIntegrityViolationException, Exception;
 	/**
 	 * Método para atualizar
 	 * @param qualquer entidade que extenda Entity
+	 * @throws DataIntegrityViolationException 
+	 * @throws Exception 
 	 */
-	public void update(E entity);
+	public void update(E entity) throws DataIntegrityViolationException, Exception;
 	/**
 	 * Método para excluir
 	 * @param qualquer entidade que extenda Entity

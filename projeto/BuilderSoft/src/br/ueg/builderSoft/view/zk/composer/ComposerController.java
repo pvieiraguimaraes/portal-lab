@@ -72,8 +72,8 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 	/**
 	 * usado para pegar chamar o zk para passar os parametros da visão para o composer
 	 */
-	private AnnotateDataBinder binder;
-	private Component component;
+	protected AnnotateDataBinder binder;
+	protected Component component;
 	
 	@SuppressWarnings("unchecked")
 	public ComposerController(){
