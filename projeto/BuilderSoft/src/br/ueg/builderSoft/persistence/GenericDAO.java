@@ -51,6 +51,7 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 	@Override
 	public void update(E entity) {
 		hibernateTemplate.update(entity);
+		getSession().clear();
 	}
 
 	@Override

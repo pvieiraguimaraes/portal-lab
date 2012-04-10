@@ -83,6 +83,10 @@ public class Control<E extends Entity>{
 				e.printStackTrace();
 				subControllerManager.getMessagesControl().addMessageError("violacaoDeIntegridade");
 				result = false;
+			}catch(org.springframework.dao.InvalidDataAccessResourceUsageException e){
+				e.printStackTrace();
+				subControllerManager.getMessagesControl().addMessageError("violacaoDeIntegridade");
+				result = false;
 			}catch (Exception e) {
 				e.printStackTrace();
 				result = false;
@@ -106,6 +110,10 @@ public class Control<E extends Entity>{
 			persistence.update(entity);
 			result = true;			
 		}catch(org.springframework.dao.DataIntegrityViolationException e){
+			e.printStackTrace();
+			subControllerManager.getMessagesControl().addMessageError("violacaoDeIntegridade");
+			result = false;
+		}catch(org.springframework.dao.InvalidDataAccessResourceUsageException e){
 			e.printStackTrace();
 			subControllerManager.getMessagesControl().addMessageError("violacaoDeIntegridade");
 			result = false;

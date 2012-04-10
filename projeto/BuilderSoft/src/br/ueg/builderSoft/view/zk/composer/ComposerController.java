@@ -119,6 +119,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 		this.component = comp;
 		
 		binder = new AnnotateDataBinder(component);
+		binder.setLoadOnSave(false);
 		binder.loadAll();
 	}
 	
@@ -246,7 +247,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 		
 			if (this.isListing()) {
 				listEntity = listingControl.getList();
-				binder.loadAll();
+				//binder.loadAll();
 			}
 	}
 
@@ -323,8 +324,8 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 		//@Command("select")
 		//@NotifyChange({ "selectedEntity", "vm" })	
 		public void selectEntity(){
-			if(selectedEntity!=null)
-				this.control.associateEntityToAttributeView(selectedEntity);
+			if(selectedEntity!=null);
+				//this.control.associateEntityToAttributeView(selectedEntity);
 		}
 
 		/**
@@ -338,8 +339,10 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 			binder.saveAll();	
 			if (control.doAction(action, initializeEntity())) {
 				verifyListing(action);
-				hideEditForm();
+				hideEditForm();	
 			}
+			binder.loadAll();
+			
 		}
 		
 		
@@ -418,9 +421,10 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 		//@Command
 		//@NotifyChange({ "selectedEntity", "vm", "viewFormEdit" })
 		public  void editEntity(){
+			//binder.saveAll();
 			this.doAction("ASSOCIATE");
-			binder.loadAll();
-			//binder.saveAll();			
+			//binder.loadAll();
+			//binder.saveAll();
 			this.showEditForm();		
 		}
 
