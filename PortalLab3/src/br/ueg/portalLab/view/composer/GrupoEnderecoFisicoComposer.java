@@ -3,8 +3,10 @@ package br.ueg.portalLab.view.composer;
 import org.springframework.context.annotation.Scope;
 import org.zkoss.zkplus.databind.BindingListModelList;
 
+import br.ueg.builderSoft.control.Control;
 import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.util.annotation.AttributeView;
+import br.ueg.builderSoft.util.control.MessagesControl;
 import br.ueg.builderSoft.view.zk.composer.TabelaComposerController;
 import br.ueg.portalLab.model.GrupoEnderecoFisico;
 import br.ueg.portalLab.model.Laboratorio;
@@ -55,6 +57,12 @@ public class GrupoEnderecoFisicoComposer extends TabelaComposerController<Usuari
 	
 	public BindingListModelList<Entity> getListLaboratorio(){
 		return this.getFKEntityModel("fldLaboratorio");
+	}
+
+
+	@Override
+	public Control<Usuario> getNewControl(MessagesControl pMessagesControl) {
+		return null;
 	}
 
 }

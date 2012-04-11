@@ -5,8 +5,10 @@ import java.util.Date;
 import org.springframework.context.annotation.Scope;
 import org.zkoss.zkplus.databind.BindingListModelList;
 
+import br.ueg.builderSoft.control.Control;
 import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.util.annotation.AttributeView;
+import br.ueg.builderSoft.util.control.MessagesControl;
 import br.ueg.builderSoft.view.zk.composer.TabelaComposerController;
 import br.ueg.portalLab.model.Autor;
 import br.ueg.portalLab.model.Bibliografia;
@@ -135,5 +137,12 @@ public class BibliografiaComposer extends TabelaComposerController<Bibliografia>
 
 	public BindingListModelList<Entity> getListAutor(){
 		return this.getFKEntityModel("fldAutor");
+	}
+
+
+
+	@Override
+	public Control<Bibliografia> getNewControl(MessagesControl pMessagesControl) {
+		return null;
 	}
 }

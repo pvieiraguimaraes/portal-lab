@@ -7,9 +7,11 @@ import java.util.Comparator;
 import org.springframework.context.annotation.Scope;
 import org.zkoss.zkplus.databind.BindingListModelList;
 
+import br.ueg.builderSoft.control.Control;
 import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.util.annotation.AttributeView;
 import br.ueg.builderSoft.util.constant.ComponentType;
+import br.ueg.builderSoft.util.control.MessagesControl;
 import br.ueg.builderSoft.view.zk.composer.TabelaComposerController;
 import br.ueg.portalLab.control.UsuarioControl;
 import br.ueg.portalLab.model.CategoriaUsuario;
@@ -47,10 +49,7 @@ public class UsuarioComposer extends TabelaComposerController<Usuario> {
 	@AttributeView(key = "categoria", isEntityValue = true, fieldType = CategoriaUsuario.class, isVisible=true, caption="usuario_categoriaColumn")
 	private CategoriaUsuario fldCategoria;
 			
-	public UsuarioComposer(){
-		super();
-		this.control.setControl(new UsuarioControl<Usuario>(this.control));
-	}
+	
 	/**
 	 * 
 	 */
@@ -144,5 +143,11 @@ public class UsuarioComposer extends TabelaComposerController<Usuario> {
 	}
 	public BindingListModelList<Entity> getListCategoriaUsuario(){
 		return this.getFKEntityModel("fldCategoria");
+	}
+
+
+	@Override
+	public Control<Usuario> getNewControl(MessagesControl pMessagesControl) {
+		return new UsuarioControl<Usuario>(pMessagesControl);
 	}
 }
