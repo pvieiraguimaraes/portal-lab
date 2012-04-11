@@ -13,6 +13,10 @@ import org.hibernate.criterion.LogicalExpression;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.util.reflection.Reflection;
 
@@ -179,6 +183,51 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 	public List<E> findByHQL(String qry){
 		Query vQry = this.getSession().createQuery(qry);
 		return vQry.list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<E> findByEntity(Entity entity){
+		List<E> searchs = new ArrayList<E>();
+		
+		Criteria criteria = this.getSession().createCriteria(entity.getClass());
+		
+		Field fields[] = entity.getClass().getFields();
+			
+		ArrayList<Criterion> conds = new ArrayList<Criterion>();
+		
+		for(int i = 0; i<fields.length; i++ ){
+			Object fieldValue=null;
+			try {
+				fieldValue = Reflection.getFieldValue(entity, fields[i].getName());
+			} catch (SecurityException e) {
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (NoSuchMethodException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			}
+			if(fieldValue!=null){
+				conds.add(Restrictions.eq(fields[i].getName(), fieldValue));
+			}
+		}
+			
+		
+		for(Criterion c: conds){
+			criteria.add(c);
+		}
+
+		
+		
+		searchs.addAll(criteria.list());
+		HashSet<E> h = new HashSet<E>(searchs);
+		searchs.clear();
+		searchs.addAll(h);
+		return searchs;
+		
 	}
 
 	@SuppressWarnings("unchecked")

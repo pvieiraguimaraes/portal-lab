@@ -11,7 +11,8 @@ public abstract class TabelaMB extends MB<Entity> {
 
 	public TabelaMB() {
 		super();
-		this.control.setControl(new Control<Entity>(this.control));
+		//TODO não funciona mais ver o do ZK
+		//this.control.setControl(new Control<Entity>(this.get));
 	}
 
 }

@@ -53,5 +53,13 @@ public interface IGenericDAO<E extends Entity> {
 	 * @return lista de todos registros da entidade
 	 */
 	List<E> getList(E entity);
+	
+	/**
+	 * Método utilizado para retornar uma lista fazendo busca pelos atributos
+	 * preenchido das entidade passada.
+	 * @param entity
+	 * @return
+	 */
+	public List<E> findByEntity(Entity entity);
 
 }
