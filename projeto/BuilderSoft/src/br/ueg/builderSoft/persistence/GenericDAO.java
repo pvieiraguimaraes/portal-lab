@@ -191,33 +191,42 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 		
 		Criteria criteria = this.getSession().createCriteria(entity.getClass());
 		
-		Field fields[] = entity.getClass().getFields();
-			
 		ArrayList<Criterion> conds = new ArrayList<Criterion>();
-		
-		for(int i = 0; i<fields.length; i++ ){
-			Object fieldValue=null;
-			try {
-				fieldValue = Reflection.getFieldValue(entity, fields[i].getName());
-			} catch (SecurityException e) {
-				e.printStackTrace();
-			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
-			} catch (NoSuchMethodException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				e.printStackTrace();
-			}
-			if(fieldValue!=null){
-				conds.add(Restrictions.eq(fields[i].getName(), fieldValue));
-			}
-		}
+
+		for (Class<?> reflectedEntity = entity.getClass(); reflectedEntity != null; reflectedEntity = reflectedEntity.getSuperclass()) {
+			Field[] fields = reflectedEntity.getDeclaredFields();
 			
 		
-		for(Criterion c: conds){
-			criteria.add(c);
+		
+			for(int i = 0; i<fields.length; i++ ){
+				Object fieldValue=null;
+				try {
+					fieldValue = Reflection.getFieldValue(entity, fields[i].getName());
+					if(fieldValue!=null && Reflection.getClassName(fieldValue.getClass()).equalsIgnoreCase("long")){
+						if( ((Long)fieldValue).doubleValue()==0L){
+							fieldValue = null;
+						}
+					}
+				} catch (SecurityException e) {
+					e.printStackTrace();
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+				} catch (NoSuchMethodException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					e.printStackTrace();
+				}
+				if(fieldValue!=null){
+					conds.add(Restrictions.eq(fields[i].getName(), fieldValue));
+				}
+			}
+				
+			
+			for(Criterion c: conds){
+				criteria.add(c);
+			}
 		}
 
 		
