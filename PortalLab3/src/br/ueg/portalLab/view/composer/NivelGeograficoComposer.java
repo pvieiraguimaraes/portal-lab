@@ -3,8 +3,10 @@ package br.ueg.portalLab.view.composer;
 import org.springframework.context.annotation.Scope;
 import org.zkoss.zkplus.databind.BindingListModelList;
 
+import br.ueg.builderSoft.control.Control;
 import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.util.annotation.AttributeView;
+import br.ueg.builderSoft.util.control.MessagesControl;
 import br.ueg.builderSoft.view.zk.composer.TabelaComposerController;
 import br.ueg.portalLab.model.NivelGeografico;
 
@@ -67,6 +69,12 @@ public class NivelGeograficoComposer extends TabelaComposerController<NivelGeogr
 	
 	public BindingListModelList<Entity> getListPai(){
 		return this.getFKEntityModel("fldPai");
+	}
+
+
+	@Override
+	public Control<NivelGeografico> getNewControl(MessagesControl pMessagesControl) {
+		return null;
 	}
 
 }

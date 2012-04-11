@@ -3,6 +3,8 @@ package br.ueg.portalLab.view.composer;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import br.ueg.builderSoft.control.Control;
+import br.ueg.builderSoft.util.control.MessagesControl;
 import br.ueg.builderSoft.view.zk.composer.TabelaBasicaComposerController;
 import br.ueg.portalLab.model.EstagioDesenvolvimento;
 
@@ -19,6 +21,11 @@ public class EstagioDesenvolvimentoComposer extends TabelaBasicaComposerControll
 	@Override
 	public Class getEntityClass() {
 		return EstagioDesenvolvimento.class;
+	}
+
+	@Override
+	public Control<EstagioDesenvolvimento> getNewControl(MessagesControl pMessagesControl) {
+		return null;
 	}
 
 }

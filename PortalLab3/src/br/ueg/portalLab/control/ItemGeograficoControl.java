@@ -4,21 +4,19 @@ import java.util.HashSet;
 import java.util.Set;
 
 import br.ueg.builderSoft.control.Control;
-import br.ueg.builderSoft.control.GenericControl;
 import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.persistence.GenericDAO;
 import br.ueg.builderSoft.util.control.MessagesControl;
 import br.ueg.builderSoft.util.sets.SpringFactory;
 import br.ueg.portalLab.model.ItemGeografico;
 import br.ueg.portalLab.model.NivelGeografico;
-import br.ueg.portalLab.util.control.UsuarioValidatorControl;
 
 public class ItemGeograficoControl<E extends Entity> extends Control<E> {
 
 	GenericDAO<ItemGeografico> nivelGeoDAO = null;
 	
 	@SuppressWarnings("unchecked")
-	public ItemGeograficoControl(GenericControl<E> control) {
+	public ItemGeograficoControl(MessagesControl control) {
 		super(control);
 		 nivelGeoDAO = (GenericDAO<ItemGeografico>) SpringFactory.getInstance().getBean("genericDAO", GenericDAO.class);
 		 //control.addController(new UsuarioValidatorControl((MessagesControl)control.getController(MessagesControl.class),1));

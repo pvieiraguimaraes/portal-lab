@@ -8,8 +8,10 @@ import java.util.Set;
 import org.springframework.context.annotation.Scope;
 import org.zkoss.zkplus.databind.BindingListModelList;
 
+import br.ueg.builderSoft.control.Control;
 import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.util.annotation.AttributeView;
+import br.ueg.builderSoft.util.control.MessagesControl;
 import br.ueg.builderSoft.view.zk.composer.TabelaComposerController;
 import br.ueg.portalLab.control.ItemGeograficoControl;
 import br.ueg.portalLab.model.ItemGeografico;
@@ -35,12 +37,7 @@ public class ItemGeograficoComposer extends TabelaComposerController<ItemGeograf
 	
 	
 	private Set<Entity> listPais;
-	
-			
-	public ItemGeograficoComposer(){
-		super();
-		this.control.setControl(new ItemGeograficoControl<ItemGeografico>(this.control));
-	}
+
 	/**
 	 * 
 	 */
@@ -93,7 +90,7 @@ public class ItemGeograficoComposer extends TabelaComposerController<ItemGeograf
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public BindingListModelList<ItemGeografico> getListItemGeograficoPai(){
 		if(this.fldNivelGeografico!=null){
-			listPais = ((ItemGeograficoControl<ItemGeografico>)this.control.getControl()).getListItemGeograficosPai(this.fldNivelGeografico);
+			listPais = ((ItemGeograficoControl<ItemGeografico>)this.genericControl.getControl()).getListItemGeograficosPai(this.fldNivelGeografico);
 		}
 		
 		BindingListModelList<ItemGeografico> itemGeograficoModel;
@@ -112,5 +109,11 @@ public class ItemGeograficoComposer extends TabelaComposerController<ItemGeograf
 		itemGeograficoModel = new BindingListModelList<ItemGeografico>(listFKEntity,true);
 		
 		return itemGeograficoModel;
+	}
+
+
+	@Override
+	public Control<ItemGeografico> getNewControl(MessagesControl pMessagesControl) {
+		return new ItemGeograficoControl<ItemGeografico>(pMessagesControl);
 	}
 }

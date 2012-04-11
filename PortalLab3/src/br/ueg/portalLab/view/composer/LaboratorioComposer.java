@@ -2,15 +2,12 @@ package br.ueg.portalLab.view.composer;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.zkoss.zk.ui.select.annotation.Wire;
-import org.zkoss.zul.Window;
 
+import br.ueg.builderSoft.control.Control;
 import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.util.annotation.AttributeView;
-import br.ueg.builderSoft.util.constant.ComponentType;
-import br.ueg.builderSoft.view.zk.composer.ComposerController;
+import br.ueg.builderSoft.util.control.MessagesControl;
 import br.ueg.builderSoft.view.zk.composer.TabelaComposerController;
-import br.ueg.portalLab.model.CategoriaUsuario;
 import br.ueg.portalLab.model.Laboratorio;
 
 @Component
@@ -70,5 +67,8 @@ public class LaboratorioComposer extends TabelaComposerController<Entity> {
 	}
 
 
-
+	@Override
+	public Control<Entity> getNewControl(MessagesControl pMessagesControl) {
+		return null;
+	}
 }
