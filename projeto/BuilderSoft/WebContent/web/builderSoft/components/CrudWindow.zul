@@ -28,7 +28,7 @@
 						<div id="divResult2">
 							<listbox model="@{controller.listEntity}"
 								selectedItem="@{controller.selectedEntity}" 
-								onSelect="@{controller.selectEntity}"
+								onSelect="controller.selectEntity()"
 								mold="paging" id="divListBox" pageSize="${arg.crudWindow.listBoxSize}"
 								>
 								<listhead id="divListhead">									

@@ -3,10 +3,8 @@ package br.ueg.builderSoft.control;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.persistence.JoinColumn;
 
@@ -15,7 +13,6 @@ import br.ueg.builderSoft.util.control.IListingControl;
 import br.ueg.builderSoft.util.control.ListingControl;
 import br.ueg.builderSoft.util.control.MessagesControl;
 import br.ueg.builderSoft.util.control.SubController;
-import br.ueg.builderSoft.util.control.ValidatorControl;
 import br.ueg.builderSoft.util.reflection.Reflection;
 import br.ueg.builderSoft.view.managed.IGenericMB;
 
@@ -37,14 +34,27 @@ public class GenericControl <E extends Entity> {
 	
 	public GenericControl(MessagesControl pMessages, ListingControl<E> pListing, IGenericMB<E> pView) {	
 		
-		this.subControllerManager = new SubControllerManager<E>();
+		this.initGenericControl(pMessages, pListing, pView, new Control<E>(pMessages));
 		
+	}
+	
+	private void initGenericControl(MessagesControl pMessages, ListingControl<E> pListing, IGenericMB<E> pView, Control<E> pControl){
+		
+		this.subControllerManager = new SubControllerManager<E>();
 		this.subControllerManager.addController(pListing);
 		this.subControllerManager.addController(pMessages);
-		this.subControllerManager.addController((SubController)new ValidatorControl(pMessages,0,Arrays.asList("SAVE")));
 		
-		this.control = new Control<E>(this);
+		for(SubController v: pControl.getListValidator()){
+			this.subControllerManager.addController(v);
+		}
 		this.view = pView;
+		this.control = pControl;
+		
+	}
+
+	public GenericControl(MessagesControl pMessages, ListingControl<E> pListing, IGenericMB<E> pView, Control<E> pControl) {	
+		
+		this.initGenericControl(pMessages, pListing, pView, pControl);	
 
 	}
 	
@@ -258,6 +268,20 @@ public class GenericControl <E extends Entity> {
 			}
 		}
 		return result;
+	}
+
+	/**
+	 * @return the subControllerManager
+	 */
+	public SubControllerManager getSubControllerManager() {
+		return subControllerManager;
+	}
+
+	/**
+	 * @param subControllerManager the subControllerManager to set
+	 */
+	public void setSubControllerManager(SubControllerManager subControllerManager) {
+		this.subControllerManager = subControllerManager;
 	}
 
 }

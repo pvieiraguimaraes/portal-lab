@@ -19,10 +19,10 @@ import org.zkoss.zul.Listhead;
 import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Window;
 
+import br.ueg.builderSoft.control.Control;
 import br.ueg.builderSoft.control.GenericControl;
 import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.util.annotation.AttributeView;
-import br.ueg.builderSoft.util.constant.ControllerType;
 import br.ueg.builderSoft.util.constant.MessagesType;
 import br.ueg.builderSoft.util.control.IListingControl;
 import br.ueg.builderSoft.util.control.ListingControl;
@@ -35,7 +35,9 @@ import br.ueg.builderSoft.view.managed.ManagedBeanField;
 @SuppressWarnings("rawtypes")
 public abstract class ComposerController<E extends Entity> extends GenericForwardComposer implements IGenericMB<E> {
 
-	protected GenericControl<E> control;
+	protected GenericControl<E> genericControl;
+	
+	protected Control<E> control;
 	
 	@AttributeView(key = "id", isEntityValue = true, fieldType = Long.class, isVisible = false, caption = "mb_idColumn")
 	protected long fldId;
@@ -77,8 +79,18 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 	
 	@SuppressWarnings("unchecked")
 	public ComposerController(){
-		control = new GenericControl<E>(new MessagesWebZK(), new ListingControl<E>(), this);
-		listingControl = (ListingControl<E>) control.getController(IListingControl.class);
+		
+		MessagesWebZK pMessages = new MessagesWebZK();
+		Control<E> newControl = this.getNewControl(pMessages);
+		listingControl = new ListingControl<E>();
+		
+		if(newControl==null){
+			genericControl = new GenericControl<E>(pMessages, listingControl, this);
+		}else{
+			genericControl = new GenericControl<E>(pMessages, listingControl, this, newControl);
+		}
+		this.setControl(genericControl.getControl());
+
 		try {
 			selectedEntity = (E) getEntityClass().newInstance();
 		} catch (InstantiationException e) {
@@ -90,6 +102,13 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 		}
 		//initializeEntity();
 	}
+	
+	/**Metodo utilizado para instanciar o controlador que sera utilizado
+	 * Caso ele return null Será utilizado o controlador padrão de crud(br.ueg.builderSoft.control.Control)
+	 * @param genericControl TODO
+	 * @return
+	 */
+	public abstract Control<E> getNewControl(MessagesControl pMessagesControl);
 	
 	/**
 	 * 
@@ -160,18 +179,19 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 	 * 
 	 */
 	/**
+	 * @param genericControl TODO
 	 * @return o controlador
 	 */
-	protected GenericControl<E> getControl() {
-		return control;
+	protected GenericControl<E> getGenericControl() {
+		return genericControl;
 	}
 
 	/**
 	 * seta o controlador
 	 * @param control
 	 */
-	protected void setControl(GenericControl<E> control) {
-		this.control = control;
+	protected void setGenericControl(GenericControl<E> control) {
+		this.genericControl = control;
 	}
 
 	/**
@@ -278,7 +298,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 
 						if (field.getAnnotation(br.ueg.builderSoft.util.annotation.AttributeView.class).isEntityValue()) {
 							String vEntityCaption = Reflection.getClassName(getEntityClass()).toLowerCase().concat("_").concat(vKey).concat("Column"); 
-							boolean existCaption = ((MessagesControl) this.getControl().getController(MessagesControl.class)).existsMessage(vEntityCaption);
+							boolean existCaption = ((MessagesControl) this.getGenericControl().getController(MessagesControl.class)).existsMessage(vEntityCaption);
 							if(existCaption){
 								 vCaption = vEntityCaption;
 							}
@@ -324,8 +344,8 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 		//@Command("select")
 		//@NotifyChange({ "selectedEntity", "vm" })	
 		public void selectEntity(){
-			if(selectedEntity!=null);
-				//this.control.associateEntityToAttributeView(selectedEntity);
+			if(selectedEntity!=null)
+				this.getGenericControl().associateEntityToAttributeView(selectedEntity);
 		}
 
 		/**
@@ -337,12 +357,12 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 		//@NotifyChange({ "listEntity", "vm" })
 		public void doAction(@BindingParam("action") String action) {
 			binder.saveAll();	
-			if (control.doAction(action, initializeEntity())) {
+			if (genericControl.doAction(action, initializeEntity())) {
 				verifyListing(action);
 				hideEditForm();	
+					
 			}
 			binder.loadAll();
-			
 		}
 		
 		
@@ -355,7 +375,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 		//@NotifyChange({ "selectedEntity", "vm", "viewFormEdit" })
 		public void newEntity() {
 			this.selectedEntity =this.initializeEntity();
-			this.control.associateEntityToAttributeView(this.selectedEntity);
+			this.genericControl.associateEntityToAttributeView(this.selectedEntity);
 			binder.loadAll();
 			binder.saveAll();
 			this.showEditForm();
@@ -364,7 +384,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 		//@Command
 		//@NotifyChange({ "selectedEntity", "vm", "viewFormEdit" })
 		public void cancelEditEntity() {
-			this.control.associateEntityToAttributeView(this.initializeEntity());
+			this.genericControl.associateEntityToAttributeView(this.initializeEntity());
 			this.hideEditForm();
 		}
 		
@@ -376,7 +396,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 		 */
 		//@Command
 		public void cancelAction() {
-			this.control.associateEntityToAttributeView(this.initializeEntity());
+			this.genericControl.associateEntityToAttributeView(this.initializeEntity());
 			verifyListing("cancel");
 		}
 		
@@ -418,12 +438,20 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 		public abstract Window getEditForm();
 		public abstract void setEditForm(Window form);
 		
-		//@Command
-		//@NotifyChange({ "selectedEntity", "vm", "viewFormEdit" })
+		public void associateEntityToView(E entity){ 
+			this.genericControl.associateEntityToAttributeView(entity);
+		}
+		
+		
 		public  void editEntity(){
-			//binder.saveAll();
-			this.doAction("ASSOCIATE");
-			//binder.loadAll();
+			binder.saveAll();
+			
+			//this.doAction("ASSOCIATE");
+			this.genericControl.associateEntityToAttributeView(this.selectedEntity);
+			binder.loadComponent(this.getEditForm());
+			//TODO descobrir uma forma de não fazer isso(ler tudo, deveria funcionar só com o comando acima, 
+			//quando o formulário é construido automaticamente.
+			binder.loadAll();
 			//binder.saveAll();
 			this.showEditForm();		
 		}
@@ -476,7 +504,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 			this.listitem = listitem;
 		}
 		public void addMessage(String message){
-			((MessagesControl) this.control.getController(MessagesControl.class)).addMessage(message, MessagesType.INFO);
+			((MessagesControl) this.genericControl.getController(MessagesControl.class)).addMessage(message, MessagesType.INFO);
 		}
 		
 		/**
@@ -512,7 +540,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 			BindingListModelList<Entity> categoriaUsuarioModel;
 			ArrayList<Entity> listFKEntity;
 			if(fkEntity!=null){
-				 listFKEntity = (ArrayList<Entity>) this.control.getControl().getListFKEntity(fkEntity);
+				 listFKEntity = (ArrayList<Entity>) this.genericControl.getControl().getListFKEntity(fkEntity);
 				
 				Collections.sort( listFKEntity, new Comparator<Entity>(){
 				    public int compare( Entity e1, Entity e2 ) {
@@ -527,5 +555,19 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 			
 			
 			return categoriaUsuarioModel;
+		}
+
+		/**
+		 * @return the control
+		 */
+		public Control<E> getControl() {
+			return control;
+		}
+
+		/**
+		 * @param control the control to set
+		 */
+		public void setControl(Control<E> control) {
+			this.control = control;
 		}
 }

@@ -1,6 +1,7 @@
 package br.ueg.builderSoft.control;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,9 +19,10 @@ import br.ueg.builderSoft.util.sets.SpringFactory;
 @SuppressWarnings("unchecked")
 public class Control<E extends Entity>{
 	
-	private GenericControl<E> gControl;
-	private GenericDAO<E> persistence;
+
+	protected GenericDAO<E> persistence;
 	private HashMap<String, Object> mapFields;
+	private MessagesControl messagesControl;
 	//construtores do subcontroller mandaram algo +
 	//controlador principal para fazer modificações
 	//DUVIDA: criar todos validadores para chamar seu método principal no construtor
@@ -33,11 +35,13 @@ public class Control<E extends Entity>{
 	 * Criar classe que extenda control, e dentro do construtor do filho da super do filho
 	 * e aumentar no arraylist de validações.
 	 */
-	public Control(GenericControl<E> pGenericControl) {
+	public Control(MessagesControl pMessagesControl) {
 		this.persistence = (GenericDAO<E>) SpringFactory.getInstance().getBean("genericDAO", GenericDAO.class);
-		this.gControl = pGenericControl;
+		this.messagesControl = pMessagesControl;
 	}
 	
+
+
 	/**
 	 * Metodo utilizado para buscar um lista de entidade baseado no tipo da entidade passada
 	 * @param entity
@@ -230,8 +234,32 @@ public class Control<E extends Entity>{
 	}
 	
 	public boolean actionAssociate(SubControllerManager<E> subControllersManager) {
-		E selectedEntity = (E) this.mapFields.get("selectedEntity");
-		this.gControl.associateEntityToAttributeView(selectedEntity);
+//		E selectedEntity = (E) this.mapFields.get("selectedEntity");
+//		this.genericControl.associateEntityToAttributeView(selectedEntity);
 		return true;
+	}
+	
+	public List<SubController> getListValidator(){
+		ArrayList<SubController> list = new ArrayList<SubController>();
+		list.add((SubController)new ValidatorControl(this.getMessagesControl(),0,Arrays.asList("SAVE")));
+		return list;
+	}
+
+
+
+	/**
+	 * @return the messagesControl
+	 */
+	public MessagesControl getMessagesControl() {
+		return messagesControl;
+	}
+
+
+
+	/**
+	 * @param messagesControl the messagesControl to set
+	 */
+	public void setMessagesControl(MessagesControl messagesControl) {
+		this.messagesControl = messagesControl;
 	}
 }

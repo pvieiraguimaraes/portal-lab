@@ -96,6 +96,7 @@ public class FormCrudWindow extends Window implements IFormWindow {
 	}
 	
 	private Grid g=null;
+	private Div d  = null;
 	private AnnotateDataBinder binder=null;
 	private void buildDivFieldsFromEntity(ComposerController<?> composer) {
 //		AnnotateDataBinder binder = new AnnotateDataBinder(crudFormWindow);
@@ -106,8 +107,9 @@ public class FormCrudWindow extends Window implements IFormWindow {
 			for(Component c : list){
 				c.detach();
 			}
-			
+			d = new Div();
 			g = new Grid();
+			d.appendChild(g);
 			
 			binder = new AnnotateDataBinder(g);
 			binder.bindBean("controller2", composer);
@@ -131,7 +133,8 @@ public class FormCrudWindow extends Window implements IFormWindow {
 					}
 				}
 				g.appendChild(r);
-				this.divFields.appendChild(g);
+				
+				d.setParent(this.divFields);
 				//binder.loadAll();
 		}
 			binder.loadComponent(g);
