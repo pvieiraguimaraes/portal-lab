@@ -507,6 +507,23 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 			((MessagesControl) this.genericControl.getController(MessagesControl.class)).addMessage(message, MessagesType.INFO);
 		}
 		
+		public BindingListModelList<Entity> getEntityModel(List<Entity> list){
+			
+			BindingListModelList<Entity> listEntityModel;
+			if(list!=null && !list.isEmpty()){
+				Collections.sort( list, new Comparator<Entity>(){
+				    public int compare( Entity e1, Entity e2 ) {
+				      return e1.compare(e2);
+				    }
+				  });
+			 }else{
+				 list = new ArrayList<Entity>();
+			 }
+
+			listEntityModel = new BindingListModelList<Entity>(list,true);
+			return listEntityModel;
+		}
+		
 		/**
 		 * @param field nome do atributo que contem a entidade extrangeira(chave estrangeir)
 		 * @return
