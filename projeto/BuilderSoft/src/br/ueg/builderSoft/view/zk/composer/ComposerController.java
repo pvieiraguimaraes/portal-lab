@@ -540,7 +540,12 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 			BindingListModelList<Entity> categoriaUsuarioModel;
 			ArrayList<Entity> listFKEntity;
 			if(fkEntity!=null){
-				 listFKEntity = (ArrayList<Entity>) this.genericControl.getControl().getListFKEntity(fkEntity);
+				 List<Entity> listFKEntity2 = this.genericControl.getControl().getListFKEntity(fkEntity);
+				 if(listFKEntity2!=null && !listFKEntity2.isEmpty()){
+					 listFKEntity = (ArrayList<Entity>) listFKEntity2;
+				 }else{
+					 listFKEntity = new ArrayList<Entity>();
+				 }
 				
 				Collections.sort( listFKEntity, new Comparator<Entity>(){
 				    public int compare( Entity e1, Entity e2 ) {
