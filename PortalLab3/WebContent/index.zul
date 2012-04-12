@@ -60,7 +60,9 @@
 			        		</tabpanels>
 			        	</tabbox> 
         			</tabpanel>
-        			<tabpanel>asd</tabpanel>
+        			<tabpanel>
+        			
+        			</tabpanel>
        				<tabpanel><!--  ##Inicio Cadastro Básicos  -->
         				<separator height="20px"></separator>
         				<tabbox id="tbCadDiversa">

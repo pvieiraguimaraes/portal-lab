@@ -51,6 +51,8 @@
     			<value>br.ueg.portalLab.model.Bibliografia</value>
     			<value>br.ueg.portalLab.model.Determinador</value>
     			<value>br.ueg.portalLab.model.AplicacaoEconomica</value>
+    			<value>br.ueg.portalLab.model.NivelTaxonomico</value>
+    			<value>br.ueg.portalLab.model.ItemTaxonomico</value>
     		</list>
     	</property>
     	<property name="hibernateProperties">

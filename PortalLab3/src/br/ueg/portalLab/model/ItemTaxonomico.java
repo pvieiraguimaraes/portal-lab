@@ -23,39 +23,39 @@ import br.ueg.builderSoft.util.annotation.Attribute;
  */
 @SuppressWarnings("serial")
 @javax.persistence.Entity
-@Table(name = "item_geografico")
-public class ItemGeografico extends Entity {
+@Table(name = "item_taxonomico")
+public class ItemTaxonomico extends Entity {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "id_itgeo")
+	@Column(name = "id_ittax")
 	private long id;
 	
-	@Column(name = "nome_itgeo")
+	@Column(name = "nome_ittax")
 	@Attribute(Required = true, SearchField = true)
 	@OrderBy("nome")
 	private String nome;
 	
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_nigeo_itgeo", insertable = true, updatable = true, nullable=true)
+	@JoinColumn(name = "id_nigeo_ittax", insertable = true, updatable = true, nullable=true)
 	@Attribute(Required = true, SearchField = true)
-	private NivelGeografico nivelGeografico;
+	private NivelTaxonomico nivelTaxonomico;
 	
 	@ManyToOne(optional = true, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_pai_itgeo", insertable = true, updatable = true, nullable=true)
-	private ItemGeografico pai; 
+	@JoinColumn(name = "id_pai_ittax", insertable = true, updatable = true, nullable=true)
+	private ItemTaxonomico pai; 
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pai",cascade = CascadeType.ALL)// mappedBy indica o atributo da entidade many	
-	private Set<ItemGeografico> filhosItensGeograficos;
+	private Set<ItemTaxonomico> filhosItensTaxonomicos;
 	
-	public ItemGeografico() {}
+	public ItemTaxonomico() {}
 	
 
-	public ItemGeografico(long id, String nome,
-			NivelGeografico nivelGeografico, ItemGeografico pai) {
+	public ItemTaxonomico(long id, String nome,
+			NivelTaxonomico nivelTaxonomico, ItemTaxonomico pai) {
 		this.id = id;
 		this.nome = nome;
-		this.nivelGeografico = nivelGeografico;
+		this.nivelTaxonomico = nivelTaxonomico;
 		this.pai = pai;
 	}
 
@@ -78,33 +78,38 @@ public class ItemGeografico extends Entity {
 	}
 
 
-	public NivelGeografico getNivelGeografico() {
-		return nivelGeografico;
+	public NivelTaxonomico getNivelTaxonomico() {
+		return nivelTaxonomico;
 	}
 
 
-	public void setNivelGeografico(NivelGeografico nivelGeografico) {
-		this.nivelGeografico = nivelGeografico;
+	public void setNivelTaxonomico(NivelTaxonomico nivelTaxonomico) {
+		this.nivelTaxonomico = nivelTaxonomico;
 	}
 
 
-	public ItemGeografico getPai() {
+	public ItemTaxonomico getPai() {
 		return pai;
 	}
 
 
-	public void setPai(ItemGeografico pai) {
+	public void setPai(ItemTaxonomico pai) {
 		this.pai = pai;
 	}
 
 
-	public Set<ItemGeografico> getFilhosItensGeograficos() {
-		return filhosItensGeograficos;
+	public Set<ItemTaxonomico> getFilhosItensTaxonomicos() {
+		return filhosItensTaxonomicos;
 	}
 
 
-	public void setFilhosItensGeograficos(Set<ItemGeografico> filhosItensGeograficos) {
-		this.filhosItensGeograficos = filhosItensGeograficos;
+	public void setFilhosItensTaxonomicos(Set<ItemTaxonomico> filhosItensTaxonomicos) {
+		this.filhosItensTaxonomicos = filhosItensTaxonomicos;
+	}
+	
+	@Override
+	public String toString(){
+		return this.getNivelTaxonomico().getNome()+" "+this.getNome();
 	}
 
 }
