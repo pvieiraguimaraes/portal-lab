@@ -18,8 +18,8 @@ import br.ueg.builderSoft.util.reflection.Reflection;
  * @author Diego
  * 
  */
-@SuppressWarnings("serial")
-public abstract class Entity implements Serializable {
+@SuppressWarnings({ "serial", "rawtypes" })
+public abstract class Entity implements Serializable, Comparable {
 
 	/**
 	 * Método que retorna a chave primária
@@ -116,6 +116,7 @@ public abstract class Entity implements Serializable {
 	 * >0 se a entidade passada for maior 
 	 * @param e Entity -> entidade para ser comparada
 	 * @return 9999 se ocorreu algum erro
+	 * @deprecated
 	 */
 	public int compare(Entity e){
 		if (this == e)
@@ -126,6 +127,17 @@ public abstract class Entity implements Serializable {
 			return 9999;
 		Entity other = (Entity) e;
 		return this.getColumnCompare().compareToIgnoreCase(other.getColumnCompare());
+	}
+	public int compareTo(Object e){
+		if (this == e)
+			return 0;
+		if (e == null)
+			return 9999;
+		if (getClass() != e.getClass()) 
+			return 9999;
+		
+		Entity other = (Entity) e;
+		return this.getColumnCompare().compareToIgnoreCase(other.getColumnCompare());		
 	}
 	/**
 	 * @return retorna a string utilizada para comprarar as entidades para efeito de ordenação.

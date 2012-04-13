@@ -132,7 +132,9 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 	public List<E> findByCriteria(E entity, String value) {
 		List<E> searchs = new ArrayList<E>();
 		
-		Criteria criteria = this.getSession().createCriteria(entity.getClass());
+		Session session = this.getSession();
+		session.clear();
+		Criteria criteria = session.createCriteria(entity.getClass());
 		int numFilters =  entity.getSearchColumnTable(entity).size();
 		Criterion conds[] = new Criterion[numFilters];
 		for (int i = 0; i < numFilters; i++) {
@@ -168,7 +170,9 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 		List<E> searchs = new ArrayList<E>();
 		for (int i = 0; i < entity.getSearchColumnTable(entity).size(); i++) {
 			String hql = "from " + entity.getClass().getSimpleName() + " where "+ entity.getSearchColumnTable(entity).get(i) +" like '%"+value+"%'";
-			Query qry = this.getSession().createQuery(hql);
+			Session session = this.getSession();
+			session.flush();
+			Query qry = session.createQuery(hql);
 			searchs.addAll(qry.list());
 		}
 		return searchs;
@@ -181,7 +185,9 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 	 */
 	@SuppressWarnings("unchecked")
 	public List<E> findByHQL(String qry){
-		Query vQry = this.getSession().createQuery(qry);
+		Session session = this.getSession();
+		session.clear();
+		Query vQry = session.createQuery(qry);
 		return vQry.list();
 	}
 	

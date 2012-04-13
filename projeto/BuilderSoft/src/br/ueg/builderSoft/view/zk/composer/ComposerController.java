@@ -564,11 +564,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 					 listFKEntity = new ArrayList<Entity>();
 				 }
 				
-				Collections.sort( listFKEntity, new Comparator<Entity>(){
-				    public int compare( Entity e1, Entity e2 ) {
-				      return e1.compare(e2);
-				    }
-				  });
+				Collections.sort( listFKEntity);
 			}else{
 				listFKEntity = new ArrayList<Entity>();
 			}
