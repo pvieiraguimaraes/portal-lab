@@ -168,8 +168,10 @@ public class ItemTaxonomicoComposer extends ComposerController<ItemTaxonomico> {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public BindingListModelList<NivelTaxonomico> getListNivelTaxonomicoFilhos(){
 		
-		Set<Entity>	listPais = ((ItemTaxonomicoControl<ItemTaxonomico>)this.genericControl.getControl()).getListNivelTaxonomicoFilhos(this.fldNivelTaxonomico);
-		
+		Set<Entity>	listPais=null;
+		if(this.fldNivelTaxonomico!=null){
+			listPais = ((ItemTaxonomicoControl<ItemTaxonomico>)this.genericControl.getControl()).getListNivelTaxonomicoFilhos(this.fldNivelTaxonomico.getPai());
+		}
 		
 		BindingListModelList<NivelTaxonomico> nivelTaxonomicoModel;
 		ArrayList<NivelTaxonomico> listFKEntity=null;

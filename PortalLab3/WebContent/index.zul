@@ -60,8 +60,18 @@
 			        		</tabpanels>
 			        	</tabbox> 
         			</tabpanel>
-        			<tabpanel>
-        			
+        			<tabpanel><!--  ##Inicio Taxonomia  -->
+	        			<separator height="20px"></separator>
+        				<tabbox id="tbCadTaxonomia">
+			        		<tabs id="tabsCadTaxonomia">
+			        			<tab id="tabCadNivelTaxonomico"			label="Nível Taxonômico"/>
+			        			<tab id="tabCadItemTaxonomico"			label="Item Taxonômico" />
+			        		</tabs>
+			        		<tabpanels>
+			        			<tabpanel><include id="incCadNivelTaxonomico" src="/pages/niveltaxonomico/"/></tabpanel>
+			        			<tabpanel><include id="incCadItemTaxonomico" src="/pages/itemtaxonomico/"/></tabpanel>
+			        		</tabpanels>
+			        	</tabbox> 
         			</tabpanel>
        				<tabpanel><!--  ##Inicio Cadastro Básicos  -->
         				<separator height="20px"></separator>
