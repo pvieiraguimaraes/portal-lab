@@ -42,11 +42,7 @@ public class ItemTaxonomicoControl<E extends Entity>  extends Control<E> {
 		}catch (Exception e) {
 			roots = new ArrayList<ItemTaxonomico>();
 		}
-		 Collections.sort( roots, new Comparator<ItemTaxonomico>(){
-			    public int compare( ItemTaxonomico e1, ItemTaxonomico e2 ) {
-			      return e1.compare(e2);
-			    }
-			  });
+		 Collections.sort( roots);
 		
 		clas.setFilhosItensTaxonomicos(new HashSet<ItemTaxonomico>(roots));
 		return clas;

@@ -56,6 +56,7 @@ public class ItemTaxonomicoComposer extends ComposerController<ItemTaxonomico> {
 	private Tree treeItemTaxonomico;
 	
 
+	private String action = "novo";
 	
 	public ItemTaxonomicoTreeModel getItemTaxonomicoTreeModel(){
 		return new ItemTaxonomicoTreeModel(((ItemTaxonomicoControl<ItemTaxonomico>)this.getControl()).getRootClasseAtividade());
@@ -144,6 +145,7 @@ public class ItemTaxonomicoComposer extends ComposerController<ItemTaxonomico> {
 	
 	@Override
 	public void newEntity() {
+		this.action="novo";
 		this.selectedEntity =this.initializeEntity();
 		//this.selectedEntity.setNivelTaxonomico(((ItemTaxonomicoControl<ItemTaxonomico>) this.control).getNivelTaxonomicoRaiz());
 		this.genericControl.associateEntityToAttributeView(this.selectedEntity);
@@ -152,7 +154,14 @@ public class ItemTaxonomicoComposer extends ComposerController<ItemTaxonomico> {
 		this.showEditForm();
 	}
 	
+	@Override
+	public void editEntity() {
+		this.action="editar";
+		super.editEntity();
+	}
+
 	public void newEntityFilha() {
+		this.action="novo";
 		ItemTaxonomico tempSelectedEntity = this.selectedEntity;
 		super.newEntity();
 		this.selectedEntity.setPai(tempSelectedEntity);
@@ -169,8 +178,12 @@ public class ItemTaxonomicoComposer extends ComposerController<ItemTaxonomico> {
 	public BindingListModelList<NivelTaxonomico> getListNivelTaxonomicoFilhos(){
 		
 		Set<Entity>	listPais=null;
-		if(this.fldNivelTaxonomico!=null){
+		if(this.fldNivelTaxonomico!=null && this.action.equalsIgnoreCase("novo")){
+			listPais = ((ItemTaxonomicoControl<ItemTaxonomico>)this.genericControl.getControl()).getListNivelTaxonomicoFilhos(this.fldNivelTaxonomico);
+		}else if(this.fldNivelTaxonomico!=null && this.action.equalsIgnoreCase("editar")) {
 			listPais = ((ItemTaxonomicoControl<ItemTaxonomico>)this.genericControl.getControl()).getListNivelTaxonomicoFilhos(this.fldNivelTaxonomico.getPai());
+		}else{
+			listPais = ((ItemTaxonomicoControl<ItemTaxonomico>)this.genericControl.getControl()).getListNivelTaxonomicoFilhos(null);
 		}
 		
 		BindingListModelList<NivelTaxonomico> nivelTaxonomicoModel;
