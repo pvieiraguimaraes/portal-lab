@@ -112,6 +112,7 @@
 				                		<attribute name="onClick">
 				                			((Treeitem)self.getParent().getParent().getParent()).setSelected(true);
 				                			itemTaxonomicoController.selectEntity();
+				                			Events.sendEvent(treeItemTaxonomico,new Event("onSelect",treeItemTaxonomico));
 				                			itemTaxonomicoController.editEntity();
 				                		</attribute>
 				                	</button>
