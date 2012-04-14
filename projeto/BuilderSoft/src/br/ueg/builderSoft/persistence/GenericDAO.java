@@ -133,7 +133,7 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 		List<E> searchs = new ArrayList<E>();
 		
 		Session session = this.getSession();
-		session.clear();
+		session.flush();
 		Criteria criteria = session.createCriteria(entity.getClass());
 		int numFilters =  entity.getSearchColumnTable(entity).size();
 		Criterion conds[] = new Criterion[numFilters];
@@ -186,7 +186,7 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 	@SuppressWarnings("unchecked")
 	public List<E> findByHQL(String qry){
 		Session session = this.getSession();
-		session.clear();
+		session.flush();
 		Query vQry = session.createQuery(qry);
 		return vQry.list();
 	}
@@ -195,7 +195,8 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 	public List<E> findByEntity(Entity entity){
 		List<E> searchs = new ArrayList<E>();
 		
-		Criteria criteria = this.getSession().createCriteria(entity.getClass());
+		Session session = this.getSession();
+		Criteria criteria = session.createCriteria(entity.getClass());
 		
 		ArrayList<Criterion> conds = new ArrayList<Criterion>();
 
@@ -236,7 +237,7 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 		}
 
 		
-		
+		session.flush();
 		searchs.addAll(criteria.list());
 		HashSet<E> h = new HashSet<E>(searchs);
 		searchs.clear();
@@ -259,7 +260,9 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 	@SuppressWarnings("unchecked")
 	public E getByID(E entity, Long id){
 		List<E> searchs = new ArrayList<E>();
-		Criteria criteria = this.getSession().createCriteria(entity.getClass()).add(Restrictions.idEq(id));
+		Session session = this.getSession();
+		Criteria criteria = session.createCriteria(entity.getClass()).add(Restrictions.idEq(id));
+		session.flush();
 		searchs = criteria.list();
 		if(searchs.size()>0){
 			return searchs.get(0);
