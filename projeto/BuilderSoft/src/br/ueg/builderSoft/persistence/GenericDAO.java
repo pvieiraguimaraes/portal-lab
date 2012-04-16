@@ -231,18 +231,15 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 			}
 				
 			
-			for(Criterion c: conds){
-				criteria.add(c);
-			}
+			
+		}
+		for(Criterion c: conds){
+			criteria.add(c);
 		}
 
 		
-		session.flush();
-		searchs.addAll(criteria.list());
-		HashSet<E> h = new HashSet<E>(searchs);
-		searchs.clear();
-		searchs.addAll(h);
-		return searchs;
+		session.flush();		
+		return criteria.list();
 		
 	}
 
