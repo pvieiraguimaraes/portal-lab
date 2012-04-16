@@ -1,4 +1,4 @@
-package com.mondoprice.security.access.decision;
+package org.ueg.security.access.decision;
 
 import java.io.Serializable;
 
@@ -7,8 +7,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.ueg.security.manager.SpringSecurityManager;
 
-import com.mondoprice.security.manager.SpringSecurityManager;
 
 /**
  * @author Johnys
