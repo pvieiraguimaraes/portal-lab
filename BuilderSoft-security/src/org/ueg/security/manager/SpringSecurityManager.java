@@ -1,12 +1,12 @@
-package com.mondoprice.security.manager;
+package org.ueg.security.manager;
 
 import java.io.Serializable;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.ueg.security.cache.SecurityCache;
 
 
-import com.mondoprice.security.cache.SecurityCache;
 
 /**
  * @author Johnys

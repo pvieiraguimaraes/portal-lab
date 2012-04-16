@@ -1,10 +1,10 @@
-package com.mondoprice.security.access.voter;
+package org.ueg.security.access.voter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.ConfigAttribute;
+import org.ueg.security.manager.SpringSecurityManager;
 
-import com.mondoprice.security.manager.SpringSecurityManager;
 
 
 public abstract class BaseVoter implements AccessDecisionVoter {

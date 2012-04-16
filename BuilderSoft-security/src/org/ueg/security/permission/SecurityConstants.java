@@ -1,4 +1,4 @@
-package com.mondoprice.security.permission;
+package org.ueg.security.permission;
 
 public interface SecurityConstants {
 

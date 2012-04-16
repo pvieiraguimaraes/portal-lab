@@ -1,4 +1,4 @@
-package com.mondoprice.security.access.decision;
+package org.ueg.security.access.decision;
 
 import java.util.Collection;
 

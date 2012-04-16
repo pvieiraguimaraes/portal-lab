@@ -1,4 +1,4 @@
-package com.mondoprice.security.access.voter;
+package org.ueg.security.access.voter;
 
 import java.util.Collection;
 
