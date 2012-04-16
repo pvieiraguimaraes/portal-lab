@@ -1,8 +1,19 @@
 package br.ueg.builderSoft.security.model;
 
+import java.util.Set;
+
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 
 import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.util.annotation.Attribute;
@@ -15,24 +26,35 @@ import br.ueg.builderSoft.util.annotation.Attribute;
 public class Usuario extends Entity  {
 	
 	@Id
+	@GeneratedValue	
 	@Column(name = "codigo_usua")
 	private long id;	
 
-	@Column(name = "login_usua")
+	@Column(name = "login_usua", length=25, nullable=false)
 	@Attribute(Required = true, SearchField = true)
 	private String login;
 	
-	@Column(name = "senha_usua")
+	@Column(name = "senha_usua", length=15, nullable=false)
 	@Attribute(Required = true, SearchField = false)
 	private String senha;
 	
-	@Column(name = "status_usua")
+	@Column(name = "status_usua", length=20, nullable=false, columnDefinition="varchar(20) default 'Ativo'")
 	@Attribute(Required = true, SearchField = false)
 	private String status;
 	
-	@Column(name = "nome_usua")
+	@Column(name = "nome_usua", length=80, nullable=false)
 	@Attribute(Required = true, SearchField = true)
 	private String nome;
+	
+	@ManyToMany(cascade =CascadeType.ALL)
+	@JoinTable(name="usuario_grupo", 
+			joinColumns			={@JoinColumn(name = "id_usua_usgr")}, 
+			inverseJoinColumns	={@JoinColumn(name = "id_grus_usgr")}
+			)
+	private Set<GrupoUsuario> grupos;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario",cascade = CascadeType.ALL)// mappedBy indica o atributo da entidade many
+	private Set<UsuarioPermissao> permissoes;
 	
 	public Usuario(){		
 	}
@@ -101,4 +123,31 @@ public class Usuario extends Entity  {
 		this.nome = nome;
 	}
 
+	/**
+	 * @return the grupos
+	 */
+	public Set<GrupoUsuario> getGrupos() {
+		return grupos;
+	}
+
+	/**
+	 * @param grupos the grupos to set
+	 */
+	public void setGrupos(Set<GrupoUsuario> grupos) {
+		this.grupos = grupos;
+	}
+
+	/**
+	 * @return the permissoes
+	 */
+	public Set<UsuarioPermissao> getPermissoes() {
+		return permissoes;
+	}
+
+	/**
+	 * @param permissoes the permissoes to set
+	 */
+	public void setPermissoes(Set<UsuarioPermissao> permissoes) {
+		this.permissoes = permissoes;
+	}
 }
