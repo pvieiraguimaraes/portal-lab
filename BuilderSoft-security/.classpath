@@ -11,7 +11,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/spring-security-core-3.0.2.RELEASE.jar">
+	<classpathentry kind="lib" path="lib/spring-security-core-3.0.2.RELEASE.jar" sourcepath="C:/Users/guiliano.AEE/Desktop/temp/projetos/spring-security-3.0.2.RELEASE/spring-security-3.0.2.RELEASE/dist/spring-security-core-3.0.2.RELEASE-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -77,5 +77,6 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry combineaccessrules="false" kind="src" path="/BuilderSoft"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

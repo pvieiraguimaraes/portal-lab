@@ -1,4 +1,4 @@
-package br.ueg.security.permission;
+package br.ueg.builderSoft.security.permission;
 
 public interface SecurityConstants {
 

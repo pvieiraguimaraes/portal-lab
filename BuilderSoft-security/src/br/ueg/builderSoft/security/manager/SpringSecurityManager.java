@@ -1,11 +1,11 @@
-package br.ueg.security.manager;
+package br.ueg.builderSoft.security.manager;
 
 import java.io.Serializable;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.ueg.security.cache.SecurityCache;
+import br.ueg.builderSoft.security.cache.SecurityCache;
 
 
 
@@ -29,14 +29,19 @@ public class SpringSecurityManager implements Serializable {
 	 *            Nome do Profile que sera verificado.
 	 * @param useCase
 	 *            Nome do UseCase que sera verificado.
+	 * @param user
+	 * 			  Nome do suuário que sera verificado.
 	 * @return True caso o Profile contenha a UseCase, false caso contrario.
 	 */
-	public boolean isGrantedUseCase(String profile, String useCase) {
-		int responseCache = securityCache.isUseCaseAccessible(profile, useCase);
+	public boolean isGrantedUseCase(String user, String profile, String useCase) {
+		//TODO fazer o Cache para usuário também
+/*		int responseCache = securityCache.isUseCaseAccessible(profile, useCase);
 		boolean granted = responseCache == SecurityCache.CACHE_GRANTED;
 		if (responseCache == SecurityCache.CACHE_FAULT) {
 			granted = isPermissionForUseCase(profile, useCase);
-		}
+		}*/
+		
+		boolean granted = isPermissionForUseCase(user, profile, useCase);;
 		return granted;
 	}
 
@@ -46,16 +51,20 @@ public class SpringSecurityManager implements Serializable {
 	 *            Nome da Profile que sera verificada.
 	 * @param useCase
 	 *            Nome da UseCase que sera verificada.
+	 * @param user
+	 * 			  Nome do usuario que sera verificado
 	 * @param functionality
 	 *            Nome da Functionality que sera verificada.
 	 * @return True caso a Profile contenha a functionality para a UseCase especificada, False caso contrario.
 	 */
-	public boolean isGrantedFunctionality(String profile, String useCase, String functionality) {
-		int responseCache = securityCache.isFunctionalityAccessible(profile, useCase, functionality);
+	public boolean isGrantedFunctionality(String user, String profile, String useCase, String functionality) {
+		//TODO fazer o cache para usuário também
+		/*int responseCache = securityCache.isFunctionalityAccessible(profile, useCase, functionality);
 		boolean granted = responseCache == SecurityCache.CACHE_GRANTED;
 		if (responseCache == SecurityCache.CACHE_FAULT) {
 			granted = isPermissionForFunctionality(profile, useCase, functionality);
-		}
+		}*/
+		boolean granted = isPermissionForFunctionality(user, profile, useCase, functionality);
 		return granted;
 	}
 
@@ -67,11 +76,14 @@ public class SpringSecurityManager implements Serializable {
 	 *            Nome da UseCase que sera verificada.
 	 * @param functionality
 	 *            Nome da Functionality que sera verificada.
+	 * @param user
+	 * 			  Nome do usuario que sera verificado
 	 * @return True caso a Profile contenha a functionality para a UseCase especificada, False caso contrario.
 	 */
-	private boolean isPermissionForFunctionality(String profile, String useCase, String functionality) {
-		boolean granted = getProfileManager().isGrantedFunctionality(profile, useCase, functionality);
-		securityCache.addCache(profile, useCase, functionality, granted);
+	private boolean isPermissionForFunctionality(String user, String profile, String useCase, String functionality) {
+		boolean granted = getProfileManager().isGrantedFunctionality(user, profile, useCase, functionality);
+		//TODO fazer a parte de cache para usuario tambem
+		//securityCache.addCache(profile, useCase, functionality, granted);
 		return granted;
 	}
 
@@ -81,11 +93,16 @@ public class SpringSecurityManager implements Serializable {
 	 *            Nome da Profile que sera verificada.
 	 * @param useCase
 	 *            Nome da UseCase que sera verificada.
+	 * @param user
+	 * 			  Nome do Usuario que sera verificado.
+	 * @param user
+	 * 			  Nome do usuario que sera verificado
 	 * @return True caso o Profile contenha a UseCase, false caso contrario.
 	 */
-	private boolean isPermissionForUseCase(String profile, String useCase) {
-		boolean granted = getProfileManager().isGrantedUseCase(profile, useCase);
-		securityCache.addCache(profile, useCase, null, granted);
+	private boolean isPermissionForUseCase(String user, String profile, String useCase) {
+		boolean granted = getProfileManager().isGrantedUseCase(user, profile, useCase);
+		//TODO fazer a parte de cahce para usuario
+		//securityCache.addCache(profile, useCase, null, granted);
 		return granted;
 	}
 
