@@ -1,4 +1,4 @@
-package org.ueg.security.permission;
+package br.ueg.security.permission;
 
 public interface SecurityConstants {
 
