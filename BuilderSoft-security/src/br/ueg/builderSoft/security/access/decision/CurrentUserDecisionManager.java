@@ -27,9 +27,17 @@ public class CurrentUserDecisionManager implements Serializable {
 		Boolean granted = false;
 		Authentication authentication = getCurrentUserAuthentication();
 		for (GrantedAuthority grantedAuthority : authentication.getAuthorities()) {
-			if (isGrantedPermission(((UserDetails)authentication.getPrincipal()).getUsername(),grantedAuthority.getAuthority(), useCase)) {
-				granted = true;
-				break;
+			Object usuario = authentication.getPrincipal();
+			if(usuario instanceof String) {
+				if(isGrantedPermission((String)usuario,grantedAuthority.getAuthority(), useCase)){
+					granted = true;
+					break;
+				}
+			}else{
+				if (isGrantedPermission(((UserDetails)usuario).getUsername(),grantedAuthority.getAuthority(), useCase)) {
+					granted = true;
+					break;
+				}
 			}
 		}
 		return granted;
