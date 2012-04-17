@@ -28,7 +28,7 @@ public class Funcionalidade extends Entity  {
 	@Attribute(Required = true, SearchField = true)
 	private String nome;
 	
-	@Column(name = "desricao_func")
+	@Column(name = "descricao_func")
 	@Attribute(Required = true, SearchField = true)
 	private String descricao;
 		
