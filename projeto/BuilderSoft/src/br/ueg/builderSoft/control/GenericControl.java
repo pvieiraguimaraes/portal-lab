@@ -44,9 +44,11 @@ public class GenericControl <E extends Entity> {
 		this.subControllerManager.addController(pListing);
 		this.subControllerManager.addController(pMessages);
 		
-		for(SubController v: pControl.getListValidator()){
-			this.subControllerManager.addController(v);
-		}
+//		if(pControl!=null){
+//			for(SubController v: pControl.getListValidator()){
+//				this.subControllerManager.addController(v);
+//			}
+//		}
 		this.view = pView;
 		this.control = pControl;
 		
@@ -64,6 +66,11 @@ public class GenericControl <E extends Entity> {
 	 */
 	public void setControl(Control<E> control) {
 		this.control = control;
+		if(control!=null){
+			for(SubController v: control.getListValidator()){
+				this.subControllerManager.addController(v);
+			}
+		}
 	}
 	
 	public Control<E> getControl() {
@@ -101,7 +108,9 @@ public class GenericControl <E extends Entity> {
 			try {
 				Method method = reflectedClass.getMethod("action" + action.substring(0, 1).toUpperCase() + action.substring(1).toLowerCase(), SubControllerManager.class);
 				result = (Boolean) method.invoke(control, this.subControllerManager);
-			} catch (SecurityException e) {
+			}catch(org.springframework.security.access.AccessDeniedException e){
+				e.printStackTrace();
+			}catch (SecurityException e) {
 				e.printStackTrace();
 			} catch (NoSuchMethodException e) {
 				e.printStackTrace();

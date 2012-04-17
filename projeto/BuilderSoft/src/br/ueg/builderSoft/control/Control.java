@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.persistence.DataIntegrityViolationException;
 import br.ueg.builderSoft.persistence.GenericDAO;
@@ -17,10 +19,20 @@ import br.ueg.builderSoft.util.control.ValidatorControl;
 import br.ueg.builderSoft.util.sets.SpringFactory;
 
 @SuppressWarnings("unchecked")
+@Service
 public class Control<E extends Entity>{
 	
 
-	protected GenericDAO<E> persistence;
+	private GenericDAO<E> persistence;
+	protected GenericDAO<E> getPersistence() {
+		if(persistence==null){
+			this.persistence = (GenericDAO<E>) SpringFactory.getInstance().getBean("genericDAO", GenericDAO.class);
+		}
+		return persistence;
+	}
+
+
+
 	private HashMap<String, Object> mapFields;
 	private MessagesControl messagesControl;
 	//construtores do subcontroller mandaram algo +
@@ -36,8 +48,11 @@ public class Control<E extends Entity>{
 	 * e aumentar no arraylist de validações.
 	 */
 	public Control(MessagesControl pMessagesControl) {
-		this.persistence = (GenericDAO<E>) SpringFactory.getInstance().getBean("genericDAO", GenericDAO.class);
+		//this.persistence = (GenericDAO<E>) SpringFactory.getInstance().getBean("genericDAO", GenericDAO.class);
 		this.messagesControl = pMessagesControl;
+	}
+	public Control(){
+		
 	}
 	
 
@@ -85,7 +100,7 @@ public class Control<E extends Entity>{
 		if (entity.getId() == 0) {
 			boolean result = false;
 			try{
-				if (persistence.save(entity) != 0) {
+				if (getPersistence().save(entity) != 0) {
 					result = true;
 				} 
 			}catch(DataIntegrityViolationException e){
@@ -112,7 +127,7 @@ public class Control<E extends Entity>{
 
 		boolean result = false;
 		try{
-			persistence.update(entity);
+			getPersistence().update(entity);
 			result = true;			
 		}catch(DataIntegrityViolationException e){
 			e.printStackTrace();
@@ -133,7 +148,7 @@ public class Control<E extends Entity>{
 	 */
 	public boolean actionDelete(SubControllerManager<E> subControllerManager) {
 		try {
-			persistence.delete((E) this.mapFields.get("selectedEntity"));
+			getPersistence().delete((E) this.mapFields.get("selectedEntity"));
 			return true;
 		}  catch (Exception e) {
 			e.printStackTrace();
@@ -150,7 +165,7 @@ public class Control<E extends Entity>{
 	public boolean actionFindByCriteria(SubControllerManager<E> subControllerManager) {//TODO: reescrever
 		if ( this.mapFields.get("searchValue") != null && ! ((String) this.mapFields.get("searchValue")).isEmpty()) {
 			ListingControl<E> listingControl = (ListingControl<E>) subControllerManager.getListingControl();
-			listingControl.setList(persistence.findByCriteria((E) this.mapFields.get("entity"),   (String) this.mapFields.get("searchValue")));
+			listingControl.setList(getPersistence().findByCriteria((E) this.mapFields.get("entity"),   (String) this.mapFields.get("searchValue")));
 			listingControl.setListing(true);
 			return true;
 		} else {
@@ -167,7 +182,7 @@ public class Control<E extends Entity>{
 	public boolean actionFindByHQL(SubControllerManager<E> subControllerManager) {//TODO: reescrever
 		if (this.mapFields.get("searchValue") != null && !((String) this.mapFields.get("searchValue")).isEmpty()) {
 			ListingControl<E> listingControl = (ListingControl<E>) subControllerManager.getListingControl();
-			listingControl.setList(persistence.findByHQL((E) this.mapFields.get("entity"), (String) this.mapFields.get("searchValue")));
+			listingControl.setList(getPersistence().findByHQL((E) this.mapFields.get("entity"), (String) this.mapFields.get("searchValue")));
 			listingControl.setListing(true);
 			return true;
 		} else {
@@ -183,7 +198,7 @@ public class Control<E extends Entity>{
 	 */
 	public boolean actionList(SubControllerManager<E> subControllerManager) {
 		ListingControl<E> listingControl = (ListingControl<E>) subControllerManager.getListingControl();
-		listingControl.setList(persistence.getList((E) this.mapFields.get("entity")));
+		listingControl.setList(getPersistence().getList((E) this.mapFields.get("entity")));
 		listingControl.setListing(true);
 		listingControl.setSearch(false);
 		return true;
@@ -251,6 +266,9 @@ public class Control<E extends Entity>{
 	 * @return the messagesControl
 	 */
 	public MessagesControl getMessagesControl() {
+		if(messagesControl==null){
+			this.messagesControl = (MessagesControl) SpringFactory.getInstance().getBean("messagesControl", MessagesControl.class);
+		}
 		return messagesControl;
 	}
 
