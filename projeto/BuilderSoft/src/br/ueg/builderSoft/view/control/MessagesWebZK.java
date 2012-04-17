@@ -35,6 +35,9 @@ public class MessagesWebZK extends MessagesControl {
 	protected Locale getLocale() {
 
 		Locale locale = org.zkoss.util.Locales.getLocale(Library.getProperty(Attributes.PREFERRED_LOCALE));
+		if(locale == null){
+			locale = org.zkoss.util.Locales.getLocale("pt_BR");
+		}
 		
 		return locale;//FacesContext.getCurrentInstance().getELContext().getLocale();
 	}

@@ -139,11 +139,13 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 		
 		this.component = comp;
 		
+		this.genericControl.setControl(this.getControl());
+		
 		binder = new AnnotateDataBinder(component);
 		binder.setLoadOnSave(false);
 		binder.loadAll();
 		
-		this.genericControl.setControl(this.getControl());
+		
 	}
 	
 	/**
@@ -561,7 +563,11 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 			BindingListModelList<Entity> categoriaUsuarioModel;
 			ArrayList<Entity> listFKEntity;
 			if(fkEntity!=null){
-				 List<Entity> listFKEntity2 = this.genericControl.getControl().getListFKEntity(fkEntity);
+				 Control<E> control2 = this.genericControl.getControl();
+				 List<Entity> listFKEntity2=null;
+				 if(control2!=null){
+					 listFKEntity2 = control2.getListFKEntity(fkEntity);
+				 }
 				 if(listFKEntity2!=null && !listFKEntity2.isEmpty()){
 					 listFKEntity = (ArrayList<Entity>) listFKEntity2;
 				 }else{

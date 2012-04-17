@@ -106,10 +106,9 @@ public class GenericControl <E extends Entity> {
 		if (control.doAnyAction(this.subControllerManager, action)) {
 			Class reflectedClass = control.getClass();
 			try {
-				Method method = reflectedClass.getMethod("action" + action.substring(0, 1).toUpperCase() + action.substring(1).toLowerCase(), SubControllerManager.class);
+				String actionName = "action" + action.substring(0, 1).toUpperCase() + action.substring(1).toLowerCase();
+				Method method = reflectedClass.getMethod(actionName, SubControllerManager.class);
 				result = (Boolean) method.invoke(control, this.subControllerManager);
-			}catch(org.springframework.security.access.AccessDeniedException e){
-				e.printStackTrace();
 			}catch (SecurityException e) {
 				e.printStackTrace();
 			} catch (NoSuchMethodException e) {
