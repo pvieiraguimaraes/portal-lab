@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.Selectors;
@@ -37,6 +38,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 
 	protected GenericControl<E> genericControl;
 	
+	@Autowired
 	protected Control<E> control;
 	
 	@AttributeView(key = "id", isEntityValue = true, fieldType = Long.class, isVisible = false, caption = "mb_idColumn")
@@ -84,11 +86,11 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 		Control<E> newControl = this.getNewControl(pMessages);
 		listingControl = new ListingControl<E>();
 		
-		if(newControl==null){
+		/*if(newControl==null){
 			genericControl = new GenericControl<E>(pMessages, listingControl, this);
-		}else{
+		}else{*/
 			genericControl = new GenericControl<E>(pMessages, listingControl, this, newControl);
-		}
+		//}
 		this.setControl(genericControl.getControl());
 
 		try {
@@ -140,6 +142,8 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 		binder = new AnnotateDataBinder(component);
 		binder.setLoadOnSave(false);
 		binder.loadAll();
+		
+		this.genericControl.setControl(this.getControl());
 	}
 	
 	/**
