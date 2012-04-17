@@ -1,0 +1,32 @@
+<zk>
+	<hbox height="350px" width="100%">
+		<listbox id="candidateLb" width="300px" height="300px" multiple="true" checkmark="true">
+			<listhead>
+				<listheader id="candidateHeader" />
+			</listhead>
+			<template name="modelCandidate">
+				<listitem>
+					<listcell label="${each}" />
+				</listitem>
+			</template>
+		</listbox>
+		<vbox height="100%" spacing="10px" align="center">
+			<separator orient="horizontal" />
+			<button style="cursor: pointer;" id="chooseBtn" />
+			<button style="cursor: pointer;" id="removeBtn" />
+			<separator orient="horizontal" />
+			<button style="cursor: pointer;" id="chooseAllBtn" />
+			<button style="cursor: pointer;" id="removeAllBtn" />
+		</vbox>
+		<listbox id="chosenLb" width="300px" height="300px" multiple="true" checkmark="true">
+			<listhead>
+				<listheader id="chosenHeader" />
+			</listhead>
+			<template name="modelChosen">
+				<listitem>
+					<listcell label="${each}" />
+				</listitem>
+			</template>
+		</listbox>
+	</hbox>
+</zk>
