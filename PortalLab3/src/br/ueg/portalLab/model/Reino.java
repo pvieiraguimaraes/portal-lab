@@ -23,7 +23,7 @@ public class Reino extends Entity {
 	@GeneratedValue
 	@OneToMany(targetEntity = Filo.class, mappedBy = "reino")
 	@Column(name = "id_reino")
-	private long id;
+	private Long id;
 	@Column(name = "nome")
 	@Attribute(Required = true, SearchField = true)
 	private String reino;
@@ -36,11 +36,11 @@ public class Reino extends Entity {
 		this.reino = reino;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

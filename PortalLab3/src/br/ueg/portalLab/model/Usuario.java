@@ -29,7 +29,7 @@ public class Usuario extends Entity {
 	@Id()
 	@GeneratedValue
 	@Column(name = "id_usuario")
-	private long id;
+	private Long id;
 	
 	@Column(name = "nome", length=100, nullable = false)
 	@Attribute(Required = true, SearchField = true)
@@ -80,12 +80,12 @@ public class Usuario extends Entity {
 	
 	
 	
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
 
 	@Override
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

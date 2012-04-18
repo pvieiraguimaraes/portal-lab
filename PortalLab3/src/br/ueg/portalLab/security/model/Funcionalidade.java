@@ -22,7 +22,7 @@ public class Funcionalidade extends Entity  {
 	@Id
 	@GeneratedValue	
 	@Column(name = "id_func")
-	private long id;	
+	private Long id;	
 
 	@Column(name = "nome_func")
 	@Attribute(Required = true, SearchField = true)
@@ -40,11 +40,11 @@ public class Funcionalidade extends Entity  {
 	public Funcionalidade(){		
 	}
 			
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

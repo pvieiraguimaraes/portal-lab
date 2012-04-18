@@ -29,7 +29,7 @@ public class NivelTaxonomico extends Entity {
 	@Id
 	@GeneratedValue
 	@Column(name = "id_nitax")
-	private long id;
+	private Long id;
 	
 	
 	@ManyToOne(optional = true, fetch = FetchType.LAZY)
@@ -57,11 +57,11 @@ public class NivelTaxonomico extends Entity {
 		this.obrigatorio = obrigatorio;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

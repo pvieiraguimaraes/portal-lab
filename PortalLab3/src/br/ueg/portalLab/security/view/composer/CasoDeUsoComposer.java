@@ -43,8 +43,8 @@ public class CasoDeUsoComposer extends TabelaComposerController<CasoDeUso> {
 	@Autowired
 	protected CasoDeUsoControl casoDeUsoControl;
 	
-	private BindingListModelSet<Funcionalidade> funcionalidadeList = new BindingListModelSet<Funcionalidade>(
-			new HashSet<Funcionalidade>(0), true);
+	private BindingListModelSet<CasoDeUsoFuncionalidade> funcionalidadeList = new BindingListModelSet<CasoDeUsoFuncionalidade>(
+			new HashSet<CasoDeUsoFuncionalidade>(0), true);
 	
 	
 	@Wire
@@ -105,11 +105,11 @@ public class CasoDeUsoComposer extends TabelaComposerController<CasoDeUso> {
 	 * 
 	 * @return List<FunctionalityUseCase> Lista de funcionalidades.
 	 */
-	public BindingListModelSet<Funcionalidade> getFuncionalidadeList() {
-		Set<Funcionalidade> funcList = new HashSet<Funcionalidade>(0);
+	public BindingListModelSet<CasoDeUsoFuncionalidade> getFuncionalidadeList() {
+		Set<CasoDeUsoFuncionalidade> funcList = new HashSet<CasoDeUsoFuncionalidade>(0);
 		try {
-			CasoDeUsoControl cc = (CasoDeUsoControl)this.getControl();
-			funcList.addAll(cc.getFuncionalidadeList());
+			
+			funcList.addAll(getCasoDeUsoControl().getFuncionalidadeList());
 		
 		} catch (Throwable e) {
 			e.printStackTrace();
@@ -127,41 +127,69 @@ public class CasoDeUsoComposer extends TabelaComposerController<CasoDeUso> {
 	 * 
 	 * @return List<FunctionalityUseCase> Lista de funcionalidades.
 	 */
-	@SuppressWarnings("unchecked")
 	public ListModel<CasoDeUsoFuncionalidade> getCasoDeUsoFuncionalidadeList() {
 		BindingListModelSet<CasoDeUsoFuncionalidade> result = null;
-		if (selectedEntity != null && selectedEntity.getId()!=0) {
-			Set<CasoDeUsoFuncionalidade> funcionalidades = selectedEntity.getFuncionalidades();
-			if(funcionalidades==null) funcionalidades = new HashSet<CasoDeUsoFuncionalidade>();
-			result = new BindingListModelSet<CasoDeUsoFuncionalidade>(funcionalidades, true);
+		if (this.getSelectedEntity() != null && this.getSelectedEntity().getId()!=null) {
+			
+//			for(CasoDeUsoFuncionalidade cafuList :  list){
+//				if(!this.getSelectedCasoDeUso().getFuncionalidades().contains(cafuList)){
+//					this.getSelectedCasoDeUso().getFuncionalidades().add(cafuList);
+//				}
+//			}
+//			Set<CasoDeUsoFuncionalidade> list = getCasoDeUsoControl().getCasoDeUsoFuncionalidades();		
+			
+			result = new BindingListModelSet<CasoDeUsoFuncionalidade>(this.selectedEntity.getFuncionalidades(), true);
 		}
 		return result;
 	}
 	
 	public void setCasoDeUsoFuncionalidadeList(ListModel<CasoDeUsoFuncionalidade> chosenList) {
 		Set<CasoDeUsoFuncionalidade> chosenItens = ((BindingListModelSet<CasoDeUsoFuncionalidade>) chosenList).getSelection();
-		if(selectedEntity.getFuncionalidades()!=null){
+		if(this.getSelectedEntity().getFuncionalidades()!=null){
 			for (CasoDeUsoFuncionalidade fuc : chosenItens) {
-				selectedEntity.getFuncionalidades().add(fuc);
+				this.getSelectedEntity().getFuncionalidades().add(fuc);
 			}
 		}
 	}
 	
 	public void editPermissoes(){
 		binder.saveAll();
+		binder.loadComponent(dualList);
 		this.casoDeUsoFuncionalidades.setMode(Window.MODAL);
 		this.casoDeUsoFuncionalidades.setVisible(true);
 		this.casoDeUsoFuncionalidades.doModal();
-		binder.loadAll();
+		
+		
 	}
 	public void savePermissoes(){
 		binder.saveAll();
-		this.genericControl.associateEntityToAttributeView(selectedEntity);
-		this.genericControl.doAction("SAVE", this.selectedEntity);
-		binder.loadAll();
-		Messagebox.show("fazer o salva permissoes");
+		this.genericControl.associateEntityToAttributeView(this.getSelectedEntity());
+		this.genericControl.doAction("SAVE", this.getSelectedEntity());
+		this.casoDeUsoFuncionalidades.setVisible(false);
+		this.doAction("SEARCH");
 	}
 	public void cancelEditFuncionalidades(){
 		this.casoDeUsoFuncionalidades.setVisible(false);
+	}
+	
+	public CasoDeUsoControl getCasoDeUsoControl(){
+		return (CasoDeUsoControl) this.getControl();
+	}
+
+	/* (non-Javadoc)
+	 * @see br.ueg.builderSoft.view.zk.composer.ComposerController#setSelectedEntity(br.ueg.builderSoft.model.Entity)
+	 */
+	@Override
+	public void setSelectedEntity(CasoDeUso selectedEntity) {
+		super.setSelectedEntity(selectedEntity);
+		this.getCasoDeUsoControl().setSelectedCasoDeUso(selectedEntity);
+	}
+
+	/* (non-Javadoc)
+	 * @see br.ueg.builderSoft.view.zk.composer.ComposerController#getSelectedEntity()
+	 */
+	@Override
+	public CasoDeUso getSelectedEntity() {		
+		return this.getCasoDeUsoControl().getSelectedCasoDeUso();
 	}
 }

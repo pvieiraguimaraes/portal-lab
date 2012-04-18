@@ -18,6 +18,9 @@ import br.ueg.portalLab.model.ItemGeografico;
 import br.ueg.portalLab.model.NivelGeografico;
 import br.ueg.portalLab.model.Usuario;
 
+import br.ueg.portalLab.security.model.CasoDeUso;
+import br.ueg.portalLab.security.model.CasoDeUsoFuncionalidade;
+import br.ueg.portalLab.security.model.Funcionalidade;
 import br.ueg.portalLab.view.managed.TipoDeMontagemMB;
 
 public class Teste {
@@ -29,8 +32,51 @@ public class Teste {
 		//listAuto3();
 		//listAuto1_1();
 		//testeSpring1();
-		testeUsuario();
+		//testeUsuario();
+		insertAuto3();
+		removeAuto3();
 		
+	}
+	public static void insertAuto3(){
+		GenericDAO<CasoDeUso> casoDeUsoDAO = (GenericDAO<CasoDeUso>) SpringFactory.getInstance().getBean("genericDAO", GenericDAO.class);
+		GenericDAO<Funcionalidade> funcionalidadeDAO = (GenericDAO<Funcionalidade>) SpringFactory.getInstance().getBean("genericDAO", GenericDAO.class);
+	
+		CasoDeUso c1 = new CasoDeUso();
+		c1 = casoDeUsoDAO.getByID(c1, 3L);
+		Funcionalidade func = funcionalidadeDAO.getByID(new Funcionalidade(), 2L);
+		
+		CasoDeUsoFuncionalidade cuf = new CasoDeUsoFuncionalidade();
+		cuf.setCasoDeUso(c1);
+		cuf.setFuncionalidade(func);
+		
+		c1.getFuncionalidades().add(cuf);
+		
+		try {
+			casoDeUsoDAO.update(c1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	public static void removeAuto3(){
+		GenericDAO<CasoDeUso> casoDeUsoDAO = (GenericDAO<CasoDeUso>) SpringFactory.getInstance().getBean("genericDAO", GenericDAO.class);
+		GenericDAO<Funcionalidade> funcionalidadeDAO = (GenericDAO<Funcionalidade>) SpringFactory.getInstance().getBean("genericDAO", GenericDAO.class);
+	
+		CasoDeUso c1 = new CasoDeUso();
+		c1 = casoDeUsoDAO.getByID(c1, 3L);
+		Funcionalidade func = funcionalidadeDAO.getByID(new Funcionalidade(), 1L);
+		for(CasoDeUsoFuncionalidade cf : c1.getFuncionalidades()){
+			System.out.println("CAFU:"+cf.getFuncionalidade().getNome());
+			c1.getFuncionalidades().remove(cf);
+		}
+		try {casoDeUsoDAO.save(c1);
+			//casoDeUsoDAO.delete(c1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	public static void testeUsuario(){
 		GenericDAO<Usuario> usuarioDAO = (GenericDAO<Usuario>)SpringFactory.getInstance().getBean("genericDAO",GenericDAO.class);
@@ -51,7 +97,7 @@ public static void insertAuto1(){
 		GenericDAO<ItemGeografico> itemGeoDAO = (GenericDAO<ItemGeografico>) SpringFactory.getInstance().getBean("genericDAO", GenericDAO.class);
 		
 		NivelGeografico nivel = new NivelGeografico();
-		nivel.setId(1);
+		nivel.setId(1L);
 		
 		
 		nivel  = (NivelGeografico) nivelGeoDAO.getByID(nivel, 1L);
