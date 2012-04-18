@@ -1,5 +1,6 @@
 package br.ueg.portalLab.security.view.composer;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -126,10 +127,14 @@ public class CasoDeUsoComposer extends TabelaComposerController<CasoDeUso> {
 	 * 
 	 * @return List<FunctionalityUseCase> Lista de funcionalidades.
 	 */
+	@SuppressWarnings("unchecked")
 	public ListModel<CasoDeUsoFuncionalidade> getCasoDeUsoFuncionalidadeList() {
 		BindingListModelSet<CasoDeUsoFuncionalidade> result = null;
-		if (selectedEntity != null && selectedEntity.getId()!=0)
-			result = new BindingListModelSet<CasoDeUsoFuncionalidade>(selectedEntity.getFuncionalidades(), true);
+		if (selectedEntity != null && selectedEntity.getId()!=0) {
+			Set<CasoDeUsoFuncionalidade> funcionalidades = selectedEntity.getFuncionalidades();
+			if(funcionalidades==null) funcionalidades = new HashSet<CasoDeUsoFuncionalidade>();
+			result = new BindingListModelSet<CasoDeUsoFuncionalidade>(funcionalidades, true);
+		}
 		return result;
 	}
 	
@@ -150,7 +155,10 @@ public class CasoDeUsoComposer extends TabelaComposerController<CasoDeUso> {
 		binder.loadAll();
 	}
 	public void savePermissoes(){
+		binder.saveAll();
+		this.genericControl.associateEntityToAttributeView(selectedEntity);
 		this.genericControl.doAction("SAVE", this.selectedEntity);
+		binder.loadAll();
 		Messagebox.show("fazer o salva permissoes");
 	}
 	public void cancelEditFuncionalidades(){
