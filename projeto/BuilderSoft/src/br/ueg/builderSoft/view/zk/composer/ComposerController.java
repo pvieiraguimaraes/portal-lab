@@ -42,7 +42,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 	protected Control<E> control;
 	
 	@AttributeView(key = "id", isEntityValue = true, fieldType = Long.class, isVisible = false, caption = "mb_idColumn")
-	protected long fldId;
+	protected Long fldId;
 	
 	protected List<E> listEntity;
 	
@@ -94,7 +94,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 		this.setControl(genericControl.getControl());
 
 		try {
-			selectedEntity = (E) getEntityClass().newInstance();
+			this.setSelectedEntity((E) getEntityClass().newInstance());
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -203,14 +203,14 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 	/**
 	 * @return the fldId
 	 */
-	public long getFldId() {
+	public Long getFldId() {
 		return fldId;
 	}
 
 	/**
 	 * @param fldId the fldId to set
 	 */
-	public void setFldId(long fldId) {
+	public void setFldId(Long fldId) {
 		this.fldId = fldId;
 	}
 
@@ -350,8 +350,8 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 		//@Command("select")
 		//@NotifyChange({ "selectedEntity", "vm" })	
 		public void selectEntity(){
-			if(selectedEntity!=null)
-				this.getGenericControl().associateEntityToAttributeView(selectedEntity);
+			if(this.getSelectedEntity()!=null)
+				this.getGenericControl().associateEntityToAttributeView(this.getSelectedEntity());
 		}
 
 		/**
@@ -380,8 +380,8 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 		//@Command
 		//@NotifyChange({ "selectedEntity", "vm", "viewFormEdit" })
 		public void newEntity() {
-			this.selectedEntity =this.initializeEntity();
-			this.genericControl.associateEntityToAttributeView(this.selectedEntity);
+			this.setSelectedEntity(this.initializeEntity());
+			this.genericControl.associateEntityToAttributeView(this.getSelectedEntity());
 			binder.loadAll();
 			binder.saveAll();
 			this.showEditForm();
@@ -453,7 +453,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 			binder.saveAll();
 			
 			//this.doAction("ASSOCIATE");
-			this.genericControl.associateEntityToAttributeView(this.selectedEntity);
+			this.genericControl.associateEntityToAttributeView(this.getSelectedEntity());
 			binder.loadComponent(this.getEditForm());
 			//TODO descobrir uma forma de não fazer isso(ler tudo, deveria funcionar só com o comando acima, 
 			//quando o formulário é construido automaticamente.
@@ -510,7 +510,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 			this.listitem = listitem;
 		}
 		public void addMessage(String message){
-			((MessagesControl) this.genericControl.getController(MessagesControl.class)).addMessage(message, MessagesType.INFO);
+			((MessagesControl) this.getGenericControl().getController(MessagesControl.class)).addMessage(message, MessagesType.INFO);
 		}
 		
 		public BindingListModelList<Entity> getEntityModel(List<Entity> list){
@@ -563,7 +563,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 			BindingListModelList<Entity> categoriaUsuarioModel;
 			ArrayList<Entity> listFKEntity;
 			if(fkEntity!=null){
-				 Control<E> control2 = this.genericControl.getControl();
+				 Control<E> control2 = this.getGenericControl().getControl();
 				 List<Entity> listFKEntity2=null;
 				 if(control2!=null){
 					 listFKEntity2 = control2.getListFKEntity(fkEntity);

@@ -97,7 +97,7 @@ public class Control<E extends Entity>{
 	 */
 	public boolean actionSave(SubControllerManager<E> subControllerManager) {
 		E entity = (E) this.mapFields.get("entity");
-		if (entity.getId() == 0) {
+		if (!entity.isNew()) {
 			boolean result = false;
 			try{
 				if (getPersistence().save(entity) != 0) {

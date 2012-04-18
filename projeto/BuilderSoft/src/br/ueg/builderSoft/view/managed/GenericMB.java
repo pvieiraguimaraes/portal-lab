@@ -21,7 +21,7 @@ public abstract class GenericMB<E extends Entity> implements IGenericMB<E> {
 
 	protected GenericControl<E> control;
 	@AttributeView(key = "id", isEntityValue = true, fieldType = Long.class, isVisible = false, caption = "mb_idColumn")
-	protected long fldId;
+	protected Long fldId;
 	protected List<E> listEntity;
 	@AttributeView(key = "searchValue")
 	protected String fldBusca = "";
@@ -52,7 +52,7 @@ public abstract class GenericMB<E extends Entity> implements IGenericMB<E> {
 	 * @see br.ueg.builderSoft.view.managed.IGenericMB#getFldId()
 	 */
 	@Override
-	public long getFldId() {
+	public Long getFldId() {
 		return fldId;
 	}
 
@@ -60,7 +60,7 @@ public abstract class GenericMB<E extends Entity> implements IGenericMB<E> {
 	 * @see br.ueg.builderSoft.view.managed.IGenericMB#setFldId(long)
 	 */
 	@Override
-	public void setFldId(long fldId) {
+	public void setFldId(Long fldId) {
 		this.fldId = fldId;
 	}
 
