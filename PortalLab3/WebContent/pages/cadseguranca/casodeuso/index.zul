@@ -22,7 +22,7 @@
 	                </row>
 	                	            	<row>
 	                	<label value="Descrição" />
-	                	<textbox value="@{controller.fldDescricao }" />
+	                	<textbox value="@{controller.fldDescricao }" width="98%"/>
 	                </row>
 	                <row>
 	                	<label value="Status"/>
@@ -64,8 +64,10 @@
 				chosenLabel="Funcionalidades selecionados" chosenModel="@{controller.casoDeUsoFuncionalidadeList}"
 				addOneLabel="Adicionar" addAllLabel="Adicionar Todos"
 				removeOneLabel="Remover" removeAllLabel="Remover Todos" />
-			<button label="Salvar" onClick="controller.savePermissoes()" hflex="1"/>
-			<button label="Cancelar" onClick="controller.cancelEditFuncionalidades()" hflex="1"/>
+			<hbox hflex="1">
+				<button label="Salvar" onClick="controller.savePermissoes()" hflex="1"/>
+				<button label="Cancelar" onClick="controller.cancelEditFuncionalidades()" hflex="1"/>
+			</hbox>
 		</vbox>
 	</window>	
 </crudWindow>

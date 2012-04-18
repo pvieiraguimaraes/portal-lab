@@ -1,5 +1,6 @@
 package br.ueg.portalLab.security.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -27,12 +28,12 @@ public class CasoDeUsoFuncionalidade extends Entity  {
 	@Column(name = "id_cafu")
 	private long id;	
 
-	@ManyToOne(optional = true , fetch = FetchType.LAZY)
+	@ManyToOne(optional = true , fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "id_caso_cafu", insertable = true, updatable = true, nullable=false)
 	@Attribute(Required = false, SearchField = false)
 	private CasoDeUso casoDeUso;
 	
-	@ManyToOne(optional = true , fetch = FetchType.LAZY)
+	@ManyToOne(optional = true , fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "id_func_cafu", insertable = true, updatable = true, nullable=false)
 	@Attribute(Required = false, SearchField = true)
 	private Funcionalidade funcionalidade;
