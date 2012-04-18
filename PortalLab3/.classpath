@@ -43,5 +43,14 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry combineaccessrules="false" kind="src" path="/BuilderSoft"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/BuilderSoft-security"/>
+	<classpathentry kind="lib" path="/BuilderSoft-security/lib/aopalliance-1.0.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft-security/lib/org.springframework.aop-3.0.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft-security/lib/spring-security-acl-3.0.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft-security/lib/spring-security-config-3.0.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft-security/lib/spring-security-core-3.0.2.RELEASE.jar" sourcepath="C:/Users/guiliano.AEE/Desktop/temp/projetos/spring-security-3.0.2.RELEASE/spring-security-3.0.2.RELEASE/dist/spring-security-core-3.0.2.RELEASE-sources.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft-security/lib/spring-security-taglibs-3.0.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft-security/lib/spring-security-web-3.0.2.RELEASE.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
