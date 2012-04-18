@@ -8,15 +8,15 @@ public class ManagedBeanField {
 	private String key;
 	private String fieldName;
 	private String fieldCaption;
-	private String entityType;
+	private String fieldType;
 	private boolean isVisible;
 	private int component;
 	
-	public ManagedBeanField(String key, String fieldName, String fieldCaption, String entityType, boolean isVisible, int component){
+	public ManagedBeanField(String key, String fieldName, String fieldCaption, String fieldType, boolean isVisible, int component){
 		this.key = key;
 		this.fieldName = fieldName;
 		this.fieldCaption = fieldCaption;
-		this.entityType = entityType;
+		this.fieldType = fieldType;
 		this.isVisible = isVisible;
 		this.component = component;
 	}
@@ -31,8 +31,8 @@ public class ManagedBeanField {
 	public String getFieldCaption() {
 		return fieldCaption;
 	}
-	public String getEntityType() {
-		return this.entityType;
+	public String getFieldType() {
+		return this.fieldType;
 	}
 	public boolean isVisible() {
 		return isVisible;

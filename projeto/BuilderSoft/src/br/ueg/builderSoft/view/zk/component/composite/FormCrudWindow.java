@@ -10,6 +10,7 @@ import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zkplus.databind.AnnotateDataBinder;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Column;
 import org.zkoss.zul.Columns;
 import org.zkoss.zul.Div;
@@ -120,15 +121,26 @@ public class FormCrudWindow extends Window implements IFormWindow {
 					c.appendChild(col2);
 				Rows r = new Rows();
 				Textbox t;
+				Checkbox checkbox;
 				for (ManagedBeanField field : composer.getListColumns()) {
 					if (field.isVisible()) {
 						Row row = new Row();					
 						row.appendChild(new Label(Labels.getLabel(field.getFieldCaption())));
-						t = new Textbox();
-						t.setWidth("98%");
 						String fieldName = "controller2."+field.getFieldName()+"";
-						binder.addBinding(t, "value", fieldName );
-						row.appendChild(t);
+						
+						if(field.getFieldType().equalsIgnoreCase("boolean")){
+							checkbox = new Checkbox();
+							binder.addBinding(checkbox,"checked", fieldName);
+							row.appendChild(checkbox);
+							
+						}else{
+							t = new Textbox();
+							
+							t.setWidth("98%");
+							
+							binder.addBinding(t, "value", fieldName );
+							row.appendChild(t);
+						}
 						r.appendChild(row);
 					}
 				}
