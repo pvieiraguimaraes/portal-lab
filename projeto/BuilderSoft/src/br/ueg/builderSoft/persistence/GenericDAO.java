@@ -17,7 +17,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import javax.persistence.Transient;
+
 import br.ueg.builderSoft.model.Entity;
+import br.ueg.builderSoft.util.annotation.Attribute;
 import br.ueg.builderSoft.util.reflection.Reflection;
 
 /**
@@ -213,6 +216,9 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 						if( ((Long)fieldValue).doubleValue()==0L){
 							fieldValue = null;
 						}
+					}
+					if(fields[i].getAnnotation(Transient.class)!=null){
+						continue;
 					}
 				} catch (SecurityException e) {
 					e.printStackTrace();

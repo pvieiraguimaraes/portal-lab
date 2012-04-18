@@ -26,7 +26,7 @@ public abstract class Entity implements Serializable, Comparable {
 	 * 
 	 * @return a PK
 	 */
-	public abstract long getId();
+	public abstract Long getId();
 	
 	/**
 	 * Método que configurar a chave primária
@@ -34,17 +34,14 @@ public abstract class Entity implements Serializable, Comparable {
 	 * @author guiliano 
 	 * 
 	 */
-	public abstract void setId(long id);
-	
-	public void setId(Long id){
-		this.setId(id.longValue());
-	}
+	public abstract void setId(Long id);
+
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + Long.signum(getId() ^ (getId() >>> 32));
+		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
 		return result;
 	}
 
@@ -139,7 +136,12 @@ public abstract class Entity implements Serializable, Comparable {
 		Entity other = (Entity) e;
 		return this.getColumnCompare().compareToIgnoreCase(other.getColumnCompare());		
 	}
-	/**
+	
+	public boolean isNew(){
+		return this.getId()!=null;
+	}
+	
+	/**@deprecated
 	 * @return retorna a string utilizada para comprarar as entidades para efeito de ordenação.
 	 */
 	protected String getColumnCompare(){

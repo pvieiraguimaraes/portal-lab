@@ -10,12 +10,12 @@ public interface IGenericMB<E extends Entity> {
 	/**
 	 * @return the fldId
 	 */
-	public abstract long getFldId();
+	public abstract Long getFldId();
 
 	/**
 	 * @param fldId the fldId to set
 	 */
-	public abstract void setFldId(long fldId);
+	public abstract void setFldId(Long fldId);
 
 	/**
 	 * @return the fldBusca
