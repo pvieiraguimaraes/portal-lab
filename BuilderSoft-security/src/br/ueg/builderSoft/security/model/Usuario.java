@@ -28,7 +28,7 @@ public class Usuario extends Entity  {
 	@Id
 	@GeneratedValue	
 	@Column(name = "codigo_usua")
-	private long id;	
+	private Long id;	
 
 	@Column(name = "login_usua", length=25, nullable=false)
 	@Attribute(Required = true, SearchField = true)
@@ -59,11 +59,11 @@ public class Usuario extends Entity  {
 	public Usuario(){		
 	}
 			
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
