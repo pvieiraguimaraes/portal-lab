@@ -2,6 +2,7 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
        xmlns:aop="http://www.springframework.org/schema/aop"
 	   xmlns:tx="http://www.springframework.org/schema/tx"
 	   xmlns:zksp="http://www.zkoss.org/2008/zkspring/core"
@@ -15,11 +16,19 @@
 						   http://www.springframework.org/schema/context 
 						   http://www.springframework.org/schema/context/spring-context-3.0.xsd
             				http://www.zkoss.org/2008/zkspring/core 
-            				http://www.zkoss.org/2008/zkspring/core/zkspring-core.xsd">
+            				http://www.zkoss.org/2008/zkspring/core/zkspring-core.xsd
+            				http://www.springframework.org/schema/security
+				            http://www.springframework.org/schema/security/spring-security-3.0.xsd">
 		
 		
 	<context:component-scan base-package="br.ueg.portalLab.view.composer" />
+	<context:component-scan base-package="br.ueg.portalLab.security.view.composer" />
+	<context:component-scan base-package="br.ueg.portalLab.security.control" />
+	<context:component-scan base-package="br.aee.boletimFrequencia.control" />
+	<context:component-scan base-package="br.ueg.builderSoft.control" />
 	<context:component-scan base-package="org.zkoss.spring.beans.zkcomponents" />
+	<context:component-scan base-package="br.ueg.builderSoft.security.manager" />
+	<context:component-scan base-package="br.ueg.builderSoft.security.access.decision" />
 		
 	<zksp:zk-config />		
 	<!-- Conexão com banco de dados -->
@@ -29,6 +38,14 @@
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
     	<property name="annotatedClasses">
     		<list>
+    		
+
+    			<value>br.ueg.portalLab.security.model.GrupoUsuario</value>
+    			<value>br.ueg.portalLab.security.model.CasoDeUso</value>
+    			<value>br.ueg.portalLab.security.model.CasoDeUsoFuncionalidade</value>
+    			<value>br.ueg.portalLab.security.model.Funcionalidade</value>
+    			<value>br.ueg.portalLab.security.model.UsuarioPermissao</value>
+    			
     			<value>br.ueg.portalLab.model.Reino</value>
     			<value>br.ueg.portalLab.model.Filo</value>
     			<value>br.ueg.portalLab.model.Classe</value>
@@ -75,4 +92,79 @@
     	<!-- Injeta esse objeto hibernateTemplate dentro do DAO -->
     	<property name="hibernateTemplate" ref="hibernateTemplate" />
     </bean>
+    
+        
+     <bean id="messagesControl" class="br.ueg.builderSoft.view.control.MessagesWebZK"/>
+     
+     
+    <!--     beans para utilização do builderSoft-Security -->
+    <bean id="profiler" class="br.ueg.portalLab.persistence.ControleAcesso" >
+    <!-- Injeta esse objeto hibernateTemplate dentro do DAO -->
+    	<property name="hibernateTemplate" ref="hibernateTemplate" />
+    </bean>
+
+    
+<!--     Parte do spring security -->
+<!-- ############################ -->
+    
+    <bean id="roleVoter" class="br.ueg.builderSoft.security.access.voter.RoleVoter" />
+
+	<bean id="authenticatedVoter" class="br.ueg.builderSoft.security.access.voter.AuthenticatedVoter" />
+
+	<bean id="methodsAccessDecisionManager"
+		class="br.ueg.builderSoft.security.access.decision.AccessDecisionManager">
+		<property name="decisionVoters">
+			<list><ref bean="roleVoter" /></list>
+		</property>
+	</bean>
+
+	<bean id="urlAccessDecisionManager"
+		class="br.ueg.builderSoft.security.access.decision.AccessDecisionManager">
+		<property name="decisionVoters">
+			<list><ref bean="authenticatedVoter" /></list>
+		</property>
+	</bean>
+	
+	<security:authentication-manager>
+		<security:authentication-provider>
+			<security:jdbc-user-service data-source-ref="dataSource"
+				users-by-username-query="SELECT login as username, senha as password, CASE WHEN status = 1 THEN 'true' ELSE 'false' END AS enable
+                                       FROM usuario WHERE status=1 AND login = ?"
+				authorities-by-username-query="SELECT u.login as username, g.nome_usgr as name FROM usuario u INNER JOIN usuario_grupo ug 
+					ON ug.id_usua_usgr = u.id_usuario INNER JOIN grupo_de_usuario g ON g.id_usgr = ug.id_grus_usgr WHERE u.login = ?" />
+			<security:ldap-user-service />
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+	<security:http access-decision-manager-ref="urlAccessDecisionManager" access-denied-page="/pages/seguranca/accessDenied.zul"
+		auto-config="true">
+		<security:intercept-url access="UC_APLICACAOECONOMICA" pattern="/pages/aplicacaoeconomica/**" />
+		<security:intercept-url access="UC_AUTOR" pattern="/pages/autor/**" />
+		<security:intercept-url access="UC_BIBLIOGRAFIA" pattern="/pages/bibliografia/**" />
+		<security:intercept-url access="UC_CATEGORIA" pattern="/pages/categoria/**" />
+		<security:intercept-url access="UC_COLETOR" pattern="/pages/coletor/**" />
+		<security:intercept-url access="UC_DATUM" pattern="/pages/datum/**" />
+		<security:intercept-url access="UC_DETERMINADOR" pattern="/pages/determinador/**" />
+		<security:intercept-url access="UC_ESTAGIODESENVOLVIMENTO" pattern="/pages/estagiodesenvolvimento/**" />
+		<security:intercept-url access="UC_FENOLOGIA" pattern="/pages/fenologia/**" />
+		<security:intercept-url access="UC_GRUPOENDERECOFISICO" pattern="/pages/grupoenderecofisico/**" />
+		<security:intercept-url access="UC_ITEMGEOGRAFICO" pattern="/pages/itemgeografico/**" />
+		<security:intercept-url access="UC_ITEMTAXONOMICO" pattern="/pages/itemtaxonomico/**" />
+		<security:intercept-url access="UC_LABORATORIO" pattern="/pages/laboratorio/**" />
+		<security:intercept-url access="UC_MASSADAGUA" pattern="/pages/massadagua/**" />
+		<security:intercept-url access="UC_METODO" pattern="/pages/metodo/**" />
+		<security:intercept-url access="UC_NIVELGEOGRAFICO" pattern="/pages/nivelgeografico/**" />
+		<security:intercept-url access="UC_NIVELTAXONOMICO" pattern="/pages/niveltaxonomico/**" />
+		<security:intercept-url access="UC_TIPOBIBLIOGRAFIA" pattern="/pages/tipobibliografia/**" />
+		<security:intercept-url access="UC_TIPODEMONTAGEM" pattern="/pages/tipodemontagem/**" />
+<!-- 		<security:intercept-url access="UC_USUARIO" pattern="/pages/usuario/**" /> -->
+		
+
+		<security:form-login login-page="/pages/seguranca/acesso.zul" always-use-default-target="false"
+			default-target-url='/index.zul' authentication-failure-url="/pages/seguranca/acesso.zul?error=1" />
+	</security:http>
+
+	<security:global-method-security secured-annotations="enabled" proxy-target-class="false"
+		pre-post-annotations="enabled" access-decision-manager-ref="methodsAccessDecisionManager">
+	</security:global-method-security>
 </beans>

@@ -12,9 +12,11 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import br.ueg.builderSoft.persistence.GenericDAO;
+import br.ueg.builderSoft.security.access.voter.RoleVoter;
 import br.ueg.builderSoft.util.sets.SpringFactory;
 import br.ueg.portalLab.model.ItemGeografico;
 import br.ueg.portalLab.model.NivelGeografico;
+import br.ueg.portalLab.model.Usuario;
 
 import br.ueg.portalLab.view.managed.TipoDeMontagemMB;
 
@@ -25,9 +27,23 @@ public class Teste {
 		//listAuto1();
 		//listAuto2();
 		//listAuto3();
-		listAuto1_1();
+		//listAuto1_1();
+		//testeSpring1();
+		testeUsuario();
 		
 	}
+	public static void testeUsuario(){
+		GenericDAO<Usuario> usuarioDAO = (GenericDAO<Usuario>)SpringFactory.getInstance().getBean("genericDAO",GenericDAO.class);
+		Usuario u = new Usuario();
+		for(Usuario u2: usuarioDAO.getList(u)){
+			System.out.println("U:"+u2.getLogin());
+		}
+	}
+	
+public static void testeSpring1(){
+	RoleVoter roleVoter = (RoleVoter) SpringFactory.getInstance().getBean("profiler", RoleVoter.class);
+	
+}
 @SuppressWarnings("unchecked")
 public static void insertAuto1(){
 		
