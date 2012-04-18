@@ -25,7 +25,7 @@ public class Bibliografia extends Entity {
 	@Id()
 	@GeneratedValue
 	@Column(name = "id_bibliografia")
-	private long id;
+	private Long id;
 	
 	@Column(name = "data")
 	@Attribute(Required = false, SearchField = false)
@@ -102,12 +102,12 @@ public class Bibliografia extends Entity {
 		return bibliografia;
 	}
 	
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
 
 	@Override
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

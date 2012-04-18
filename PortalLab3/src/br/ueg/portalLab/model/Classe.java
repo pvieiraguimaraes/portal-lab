@@ -23,7 +23,7 @@ public class Classe extends Entity {
 	@Id
 	@GeneratedValue
 	@Column(name = "id_classe")
-	private long id;
+	private Long id;
 	@Column(name = "nome")
 	@Attribute(Required = true, SearchField = true)
 	private String classe;
@@ -40,11 +40,11 @@ public class Classe extends Entity {
 		this.filo = filo;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

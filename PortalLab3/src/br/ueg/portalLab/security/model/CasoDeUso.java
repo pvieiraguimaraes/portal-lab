@@ -1,14 +1,21 @@
 package br.ueg.portalLab.security.model;
 
+import java.util.HashSet;
 import java.util.Set;
+
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+
 
 import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.util.annotation.Attribute;
@@ -27,7 +34,7 @@ public class CasoDeUso extends Entity  {
 	@Id
 	@GeneratedValue	
 	@Column(name = "id_caso")
-	private long id;	
+	private Long id;	
 
 	@Column(name = "nome_caso")
 	@Attribute(Required = true, SearchField = true)
@@ -41,18 +48,20 @@ public class CasoDeUso extends Entity  {
 	@Attribute(Required = true, SearchField = false)
 	private Boolean status;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "casoDeUso",cascade = CascadeType.ALL)// mappedBy indica o atributo da entidade many
-	private Set<CasoDeUsoFuncionalidade> funcionalidades;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "casoDeUso",cascade =CascadeType.ALL )// mappedBy indica o atributo da entidade many
+	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+	@JoinTable(name = "casodeuso_funcionalidade", joinColumns = @JoinColumn(name = "id_caso"), inverseJoinColumns = @JoinColumn(name = "is_caso_cafu"))
+	private Set<CasoDeUsoFuncionalidade> funcionalidades = new HashSet<CasoDeUsoFuncionalidade>(0);
 	
 	
 	public CasoDeUso(){		
 	}
 			
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
