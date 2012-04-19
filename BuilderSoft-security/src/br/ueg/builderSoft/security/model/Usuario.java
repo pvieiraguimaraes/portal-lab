@@ -1,5 +1,6 @@
 package br.ueg.builderSoft.security.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -13,6 +14,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
 
 
 import br.ueg.builderSoft.model.Entity;
@@ -54,7 +57,9 @@ public class Usuario extends Entity  {
 	private Set<GrupoUsuario> grupos;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario",cascade = CascadeType.ALL)// mappedBy indica o atributo da entidade many
-	private Set<UsuarioPermissao> permissoes;
+	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+	@Attribute(Required = false, SearchField = false)
+	private Set<UsuarioPermissao> permissoes = new HashSet<UsuarioPermissao>(0);
 	
 	public Usuario(){		
 	}

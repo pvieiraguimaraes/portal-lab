@@ -1,4 +1,4 @@
-package br.ueg.builderSoft.security.composer;
+package br.ueg.builderSoft.security.view.composer;
 
 import org.springframework.context.annotation.Scope;
 import org.zkoss.zk.ui.Component;
