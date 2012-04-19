@@ -1,5 +1,5 @@
 <zk>
-<window id="crudFormWindow"  border="none" width="460px" xmlns:c="client"
+<window id="crudFormWindow"  border="none" width="700px" xmlns:c="client"
 					closable="false"  action="show: slideDown;hide: slideUp" apply="${controller}" sizable="false">
  <attribute c:name="onClose"><![CDATA[
 					        event.stop();

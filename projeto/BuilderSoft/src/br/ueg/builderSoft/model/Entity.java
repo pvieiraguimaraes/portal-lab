@@ -54,7 +54,10 @@ public abstract class Entity implements Serializable, Comparable {
 		if (getClass() != obj.getClass())
 			return false;
 		Entity other = (Entity) obj;
-		if (getId() != other.getId())
+		if (getId() == null) {
+			if (other.getId() != null)
+				return false;
+		} else if (!getId().equals(other.getId()))
 			return false;
 		return true;
 	}
