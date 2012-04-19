@@ -3,6 +3,9 @@ package br.ueg.builderSoft.view.zk.component.composite.duallistbox;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventListener;
+import org.zkoss.zk.ui.event.SelectEvent;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zkplus.databind.BindingListModelSet;
@@ -176,6 +179,21 @@ public class DualListbox<E> extends BaseComponent {
 		chosenLb.setCheckmark(b);
 		chosenLb.setMultiple(b);
 		renderDualListbox();
+	}
+	
+	/**Adicionar um listener de OnSelect na lista de intens escolhidos
+	 * @param listener
+	 */
+	public void setChoosenOnSelectListen(EventListener<? extends Event> listener){
+		this.chosenLb.addEventListener("onSelect", listener);
+	}
+	
+	
+	/** Adiciona um listener de OnSelect na lista de itens candidata
+	 * @param listener
+	 */
+	public void setCandidateOnSelectListen(EventListener<? extends Event> listener){
+		this.chosenLb.addEventListener("onSelect", listener);
 	}
 
 }
