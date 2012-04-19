@@ -1,6 +1,5 @@
 package br.ueg.portalLab.security.control;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -8,16 +7,13 @@ import java.util.Set;
 import org.springframework.stereotype.Service;
 
 import br.ueg.builderSoft.control.Control;
-import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.persistence.GenericDAO;
 import br.ueg.builderSoft.util.control.MessagesControl;
 import br.ueg.builderSoft.util.sets.SpringFactory;
-import br.ueg.portalLab.model.ItemGeografico;
-import br.ueg.portalLab.model.NivelGeografico;
 import br.ueg.portalLab.security.model.CasoDeUso;
 import br.ueg.portalLab.security.model.CasoDeUsoFuncionalidade;
-import br.ueg.portalLab.security.model.GrupoUsuario;
 import br.ueg.portalLab.security.model.Funcionalidade;
+import br.ueg.portalLab.security.model.GrupoUsuario;
 
 @Service
 public class GrupoUsuarioControl extends Control<GrupoUsuario> {
@@ -28,7 +24,6 @@ public class GrupoUsuarioControl extends Control<GrupoUsuario> {
 	
 	private CasoDeUso selectedCasoDeUso;
 	
-	@SuppressWarnings("unchecked")
 	public GrupoUsuarioControl(MessagesControl control) {
 		super(control);
 		 //control.addController(new UsuarioValidatorControl((MessagesControl)control.getController(MessagesControl.class),1));
@@ -47,7 +42,9 @@ public class GrupoUsuarioControl extends Control<GrupoUsuario> {
 		if(selectedGrupoUsuario== null) return false;
 		Set<CasoDeUsoFuncionalidade> funcGrupoUsuarioList = this.getSelectedGrupoUsuario().getFuncionalidades();
 		for(CasoDeUsoFuncionalidade cafu : funcGrupoUsuarioList){
-			if(cafu.getFuncionalidade().equals(funcionalidade)){
+			CasoDeUso casoDeUso = cafu.getCasoDeUso();
+			Funcionalidade funcionalidade2 = cafu.getFuncionalidade();
+			if(casoDeUso.getId().equals(this.getSelectedCasoDeUso().getId()) && funcionalidade2.getId().equals(funcionalidade.getId())){
 				return true;
 			}
 		}
@@ -80,8 +77,14 @@ public class GrupoUsuarioControl extends Control<GrupoUsuario> {
 		
 		if(this.getSelectedCasoDeUso()!=null){
 			CasoDeUsoFuncionalidade cafu = new CasoDeUsoFuncionalidade();
-			cafu.setCasoDeUso(this.getSelectedCasoDeUso());
-			listCasoDeUsoFuncionalidade.addAll(casoDeUsoFuncionalidadeDAO.findByEntity(cafu));
+			cafu.setCasoDeUso(this.getSelectedCasoDeUso());			
+			List<CasoDeUsoFuncionalidade> listFuncionalidades = casoDeUsoFuncionalidadeDAO.findByEntity(cafu);
+			long numFuncs = 0;
+			for(CasoDeUsoFuncionalidade f: listFuncionalidades){
+				if(!isFuncionalidadePresenteGrupoUsuario(f.getFuncionalidade())){					
+					listCasoDeUsoFuncionalidade.add(f);
+				}
+			}			
 		}
 		
 		

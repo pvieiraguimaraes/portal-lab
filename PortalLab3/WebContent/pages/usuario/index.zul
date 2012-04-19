@@ -3,76 +3,114 @@
 <?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
 <?init class="org.zkoss.zk.ui.util.Composition" arg0="/WEB-INF/layout/inner_page.zul"?>
 <?component name="crudWindow" class="br.ueg.builderSoft.view.zk.component.composite.CrudWindow" ?>
-
+<?component name="dualListbox" class="br.ueg.builderSoft.view.zk.component.composite.duallistbox.DualListbox" ?>
 
 <zk xmlns:w="http://www.zkoss.org/2005/zk/client">
 
 
 <crudWindow self="@{define(content)}" id="crudUsuario" apply="${usuarioComposer}"   listBoxSize="8"  height="450px" titulo="Manter Usuário" composer="@{controller}">
 		<div id="form">
-			<grid>
-	            <columns>
-	                <column width="120px" />
-	                <column align="left" />	
-	            </columns>
-	            <rows>
-	                <row>
-	                    <label value="Nome:" />
-	                    <textbox value="@{controller.fldNome}" maxlength="100" width = "98%"/>                    
-	                </row>
-	                <row>
-	                	<label value="CPF"/>
-	                	<textbox value="@{controller.fldCPF}" maxlength="11"  width = "98%"/>
-	                </row>
-	                <row>
-	                	<label value="Email"/>
-	                	<textbox value="@{controller.fldEmail}" maxlength="150"  width = "98%"/>
-	                </row>
-	                <row>
-	                	<label value="Telefone1"/>
-	                	<textbox value="@{controller.fldTelefone1}" maxlength="20" width = "98%"/>
-	                </row>
-	                <row>
-	                	<label value="Telefone2"/>
-	                	<textbox value="@{controller.fldTelefone2}" maxlength="20" width = "98%"/>
-	                </row>
-	                <row>
-	                	<label value="Login"/>
-	                	<textbox value="@{controller.fldLogin}" maxlength="20" width = "98%"/>
-	                </row>
-	                <row>
-	                	<label value="Senha"/>
-	                	<textbox value="@{controller.fldSenha}" maxlength="20" width = "98%"/>
-	                </row>
-	                <row>
-	                	<label value="Categoria" />
-	                	<combobox name="cmdProgramado"
-	                		id="cmbProgramado" 
-	                		model="@{controller.ListCategoriaUsuario}" 
-	                		selectedItem="@{controller.fldCategoria}"
-	                		autodrop="true"
-	                		
-	                		>
-	                		<comboitem self="@{each=categoria}" label="@{categoria.nome}" value="@{categoria}"/>	
-	                	</combobox>
-	                </row>
-<!-- 	                <row> -->
-<!-- 	                	<label value="Categoria teste" /> -->
-<!--  	                	dessa forma não precisa mecher no composer, mas não atualiza d  -->
-<!-- 	                	<combobox name="cmdProgramado2" -->
-<!-- 	                		id="cmbProgramado2"  -->
-<!-- 	                		model="${usuarioComposer.getFKEntityModel('fldCategoria')}"  -->
-<!-- 	                		selectedItem="@{controller.fldCategoria}" -->
-<!-- 	                		autodrop="true" -->
-	                		
-<!-- 	                		> -->
-<!-- 	                		<comboitem self="@{each=categoria}" label="@{categoria.nome}" value="@{categoria}"/>	 -->
-<!-- 	                	</combobox> -->
-	                	
-<!-- 	                </row> -->
-	                
-	            </rows>
-	        </grid>
+			<tabbox self="@{define(content)}" id="tb" orient="horizontal">
+			    <tabs id="tabs" width="150px">
+			        <tab id="cadDadosUsuario" 	label="Cadastro de Usuários" />
+			        <tab id="cadPermissoes" 	label="Permissões" />
+			    </tabs>
+			    <tabpanels>
+			        <tabpanel>
+						<grid>
+				            <columns>
+				                <column width="120px" />
+				                <column align="left" />	
+				            </columns>
+				            <rows>
+				                <row>
+				                    <label value="Nome:" />
+				                    <textbox value="@{controller.fldNome}" maxlength="100" width = "98%"/>                    
+				                </row>
+				                <row>
+				                	<label value="CPF"/>
+				                	<textbox value="@{controller.fldCPF}" maxlength="11"  width = "98%"/>
+				                </row>
+				                <row>
+				                	<label value="Email"/>
+				                	<textbox value="@{controller.fldEmail}" maxlength="150"  width = "98%"/>
+				                </row>
+				                <row>
+				                	<label value="Telefone1"/>
+				                	<textbox value="@{controller.fldTelefone1}" maxlength="20" width = "98%"/>
+				                </row>
+				                <row>
+				                	<label value="Telefone2"/>
+				                	<textbox value="@{controller.fldTelefone2}" maxlength="20" width = "98%"/>
+				                </row>
+				                <row>
+				                	<label value="Login"/>
+				                	<textbox value="@{controller.fldLogin}" maxlength="20" width = "98%"/>
+				                </row>
+				                <row>
+				                	<label value="Senha"/>
+				                	<textbox value="@{controller.fldSenha}" maxlength="20" width = "98%"/>
+				                </row>
+				                <row>
+				                	<label value="Status"/>
+				                	<checkbox checked="@{controller.fldStatus}" label="Ativo"/>
+				                </row>
+				                <row>
+				                	<label value="Categoria" />
+				                	<combobox name="cmdProgramado"
+				                		id="cmbProgramado" 
+				                		model="@{controller.ListCategoriaUsuario}" 
+				                		selectedItem="@{controller.fldCategoria}"
+				                		autodrop="true"
+				                		
+				                		>
+				                		<comboitem self="@{each=categoria}" label="@{categoria.nome}" value="@{categoria}"/>	
+				                	</combobox>
+				                </row>
+			<!-- 	                <row> -->
+			<!-- 	                	<label value="Categoria teste" /> -->
+			<!--  	                	dessa forma não precisa mecher no composer, mas não atualiza d  -->
+			<!-- 	                	<combobox name="cmdProgramado2" -->
+			<!-- 	                		id="cmbProgramado2"  -->
+			<!-- 	                		model="${usuarioComposer.getFKEntityModel('fldCategoria')}"  -->
+			<!-- 	                		selectedItem="@{controller.fldCategoria}" -->
+			<!-- 	                		autodrop="true" -->
+				                		
+			<!-- 	                		> -->
+			<!-- 	                		<comboitem self="@{each=categoria}" label="@{categoria.nome}" value="@{categoria}"/>	 -->
+			<!-- 	                	</combobox> -->
+				                	
+			<!-- 	                </row> -->
+				                
+				            </rows>
+				        </grid>
+			        </tabpanel>
+			        <tabpanel>
+				        <vbox width="550px">
+							<hbox width="100%">
+								<label id="labelCasoDeUso" value="Caso de Uso:" />
+								<combobox name="cmdCasoDeUso"
+					                		id="cmdCasoDeUso" 
+					                		model="@{controller.casoDeUsoList}" 
+					                		selectedItem="@{controller.selectedCasoDeUso}"
+					                		autodrop="true"
+					                		width="70%"
+					                		>
+					                		<comboitem self="@{each=casoDeUso}" label="@{casoDeUso.nome}" value="@{casoDeUso}"/>	
+					                	</combobox>  
+								
+							</hbox>
+							<label id="labelPermissions" value="Funcionalidades " />
+							<dualListbox id="dualList" multipleSelection="true"
+								candidateLabel="funcionalidades disponíveis"
+								candidateModel="@{controller.funcionalidadeList}"
+								chosenLabel="Funcionalidades selecionados" chosenModel="@{controller.casoDeUsoFuncionalidadeList}"
+								addOneLabel="Adicionar" addAllLabel="Adicionar Todos"
+								removeOneLabel="Remover" removeAllLabel="Remover Todos" />
+						</vbox>
+					</tabpanel>
+				</tabpanels>
+			</tabbox>
 		</div>
 		<div id="result">
 			<listbox>

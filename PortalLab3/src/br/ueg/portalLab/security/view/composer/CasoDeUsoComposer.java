@@ -155,16 +155,17 @@ public class CasoDeUsoComposer extends TabelaComposerController<CasoDeUso> {
 		}
 	}
 	
-	public void editPermissoes(){
+	public void editFuncionalidades(){
 		binder.saveAll();
 		binder.loadComponent(dualList);
+		binder.loadAll();
 		this.casoDeUsoFuncionalidades.setMode(Window.MODAL);
 		this.casoDeUsoFuncionalidades.setVisible(true);
 		this.casoDeUsoFuncionalidades.doModal();
 		
 		
 	}
-	public void savePermissoes(){
+	public void saveFuncionalidades(){
 		binder.saveAll();
 		this.genericControl.associateEntityToAttributeView(this.getSelectedEntity());
 		this.genericControl.doAction("SAVE", this.getSelectedEntity());
