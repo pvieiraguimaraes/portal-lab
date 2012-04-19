@@ -51,6 +51,7 @@ public class CasoDeUso extends Entity  {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "casoDeUso",cascade =CascadeType.ALL )// mappedBy indica o atributo da entidade many
 	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
 	@JoinTable(name = "casodeuso_funcionalidade", joinColumns = @JoinColumn(name = "id_caso"), inverseJoinColumns = @JoinColumn(name = "is_caso_cafu"))
+	@Attribute(Required = false, SearchField = false)
 	private Set<CasoDeUsoFuncionalidade> funcionalidades = new HashSet<CasoDeUsoFuncionalidade>(0);
 	
 	

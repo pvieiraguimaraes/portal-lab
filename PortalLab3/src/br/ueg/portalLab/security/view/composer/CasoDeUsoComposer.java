@@ -40,6 +40,9 @@ public class CasoDeUsoComposer extends TabelaComposerController<CasoDeUso> {
 	@AttributeView(key = "status", isEntityValue = true, fieldType = Boolean.class, isVisible=true, caption="casodeuso_statusColumn")
 	private Boolean fldStatus;
 	
+	@AttributeView(key = "funcionalidades", isEntityValue = true, fieldType = Set.class, isVisible = true, caption="casodeuso_funcionalidadesColumn")
+	private Set<CasoDeUsoFuncionalidade> fldFuncionalidades;
+	
 	@Autowired
 	protected CasoDeUsoControl casoDeUsoControl;
 	
@@ -192,4 +195,14 @@ public class CasoDeUsoComposer extends TabelaComposerController<CasoDeUso> {
 	public CasoDeUso getSelectedEntity() {		
 		return this.getCasoDeUsoControl().getSelectedCasoDeUso();
 	}
+
+	public Set<CasoDeUsoFuncionalidade> getFldFuncionalidades() {
+		return fldFuncionalidades;
+	}
+
+	public void setFldFuncionalidades(
+			Set<CasoDeUsoFuncionalidade> fldFuncionalidades) {
+		this.fldFuncionalidades = fldFuncionalidades;
+	}
+
 }
