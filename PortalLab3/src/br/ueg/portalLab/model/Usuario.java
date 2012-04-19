@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+
 
 
 import br.ueg.builderSoft.model.Entity;
@@ -77,6 +79,7 @@ public class Usuario extends Entity {
 	private Set<GrupoUsuario> grupos;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario",cascade = CascadeType.ALL)// mappedBy indica o atributo da entidade many
+	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
 	@Attribute(Required = false, SearchField = false)
 	private Set<UsuarioPermissao> permissoes = new HashSet<UsuarioPermissao>(0);
 	

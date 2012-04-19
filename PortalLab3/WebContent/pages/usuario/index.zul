@@ -14,6 +14,7 @@
 			    <tabs id="tabs" width="150px">
 			        <tab id="cadDadosUsuario" 	label="Cadastro de Usuários" />
 			        <tab id="cadPermissoes" 	label="Permissões" />
+			        <tab id="cadGrupos"			label="Grupos do Usuário" />
 			    </tabs>
 			    <tabpanels>
 			        <tabpanel>
@@ -98,13 +99,27 @@
 					                		>
 					                		<comboitem self="@{each=casoDeUso}" label="@{casoDeUso.nome}" value="@{casoDeUso}"/>	
 					                	</combobox>  
+					                	<vbox hflex="1">
+								<checkbox checked="true" label="Permitido" id="checkBoxPermitido"/>
+							</vbox>
 								
 							</hbox>
 							<label id="labelPermissions" value="Funcionalidades " />
 							<dualListbox id="dualList" multipleSelection="true"
 								candidateLabel="funcionalidades disponíveis"
-								candidateModel="@{controller.funcionalidadeList}"
+								candidateModel="@{controller.usuarioPermissaoList}"
 								chosenLabel="Funcionalidades selecionados" chosenModel="@{controller.casoDeUsoFuncionalidadeList}"
+								addOneLabel="Adicionar" addAllLabel="Adicionar Todos"
+								removeOneLabel="Remover" removeAllLabel="Remover Todos" />							
+						</vbox>
+					</tabpanel>
+					 <tabpanel>
+				        <vbox width="550px">
+							<label id="labelGrupos" value="Grupos do usuário" />
+							<dualListbox id="dualList2" multipleSelection="true"
+								candidateLabel="Grupos disponíveis"
+								candidateModel="@{controller.grupoUsuarioList}"
+								chosenLabel="Grupos selecionados" chosenModel="@{controller.usuarioGrupoUsuarioList}"
 								addOneLabel="Adicionar" addAllLabel="Adicionar Todos"
 								removeOneLabel="Remover" removeAllLabel="Remover Todos" />
 						</vbox>

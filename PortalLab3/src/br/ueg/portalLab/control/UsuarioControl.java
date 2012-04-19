@@ -79,25 +79,32 @@ public class UsuarioControl extends Control<Usuario> {
 //	}
 
 	@SuppressWarnings("unchecked")
-	public Set<CasoDeUsoFuncionalidade> getFuncionalidadeList(){
+	public Set<UsuarioPermissao> getUsuarioPermissaoList(){
 		GenericDAO<CasoDeUsoFuncionalidade> casoDeUsoFuncionalidadeDAO = (GenericDAO<CasoDeUsoFuncionalidade>)SpringFactory.getInstance().getBean("genericDAO", GenericDAO.class);
 		
-		Set<CasoDeUsoFuncionalidade> listCasoDeUsoFuncionalidade = new HashSet<CasoDeUsoFuncionalidade>();
+		Set<UsuarioPermissao> listUsuarioPermissao = new HashSet<UsuarioPermissao>(0);
 		
 		if(this.getSelectedCasoDeUso()!=null){
 			CasoDeUsoFuncionalidade cafu = new CasoDeUsoFuncionalidade();
 			cafu.setCasoDeUso(this.getSelectedCasoDeUso());			
-			List<CasoDeUsoFuncionalidade> listFuncionalidades = casoDeUsoFuncionalidadeDAO.findByEntity(cafu);
-			for(CasoDeUsoFuncionalidade f: listFuncionalidades){
-				if(!isFuncionalidadePresenteUsuario(f.getFuncionalidade())){					
-					listCasoDeUsoFuncionalidade.add(f);
+			List<CasoDeUsoFuncionalidade> listCasoDeUsoFuncionalidades = casoDeUsoFuncionalidadeDAO.findByEntity(cafu);
+			long numUserPermissoes = 0;
+			for(CasoDeUsoFuncionalidade f: listCasoDeUsoFuncionalidades){
+				if(!isFuncionalidadePresenteUsuario(f.getFuncionalidade())){	
+					UsuarioPermissao up = new UsuarioPermissao();
+					up.setId(numUserPermissoes++);
+					up.setUsuario(this.getSelectedUsuario());
+					up.setCasoDeUsoFuncionalidade(f);
+					listUsuarioPermissao.add(up);
 				}
 			}			
 		}
 		
 		
-		return listCasoDeUsoFuncionalidade;
+		return listUsuarioPermissao;
 	}
+	
+	
 	@SuppressWarnings("unchecked")
 	public Set<CasoDeUso> getCasoDeUsoList(){
 		GenericDAO<CasoDeUso> casoDeUsoDAO = (GenericDAO<CasoDeUso>)SpringFactory.getInstance().getBean("genericDAO", GenericDAO.class);
@@ -110,6 +117,27 @@ public class UsuarioControl extends Control<Usuario> {
 		
 		return listCasoDeUso;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public Set<GrupoUsuario> getGrupoUsuarioList(){
+		Set<GrupoUsuario> listGrupoUsuario = new HashSet<GrupoUsuario>();
+		if(this.getSelectedUsuario()!=null){
+			GenericDAO<GrupoUsuario> grupoUsuarioDAO = (GenericDAO<GrupoUsuario>)SpringFactory.getInstance().getBean("genericDAO", GenericDAO.class);				
+			
+			List<GrupoUsuario> list =  grupoUsuarioDAO.getList(new GrupoUsuario());
+			listGrupoUsuario.addAll(list);
+			for(GrupoUsuario gu : list){
+				for(GrupoUsuario gg: this.getSelectedUsuario().getGrupos()){
+					if(gg.getId()!=null && gg.getId().equals(gu.getId())){
+						listGrupoUsuario.remove(gu);
+					}
+				}
+			}			
+		}
+		
+		return listGrupoUsuario;
+	}
+		
 	
 	
 	/**

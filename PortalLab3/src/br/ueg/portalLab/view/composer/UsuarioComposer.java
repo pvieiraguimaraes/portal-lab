@@ -1,17 +1,17 @@
 package br.ueg.portalLab.view.composer;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zkplus.databind.BindingListModelList;
 import org.zkoss.zkplus.databind.BindingListModelSet;
+import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.ListModel;
+import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import br.ueg.builderSoft.control.Control;
@@ -25,7 +25,7 @@ import br.ueg.builderSoft.view.zk.composer.TabelaComposerController;
 import br.ueg.portalLab.control.UsuarioControl;
 import br.ueg.portalLab.model.CategoriaUsuario;
 import br.ueg.portalLab.model.Usuario;
-import br.ueg.portalLab.security.control.GrupoUsuarioControl;
+import br.ueg.portalLab.security.listener.ListboxListenUsuarioPermissao;
 import br.ueg.portalLab.security.model.CasoDeUso;
 import br.ueg.portalLab.security.model.CasoDeUsoFuncionalidade;
 import br.ueg.portalLab.security.model.GrupoUsuario;
@@ -73,8 +73,19 @@ public class UsuarioComposer extends TabelaComposerController<Usuario> {
 	private Set<GrupoUsuario> fldGrupos;
 	
 	
-	private BindingListModelSet<CasoDeUsoFuncionalidade> funcionalidadeList = new BindingListModelSet<CasoDeUsoFuncionalidade>(
-			new HashSet<CasoDeUsoFuncionalidade>(0), true);
+	private BindingListModelSet<UsuarioPermissao> usuarioPermissaoList = new BindingListModelSet<UsuarioPermissao>(new HashSet<UsuarioPermissao>(0), true);
+	
+	private BindingListModelSet<GrupoUsuario> grupoUsuarioList = new BindingListModelSet<GrupoUsuario>(new HashSet<GrupoUsuario>(0), true);
+	
+	private BindingListModelSet<UsuarioPermissao> casoDeUsoFuncionalidadeList = new BindingListModelSet<UsuarioPermissao>(new HashSet<UsuarioPermissao>(0), true);
+	
+	private BindingListModelSet<GrupoUsuario>  usuarioGrupoUsuarioList = new BindingListModelSet<GrupoUsuario>(new HashSet<GrupoUsuario>(0),true);
+	
+
+	
+	@Wire
+	private Checkbox checkBoxPermitido;  
+	
 	
 	@Wire
 	private Window casoDeUsoFuncionalidades;
@@ -82,6 +93,15 @@ public class UsuarioComposer extends TabelaComposerController<Usuario> {
 	@Wire
 	private DualListbox<CasoDeUsoFuncionalidade> dualList;
 	
+	/* (non-Javadoc)
+	 * @see br.ueg.builderSoft.view.zk.composer.ComposerController#doAfterCompose(org.zkoss.zk.ui.Component)
+	 */
+	@Override
+	public void doAfterCompose(Component comp) throws Exception {
+		super.doAfterCompose(comp);
+		dualList.setCandidateOnSelectListen(new ListboxListenUsuarioPermissao(this.checkBoxPermitido));
+	}
+
 	private CasoDeUso selectedCasoDeUso;
 	
 	@Autowired
@@ -246,32 +266,33 @@ public class UsuarioComposer extends TabelaComposerController<Usuario> {
 	
 	
 	/**
-	 * Lista todas as funcionalidades cadastrados para o caso de uso selecionado.
+	 * Lista todas as permissões do removendo as que o usuário já possua
 	 * 
 	 * @return List<FunctionalityUseCase> Lista de funcionalidades.
 	 */
-	public BindingListModelSet<CasoDeUsoFuncionalidade> getFuncionalidadeList() {
-		Set<CasoDeUsoFuncionalidade> funcList = new HashSet<CasoDeUsoFuncionalidade>(0);
+	public BindingListModelSet<UsuarioPermissao> getUsuarioPermissaoList() {
+		Set<UsuarioPermissao> funcList = new HashSet<UsuarioPermissao>(0);
 		try {
 			
-			funcList.addAll(getUsuarioControl().getFuncionalidadeList());
+			funcList.addAll(getUsuarioControl().getUsuarioPermissaoList());
 		
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
-		funcionalidadeList.clear();
-		funcionalidadeList.addAll(funcList);
-		return funcionalidadeList;
+		usuarioPermissaoList.clear();
+		usuarioPermissaoList.addAll(funcList);
+		return usuarioPermissaoList;
 	}
 
 	
 	/**
 	 * Lista todas as funcionalidades cadastrados para a entidade do composer.
 	 * 
-	 * @return List<FunctionalityUseCase> Lista de funcionalidades.
+	 * @return List<UsuarioPermissao> Lista de funcionalidades.
 	 */
 	public ListModel<UsuarioPermissao> getCasoDeUsoFuncionalidadeList() {
-		BindingListModelSet<UsuarioPermissao> result = null;
+		Set<UsuarioPermissao> userPermList = new HashSet<UsuarioPermissao>(0);
+		
 		if (this.getSelectedEntity() != null && this.getSelectedEntity().getId()!=null) {
 			
 //			for(CasoDeUsoFuncionalidade cafuList :  list){
@@ -281,10 +302,59 @@ public class UsuarioComposer extends TabelaComposerController<Usuario> {
 //			}
 //			Set<CasoDeUsoFuncionalidade> list = getCasoDeUsoControl().getCasoDeUsoFuncionalidades();		
 			
-			result = new BindingListModelSet<UsuarioPermissao>(this.selectedEntity.getPermissoes(), true);
+			userPermList.addAll(this.selectedEntity.getPermissoes());
 		}
-		return result;
+		casoDeUsoFuncionalidadeList.clear();
+		casoDeUsoFuncionalidadeList.addAll(userPermList);
+		return casoDeUsoFuncionalidadeList;
 	}
+	
+	/**
+	 * Lista todas os Grupos de Usuários  do removendo as que o usuário já esteja
+	 * 
+	 * @return List<GrupoUsuario> Lista de funcionalidades.
+	 */
+	public BindingListModelSet<GrupoUsuario> getGrupoUsuarioList() {
+		Set<GrupoUsuario> funcList = new HashSet<GrupoUsuario>(0);
+		try {
+			
+			funcList.addAll(getUsuarioControl().getGrupoUsuarioList());
+		
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+		grupoUsuarioList.clear();
+		grupoUsuarioList.addAll(funcList);
+		return grupoUsuarioList;
+	}
+
+	
+	/**
+	 * Lista todas os grupos de usuario cadastrados para a entidade do composer.
+	 * 
+	 * @return List<GrupoUsuario> Lista de grupo de usuários.
+	 */
+	public ListModel<GrupoUsuario> getUsuarioGrupoUsuarioList() {
+		Set<GrupoUsuario> grupoList = new HashSet<GrupoUsuario>(0);
+		if (this.getSelectedEntity() != null && this.getSelectedEntity().getId()!=null) {
+			
+//			for(CasoDeUsoFuncionalidade cafuList :  list){
+//				if(!this.getSelectedCasoDeUso().getFuncionalidades().contains(cafuList)){
+//					this.getSelectedCasoDeUso().getFuncionalidades().add(cafuList);
+//				}
+//			}
+//			Set<CasoDeUsoFuncionalidade> list = getCasoDeUsoControl().getCasoDeUsoFuncionalidades();		
+			Set<GrupoUsuario> grupos = this.getSelectedEntity().getGrupos();
+			if(grupos!=null){
+				grupoList.addAll(grupos);
+			}
+		}
+		usuarioGrupoUsuarioList.clear();
+		usuarioGrupoUsuarioList.addAll(grupoList);
+		return usuarioGrupoUsuarioList;
+	}
+	
+	
 	/**
 	 * Lista todas os casos de uso cadastrados.
 	 * 
