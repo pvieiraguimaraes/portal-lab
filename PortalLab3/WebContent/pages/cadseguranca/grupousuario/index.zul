@@ -47,7 +47,7 @@
 				</listitem>
 			</listbox>
 		</div>	
-	<window id="casoDeUsoFuncionalidades" title="teste"   border="normal" mode="overlapped" visible="false" closable="false">
+	<window id="casoDeUsoFuncionalidades" title="Permissões"   border="normal" mode="overlapped" visible="false" closable="false">
 		<vbox>
 			<hbox hflex="1">
 				<label id="labelCasoDeUso" value="Caso de Uso:" hflex="1"/>
@@ -56,7 +56,7 @@
 	                		model="@{controller.casoDeUsoList}" 
 	                		selectedItem="@{controller.selectedCasoDeUso}"
 	                		autodrop="true"
-	                		
+	                		hflex="1"
 	                		>
 	                		<comboitem self="@{each=casoDeUso}" label="@{casoDeUso.nome}" value="@{casoDeUso}"/>	
 	                	</combobox>  

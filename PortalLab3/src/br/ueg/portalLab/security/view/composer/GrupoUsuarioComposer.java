@@ -140,23 +140,15 @@ public class GrupoUsuarioComposer extends TabelaComposerController<GrupoUsuario>
 		return result;
 	}
 	/**
-	 * Lista todas as funcionalidades cadastrados para a entidade do composer.
+	 * Lista todas os casos de uso cadastrados.
 	 * 
 	 * @return List<FunctionalityUseCase> Lista de funcionalidades.
 	 */
 	public ListModel<CasoDeUso> getCasoDeUsoList() {
 		BindingListModelSet<CasoDeUso> result = null;
-		if (this.getSelectedEntity() != null && this.getSelectedEntity().getId()!=null) {
-			
-//			for(CasoDeUsoFuncionalidade cafuList :  list){
-//				if(!this.getSelectedCasoDeUso().getFuncionalidades().contains(cafuList)){
-//					this.getSelectedCasoDeUso().getFuncionalidades().add(cafuList);
-//				}
-//			}
-//			Set<CasoDeUsoFuncionalidade> list = getCasoDeUsoControl().getCasoDeUsoFuncionalidades();		
-			
-			result = new BindingListModelSet<CasoDeUso>(this.getGrupoUsuarioControl().getCasoDeUsoList(), true);
-		}
+		
+		result = new BindingListModelSet<CasoDeUso>(this.getGrupoUsuarioControl().getCasoDeUsoList(), true);
+		
 		return result;
 	}
 	
