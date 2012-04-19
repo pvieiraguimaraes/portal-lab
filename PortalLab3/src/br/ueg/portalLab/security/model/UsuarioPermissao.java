@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.util.annotation.Attribute;
@@ -38,7 +39,29 @@ public class UsuarioPermissao extends Entity  {
 	@Attribute(Required = false, SearchField = false)
 	private CasoDeUsoFuncionalidade casoDeUsoFuncionalidade;
 	
+	@Transient
+	private boolean controleInsercaoPadrao = true;
+	/* (non-Javadoc)
+	 * @see br.ueg.builderSoft.model.Entity#isNew()
+	 */
+	@Override
+	public boolean isNew() {
+		if(this.isControleInsercaoPadroa()){
+			return super.isNew();
+		}else{
+			return false;
+		}
+	}
 	
+	/**
+	 * @return the controleInsercaoPadroa
+	 */
+	public boolean isControleInsercaoPadroa() {
+		return controleInsercaoPadrao;
+	}
+	public boolean getControleInsercaoPadrao(){
+		return this.isControleInsercaoPadroa();
+	}
 	
 	public UsuarioPermissao(){		
 	}
@@ -91,5 +114,16 @@ public class UsuarioPermissao extends Entity  {
 	 */
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+	
+	public String toString(){
+		String retorno = "";
+		if(this.getCasoDeUsoFuncionalidade()!=null && this.getCasoDeUsoFuncionalidade().getCasoDeUso()!=null){
+			retorno = this.getCasoDeUsoFuncionalidade().getCasoDeUso().getNome();
+		}
+		if(this.getCasoDeUsoFuncionalidade()!=null && this.getCasoDeUsoFuncionalidade().getFuncionalidade()!=null){
+			retorno += " : " + this.getCasoDeUsoFuncionalidade().getFuncionalidade().getNome();
+		}
+		return retorno;
 	}
 }

@@ -99,4 +99,8 @@ public class GrupoUsuario extends Entity  {
 	public void setFuncionalidades(Set<CasoDeUsoFuncionalidade> funcionalidades) {
 		this.funcionalidades = funcionalidades;
 	}
+	@Override
+	public String toString(){
+		return this.getNome();
+	}
 }
