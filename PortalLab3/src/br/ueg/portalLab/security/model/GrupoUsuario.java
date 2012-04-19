@@ -1,5 +1,6 @@
 package br.ueg.portalLab.security.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -43,7 +44,7 @@ public class GrupoUsuario extends Entity  {
 			joinColumns			={@JoinColumn(name = "id_grup")}, 
 			inverseJoinColumns	={@JoinColumn(name = "id_cafu")}
 			)
-	private Set<CasoDeUsoFuncionalidade> funcionalidades;
+	private Set<CasoDeUsoFuncionalidade> funcionalidades = new HashSet<CasoDeUsoFuncionalidade>(0);
 	
 	
 	public GrupoUsuario(){		
