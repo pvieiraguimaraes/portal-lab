@@ -1,4 +1,4 @@
-package br.ueg.builderSoft.security.composer;
+package br.ueg.builderSoft.security.view.composer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
