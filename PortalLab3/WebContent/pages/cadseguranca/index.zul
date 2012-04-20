@@ -3,10 +3,11 @@
 <zk xmlns:h="native">
 <window title="Menu de Segurança" border="normal" height="300px">
 <vbox>
-	<menubar id="menubar" autodrop="true" orient="vertical" apply="br.ueg.builderSoft.security.composer.MenuBarComposer">
+	<menubar id="menubar" autodrop="true" orient="vertical" apply="br.ueg.builderSoft.security.view.composer.MenuBarComposer">
 		<menuitem label="Caso de Uso" href="/pages/cadseguranca/casodeuso/" id="UC_SEG_CASODEUSO"/>
 		<menuitem label="Funcionalidades" href="/pages/cadseguranca/funcionalidade/" id="UC_SEG_FUNCIONALIDADE" />
 		<menuitem label="Grupo de Usuario" href="/pages/cadseguranca/grupousuario/" id="UC_SEG_GRUPOUSUARIO" />
+		<menuitem label="Usuário" href="/pages/cadseguranca/usuario/" id="UC_SEG_USUARIO" />
 		<menuitem label="Acesso" href="/pages/seguranca/acesso.zul" />
 		<menuitem label="Sair" href="../../j_spring_security_logout"/>
 	</menubar>

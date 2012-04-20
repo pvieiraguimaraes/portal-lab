@@ -77,11 +77,6 @@ public class UsuarioComposer extends TabelaComposerController<Usuario> {
 	
 	private BindingListModelSet<GrupoUsuario> grupoUsuarioList = new BindingListModelSet<GrupoUsuario>(new HashSet<GrupoUsuario>(0), true);
 	
-	private BindingListModelSet<UsuarioPermissao> casoDeUsoFuncionalidadeList = new BindingListModelSet<UsuarioPermissao>(new HashSet<UsuarioPermissao>(0), true);
-	
-	private BindingListModelSet<GrupoUsuario>  usuarioGrupoUsuarioList = new BindingListModelSet<GrupoUsuario>(new HashSet<GrupoUsuario>(0),true);
-	
-
 	
 	@Wire
 	private Checkbox checkBoxPermitido;  
@@ -291,22 +286,13 @@ public class UsuarioComposer extends TabelaComposerController<Usuario> {
 	 * @return List<UsuarioPermissao> Lista de funcionalidades.
 	 */
 	public ListModel<UsuarioPermissao> getCasoDeUsoFuncionalidadeList() {
-		Set<UsuarioPermissao> userPermList = new HashSet<UsuarioPermissao>(0);
+		BindingListModelSet<UsuarioPermissao> userPermList = new BindingListModelSet<UsuarioPermissao>(new HashSet<UsuarioPermissao>(),true);
 		
 		if (this.getSelectedEntity() != null && this.getSelectedEntity().getId()!=null) {
-			
-//			for(CasoDeUsoFuncionalidade cafuList :  list){
-//				if(!this.getSelectedCasoDeUso().getFuncionalidades().contains(cafuList)){
-//					this.getSelectedCasoDeUso().getFuncionalidades().add(cafuList);
-//				}
-//			}
-//			Set<CasoDeUsoFuncionalidade> list = getCasoDeUsoControl().getCasoDeUsoFuncionalidades();		
-			
-			userPermList.addAll(this.selectedEntity.getPermissoes());
+			userPermList = new BindingListModelSet<UsuarioPermissao>(this.selectedEntity.getPermissoes(),true);		
 		}
-		casoDeUsoFuncionalidadeList.clear();
-		casoDeUsoFuncionalidadeList.addAll(userPermList);
-		return casoDeUsoFuncionalidadeList;
+		
+		return userPermList;
 	}
 	
 	/**
@@ -335,23 +321,12 @@ public class UsuarioComposer extends TabelaComposerController<Usuario> {
 	 * @return List<GrupoUsuario> Lista de grupo de usuários.
 	 */
 	public ListModel<GrupoUsuario> getUsuarioGrupoUsuarioList() {
-		Set<GrupoUsuario> grupoList = new HashSet<GrupoUsuario>(0);
+		BindingListModelSet<GrupoUsuario> listGrupos =  new BindingListModelSet<GrupoUsuario>(new HashSet<GrupoUsuario>(0),true);;
 		if (this.getSelectedEntity() != null && this.getSelectedEntity().getId()!=null) {
-			
-//			for(CasoDeUsoFuncionalidade cafuList :  list){
-//				if(!this.getSelectedCasoDeUso().getFuncionalidades().contains(cafuList)){
-//					this.getSelectedCasoDeUso().getFuncionalidades().add(cafuList);
-//				}
-//			}
-//			Set<CasoDeUsoFuncionalidade> list = getCasoDeUsoControl().getCasoDeUsoFuncionalidades();		
-			Set<GrupoUsuario> grupos = this.getSelectedEntity().getGrupos();
-			if(grupos!=null){
-				grupoList.addAll(grupos);
-			}
+			listGrupos = new BindingListModelSet<GrupoUsuario>(this.getSelectedEntity().getGrupos(),true);			
 		}
-		usuarioGrupoUsuarioList.clear();
-		usuarioGrupoUsuarioList.addAll(grupoList);
-		return usuarioGrupoUsuarioList;
+		
+		return listGrupos;
 	}
 	
 	
