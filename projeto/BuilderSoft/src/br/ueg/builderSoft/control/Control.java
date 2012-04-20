@@ -23,7 +23,7 @@ import br.ueg.builderSoft.util.sets.SpringFactory;
 public class Control<E extends Entity>{
 	
 
-	private GenericDAO<E> persistence;
+	protected GenericDAO<E> persistence;
 	protected GenericDAO<E> getPersistence() {
 		if(persistence==null){
 			this.persistence = (GenericDAO<E>) SpringFactory.getInstance().getBean("genericDAO", GenericDAO.class);

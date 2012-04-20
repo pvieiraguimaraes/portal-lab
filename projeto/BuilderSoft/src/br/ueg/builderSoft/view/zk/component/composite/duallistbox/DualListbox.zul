@@ -2,7 +2,7 @@
 	<hbox height="350px" width="100%">
 		<listbox id="candidateLb" width="300px" height="300px" multiple="true" checkmark="true">
 			<listhead>
-				<listheader id="candidateHeader" />
+				<listheader id="candidateHeader" sort="auto"/>
 			</listhead>
 			<template name="modelCandidate">
 				<listitem>
@@ -20,7 +20,7 @@
 		</vbox>
 		<listbox id="chosenLb" width="300px" height="300px" multiple="true" checkmark="true">
 			<listhead>
-				<listheader id="chosenHeader" />
+				<listheader id="chosenHeader" sort="auto"/>
 			</listhead>
 			<template name="modelChosen">
 				<listitem>

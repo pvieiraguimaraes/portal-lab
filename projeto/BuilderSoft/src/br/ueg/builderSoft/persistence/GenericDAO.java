@@ -212,10 +212,10 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 				Object fieldValue=null;
 				try {
 					fieldValue = Reflection.getFieldValue(entity, fields[i].getName());
-					if(fieldValue!=null && Reflection.getClassName(fieldValue.getClass()).equalsIgnoreCase("long")){
-						if( ((Long)fieldValue).doubleValue()==0L){
+					if(fieldValue!=null && fieldValue instanceof HashSet){
+//						if( ((Long)fieldValue).doubleValue()==0L){
 							fieldValue = null;
-						}
+//						}
 					}
 					if(fields[i].getAnnotation(Transient.class)!=null){
 						continue;
