@@ -11,6 +11,7 @@ import br.ueg.builderSoft.persistence.GenericDAO;
 import br.ueg.builderSoft.security.model.CasoDeUso;
 import br.ueg.builderSoft.security.model.CasoDeUsoFuncionalidade;
 import br.ueg.builderSoft.security.model.Funcionalidade;
+import br.ueg.builderSoft.security.model.GrupoUsuario;
 import br.ueg.builderSoft.util.control.MessagesControl;
 import br.ueg.builderSoft.util.sets.SpringFactory;
 
@@ -27,6 +28,14 @@ public class CasoDeUsoControl extends Control<CasoDeUso> {
 	}
 	public CasoDeUsoControl(){
 		
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	protected GenericDAO<CasoDeUso> getPersistence() {
+		if(persistence==null){
+			this.persistence = (GenericDAO<CasoDeUso>) SpringFactory.getInstance().getBean("genericDAOSecurity", GenericDAO.class);
+		}
+		return persistence;
 	}
 
 	
@@ -54,7 +63,7 @@ public class CasoDeUsoControl extends Control<CasoDeUso> {
  */
 @SuppressWarnings("unchecked")
 private GenericDAO<CasoDeUsoFuncionalidade> getCasoDeUsoFuncionalidadeDAO() {
-	return (GenericDAO<CasoDeUsoFuncionalidade>)SpringFactory.getInstance().getBean("genericDAO", GenericDAO.class);
+	return (GenericDAO<CasoDeUsoFuncionalidade>)SpringFactory.getInstance().getBean("genericDAOSecurity", GenericDAO.class);
 }
 	public Set<CasoDeUsoFuncionalidade> getCasoDeUsoFuncionalidades(){
 		HashSet<CasoDeUsoFuncionalidade> list = new HashSet<CasoDeUsoFuncionalidade>(0);
@@ -72,7 +81,7 @@ private GenericDAO<CasoDeUsoFuncionalidade> getCasoDeUsoFuncionalidadeDAO() {
 
 	@SuppressWarnings("unchecked")
 	public Set<CasoDeUsoFuncionalidade> getFuncionalidadeList(){
-		GenericDAO<Funcionalidade> funcionalidadeDAO = (GenericDAO<Funcionalidade>)SpringFactory.getInstance().getBean("genericDAO", GenericDAO.class);
+		GenericDAO<Funcionalidade> funcionalidadeDAO = (GenericDAO<Funcionalidade>)SpringFactory.getInstance().getBean("genericDAOSecurity", GenericDAO.class);
 		
 		List<Funcionalidade> listFuncionalidades = funcionalidadeDAO.getList(new Funcionalidade());
 		Set<CasoDeUsoFuncionalidade> listCasoDeUsoFuncionalidade = new HashSet<CasoDeUsoFuncionalidade>();

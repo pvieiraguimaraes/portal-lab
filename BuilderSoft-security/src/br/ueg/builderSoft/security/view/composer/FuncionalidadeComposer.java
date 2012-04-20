@@ -4,10 +4,12 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import br.ueg.builderSoft.control.Control;
+import br.ueg.builderSoft.security.control.FuncionalidadeControl;
+import br.ueg.builderSoft.security.model.Funcionalidade;
 import br.ueg.builderSoft.util.annotation.AttributeView;
 import br.ueg.builderSoft.util.control.MessagesControl;
+import br.ueg.builderSoft.util.sets.SpringFactory;
 import br.ueg.builderSoft.view.zk.composer.TabelaComposerController;
-import br.ueg.builderSoft.security.model.Funcionalidade;
 
 
 @Component
@@ -24,6 +26,8 @@ public class FuncionalidadeComposer extends TabelaComposerController<Funcionalid
 	
 	@AttributeView(key = "status", isEntityValue = true, fieldType = Boolean.class, isVisible=true, caption="funcionalidade_statusColumn")
 	private Boolean fldStatus;
+	
+	private FuncionalidadeControl funcionalidadeControl;
 	
 	@SuppressWarnings("rawtypes")
 	@Override
@@ -58,6 +62,14 @@ public class FuncionalidadeComposer extends TabelaComposerController<Funcionalid
 
 	public void setFldStatus(Boolean fldStatus) {
 		this.fldStatus = fldStatus;
+	}
+	
+	@Override
+	public Control<Funcionalidade> getControl(){
+		if(this.funcionalidadeControl==null){
+			this.funcionalidadeControl = (FuncionalidadeControl) SpringFactory.getInstance().getBean("funcionalidadeControl", FuncionalidadeControl.class);
+		}
+		return this.funcionalidadeControl;
 	}
 
 }
