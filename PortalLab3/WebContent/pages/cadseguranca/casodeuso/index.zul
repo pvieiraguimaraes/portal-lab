@@ -10,26 +10,53 @@
 
 <crudWindow self="@{define(content)}" id="crudCasoDeUso" apply="${casoDeUsoComposer}"  listBoxSize="8"  height="450px"   titulo="Manter Caso de Uso" composer="@{controller}" >
 <div id="form">
-			<grid>
-	            <columns>
-	                <column width="120px" />
-	                <column align="left" />	
-	            </columns>
-	            <rows>
-	                <row>
-	                    <label value="Nome do Caso de Uso:" />
-	                    <textbox value="@{controller.fldNome}" maxlength="50" width = "98%"/>                    
-	                </row>
-	                	            	<row>
-	                	<label value="Descrição" />
-	                	<textbox value="@{controller.fldDescricao }" width="98%"/>
-	                </row>
-	                <row>
-	                	<label value="Status"/>
-	                	<checkbox checked="@{controller.fldStatus}"/>
-	                </row>	                
-	            </rows>
-	        </grid>
+	<tabbox self="@{define(content)}" id="tb" orient="horizontal">
+			    <tabs id="tabs" width="150px">
+			        <tab id="cadCadoDeUso" 	label="Cadastro de Caso de Uso" />
+			        <tab id="cadFuncionalidades" 	label="Funionalidades" />
+			    </tabs>
+			    <tabpanels>
+			        <tabpanel>
+						<grid>
+				            <columns>
+				                <column width="120px" />
+				                <column align="left" />	
+				            </columns>
+				            <rows>
+				                <row>
+				                    <label value="Nome do Caso de Uso:" />
+				                    <textbox value="@{controller.fldNome}" maxlength="50" width = "98%"/>                    
+				                </row>
+				                	            	<row>
+				                	<label value="Descrição" />
+				                	<textbox value="@{controller.fldDescricao }" width="98%"/>
+				                </row>
+				                <row>
+				                	<label value="Status"/>
+				                	<checkbox checked="@{controller.fldStatus}"/>
+				                </row>	                
+				            </rows>
+				        </grid>
+					</tabpanel>
+					<tabpanel>
+						<vbox>
+							<hbox align="left">
+								<label id="labelCasoDeUso" value="Caso de Uso:" />
+								<label id="labelDescCasoDeUso" value="@{controller.SelectedEntity.nome} " />
+								<label value=" - "/>
+								<label value = "@{controller.SelectedEntity.descricao} " />
+							</hbox>
+							<label id="labelFuncionalidades" value="Funcionalidades " />
+							<dualListbox id="dualList" multipleSelection="true"
+								candidateLabel="funcionalidades disponíveis"
+								candidateModel="@{controller.funcionalidadeList}"
+								chosenLabel="Funcionalidades selecionados" chosenModel="@{controller.casoDeUsoFuncionalidadeList}"
+								addOneLabel="Adicionar" addAllLabel="Adicionar Todos"
+								removeOneLabel="Remover" removeAllLabel="Remover Todos" />
+						</vbox>					
+					</tabpanel>
+				</tabpanels>
+			</tabbox>
 		</div>
 		<div id="result">
 			<listbox>
@@ -37,44 +64,15 @@
 					<listheader label="Nome do Caso de Uso" align="left" sort="auto(nome)"  />
 					<listheader label="Descrição" align="left" sort="auto(descricao)"  />
 					<listheader label="Status" align="left" sort="auto(status)" width="100px" />
-					<listheader label="Permissões" align="left" />
 						
 				</listhead>
 				<listitem id="listitem">
 					<listcell label="@{entity.nome}" />
 					<listcell label="@{entity.descricao}" />
-					<listcell label="@{entity.status, converter='br.ueg.builderSoft.view.zk.converter.BooleanFormatConverter'}" self="@{valor(Ativo:Inativo)}"/>
-					<listcell><button label="Funcionalidades">
-					<attribute name="onClick">
-						self.getParent().getParent().setSelected(true);
-						Events.sendEvent(divListBox,new Event("onSelect",divListBox));
-						controller.editFuncionalidades();
-					</attribute>
-					</button> </listcell>
+					<listcell label="@{entity.status, converter='br.ueg.builderSoft.view.zk.converter.BooleanFormatConverter'}" self="@{valor(Ativo:Inativo)}"/>					
 				</listitem>
 			</listbox>
-		</div>	
-	<window id="casoDeUsoFuncionalidades" title="Funcionalidades"   border="normal" mode="overlapped" visible="false" closable="false">
-		<vbox>
-			<hbox align="left">
-				<label id="labelCasoDeUso" value="Caso de Uso:" />
-				<label id="labelDescCasoDeUso" value="@{controller.SelectedEntity.nome} " />
-				<label value=" - "/>
-				<label value = "@{controller.SelectedEntity.descricao} " />
-			</hbox>
-			<label id="labelFuncionalidades" value="Funcionalidades " />
-			<dualListbox id="dualList" multipleSelection="true"
-				candidateLabel="funcionalidades disponíveis"
-				candidateModel="@{controller.funcionalidadeList}"
-				chosenLabel="Funcionalidades selecionados" chosenModel="@{controller.casoDeUsoFuncionalidadeList}"
-				addOneLabel="Adicionar" addAllLabel="Adicionar Todos"
-				removeOneLabel="Remover" removeAllLabel="Remover Todos" />
-			<hbox hflex="1">
-				<button label="Salvar" onClick="controller.saveFuncionalidades()" hflex="1"/>
-				<button label="Cancelar" onClick="controller.cancelEditFuncionalidades()" hflex="1"/>
-			</hbox>
-		</vbox>
-	</window>	
+		</div>
 </crudWindow>
 	
 

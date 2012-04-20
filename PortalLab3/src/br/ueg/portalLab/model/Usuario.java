@@ -76,7 +76,7 @@ public class Usuario extends Entity {
 			joinColumns			={@JoinColumn(name = "id_usua_usgr")}, 
 			inverseJoinColumns	={@JoinColumn(name = "id_grus_usgr")}
 			)
-	private Set<GrupoUsuario> grupos;
+	private Set<GrupoUsuario> grupos = new HashSet<GrupoUsuario>(0);
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario",cascade = CascadeType.ALL)// mappedBy indica o atributo da entidade many
 	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
