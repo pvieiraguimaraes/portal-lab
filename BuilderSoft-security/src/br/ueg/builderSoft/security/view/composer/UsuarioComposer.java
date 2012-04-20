@@ -46,8 +46,8 @@ public class UsuarioComposer extends TabelaComposerController<Usuario> {
 	@AttributeView(key = "senha", isEntityValue = true, fieldType = String.class, isVisible=true, caption="usuario_senhaColumn", component = ComponentType.INPUT_SECRET)
 	private String fldSenha;
 	
-	@AttributeView(key = "Status", isEntityValue = true, fieldType = Boolean.class, isVisible=true, caption="usuario_statusColumn")
-	private Boolean fldStatus;
+	@AttributeView(key = "Status", isEntityValue = true, fieldType = String.class, isVisible=true, caption="usuario_statusColumn")
+	private String fldStatus;
 	
 	@AttributeView(key = "permissoes", isEntityValue = true, fieldType = Set.class, isVisible=true, caption="usuario_permissoesColumn")
 	private Set<UsuarioPermissao> fldPermissoes;
@@ -131,7 +131,7 @@ public class UsuarioComposer extends TabelaComposerController<Usuario> {
 	/**
 	 * @return the fldStatus
 	 */
-	public Boolean getFldStatus() {
+	public String getFldStatus() {
 		return fldStatus;
 	}
 
@@ -139,7 +139,7 @@ public class UsuarioComposer extends TabelaComposerController<Usuario> {
 	/**
 	 * @param fldStatus the fldStatus to set
 	 */
-	public void setFldStatus(Boolean fldStatus) {
+	public void setFldStatus(String fldStatus) {
 		this.fldStatus = fldStatus;
 	}
 
