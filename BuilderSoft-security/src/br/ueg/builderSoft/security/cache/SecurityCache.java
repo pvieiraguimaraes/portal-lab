@@ -11,15 +11,15 @@ public class SecurityCache {
 	public static final int CACHE_FAULT = -1;
 	public static final int CACHE_DENIED = 0;
 	public static final int CACHE_GRANTED = 1;
-	private Map<String, Map<String, List<String>>> grantedCache;
-	private Map<String, Map<String, List<String>>> deniedCache;
+	private Map<String, Map<String, Map<String, List<String>>>> grantedCache;
+	private Map<String, Map<String, Map<String, List<String>>>> deniedCache;
 
 	/**
 	 * Construtor privado para impedir que esta classe seja instanciada fora do método <code>getInstance</code>
 	 */
 	private SecurityCache() {
-		grantedCache = new HashMap<String, Map<String, List<String>>>(0);
-		deniedCache = new HashMap<String, Map<String, List<String>>>(0);
+		grantedCache = new HashMap<String, Map<String, Map<String, List<String>>>>(0);
+		deniedCache =  new HashMap<String, Map<String, Map<String, List<String>>>>(0);
 	}
 
 	/**
@@ -45,13 +45,18 @@ public class SecurityCache {
 	 *         bloqueado ao useCase gravado no cache; CACHE_GRANTED - caso o profile tenha acesso liberado ao useCase
 	 *         gravado no cache.
 	 */
-	public int isUseCaseAccessible(String profile, String useCase) {
-		Map<String, List<String>> useCaseMap = grantedCache.get(profile);
-		if (useCaseMap != null && useCaseMap.get(useCase) != null)
-			return SecurityCache.CACHE_GRANTED;
-		useCaseMap = deniedCache.get(profile);
-		if (useCaseMap != null && useCaseMap.get(useCase) != null)
-			return SecurityCache.CACHE_DENIED;
+	public int isUseCaseAccessible(String user, String profile, String useCase) {
+		Map<String, Map<String, List<String>>> userUseCaseMap = grantedCache.get(user);
+		if(userUseCaseMap!=null && userUseCaseMap.get(profile)!=null){
+			Map<String, List<String>> useCaseMap = userUseCaseMap.get(profile);
+			if (useCaseMap != null && useCaseMap.get(useCase) != null)
+				return SecurityCache.CACHE_GRANTED;
+			
+			Map<String, Map<String, List<String>>> userUseCaseMapDenied = grantedCache.get(user);
+			useCaseMap = userUseCaseMapDenied.get(profile);
+			if (useCaseMap != null && useCaseMap.get(useCase) != null)
+				return SecurityCache.CACHE_DENIED;
+		}
 		return SecurityCache.CACHE_FAULT;
 	}
 
@@ -69,13 +74,18 @@ public class SecurityCache {
 	 *         bloqueado ao useCase gravado no cache; CACHE_GRANTED - caso o profile tenha acesso liberado ao useCase
 	 *         gravado no cache.
 	 */
-	public int isFunctionalityAccessible(String profile, String useCase, String functionality) {
-		Map<String, List<String>> useCaseMap = grantedCache.get(profile);
-		if (useCaseMap != null && useCaseMap.get(useCase) != null && useCaseMap.get(useCase).contains(functionality))
-			return SecurityCache.CACHE_GRANTED;
-		useCaseMap = deniedCache.get(profile);
-		if (useCaseMap != null && useCaseMap.get(useCase) != null && useCaseMap.get(useCase).contains(functionality))
-			return SecurityCache.CACHE_DENIED;
+	public int isFunctionalityAccessible(String user, String profile, String useCase, String functionality) {
+		Map<String, Map<String, List<String>>> userUseCaseMap = grantedCache.get(user);
+		if(userUseCaseMap!=null && userUseCaseMap.get(profile)!=null){
+			Map<String, List<String>> useCaseMap = userUseCaseMap.get(profile);
+			if (useCaseMap != null && useCaseMap.get(useCase) != null && useCaseMap.get(useCase).contains(functionality))
+				return SecurityCache.CACHE_GRANTED;
+			
+			Map<String, Map<String, List<String>>> userUseCaseMapDenied = grantedCache.get(user);
+			useCaseMap = userUseCaseMapDenied.get(profile);
+			if (useCaseMap != null && useCaseMap.get(useCase) != null && useCaseMap.get(useCase).contains(functionality))
+				return SecurityCache.CACHE_DENIED;
+		}
 		return SecurityCache.CACHE_FAULT;
 	}
 
@@ -91,8 +101,13 @@ public class SecurityCache {
 	 * @param cache
 	 *            cache ao qual deve ser adicionado os demais parametros (bloqueio ou liberação)
 	 */
-	private void add(String profile, String useCase, String functionality, Map<String, Map<String, List<String>>> cache) {
-		Map<String, List<String>> useCaseMap = cache.get(profile);
+	private void add(String user, String profile, String useCase, String functionality, Map<String, Map<String, Map<String, List<String>>>> cache) {
+		Map<String, Map<String, List<String>>> userUseCaseMap = grantedCache.get(user);
+		if(userUseCaseMap == null){
+			userUseCaseMap = new HashMap<String, Map<String, List<String>>>(0);
+		}
+		
+		Map<String, List<String>> useCaseMap = userUseCaseMap.get(profile);
 		// verifica se ja tem o profile
 		if (useCaseMap == null) {
 			// se não tiver o profile
@@ -112,7 +127,9 @@ public class SecurityCache {
 			}
 			useCaseMap.put(useCase, functionalities);
 		}
-		cache.put(profile, useCaseMap);
+		userUseCaseMap.put(profile, useCaseMap);
+		
+		cache.put(user, userUseCaseMap);
 	}
 
 	/**
@@ -145,11 +162,11 @@ public class SecurityCache {
 	 * @param granted
 	 *            true para funcionalidade permitida e false para funcionalidade bloqueada
 	 */
-	public void addCache(String profile, String useCase, String functionality, Boolean granted) {
+	public void addCache(String user, String profile, String useCase, String functionality, Boolean granted) {
 		if (granted) {
-			add(profile, useCase, functionality, grantedCache);
+			add(user, profile, useCase, functionality, grantedCache);
 		} else {
-			add(profile, useCase, functionality, deniedCache);
+			add(user, profile, useCase, functionality, deniedCache);
 		}
 	}
 

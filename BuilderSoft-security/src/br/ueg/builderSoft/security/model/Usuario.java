@@ -43,7 +43,7 @@ public class Usuario extends Entity  {
 	
 	@Column(name = "status_usua", length=20, nullable=false, columnDefinition="varchar(20) default 'Ativo'")
 	@Attribute(Required = true, SearchField = false)
-	private Boolean status = true;
+	private String status = "Ativo";
 	
 	@Column(name = "nome_usua", length=80, nullable=false)
 	@Attribute(Required = true, SearchField = true)
@@ -103,14 +103,14 @@ public class Usuario extends Entity  {
 	/**
 	 * @return the status
 	 */
-	public Boolean getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
 	/**
 	 * @param status the status to set
 	 */
-	public void setStatus(Boolean status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
