@@ -43,7 +43,7 @@ public class Usuario extends Entity  {
 	
 	@Column(name = "status_usua", length=20, nullable=false, columnDefinition="varchar(20) default 'Ativo'")
 	@Attribute(Required = true, SearchField = false)
-	private String status;
+	private Boolean status = true;
 	
 	@Column(name = "nome_usua", length=80, nullable=false)
 	@Attribute(Required = true, SearchField = true)
@@ -54,7 +54,7 @@ public class Usuario extends Entity  {
 			joinColumns			={@JoinColumn(name = "id_usua_usgr")}, 
 			inverseJoinColumns	={@JoinColumn(name = "id_grus_usgr")}
 			)
-	private Set<GrupoUsuario> grupos;
+	private Set<GrupoUsuario> grupos = new HashSet<GrupoUsuario>(0);
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario",cascade = CascadeType.ALL)// mappedBy indica o atributo da entidade many
 	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
@@ -103,14 +103,14 @@ public class Usuario extends Entity  {
 	/**
 	 * @return the status
 	 */
-	public String getStatus() {
+	public Boolean getStatus() {
 		return status;
 	}
 
 	/**
 	 * @param status the status to set
 	 */
-	public void setStatus(String status) {
+	public void setStatus(Boolean status) {
 		this.status = status;
 	}
 

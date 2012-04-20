@@ -10,49 +10,45 @@ import br.ueg.builderSoft.control.Control;
 import br.ueg.builderSoft.persistence.GenericDAO;
 import br.ueg.builderSoft.util.control.MessagesControl;
 import br.ueg.builderSoft.util.sets.SpringFactory;
+import br.ueg.builderSoft.security.model.Usuario;
 import br.ueg.builderSoft.security.model.CasoDeUso;
 import br.ueg.builderSoft.security.model.CasoDeUsoFuncionalidade;
 import br.ueg.builderSoft.security.model.Funcionalidade;
 import br.ueg.builderSoft.security.model.GrupoUsuario;
-import br.ueg.builderSoft.security.model.Usuario;
+import br.ueg.builderSoft.security.model.UsuarioPermissao;
 
+@SuppressWarnings("unused")
 @Service
-public class GrupoUsuarioControl extends Control<GrupoUsuario> {
+public class UsuarioControl extends Control<Usuario> {
 
-	GenericDAO<GrupoUsuario> grupoUsuarioDAO = null;
-	
-	private GrupoUsuario selectedGrupoUsuario;
+	private Usuario selectedUsuario;
 	
 	private CasoDeUso selectedCasoDeUso;
 	
-	public GrupoUsuarioControl(MessagesControl control) {
+	public UsuarioControl(MessagesControl control) {
 		super(control);
-		 //control.addController(new UsuarioValidatorControl((MessagesControl)control.getController(MessagesControl.class),1));
+		 //nivelGeoDAO = (GenericDAO<CategoriaUsuario>) SpringFactory.getInstance().getBean("genericDAO", GenericDAO.class);
 	}
-	public GrupoUsuarioControl(){
+	public UsuarioControl(){
 		
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	protected GenericDAO<GrupoUsuario> getPersistence() {
+	protected GenericDAO<Usuario> getPersistence() {
 		if(persistence==null){
-			this.persistence = (GenericDAO<GrupoUsuario>) SpringFactory.getInstance().getBean("genericDAOSecurity", GenericDAO.class);
+			this.persistence = (GenericDAO<Usuario>) SpringFactory.getInstance().getBean("genericDAOSecurity", GenericDAO.class);
 		}
 		return persistence;
 	}
-
 	
-//	public Set<CategoriaUsuario> getListCategoriaUsuario(){
-//		
-//		Set<CategoriaUsuario> list = new HashSet<CategoriaUsuario>(nivelGeoDAO.getList(new CategoriaUsuario()));
-//		return list;
-//	}
-	public boolean isFuncionalidadePresenteGrupoUsuario(Funcionalidade funcionalidade){
-		if(selectedGrupoUsuario== null) return false;
-		Set<CasoDeUsoFuncionalidade> funcGrupoUsuarioList = this.getSelectedGrupoUsuario().getFuncionalidades();
-		for(CasoDeUsoFuncionalidade cafu : funcGrupoUsuarioList){
-			CasoDeUso casoDeUso = cafu.getCasoDeUso();
-			Funcionalidade funcionalidade2 = cafu.getFuncionalidade();
+	
+	
+	public boolean isFuncionalidadePresenteUsuario(Funcionalidade funcionalidade){
+		if(selectedUsuario== null) return false;
+		Set<UsuarioPermissao> funcUsuarioList = this.getSelectedUsuario().getPermissoes();
+		for(UsuarioPermissao up : funcUsuarioList){
+			CasoDeUso casoDeUso = up.getCasoDeUsoFuncionalidade().getCasoDeUso();
+			Funcionalidade funcionalidade2 = up.getCasoDeUsoFuncionalidade().getFuncionalidade();
 			if(casoDeUso.getId().equals(this.getSelectedCasoDeUso().getId()) && funcionalidade2.getId().equals(funcionalidade.getId())){
 				return true;
 			}
@@ -63,7 +59,7 @@ public class GrupoUsuarioControl extends Control<GrupoUsuario> {
 	/**
 	 * @return
 	 */
-	@SuppressWarnings({ "unused", "unchecked" })
+	@SuppressWarnings({ "unchecked" })
 	private GenericDAO<CasoDeUsoFuncionalidade> getCasoDeUsoFuncionalidadeDAO() {
 		return (GenericDAO<CasoDeUsoFuncionalidade>)SpringFactory.getInstance().getBean("genericDAOSecurity", GenericDAO.class);
 	}
@@ -80,25 +76,32 @@ public class GrupoUsuarioControl extends Control<GrupoUsuario> {
 //	}
 
 	@SuppressWarnings("unchecked")
-	public Set<CasoDeUsoFuncionalidade> getFuncionalidadeList(){
+	public Set<UsuarioPermissao> getUsuarioPermissaoList(){
 		GenericDAO<CasoDeUsoFuncionalidade> casoDeUsoFuncionalidadeDAO = (GenericDAO<CasoDeUsoFuncionalidade>)SpringFactory.getInstance().getBean("genericDAOSecurity", GenericDAO.class);
 		
-		Set<CasoDeUsoFuncionalidade> listCasoDeUsoFuncionalidade = new HashSet<CasoDeUsoFuncionalidade>();
+		Set<UsuarioPermissao> listUsuarioPermissao = new HashSet<UsuarioPermissao>(0);
 		
 		if(this.getSelectedCasoDeUso()!=null){
 			CasoDeUsoFuncionalidade cafu = new CasoDeUsoFuncionalidade();
 			cafu.setCasoDeUso(this.getSelectedCasoDeUso());			
-			List<CasoDeUsoFuncionalidade> listFuncionalidades = casoDeUsoFuncionalidadeDAO.findByEntity(cafu);
-			for(CasoDeUsoFuncionalidade f: listFuncionalidades){
-				if(!isFuncionalidadePresenteGrupoUsuario(f.getFuncionalidade())){					
-					listCasoDeUsoFuncionalidade.add(f);
+			List<CasoDeUsoFuncionalidade> listCasoDeUsoFuncionalidades = casoDeUsoFuncionalidadeDAO.findByEntity(cafu);
+			long numUserPermissoes = 0;
+			for(CasoDeUsoFuncionalidade f: listCasoDeUsoFuncionalidades){
+				if(!isFuncionalidadePresenteUsuario(f.getFuncionalidade())){	
+					UsuarioPermissao up = new UsuarioPermissao();
+					up.setId(numUserPermissoes++);
+					up.setUsuario(this.getSelectedUsuario());
+					up.setCasoDeUsoFuncionalidade(f);
+					listUsuarioPermissao.add(up);
 				}
 			}			
 		}
 		
 		
-		return listCasoDeUsoFuncionalidade;
+		return listUsuarioPermissao;
 	}
+	
+	
 	@SuppressWarnings("unchecked")
 	public Set<CasoDeUso> getCasoDeUsoList(){
 		GenericDAO<CasoDeUso> casoDeUsoDAO = (GenericDAO<CasoDeUso>)SpringFactory.getInstance().getBean("genericDAOSecurity", GenericDAO.class);
@@ -112,18 +115,39 @@ public class GrupoUsuarioControl extends Control<GrupoUsuario> {
 		return listCasoDeUso;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public Set<GrupoUsuario> getGrupoUsuarioList(){
+		Set<GrupoUsuario> listGrupoUsuario = new HashSet<GrupoUsuario>();
+		if(this.getSelectedUsuario()!=null){
+			GenericDAO<GrupoUsuario> grupoUsuarioDAO = (GenericDAO<GrupoUsuario>)SpringFactory.getInstance().getBean("genericDAOSecurity", GenericDAO.class);				
+			
+			List<GrupoUsuario> list =  grupoUsuarioDAO.getList(new GrupoUsuario());
+			listGrupoUsuario.addAll(list);
+			for(GrupoUsuario gu : list){
+				for(GrupoUsuario gg: this.getSelectedUsuario().getGrupos()){
+					if(gg.getId()!=null && gg.getId().equals(gu.getId())){
+						listGrupoUsuario.remove(gu);
+					}
+				}
+			}			
+		}
+		
+		return listGrupoUsuario;
+	}
+		
+	
 	
 	/**
 	 * @return the selectedGrupoUsuario
 	 */
-	public GrupoUsuario getSelectedGrupoUsuario() {
-		return selectedGrupoUsuario;
+	public Usuario getSelectedUsuario() {
+		return selectedUsuario;
 	}
 	/**
-	 * @param selectedGrupoUsuario the selectedGrupoUsuario to set
+	 * @param selectedUsuario the selectedGrupoUsuario to set
 	 */
-	public void setSelectedGrupoUsuario(GrupoUsuario selectedGrupoUsuario) {
-		this.selectedGrupoUsuario = selectedGrupoUsuario;
+	public void setSelectedUsuario(Usuario selectedUsuario) {
+		this.selectedUsuario = selectedUsuario;
 	}
 	public CasoDeUso getSelectedCasoDeUso() {
 		return selectedCasoDeUso;
