@@ -70,6 +70,8 @@
     			<value>br.ueg.portalLab.model.AplicacaoEconomica</value>
     			<value>br.ueg.portalLab.model.NivelTaxonomico</value>
     			<value>br.ueg.portalLab.model.ItemTaxonomico</value>
+    			<value>br.ueg.portalLab.model.Sexo</value>
+    			<value>br.ueg.portalLab.model.Especime</value>
     		</list>
     	</property>
     	<property name="hibernateProperties">

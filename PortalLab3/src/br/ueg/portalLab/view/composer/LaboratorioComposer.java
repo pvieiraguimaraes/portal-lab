@@ -18,6 +18,9 @@ public class LaboratorioComposer extends TabelaComposerController<Entity> {
 	@AttributeView(key = "nome", isEntityValue = true, fieldType = String.class, isVisible=true, caption="laboratorio_nomeColumn")
 	private String fldNome;
 	
+	@AttributeView(key = "sigla", isEntityValue = true, fieldType = String.class, isVisible=true, caption="laboratorio_siglaColumn")
+	private String fldSigla;
+	
 	@AttributeView(key = "responsavel", isEntityValue = true, fieldType = String.class, isVisible=true, caption="laboratorio_responsavelColumn")
 	private String fldResponsavel;
 	
@@ -44,6 +47,16 @@ public class LaboratorioComposer extends TabelaComposerController<Entity> {
 
 	public void setFldNome(String fldNome) {
 		this.fldNome = fldNome;
+	}
+
+
+	public String getFldSigla() {
+		return fldSigla;
+	}
+
+
+	public void setFldSigla(String fldSigla) {
+		this.fldSigla = fldSigla;
 	}
 
 
