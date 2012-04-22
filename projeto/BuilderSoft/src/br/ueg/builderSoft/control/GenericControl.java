@@ -149,7 +149,7 @@ public class GenericControl <E extends Entity> {
 	 * @param vMB
 	 */
 	public void mapManagerBeanToEntity(E entity, IGenericMB<E> vMB){ 
-		
+		if (entity==null) return ;
 		for (Class<?> reflectedClass = vMB.getClass(); reflectedClass != null; reflectedClass = reflectedClass.getSuperclass()) {
 			Field[] fields = reflectedClass.getDeclaredFields();
 			for (Field field : fields) {
