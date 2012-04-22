@@ -60,6 +60,9 @@ public class GrupoEnderecoFisico extends Entity {
 		this.laboratorio = laboratorio;
 	}
 
-	
+	@Override
+	public String toString(){
+		return this.getNome();
+	}
 	
 }

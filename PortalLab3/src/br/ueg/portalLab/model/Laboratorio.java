@@ -24,11 +24,15 @@ public class Laboratorio extends Entity {
 	@Attribute(Required = true, SearchField = true)
 	private String nome;
 	
+	@Column(name = "sigla", length=8, unique=true)
+	@Attribute(Required = true, SearchField = true)
+	private String sigla;
+	
 	@Column(name = "responsavel", length=100)
 	@Attribute(Required = false, SearchField = false)
 	private String responsavel;
 	
-	@Column(name = "telefone")
+	@Column(name = "telefone", length=20)
 	@Attribute(Required = false, SearchField = true)
 	private String telefone;
 	
@@ -51,6 +55,14 @@ public class Laboratorio extends Entity {
 		this.nome = nome;
 	}
 
+	public String getSigla() {
+		return sigla;
+	}
+
+	public void setSigla(String sigla) {
+		this.sigla = sigla;
+	}
+
 	public String getResponsavel() {
 		return responsavel;
 	}
@@ -67,6 +79,10 @@ public class Laboratorio extends Entity {
 		this.telefone = telefone;
 	}
 
+	@Override
+	public String toString(){
+		return this.getNome().concat(" ( ").concat(this.getSigla()).concat(" )");
+	}
 	
 	
 }
