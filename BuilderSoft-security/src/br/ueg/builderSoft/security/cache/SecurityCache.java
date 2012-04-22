@@ -47,7 +47,7 @@ public class SecurityCache {
 	 */
 	public int isUseCaseAccessible(String user, String profile, String useCase) {
 		Map<String, Map<String, List<String>>> userUseCaseMap = grantedCache.get(user);
-		if(userUseCaseMap!=null && userUseCaseMap.get(profile)!=null){
+		if(false && userUseCaseMap!=null && userUseCaseMap.get(profile)!=null){
 			Map<String, List<String>> useCaseMap = userUseCaseMap.get(profile);
 			if (useCaseMap != null && useCaseMap.get(useCase) != null)
 				return SecurityCache.CACHE_GRANTED;
@@ -76,7 +76,7 @@ public class SecurityCache {
 	 */
 	public int isFunctionalityAccessible(String user, String profile, String useCase, String functionality) {
 		Map<String, Map<String, List<String>>> userUseCaseMap = grantedCache.get(user);
-		if(userUseCaseMap!=null && userUseCaseMap.get(profile)!=null){
+		if(false && userUseCaseMap!=null && userUseCaseMap.get(profile)!=null){
 			Map<String, List<String>> useCaseMap = userUseCaseMap.get(profile);
 			if (useCaseMap != null && useCaseMap.get(useCase) != null && useCaseMap.get(useCase).contains(functionality))
 				return SecurityCache.CACHE_GRANTED;
