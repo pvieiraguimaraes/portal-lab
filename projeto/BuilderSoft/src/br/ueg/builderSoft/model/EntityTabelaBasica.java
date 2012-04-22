@@ -48,5 +48,10 @@ public abstract class EntityTabelaBasica extends Entity {
 	public void setDescricao(String vDescricao){
 		this.descricao = vDescricao;
 	}
+	
+	@Override
+	public String toString(){
+		return this.getDescricao();
+	}
 
 }

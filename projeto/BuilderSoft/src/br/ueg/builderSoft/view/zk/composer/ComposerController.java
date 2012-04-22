@@ -448,6 +448,13 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 			this.genericControl.associateEntityToAttributeView(entity);
 		}
 		
+		public void searchEntity(){
+			this.doAction("SEARCH");
+		}
+		
+		public void saveEntity(){
+			this.doAction("SAVE");
+		}
 		
 		public  void editEntity(){
 			binder.saveAll();
