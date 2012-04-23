@@ -155,9 +155,9 @@ public class ItemTaxonomicoComposer extends ComposerController<ItemTaxonomico> {
 	}
 	
 	@Override
-	public void editEntity() {
+	public boolean editEntity() {
 		this.action="editar";
-		super.editEntity();
+		return super.editEntity();
 	}
 
 	public void newEntityFilha() {
