@@ -254,6 +254,11 @@ public class Control<E extends Entity>{
 		return true;
 	}
 	
+	public boolean actionCanceledit(SubControllerManager<E> subControllersManager){
+		this.getPersistence().refresh((E) this.mapFields.get("entity"));
+		return true;
+	}
+	
 	public List<SubController> getListValidator(){
 		ArrayList<SubController> list = new ArrayList<SubController>();
 		list.add((SubController)new ValidatorControl(this.getMessagesControl(),0,Arrays.asList("SAVE")));

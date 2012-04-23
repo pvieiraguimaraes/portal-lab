@@ -361,14 +361,17 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 		 */
 		//@Command
 		//@NotifyChange({ "listEntity", "vm" })
-		public void doAction(@BindingParam("action") String action) {
+		public boolean doAction(@BindingParam("action") String action) {
+			boolean result = false;
 			binder.saveAll();	
 			if (genericControl.doAction(action, initializeEntity())) {
 				verifyListing(action);
 				hideEditForm();	
+				result = true;
 					
 			}
 			binder.loadAll();
+			return result;
 		}
 		
 		
@@ -390,6 +393,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 		//@Command
 		//@NotifyChange({ "selectedEntity", "vm", "viewFormEdit" })
 		public void cancelEditEntity() {
+			this.genericControl.doAction("cancelEdit", getSelectedEntity());
 			this.genericControl.associateEntityToAttributeView(this.initializeEntity());
 			this.hideEditForm();
 		}
@@ -448,15 +452,19 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 			this.genericControl.associateEntityToAttributeView(entity);
 		}
 		
-		public void searchEntity(){
-			this.doAction("SEARCH");
+		public boolean searchEntity(){
+			return this.doAction("SEARCH");
 		}
 		
-		public void saveEntity(){
-			this.doAction("SAVE");
+		public boolean saveEntity(){
+			if(this.doAction("SAVE")){
+				this.hideEditForm();
+				return true;
+			}
+			return false;
 		}
 		
-		public  void editEntity(){
+		public  boolean editEntity(){
 			binder.saveAll();
 			
 			//this.doAction("ASSOCIATE");
@@ -466,7 +474,8 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 			//quando o formulário é construido automaticamente.
 			binder.loadAll();
 			//binder.saveAll();
-			this.showEditForm();		
+			this.showEditForm();
+			return true;
 		}
 
 		public Div getSearchForm() {
@@ -481,7 +490,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 			return form;
 		}	
 		
-		private void processRecursive(Component comp, Object composer) {
+		protected void processRecursive(Component comp, Object composer) {
 			Selectors.wireComponents(comp, composer, false);
 			Selectors.wireEventListeners(comp, composer);
 			

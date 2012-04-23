@@ -144,7 +144,7 @@ public abstract class Entity implements Serializable, Comparable {
 		return this.getId()!=null;
 	}
 	
-	/**@deprecated
+	/**
 	 * @return retorna a string utilizada para comprarar as entidades para efeito de ordenação.
 	 */
 	protected String getColumnCompare(){

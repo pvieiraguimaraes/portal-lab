@@ -129,6 +129,9 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 		this.getSession().flush();
 		getSession().clear();
 	}
+	public void refresh(E entity){
+		this.getSession().refresh(entity);
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
