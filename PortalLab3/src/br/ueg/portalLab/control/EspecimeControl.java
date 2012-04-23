@@ -113,12 +113,15 @@ public class EspecimeControl extends Control<Especime> {
 		GrupoEnderecoFisico gef = new GrupoEnderecoFisico();
 		gef.setLaboratorio(lab);
 		List<GrupoEnderecoFisico> findByEntity = grupoEnderecoFisicoDAO.findByEntity(gef);
+		Collections.sort(findByEntity);
 		//List<GrupoEnderecoFisico> findByEntity = grupoEnderecoFisicoDAO.getListFK(gef.getClass());
 		return findByEntity;
 	}
 	
 	
-		
+//	public void cancelEditEntity(){
+//		this.getPersistence().getSession().refresh(selctedEspecime);
+//	}
 	
 	
 	/**

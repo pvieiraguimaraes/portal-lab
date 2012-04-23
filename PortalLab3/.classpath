@@ -24,9 +24,9 @@
 	<classpathentry kind="lib" path="/BuilderSoft/lib/zcommon.jar"/>
 	<classpathentry kind="lib" path="/BuilderSoft/lib/zel.jar"/>
 	<classpathentry kind="lib" path="/BuilderSoft/lib/zhtml.jar"/>
-	<classpathentry kind="lib" path="/BuilderSoft/lib/zk.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/zk.jar" sourcepath="E:/programas/zk/zk-src-6.0.1-FL-2012-03-21.zip"/>
 	<classpathentry kind="lib" path="/BuilderSoft/lib/zkbind.jar"/>
-	<classpathentry kind="lib" path="/BuilderSoft/lib/zkplus.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/zkplus.jar" sourcepath="E:/programas/zk/zk-src-6.0.1-FL-2012-03-21.zip"/>
 	<classpathentry kind="lib" path="/BuilderSoft/lib/zkspring-core-3.0.jar"/>
 	<classpathentry kind="lib" path="/BuilderSoft/lib/zkspring-webflow-3.0.jar"/>
 	<classpathentry kind="lib" path="/BuilderSoft/lib/zul.jar"/>
