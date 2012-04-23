@@ -18,6 +18,16 @@ import br.ueg.builderSoft.util.annotation.Attribute;
 @Table(name="grupo_endereco")
 public class GrupoEnderecoFisico extends Entity {
 
+
+
+	/* (non-Javadoc)
+	 * @see br.ueg.builderSoft.model.Entity#getColumnCompare()
+	 */
+	@Override
+	protected String getColumnCompare() {
+		return this.getNome();
+	}
+
 	@Id()
 	@GeneratedValue
 	@Column(name = "id_grupo")

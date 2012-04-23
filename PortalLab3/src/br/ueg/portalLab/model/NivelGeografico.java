@@ -1,6 +1,5 @@
 package br.ueg.portalLab.model;
 
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -29,7 +28,7 @@ public class NivelGeografico extends Entity {
 	@Id
 	@GeneratedValue
 	@Column(name = "id_nigeo")
-	private long id;
+	private Long id;
 	
 	
 	@ManyToOne(optional = true, fetch = FetchType.LAZY)

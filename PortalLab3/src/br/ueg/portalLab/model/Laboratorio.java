@@ -81,7 +81,11 @@ public class Laboratorio extends Entity {
 
 	@Override
 	public String toString(){
-		return this.getNome().concat(" ( ").concat(this.getSigla()).concat(" )");
+		if(this.getNome()!=null && this.getSigla()!=null){
+			return this.getNome().concat(" ( ").concat(this.getSigla()).concat(" )");
+		}else{
+			return "Não informado";
+		}
 	}
 	
 	
