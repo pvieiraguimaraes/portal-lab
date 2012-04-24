@@ -124,20 +124,23 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 	public void delete(E entity) {
 		//hibernateTemplate.delete(entity);
 		Transaction ta =this.getSession().beginTransaction();
+		getSession().clear();
 		this.getSession().delete(entity);
 		ta.commit();
 		this.getSession().flush();
-		getSession().clear();
+		
 	}
 	public void refresh(E entity){
-		this.getSession().refresh(entity);
+		if(entity!=null && entity.getId()!=null){
+			this.getSession().refresh(entity);
+		}
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<E> findByCriteria(E entity, String value) {
 		List<E> searchs = new ArrayList<E>();
-		
+		if(entity==null) return searchs;
 		Session session = this.getSession();
 		session.flush();
 		Criteria criteria = session.createCriteria(entity.getClass());

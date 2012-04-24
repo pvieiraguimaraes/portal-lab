@@ -393,6 +393,9 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 		//@Command
 		//@NotifyChange({ "selectedEntity", "vm", "viewFormEdit" })
 		public void cancelEditEntity() {
+			if(getSelectedEntity()==null){
+				setSelectedEntity(this.initializeEntity());
+			}
 			this.genericControl.doAction("cancelEdit", getSelectedEntity());
 			this.genericControl.associateEntityToAttributeView(this.initializeEntity());
 			this.hideEditForm();
