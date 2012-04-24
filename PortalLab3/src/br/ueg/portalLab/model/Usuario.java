@@ -71,7 +71,7 @@ public class Usuario extends Entity {
 	@Attribute(Required = true, SearchField = false)
 	private CategoriaUsuario categoria; 
 	
-	@ManyToMany(cascade =CascadeType.ALL)
+	@ManyToMany(cascade ={CascadeType.PERSIST})
 	@JoinTable(name="usuario_grupo", 
 			joinColumns			={@JoinColumn(name = "id_usua_usgr")}, 
 			inverseJoinColumns	={@JoinColumn(name = "id_grus_usgr")}

@@ -1,10 +1,10 @@
 <zk>
 <window id="formEspecime" title="Formulário de Manutenção Especime" border="normal" xmlns:c="client"
-					closable="false"   visible="false" width="850px">		
+					closable="false"   visible="true" width="850px">		
 			<tabbox id="tb" orient="horizontal">
 			    <tabs id="tabs" width="150px">
 			        <tab id="cadColeta" 			label="Coleta" />
-			        <tab id="cadGeografia" 			label="Geografia" />
+			        <tab id="cadGeografia" 			label="Geografia"/>
 			        <tab id="cadTaxonomia"			label="Taxonomia" />
 			        <tab id="cadMultimidia"			label="Multímia" />
 			        <tab id="cadConteudoDidatico"	label="Conteúdo Didático" />
@@ -52,7 +52,7 @@
 			        		<separator/>
 			        		<grid>
 								<columns>
-									<column width="168px"/>
+									<column width="172px"/>
 									<column align="left"/>
 									<column width="120px" align="left"/>
 									<column align="left"/>
@@ -125,7 +125,7 @@
 											</attribute>											
 											<listcell><label value="@{entity }"/></listcell>
 											<listcell>
-												<button Label="Excluir" id="coletorBtnDelete" image="../../images/lixeira.png">
+												<button Label="Excluir" id="coletorBtnDelete" image="/images/lixeira.png">
 												<attribute name="onClick"><![CDATA[
 												self.getParent().getParent().setSelected(true);	
 												Events.sendEvent(lbColetores,new Event("onSelect",lbColetores));
@@ -143,10 +143,10 @@
 				        		</vlayout>
 							</groupbox>
 							<separator></separator>
-							<hlayout>
+							<vlayout>
 								<label value="Observações"/>
-								<textbox rows="7" cols="90"/>
-							</hlayout>
+								<textbox rows="5" cols="90" width="99%"/>
+							</vlayout>
 							<separator></separator>
 							<div align="right">
 								<button label="Próximo" onClick="controller.saveEntity()"/>
@@ -155,7 +155,274 @@
 						</vlayout>
 			        </tabpanel>
 			        <tabpanel>
-				        geografia
+				        <vlayout>
+					        <groupbox hflex="1">
+				        			<caption><label value="Área Geográfica"/></caption>
+				        			<vlayout>
+				        			<grid>
+										<columns>
+											<column width="85px"/>
+											<column align="left"/>
+										</columns>
+										<rows>
+											<row>
+												<label value="Páis" />
+												<combobox width="440px"/>
+											</row>
+											<row>
+												<label value="Estado" />
+												<combobox width="440px"/>
+											</row>
+											<row>
+												<label value="Município" />
+												<combobox width="440px"/>
+											</row>
+											<row>
+												<label value="Localidade" />
+												<textbox width="437px"/>
+											</row>
+										</rows>
+										</grid>
+				        			
+				        			</vlayout>
+				        	</groupbox>
+							<hlayout>
+								<groupbox hflex="2">
+				        			<caption><label value="Coordenada Geográfica"/></caption>
+				        			<vlayout>
+				        			<grid>
+										<columns>
+											<column width="92px"/>
+											<column align="left"/>
+											<column width="85px" align="left"/>
+											<column align="left"/>
+										</columns>
+										<rows>
+											<row>
+												<label value="Latitude" />
+												<textbox value="" />
+												<label value="Longitude" />
+												<textbox value="" />										
+											</row>
+											<row>
+												<label value="Altitude" />
+												<textbox value="" />
+												<label value="Profundidade" />
+												<textbox value="" />
+											</row>
+											<row>
+												<label value="Precisão"/>
+												<textbox value="" />
+											</row>
+											<row>
+												<label value="Massa D'Água" />
+												<cell colspan="2"><combobox width="100%"/></cell>
+											</row>
+											<row>
+												<label value="Datum" />
+												<cell colspan="2"><combobox width="100%"/></cell>
+											</row>
+										</rows>
+									</grid>
+				        		</vlayout>
+					        	</groupbox>
+					        	<groupbox hflex="1" height="194px">
+					        			<caption><label value="Observações"/></caption>
+					        			<vlayout>
+					        			<textbox rows="11" width="100%"/>
+					        			</vlayout>
+					        	</groupbox>
+							</hlayout>			        	
+				        </vlayout>
+					</tabpanel>
+					<tabpanel>
+				       <vlayout>
+							<groupbox hflex="1">
+				        		<caption><label value="Taxonomia da Espécie"/></caption>
+				        		<vlayout>
+					        			<grid hflex="1">
+											<columns>
+												<column width="90px"/>
+												<column align="left"/>
+												<column align="left" width="90px"/>
+												<column align="left" />
+											</columns>
+											<rows>
+												<row>
+													<label value="Reino" />
+													<combobox width="100%"/>
+												</row>
+												<row>
+													<label value="Filo" />
+													<combobox width="100%"/>
+												</row>
+												<row>
+													<label value="Classe" />
+													<combobox width="100%"/>
+													<label value="Sub-Classe" />
+													<combobox width="100%"/>
+												</row>
+												<row>
+													<label value="Família" />
+													<combobox width="100%"/>
+													<label value="Sub-Família" />
+													<combobox width="100%"/>
+												</row>
+												<row>
+													<label value="Ordem" />
+													<combobox width="100%"/>
+													<label value="Sub-Ordem" />
+													<combobox width="100%"/>
+												</row>
+												<row>
+													<label value="Gênero" />
+													<combobox width="100%"/>
+												</row>
+													<row>
+													<label value="Ep. Específico" />
+													<cell colspan="2">
+														<combobox width="100%"/>
+													</cell>
+												</row>
+											</rows>
+										</grid>
+														        		
+				        		</vlayout>
+				        	</groupbox>
+							<hlayout>
+								<vlayout hflex="1">
+									<hlayout>
+										<grid hflex="1">
+											<columns>
+												<column width="95px"/>
+												<column align="left"/>
+												<column align="left" width="90px"/>
+											</columns>
+											<rows>
+												<row>
+													<label value="Determinador" />
+													<cell colspan="2">
+														<combobox width="100%" />
+													</cell>
+												</row>
+												<row>
+													<label value="Data" />
+													<datebox hflex="1"></datebox>
+													<button label="Adicionar" hflex="1"/>
+												</row>
+												<row>
+													<cell colspan="3">
+														<listbox model="@{controller.coletorList}"										
+															mold="paging" id="lbDeterminadores" 
+															pageSize="3"
+															height="110px"
+															>
+															<listhead id="listheadDeterminadores">
+																<listheader label="Determinador" align="left"/>											
+																<listheader label="Data" align="left" width="70px"/>
+																<listheader label="Op." align="center" width="70px" />							
+															</listhead>
+															<listitem self="@{each=entity}" id="listitemDeterminadores">
+																<attribute name="onDoubleClick">
+																			controller.editEntity();
+																</attribute>	
+																<listcell><label value="@{entity }"/></listcell>
+																<listcell></listcell>
+																<listcell>
+																	<button  id="DeterminadorBtnDelete" image="/images/lixeira.png">
+																	<attribute name="onClick"><![CDATA[
+																	self.getParent().getParent().setSelected(true);	
+																	Events.sendEvent(lbColetores,new Event("onSelect",lbColetores));
+																	
+											 						Listbox lb = (Listbox)self.getParent().getParent().getParent();
+											 						BindingListModelSet lm = ((BindingListModelSet)lb.getModel());
+											 						for(Object b: lm.getSelection()){
+																		lm.remove(b);
+											 						}
+																	]]></attribute>
+																	</button>
+																</listcell>
+															</listitem>
+														</listbox>
+													</cell>
+												</row>
+												<row>
+													<label value="Imprecisão" />
+													<cell colspan="2">
+														<textbox width="99%" /> 
+													</cell>
+												</row>
+											</rows>
+										</grid>
+									</hlayout>
+								</vlayout>
+								<vlayout hflex="1">
+									<hlayout>
+										<grid hflex="1">
+											<columns>
+												<column width="95px"/>
+												<column align="left"/>
+												<column align="left" width="90px"/>
+											</columns>
+											<rows>
+												<row>
+													<label value="Autor" />
+													<combobox width="100%" />
+													<button label="Adicionar" hflex="1"/>
+												</row>
+												<row>
+													<cell colspan="3">
+														<listbox model="@{controller.coletorList}"										
+															mold="paging" id="lbAutores" 
+															pageSize="5"
+															height="172px"
+															>
+															<listhead id="listheadAutores">
+																<listheader label="Determinador" align="left"/>											
+																<listheader label="Data" align="left" width="70px"/>
+																<listheader label="Op." align="center" width="70px" />							
+															</listhead>
+															<listitem self="@{each=entity}" id="listitemAutores">
+																<attribute name="onDoubleClick">
+																			controller.editEntity();
+																</attribute>	
+																<listcell><label value="@{entity }"/></listcell>
+																<listcell></listcell>
+																<listcell>
+																	<button  id="autoresBtnDelete" image="/images/lixeira.png">
+																	<attribute name="onClick"><![CDATA[
+																	self.getParent().getParent().setSelected(true);	
+																	Events.sendEvent(lbColetores,new Event("onSelect",lbColetores));
+																	
+											 						Listbox lb = (Listbox)self.getParent().getParent().getParent();
+											 						BindingListModelSet lm = ((BindingListModelSet)lb.getModel());
+											 						for(Object b: lm.getSelection()){
+																		lm.remove(b);
+											 						}
+																	]]></attribute>
+																	</button>
+																</listcell>
+															</listitem>
+														</listbox>
+													</cell>
+												</row>
+											</rows>
+										</grid>
+									</hlayout>
+								</vlayout>
+							</hlayout>
+							<label value="Observações" />
+							<textbox rows="3" width="100%"/>	        	
+				        </vlayout>				        	
+					</tabpanel>
+					 <tabpanel>
+				        multimidia
+					</tabpanel>
+					 <tabpanel>
+				        conteúdo didático
+					</tabpanel>
+					 <tabpanel>
+				        Bibliografia
 					</tabpanel>
 				</tabpanels>
 			</tabbox>

@@ -12,6 +12,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.util.annotation.Attribute;
 
@@ -39,10 +43,10 @@ public class GrupoUsuario extends Entity  {
 	@Attribute(Required = true, SearchField = false)
 	private Boolean status;
 	
-	@ManyToMany(cascade =CascadeType.ALL)
+	@ManyToMany(cascade ={CascadeType.PERSIST})
 	@JoinTable(name="grupo_permissao", 
-			joinColumns			={@JoinColumn(name = "id_grup")}, 
-			inverseJoinColumns	={@JoinColumn(name = "id_cafu")}
+			joinColumns			={@JoinColumn(name = "id_grup_grpe")}, 
+			inverseJoinColumns	={@JoinColumn(name = "id_cafu_grpe")}
 			)
 	private Set<CasoDeUsoFuncionalidade> funcionalidades = new HashSet<CasoDeUsoFuncionalidade>(0);
 	
