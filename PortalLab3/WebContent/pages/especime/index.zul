@@ -62,16 +62,17 @@
 							<listcell><label value="@{entity.codigoCatalogo }"/></listcell>
 							<listcell></listcell>
 							<listcell></listcell>
-							<listcell><label value="@{entity.dataColeta }"/></listcell>
+							<listcell><label value="@{entity.dataColeta, converter='org.zkoss.zkplus.databind.DateFormatConverter'}"
+					self="@{format(dd/MM/yyyy)}"/></listcell>
 							<listcell>
-								<button Label="Editar" id="crudWindowBtnEdit" image="../../images/editar.png">
+								<button Label="Editar" id="crudWindowBtnEdit" image="/images/editar.png">
 									<attribute name="onClick">
 										self.getParent().getParent().setSelected(true);
 										Events.sendEvent(especimeListbox,new Event("onSelect",especimeListbox));
 										controller.editEntity();
 									</attribute>
 								</button>						
-								<button Label="Excluir" id="crudWindowBtnDelete" image="../../images/lixeira.png">
+								<button Label="Excluir" id="crudWindowBtnDelete" image="/images/lixeira.png">
 								<attribute name="onClick"><![CDATA[
 		 						self.getParent().getParent().setSelected(true); 
 		 						Events.sendEvent(especimeListbox,new Event("onSelect",especimeListbox));
@@ -79,9 +80,7 @@
 								    public void onEvent(Event evt) throws InterruptedException { 
 								        if (evt.getName().equals("onOK")) { 
 		 						        	controller.doAction("DELETE"); 
-								        } else { 
-								          controller.addMessage("coisa de teste"); 
-		 						        } 
+								        } 
 		 						    } 
 		 						}); 
 								]]></attribute>

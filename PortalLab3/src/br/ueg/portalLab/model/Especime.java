@@ -15,6 +15,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+
 import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.util.annotation.Attribute;
 
@@ -79,10 +81,10 @@ public class Especime extends Entity {
 	@Column(name="numero_individuo")
 	private Integer numeroIndividuo = new Integer(1);
 	
-	@ManyToMany(cascade =CascadeType.ALL)
+	@ManyToMany(cascade ={CascadeType.PERSIST})
 	@JoinTable(name="especime_coletor", 
-			joinColumns			={@JoinColumn(name = "id_espe_esco")}, 
-			inverseJoinColumns	={@JoinColumn(name = "id_cole_esco")}
+			joinColumns			={@JoinColumn(name = "id_espe_esco", nullable = false, updatable = false)}, 
+			inverseJoinColumns	={@JoinColumn(name = "id_cole_esco", nullable = false, updatable = false)}
 			)
 	private Set<Coletor> coletores = new HashSet<Coletor>(0);
 	
