@@ -1,5 +1,6 @@
 package br.ueg.builderSoft.security.cache;
 
+import java.awt.GradientPaint;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +33,11 @@ public class SecurityCache {
 			instance = new SecurityCache();
 		return instance;
 	}
+	
+	public void cleanCache(){
+		grantedCache.clear();
+		deniedCache.clear();
+	}
 
 	/**
 	 * Verifica se o <code>UseCase</code> está disponível no cache da aplicação para o profile especificado, retornando
@@ -47,13 +53,14 @@ public class SecurityCache {
 	 */
 	public int isUseCaseAccessible(String user, String profile, String useCase) {
 		Map<String, Map<String, List<String>>> userUseCaseMap = grantedCache.get(user);
-		if(false && userUseCaseMap!=null && userUseCaseMap.get(profile)!=null){
+		if(userUseCaseMap!=null && userUseCaseMap.get(profile)!=null){
 			Map<String, List<String>> useCaseMap = userUseCaseMap.get(profile);
 			if (useCaseMap != null && useCaseMap.get(useCase) != null)
 				return SecurityCache.CACHE_GRANTED;
-			
-			Map<String, Map<String, List<String>>> userUseCaseMapDenied = grantedCache.get(user);
-			useCaseMap = userUseCaseMapDenied.get(profile);
+		}
+		Map<String, Map<String, List<String>>> userUseCaseMapDenied = deniedCache.get(user);
+		if(userUseCaseMapDenied!=null && userUseCaseMapDenied.get(profile)!=null){
+			Map<String, List<String>> useCaseMap = userUseCaseMapDenied.get(profile);
 			if (useCaseMap != null && useCaseMap.get(useCase) != null)
 				return SecurityCache.CACHE_DENIED;
 		}
@@ -75,17 +82,20 @@ public class SecurityCache {
 	 *         gravado no cache.
 	 */
 	public int isFunctionalityAccessible(String user, String profile, String useCase, String functionality) {
-		Map<String, Map<String, List<String>>> userUseCaseMap = grantedCache.get(user);
-		if(false && userUseCaseMap!=null && userUseCaseMap.get(profile)!=null){
-			Map<String, List<String>> useCaseMap = userUseCaseMap.get(profile);
-			if (useCaseMap != null && useCaseMap.get(useCase) != null && useCaseMap.get(useCase).contains(functionality))
-				return SecurityCache.CACHE_GRANTED;
-			
-			Map<String, Map<String, List<String>>> userUseCaseMapDenied = grantedCache.get(user);
-			useCaseMap = userUseCaseMapDenied.get(profile);
+		Map<String, Map<String, List<String>>> userUseCaseMapDenied = deniedCache.get(user);
+		if(userUseCaseMapDenied!=null && userUseCaseMapDenied.get(profile)!=null){			
+			Map<String, List<String>> useCaseMap = userUseCaseMapDenied.get(profile);
 			if (useCaseMap != null && useCaseMap.get(useCase) != null && useCaseMap.get(useCase).contains(functionality))
 				return SecurityCache.CACHE_DENIED;
 		}
+		
+		Map<String, Map<String, List<String>>> userUseCaseMap = grantedCache.get(user);
+		if(userUseCaseMap!=null && userUseCaseMap.get(profile)!=null){
+			Map<String, List<String>> useCaseMap = userUseCaseMap.get(profile);
+			if (useCaseMap != null && useCaseMap.get(useCase) != null && useCaseMap.get(useCase).contains(functionality))
+				return SecurityCache.CACHE_GRANTED;
+		}
+		
 		return SecurityCache.CACHE_FAULT;
 	}
 
@@ -102,7 +112,7 @@ public class SecurityCache {
 	 *            cache ao qual deve ser adicionado os demais parametros (bloqueio ou liberação)
 	 */
 	private void add(String user, String profile, String useCase, String functionality, Map<String, Map<String, Map<String, List<String>>>> cache) {
-		Map<String, Map<String, List<String>>> userUseCaseMap = grantedCache.get(user);
+		Map<String, Map<String, List<String>>> userUseCaseMap = cache.get(user);
 		if(userUseCaseMap == null){
 			userUseCaseMap = new HashMap<String, Map<String, List<String>>>(0);
 		}
@@ -171,15 +181,15 @@ public class SecurityCache {
 	}
 
 	/**
-	 * Remove o profile do cache do sistema. Esta funcionalidade é utilizada quando é alterado alguma profile do
+	 * Remove o user do cache do sistema. Esta funcionalidade é utilizada quando é alterado alguma usario do
 	 * sistema.
 	 * 
-	 * @param profile
+	 * @param user
 	 *            role atribuida a um grupo de usuários do sistema.
 	 */
-	public void removeCache(String profile) {
-		grantedCache.remove(profile);
-		deniedCache.remove(profile);
+	public void removeCache(String user) {
+		grantedCache.remove(user);
+		deniedCache.remove(user);
 	}
 
 }

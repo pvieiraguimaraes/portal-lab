@@ -24,6 +24,7 @@ import br.ueg.builderSoft.security.model.UsuarioPermissao;
 import br.ueg.builderSoft.security.view.listener.ListboxListenUsuarioPermissao;
 import br.ueg.builderSoft.util.annotation.AttributeView;
 import br.ueg.builderSoft.util.constant.ComponentType;
+import br.ueg.builderSoft.util.constant.MessagesType;
 import br.ueg.builderSoft.util.control.MessagesControl;
 import br.ueg.builderSoft.util.sets.SpringFactory;
 import br.ueg.builderSoft.view.zk.component.composite.duallistbox.DualListbox;
@@ -318,5 +319,10 @@ public class UsuarioComposer extends TabelaComposerController<Usuario> {
 		this.selectedCasoDeUso = selectedCasoDeUso;
 		getUsuarioControl().setSelectedCasoDeUso(selectedCasoDeUso);
 		this.binder.loadComponent(dualList);
+	}
+	
+	public void reloadPermission(){
+		this.getUsuarioControl().cleanPermission();
+		this.getUsuarioControl().getMessagesControl().addMessage("success", MessagesType.INFO);
 	}
 }

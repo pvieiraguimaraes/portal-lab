@@ -10,6 +10,7 @@ import br.ueg.builderSoft.control.Control;
 import br.ueg.builderSoft.persistence.GenericDAO;
 import br.ueg.builderSoft.util.control.MessagesControl;
 import br.ueg.builderSoft.util.sets.SpringFactory;
+import br.ueg.builderSoft.security.cache.SecurityCache;
 import br.ueg.builderSoft.security.model.Usuario;
 import br.ueg.builderSoft.security.model.CasoDeUso;
 import br.ueg.builderSoft.security.model.CasoDeUsoFuncionalidade;
@@ -134,7 +135,10 @@ public class UsuarioControl extends Control<Usuario> {
 		
 		return listGrupoUsuario;
 	}
-		
+	
+	public void cleanPermission(){ 
+		SecurityCache.getInstance().cleanCache();
+	}
 	
 	
 	/**
