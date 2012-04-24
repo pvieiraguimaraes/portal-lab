@@ -1,5 +1,10 @@
 package br.ueg.builderSoft.view.zk.composer;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -10,6 +15,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
@@ -503,6 +509,52 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 					processRecursive(vComp, composer);
 				}
 			}
+		}
+		
+		/**
+		 *obtem o reader do arquivo passado considerando que o arquivo está no mesmo diretório que a pagina index.zul do 
+		 *caso de uso
+		 *exemplo: /pages/casodeuso/file.zul
+		 * 
+		 * @return
+		 * @throws UnsupportedEncodingException 
+		 */
+		protected Reader getZulReader(String file) throws UnsupportedEncodingException {
+			String name = this.getPathToFormZulFile()+"/"+file +".zul";
+			InputStream resourceAsStream = this.getComponent().getDesktop().getWebApp().getResourceAsStream(name);
+			return new InputStreamReader(resourceAsStream, "UTF-8");
+		}
+		
+		protected String getPathToFormZulFile(){
+			return "/pages/"+this.getEntityClass().getSimpleName().toLowerCase();
+		}
+		
+		/**
+		 * obtem um formulário passando o nome, 
+		 * o formulário será procurando um arquivo zul que deve ter um window declarado no inicio logo apos o zk
+		 * @param name
+		 * @return
+		 */
+		public Window getFormByName(String name) {
+			Window formName = null;
+			try {
+				//if(this.formEspecime==null){
+					formName = (Window) Executions.createComponentsDirectly(getZulReader(name), null, this.getComponent(), null);
+					
+					formName.setParent(this.getComponent());
+					this.getComponent().appendChild(formName);
+					
+					AnnotateDataBinder formNameBinder = new AnnotateDataBinder(formName);
+					formNameBinder.bindBean("controller", this);
+					formNameBinder.loadComponent(formName);
+					
+				//}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return formName;
 		}
 
 		public String getUseCase() {

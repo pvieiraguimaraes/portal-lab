@@ -1,6 +1,7 @@
 package br.ueg.builderSoft.util.sets;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.web.context.request.SessionScope;
 
 /**
  * Classe que carrega as configurações do Spring
@@ -18,6 +19,7 @@ public class SpringFactory extends ClassPathXmlApplicationContext {
 	public static ClassPathXmlApplicationContext getInstance() {
 		if (instance == null) {
 			instance = new ClassPathXmlApplicationContext("br/ueg/builderSoft/config/spring.xml");
+			instance.getBeanFactory().registerScope("session", new SessionScope());
 		} 
 		return instance;
 	}
