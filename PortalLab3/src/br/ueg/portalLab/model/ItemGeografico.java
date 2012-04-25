@@ -106,5 +106,8 @@ public class ItemGeografico extends Entity {
 	public void setFilhosItensGeograficos(Set<ItemGeografico> filhosItensGeograficos) {
 		this.filhosItensGeograficos = filhosItensGeograficos;
 	}
-
+	@Override
+	public String toString(){
+		return this.getNome();
+	}
 }

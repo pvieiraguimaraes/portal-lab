@@ -5,22 +5,31 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.poi.hssf.record.TextObjectRecord;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.Cascade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.zkoss.bind.AnnotateBinder;
+import org.springframework.stereotype.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zkplus.databind.AnnotateDataBinder;
 import org.zkoss.zkplus.databind.BindingListModelList;
 import org.zkoss.zkplus.databind.BindingListModelSet;
 import org.zkoss.zul.Combobox;
-import org.zkoss.zul.Comboitem;
 import org.zkoss.zul.ListModel;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Textbox;
@@ -28,24 +37,38 @@ import org.zkoss.zul.Window;
 
 import br.ueg.builderSoft.control.Control;
 import br.ueg.builderSoft.model.Entity;
+import br.ueg.builderSoft.util.annotation.Attribute;
 import br.ueg.builderSoft.util.annotation.AttributeView;
 import br.ueg.builderSoft.util.control.MessagesControl;
 import br.ueg.builderSoft.util.sets.SpringFactory;
 import br.ueg.builderSoft.view.zk.composer.ComposerController;
 import br.ueg.portalLab.control.EspecimeControl;
+import br.ueg.portalLab.model.Autor;
 import br.ueg.portalLab.model.Coletor;
+import br.ueg.portalLab.model.Datum;
 import br.ueg.portalLab.model.Especime;
+import br.ueg.portalLab.model.EspecimeDeterminador;
 import br.ueg.portalLab.model.EstagioDesenvolvimento;
 import br.ueg.portalLab.model.Fenologia;
 import br.ueg.portalLab.model.GrupoEnderecoFisico;
+import br.ueg.portalLab.model.ItemGeografico;
+import br.ueg.portalLab.model.ItemTaxonomico;
 import br.ueg.portalLab.model.Laboratorio;
+import br.ueg.portalLab.model.MassaDAgua;
 import br.ueg.portalLab.model.MetodoColeta;
 import br.ueg.portalLab.model.Sexo;
 import br.ueg.portalLab.model.TipoDeMontagem;
 
-@org.springframework.stereotype.Component
+@Component
 @Scope("desktop")
 public class EspecimeComposer extends ComposerController<Especime> {
+
+	@Override
+	public void doAfterCompose(org.zkoss.zk.ui.Component comp) throws Exception {
+		// TODO Auto-generated method stub
+		super.doAfterCompose(comp);
+		this.setEditForm(null);
+	}
 
 	/* (non-Javadoc)
 	 * @see br.ueg.builderSoft.view.zk.composer.ComposerController#cancelEditEntity()
@@ -104,6 +127,90 @@ public class EspecimeComposer extends ComposerController<Especime> {
 
 	@AttributeView(key = "buscaCatalogo", isEntityValue = false, fieldType = String.class, isVisible = true, caption = "especime_buscaCatalogoColumn")
 	private String fldBuscaCatalogo;
+	
+	/* geografia */
+	@AttributeView(key = "pais", isEntityValue = true, fieldType = ItemGeografico.class, isVisible = true, caption = "especime_paisColumn")
+	private ItemGeografico fldPais;
+	
+	@AttributeView(key = "estado", isEntityValue = true, fieldType = ItemGeografico.class, isVisible = true, caption = "especime_estadoColumn")
+	private ItemGeografico fldEstado;
+	
+	@AttributeView(key = "municipio", isEntityValue = true, fieldType = ItemGeografico.class, isVisible = true, caption = "especime_municipioColumn")
+	private ItemGeografico fldMunicipio;
+	
+	@AttributeView(key = "localidade", isEntityValue = true, fieldType = String.class, isVisible = true, caption = "especime_localidadeColumn")
+	private String fldLocalidade;
+	
+	@AttributeView(key = "latitude", isEntityValue = true, fieldType = String.class, isVisible = true, caption = "especime_latitudeColumn")
+	private String fldLatitude;
+	
+	@AttributeView(key = "longitude", isEntityValue = true, fieldType = String.class, isVisible = true, caption = "especime_longitudeColumn")
+	private String fldLongitude;
+	
+	@AttributeView(key = "altitude", isEntityValue = true, fieldType = String.class, isVisible = true, caption = "especime_altitudeColumn")
+	private String fldAltitude;
+	
+	@AttributeView(key = "profundidade", isEntityValue = true, fieldType = String.class, isVisible = true, caption = "especime_profundidadeColumn")
+	private String fldProfundidade;
+	
+	@AttributeView(key = "precisao", isEntityValue = true, fieldType = String.class, isVisible = true, caption = "especime_precisaoColumn")
+	private String fldPrecisao;
+	
+	@AttributeView(key = "massaDAgua", isEntityValue = true, fieldType = MassaDAgua.class, isVisible = true, caption = "especime_massaDAguaColumn")
+	private MassaDAgua fldMassaDAgua;
+	
+	@AttributeView(key = "datum", isEntityValue = true, fieldType = Datum.class, isVisible = true, caption = "especime_datumColumn")
+	private Datum fldDatum;
+	
+	@AttributeView(key = "observacaoGeografria", isEntityValue = true, fieldType = String.class, isVisible = true, caption = "especime_observacaoGeografriaColumn")
+	private String fldObservacaoGeografria;
+	
+	
+	//Atributos guia taxonomia
+	
+	@AttributeView(key = "reino", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true, 		caption = "especime_reinoColumn")
+	private ItemTaxonomico fldReino;
+	
+	@AttributeView(key = "filo", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true,	 		caption = "especime_filoColumn")
+	private ItemTaxonomico fldFilo;
+	
+	@AttributeView(key = "classe", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true, 		caption = "especime_classeColumn")
+	private ItemTaxonomico fldClasse;
+	
+	@AttributeView(key = "subClasse", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true,		caption = "especime_subClasseColumn")
+	private ItemTaxonomico fldSubClasse;
+	
+	@AttributeView(key = "familia", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true, 		caption = "especime_familiaColumn")
+	private ItemTaxonomico fldFamilia;
+	
+	@AttributeView(key = "subFamilia", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true,	caption = "especime_subFamiliaColumn")
+	private ItemTaxonomico fldSubFamilia;
+	
+	@AttributeView(key = "ordem", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true,			caption = "especime_ordemColumn")
+	private ItemTaxonomico fldOrdem;
+	
+	@AttributeView(key = "subOrdem", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true,		 caption = "especime_subOrdemColumn")
+	private ItemTaxonomico fldSubOrdem;
+	
+	@AttributeView(key = "genero", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true,		 caption = "especime_generoColumn")
+	private ItemTaxonomico fldGenero;
+	
+	@AttributeView(key = "epitetoEspecifico", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true,		 caption = "especime_epitetoEspecificoColumn")
+	private ItemTaxonomico fldEpitetoEspecifico;
+	
+	@AttributeView(key = "especimeDeterminadores", isEntityValue = true, fieldType = Set.class, isVisible = true,		 caption = "especime_especimeDeterminadoresColumn")
+	private Set<EspecimeDeterminador> fldEspecimeDeterminadores = new HashSet<EspecimeDeterminador>(0);
+
+	@AttributeView(key = "imprecisao", isEntityValue = true, fieldType = String.class, isVisible = true,		 caption = "especime_imprecisaoColumn")
+	private String fldImprecisao;
+	
+	@AttributeView(key = "autores", isEntityValue = true, fieldType = Set.class, isVisible = true,		 caption = "especime_autoresColumn")
+	private Set<Autor> fldAutores = new HashSet<Autor>(0);
+	
+	@AttributeView(key = "observacaoTaxonomia", isEntityValue = true, fieldType = String.class, isVisible = true,		 caption = "especime_observacaoTaxonomiaColumn")
+	private String fldObservacaoTaxonomia;
+	
+	
 
 	@Autowired
 	protected EspecimeControl especimeControl;
@@ -280,6 +387,207 @@ public class EspecimeComposer extends ComposerController<Especime> {
 		this.fldObservacao = fldObservacao;
 	}
 
+	public ItemGeografico getFldPais() {
+		return fldPais;
+	}
+
+	public void setFldPais(ItemGeografico fldPais) {
+		this.fldPais = fldPais;
+	}
+
+	public ItemGeografico getFldEstado() {
+		return fldEstado;
+	}
+
+	public void setFldEstado(ItemGeografico fldEstado) {
+		this.fldEstado = fldEstado;
+	}
+
+	public ItemGeografico getFldMunicipio() {
+		return fldMunicipio;
+	}
+
+	public void setFldMunicipio(ItemGeografico fldMunicipio) {
+		this.fldMunicipio = fldMunicipio;
+	}
+
+	public String getFldLocalidade() {
+		return fldLocalidade;
+	}
+
+	public void setFldLocalidade(String fldLocalidade) {
+		this.fldLocalidade = fldLocalidade;
+	}
+
+	public String getFldLatitude() {
+		return fldLatitude;
+	}
+
+	public void setFldLatitude(String fldLatitude) {
+		this.fldLatitude = fldLatitude;
+	}
+
+	public String getFldLongitude() {
+		return fldLongitude;
+	}
+
+	public void setFldLongitude(String longitude) {
+		this.fldLongitude = longitude;
+	}
+
+	public String getFldAltitude() {
+		return fldAltitude;
+	}
+
+	public void setFldAltitude(String fldAltitude) {
+		this.fldAltitude = fldAltitude;
+	}
+
+	public String getFldProfundidade() {
+		return fldProfundidade;
+	}
+
+	public void setFldProfundidade(String fldProfundidade) {
+		this.fldProfundidade = fldProfundidade;
+	}
+
+	public String getFldPrecisao() {
+		return fldPrecisao;
+	}
+
+	public void setFldPrecisao(String precisao) {
+		this.fldPrecisao = precisao;
+	}
+
+	public MassaDAgua getFldMassaDAgua() {
+		return fldMassaDAgua;
+	}
+
+	public void setFldMassaDAgua(MassaDAgua fldMassaDAgua) {
+		this.fldMassaDAgua = fldMassaDAgua;
+	}
+
+	public Datum getFldDatum() {
+		return fldDatum;
+	}
+
+	public void setFldDatum(Datum fldDatum) {
+		this.fldDatum = fldDatum;
+	}
+
+	public String getFldObservacaoGeografria() {
+		return fldObservacaoGeografria;
+	}
+
+	public void setFldObservacaoGeografria(String observacaoGeografria) {
+		this.fldObservacaoGeografria = observacaoGeografria;
+	}
+
+	public ItemTaxonomico getFldReino() {
+		return fldReino;
+	}
+
+	public void setFldReino(ItemTaxonomico fldReino) {
+		this.fldReino = fldReino;
+	}
+
+	public ItemTaxonomico getFldFilo() {
+		return fldFilo;
+	}
+
+	public void setFldFilo(ItemTaxonomico fldFilo) {
+		this.fldFilo = fldFilo;
+	}
+
+	public ItemTaxonomico getFldClasse() {
+		return fldClasse;
+	}
+
+	public void setFldClasse(ItemTaxonomico fldClasse) {
+		this.fldClasse = fldClasse;
+	}
+
+	public ItemTaxonomico getFldSubClasse() {
+		return fldSubClasse;
+	}
+
+	public void setFldSubClasse(ItemTaxonomico fldSubClasse) {
+		this.fldSubClasse = fldSubClasse;
+	}
+
+	public ItemTaxonomico getFldFamilia() {
+		return fldFamilia;
+	}
+
+	public void setFldFamilia(ItemTaxonomico fldFamilia) {
+		this.fldFamilia = fldFamilia;
+	}
+
+	public ItemTaxonomico getFldSubFamilia() {
+		return fldSubFamilia;
+	}
+
+	public void setFldSubFamilia(ItemTaxonomico fldSubFamilia) {
+		this.fldSubFamilia = fldSubFamilia;
+	}
+
+	public ItemTaxonomico getFldOrdem() {
+		return fldOrdem;
+	}
+
+	public void setFldOrdem(ItemTaxonomico fldOrdem) {
+		this.fldOrdem = fldOrdem;
+	}
+
+	public ItemTaxonomico getFldSubOrdem() {
+		return fldSubOrdem;
+	}
+
+	public void setFldSubOrdem(ItemTaxonomico fldSubOrdem) {
+		this.fldSubOrdem = fldSubOrdem;
+	}
+
+	public ItemTaxonomico getFldGenero() {
+		return fldGenero;
+	}
+
+	public void setFldGenero(ItemTaxonomico fldGenero) {
+		this.fldGenero = fldGenero;
+	}
+
+	public ItemTaxonomico getFldEpitetoEspecifico() {
+		return fldEpitetoEspecifico;
+	}
+
+	public void setFldEpitetoEspecifico(ItemTaxonomico fldEpitetoEspecifico) {
+		this.fldEpitetoEspecifico = fldEpitetoEspecifico;
+	}
+
+	public Set<EspecimeDeterminador> getFldEspecimeDeterminadores() {
+		return fldEspecimeDeterminadores;
+	}
+
+	public void setFldEspecimeDeterminadores(
+			Set<EspecimeDeterminador> fldEspecimeDeterminadores) {
+		this.fldEspecimeDeterminadores = fldEspecimeDeterminadores;
+	}
+
+	public Set<Autor> getFldAutores() {
+		return fldAutores;
+	}
+
+	public void setFldAutores(Set<Autor> fldAutores) {
+		this.fldAutores = fldAutores;
+	}
+
+	public String getFldObservacaoTaxonomia() {
+		return fldObservacaoTaxonomia;
+	}
+
+	public void setFldObservacaoTaxonomia(String fldObservacaoTaxonomia) {
+		this.fldObservacaoTaxonomia = fldObservacaoTaxonomia;
+	}
+
 	public String getFldBuscaLocal() {
 		return fldBuscaLocal;
 	}
@@ -315,10 +623,11 @@ public class EspecimeComposer extends ComposerController<Especime> {
 			if(this.formEspecime==null){
 				this.formEspecime = (Window) Executions.createComponentsDirectly(getZulReader(), null, this.controlEspecime, null);
 				
-				this.formEspecime.setParent(this.controlEspecime);
-				this.controlEspecime.appendChild(this.formEspecime);
+				//this.formEspecime.setParent(this.controlEspecime);
+				//this.controlEspecime.appendChild(this.formEspecime);
 				
 				this.binderForm = new AnnotateDataBinder(this.formEspecime);
+				this.binderForm.setLoadOnSave(false);
 				this.binderForm.bindBean("controller", this);
 				this.binderForm.loadComponent(this.formEspecime);
 				
@@ -413,7 +722,7 @@ public class EspecimeComposer extends ComposerController<Especime> {
 		//this.doAction("ASSOCIATE");
 		this.genericControl.associateEntityToAttributeView(this.getSelectedEntity());
 		
-		//binder.loadComponent(this.getEditForm());
+		binder.loadComponent(this.getEditForm());
 		//TODO descobrir uma forma de não fazer isso(ler tudo, deveria funcionar só com o comando acima, 
 		//quando o formulário é construido automaticamente.
 		binder.loadAll();
@@ -463,9 +772,63 @@ public class EspecimeComposer extends ComposerController<Especime> {
 		// TODO Auto-generated method stub
 		super.showEditForm();
 		Textbox tb = (Textbox)this.getEditForm().getFellow("fldGrupoEnderecoFisicoHidden");
-		Combobox cb = (Combobox) this.getEditForm().getFellow("cmbGrupoEnderecoFisico");
+		Combobox cb = (Combobox) this.getEditForm().getFellow("cmbGrupoEnderecoFisico");		
+		cb.setValue(tb.getValue());
+		
+		//estado
+		tb = (Textbox)this.getEditForm().getFellow("fldEstadoHidden");
+		cb = (Combobox) this.getEditForm().getFellow("cmbEstado");		
+		cb.setValue(tb.getValue());
+		
+		//municipio
+		tb = (Textbox)this.getEditForm().getFellow("fldMunicipioHidden");
+		cb = (Combobox) this.getEditForm().getFellow("cmbMunicipio");		
+		cb.setValue(tb.getValue());
+		
+		//Filo
+		tb = (Textbox)this.getEditForm().getFellow("fldFiloHidden");
+		cb = (Combobox) this.getEditForm().getFellow("cmbFilo");		
+		cb.setValue(tb.getValue());
+		
+		//Classe
+		tb = (Textbox)this.getEditForm().getFellow("fldClasseHidden");
+		cb = (Combobox) this.getEditForm().getFellow("cmbClasse");		
 		cb.setValue(tb.getValue());
 
+		//SubClasse
+		tb = (Textbox)this.getEditForm().getFellow("fldSubClasseHidden");
+		cb = (Combobox) this.getEditForm().getFellow("cmbSubClasse");		
+		cb.setValue(tb.getValue());		
+
+		//Familia
+		tb = (Textbox)this.getEditForm().getFellow("fldFamiliaHidden");
+		cb = (Combobox) this.getEditForm().getFellow("cmbFamilia");		
+		cb.setValue(tb.getValue());		
+
+		//SubFamilia
+		tb = (Textbox)this.getEditForm().getFellow("fldSubFamiliaHidden");
+		cb = (Combobox) this.getEditForm().getFellow("cmbSubFamilia");		
+		cb.setValue(tb.getValue());		
+
+		//Ordem
+		tb = (Textbox)this.getEditForm().getFellow("fldOrdemHidden");
+		cb = (Combobox) this.getEditForm().getFellow("cmbOrdem");		
+		cb.setValue(tb.getValue());		
+		
+		//SubOrdem
+		tb = (Textbox)this.getEditForm().getFellow("fldSubOrdemHidden");
+		cb = (Combobox) this.getEditForm().getFellow("cmbSubOrdem");		
+		cb.setValue(tb.getValue());		
+		
+		//Genero
+		tb = (Textbox)this.getEditForm().getFellow("fldGeneroHidden");
+		cb = (Combobox) this.getEditForm().getFellow("cmbGenero");		
+		cb.setValue(tb.getValue());		
+
+		//EpitetoEspecifico
+		tb = (Textbox)this.getEditForm().getFellow("fldEpitetoEspecificoHidden");
+		cb = (Combobox) this.getEditForm().getFellow("cmbEpitetoEspecifico");		
+		cb.setValue(tb.getValue());
 		
 		//this.binder.
 	}
@@ -499,6 +862,143 @@ public class EspecimeComposer extends ComposerController<Especime> {
 		
 	}
 
-	/* Fim tratar guia coelta */
+	/* Fim tratar guia coleta */
+	
+	/* inicio geografia */
+	public List<ItemGeografico> getPaisList(){		
+		return this.getEspecimeControl().getPaisList();
+	}
+	
+	public List<ItemGeografico> getEstadoList(){
+		return this.getEspecimeControl().getFilhoList(this.getFldPais());
+	}
+	public List<ItemGeografico> getMunicipioList(){
+		return this.getEspecimeControl().getFilhoList(this.getFldEstado());
+	}
+	
+	
+	/* fim geografia */
+	
+	/* inicio guia taxonomia */
+	
+	public List<ItemTaxonomico> getReinoList(){		
+		return this.getEspecimeControl().getReinoList();
+	}
+	
+	public List<ItemTaxonomico> getFiloList(){
+		return this.getEspecimeControl().getFilhoList(this.getFldReino());
+	}
+	public List<ItemTaxonomico> getClasseList(){
+		return this.getEspecimeControl().getFilhoList(this.getFldFilo());
+	}
+	public List<ItemTaxonomico> getSubClasseList(){
+		return this.getEspecimeControl().getFilhoList(this.getFldClasse());
+	}
+	public List<ItemTaxonomico> getFamiliaList(){
+		ArrayList<ItemTaxonomico> resultList = new ArrayList<ItemTaxonomico>(0);
+		List<ItemTaxonomico> filhoList = this.getEspecimeControl().getFilhoList(this.getFldClasse());
+		if(filhoList!=null)
+			resultList.addAll(filhoList);
+		
+		List<ItemTaxonomico> filhoList2 = this.getEspecimeControl().getFilhoList(this.getFldSubClasse());
+		if(filhoList2!=null)
+			resultList.addAll(filhoList2);
+		return resultList;
+	}
+	public List<ItemTaxonomico> getSubFamiliaList(){
+		return this.getEspecimeControl().getFilhoList(this.getFldFamilia());
+	}
+	public List<ItemTaxonomico> getOrdemList(){
+		ArrayList<ItemTaxonomico> resultList = new ArrayList<ItemTaxonomico>(0);
+		List<ItemTaxonomico> filhoList = this.getEspecimeControl().getFilhoList(this.getFldFamilia());
+		if(filhoList!=null)
+			resultList.addAll(filhoList);
+		
+		List<ItemTaxonomico> filhoList2 = this.getEspecimeControl().getFilhoList(this.getFldSubFamilia());
+		if(filhoList2!=null)
+			resultList.addAll(filhoList2);
+		return resultList;
+	}
+	public List<ItemTaxonomico> getSubOrdemList(){
+		return this.getEspecimeControl().getFilhoList(this.getFldOrdem());
+	}
+	public List<ItemTaxonomico> getGeneroList(){
+		ArrayList<ItemTaxonomico> resultList = new ArrayList<ItemTaxonomico>(0);
+		List<ItemTaxonomico> filhoList = this.getEspecimeControl().getFilhoList(this.getFldOrdem());
+		if(filhoList!=null)
+			resultList.addAll(filhoList);
+		
+		List<ItemTaxonomico> filhoList2 = this.getEspecimeControl().getFilhoList(this.getFldSubOrdem());
+		if(filhoList2!=null)
+			resultList.addAll(filhoList2);
+		return resultList;
+	}
+	public List<ItemTaxonomico> getEpitetoEspecificoList(){
+		return this.getEspecimeControl().getFilhoList(this.getFldGenero());
+	}
+	
+	public ListModel<EspecimeDeterminador> getEspecimeDeterminadorList() {
+		BindingListModelSet<EspecimeDeterminador> coletoresList = new BindingListModelSet<EspecimeDeterminador>(
+				new HashSet<EspecimeDeterminador>(0), true);
 
+		if (this.getSelectedEntity() != null
+				&& this.getSelectedEntity().getId() != null) {
+			coletoresList = new BindingListModelSet<EspecimeDeterminador>(
+					this.selectedEntity.getEspecimeDeterminadores(), true);
+		}
+
+		return coletoresList;
+	}
+	
+	public BindingListModelList<Entity> getEspecimeDeterminadorListAvaliable() {
+		Set<EspecimeDeterminador> fldDeterminadores2 = this.getSelectedEntity()!=null?this.getSelectedEntity().getEspecimeDeterminadores():null;
+		
+		if(fldDeterminadores2==null ||(fldDeterminadores2!=null && fldDeterminadores2.size()==0)){
+			fldDeterminadores2 = new HashSet<EspecimeDeterminador>();
+			EspecimeDeterminador e = new EspecimeDeterminador();
+			e.setId(0L);
+			fldDeterminadores2.add(e);
+		}
+		return this.getEntityModel(this.getEspecimeControl()
+										.getListToEntityField(new HashSet<Entity>(fldDeterminadores2))
+				);
+	}
+	
+	public String getFldImprecisao() {
+		return fldImprecisao;
+	}
+
+	public void setFldImprecisao(String fldImprecisao) {
+		this.fldImprecisao = fldImprecisao;
+	}
+
+	public ListModel<Autor> getAutorList() {
+		BindingListModelSet<Autor> coletoresList = new BindingListModelSet<Autor>(
+				new HashSet<Autor>(0), true);
+
+		if (this.getSelectedEntity() != null
+				&& this.getSelectedEntity().getId() != null) {
+			coletoresList = new BindingListModelSet<Autor>(
+					this.selectedEntity.getAutores(), true);
+		}
+
+		return coletoresList;
+	}
+	
+	public BindingListModelList<Entity> getAutorListAvaliable() {
+		Set<Autor> fldAutores2 = this.getSelectedEntity()!=null?this.getSelectedEntity().getAutores():null;
+		
+		if(fldAutores2==null ||(fldAutores2!=null && fldAutores2.size()==0)){
+			fldAutores2 = new HashSet<Autor>();
+			Autor e = new Autor();
+			e.setId(0L);
+			fldAutores2.add(e);
+		}
+		return this.getEntityModel(this.getEspecimeControl()
+										.getListToEntityField(new HashSet<Entity>(fldAutores2))
+				);
+	}
+	
+	/* fim guia taxonomia */
+	
 }

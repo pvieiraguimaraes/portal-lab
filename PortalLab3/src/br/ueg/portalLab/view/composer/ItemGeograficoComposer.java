@@ -12,7 +12,9 @@ import br.ueg.builderSoft.control.Control;
 import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.util.annotation.AttributeView;
 import br.ueg.builderSoft.util.control.MessagesControl;
+import br.ueg.builderSoft.util.sets.SpringFactory;
 import br.ueg.builderSoft.view.zk.composer.TabelaComposerController;
+import br.ueg.portalLab.control.EspecimeControl;
 import br.ueg.portalLab.control.ItemGeograficoControl;
 import br.ueg.portalLab.model.ItemGeografico;
 import br.ueg.portalLab.model.NivelGeografico;
@@ -114,6 +116,17 @@ public class ItemGeograficoComposer extends TabelaComposerController<ItemGeograf
 
 	@Override
 	public Control<ItemGeografico> getNewControl(MessagesControl pMessagesControl) {
-		return new ItemGeograficoControl<ItemGeografico>(pMessagesControl);
+		return null;
+	}
+	private Control<ItemGeografico> controlItemGeografico;
+	@SuppressWarnings("unchecked")
+	@Override
+	public Control<ItemGeografico> getControl(){
+		if(this.controlItemGeografico== null){
+			this.controlItemGeografico =(ItemGeograficoControl<ItemGeografico>) SpringFactory
+					.getInstance().getBean("itemGeograficoControl",
+							ItemGeograficoControl.class);
+		}
+		return this.controlItemGeografico;
 	}
 }

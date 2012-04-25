@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -16,6 +17,7 @@ import br.ueg.builderSoft.control.Control;
 import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.util.annotation.AttributeView;
 import br.ueg.builderSoft.util.control.MessagesControl;
+import br.ueg.builderSoft.util.sets.SpringFactory;
 import br.ueg.builderSoft.view.zk.composer.ComposerController;
 import br.ueg.portalLab.control.ItemGeograficoControl;
 import br.ueg.portalLab.control.ItemTaxonomicoControl;
@@ -46,7 +48,8 @@ public class ItemTaxonomicoComposer extends ComposerController<ItemTaxonomico> {
 	@AttributeView(key = "filhosItensTaxonomicos", isEntityValue = true, fieldType = Set.class, isVisible=true, caption="itemtaxonomico_filhosColum")
 	private Set<ItemTaxonomico> fldFilhosItensTaxonomicos;
 
-	
+	@Autowired
+	protected Control<ItemTaxonomico> controlItemTaxonomico;
 	
 	//para acesso ao formulário de edição
 	@Wire
@@ -140,7 +143,7 @@ public class ItemTaxonomicoComposer extends ComposerController<ItemTaxonomico> {
 	}
 
 	public boolean getPodeExcluir(){
-		return (this.getFldId()>0L && this.getFldFilhosItensTaxonomicos()!=null && this.getFldFilhosItensTaxonomicos().size()==0);
+		return (this.getFldId()!=null && this.getFldFilhosItensTaxonomicos()!=null && this.getFldFilhosItensTaxonomicos().size()==0);
 	}
 	
 	@Override
@@ -207,6 +210,15 @@ public class ItemTaxonomicoComposer extends ComposerController<ItemTaxonomico> {
 	@Override
 	public Control<ItemTaxonomico> getNewControl(MessagesControl pMessagesControl) {
 		return new ItemTaxonomicoControl<ItemTaxonomico>(pMessagesControl); 
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public Control<ItemTaxonomico> getControl(){
+		if(controlItemTaxonomico==null){
+			this.controlItemTaxonomico = (ItemTaxonomicoControl<ItemTaxonomico>) SpringFactory.getInstance().getBean("itemTaxonomicoControl",ItemTaxonomicoControl.class);
+		}
+		return this.controlItemTaxonomico;
 	}
 
 

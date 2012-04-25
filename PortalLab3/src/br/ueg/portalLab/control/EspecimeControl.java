@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import br.ueg.builderSoft.control.Control;
@@ -17,6 +18,8 @@ import br.ueg.builderSoft.util.sets.SpringFactory;
 import br.ueg.portalLab.model.Coletor;
 import br.ueg.portalLab.model.Especime;
 import br.ueg.portalLab.model.GrupoEnderecoFisico;
+import br.ueg.portalLab.model.ItemGeografico;
+import br.ueg.portalLab.model.ItemTaxonomico;
 import br.ueg.portalLab.model.Laboratorio;
 import br.ueg.portalLab.model.Usuario;
 import br.ueg.portalLab.security.model.CasoDeUso;
@@ -28,6 +31,7 @@ import br.ueg.portalLab.util.control.EspecimeValidatorControl;
 import br.ueg.portalLab.util.control.UsuarioValidatorControl;
 
 @Service
+@Scope("desktop")
 public class EspecimeControl extends Control<Especime> {
 
 	private Especime selctedEspecime;
@@ -108,6 +112,7 @@ public class EspecimeControl extends Control<Especime> {
 	
 	
 	
+	@SuppressWarnings("unchecked")
 	public List<GrupoEnderecoFisico> getGrupoEnderecoFisicoList(Laboratorio lab){
 		GenericDAO<GrupoEnderecoFisico> grupoEnderecoFisicoDAO = this.getGrupoEnderecoFisicoDAO();
 		GrupoEnderecoFisico gef = new GrupoEnderecoFisico();
@@ -135,5 +140,55 @@ public class EspecimeControl extends Control<Especime> {
 	 */
 	public void setSelectedEspecime(Especime selectedEspecime) {
 		this.selctedEspecime = selectedEspecime;
-	}	
+	}
+	
+	/* metodos para aba geografia */
+	@SuppressWarnings("unchecked")
+	public GenericDAO<ItemGeografico> getItemGeograficoDAO(){
+		return (GenericDAO<ItemGeografico>) SpringFactory.getInstance().getBean("genericDAO", GenericDAO.class);
+	}
+	
+	public List<ItemGeografico> getPaisList(){
+		GenericDAO<ItemGeografico> itemGeograficoDAO = this.getItemGeograficoDAO();
+		String qry = "from ItemGeografico i where i.pai is null order by i.nome";	
+		List<ItemGeografico> list = itemGeograficoDAO.findByHQL(qry);
+		if(list==null) new ArrayList<ItemGeografico>(0);
+		return list;
+	}
+	
+	public List<ItemGeografico> getFilhoList(ItemGeografico pai){
+		List<ItemGeografico> list = null;
+		if(pai!=null){
+			GenericDAO<ItemGeografico> itemGeograficoDAO = this.getItemGeograficoDAO();
+			String qry = "from ItemGeografico i where i.pai="+pai.getId()+" order by i.nome";
+			list = itemGeograficoDAO.findByHQL(qry);
+		}
+		if(list==null) new ArrayList<ItemGeografico>(0);
+		return list;
+	}
+	
+	/* metodos guia taxonomia */
+	@SuppressWarnings("unchecked")
+	public GenericDAO<ItemTaxonomico> getItemTaxonomicoDAO(){
+		return (GenericDAO<ItemTaxonomico>) SpringFactory.getInstance().getBean("genericDAO", GenericDAO.class);
+	}
+	
+	public List<ItemTaxonomico> getReinoList(){
+		GenericDAO<ItemTaxonomico> itemTaxonomicoDAO = this.getItemTaxonomicoDAO();
+		String qry = "from ItemTaxonomico i where i.pai is null order by i.nome";	
+		List<ItemTaxonomico> list = itemTaxonomicoDAO.findByHQL(qry);
+		if(list==null) new ArrayList<ItemGeografico>(0);
+		return list;
+	}
+	
+	public List<ItemTaxonomico> getFilhoList(ItemTaxonomico pai){
+		List<ItemTaxonomico> list = null;
+		if(pai!=null){
+			GenericDAO<ItemTaxonomico> itemTaxonomicoDAO = this.getItemTaxonomicoDAO();
+			String qry = "from ItemTaxonomico i where i.pai="+pai.getId()+" order by i.nome";
+			list = itemTaxonomicoDAO.findByHQL(qry);
+		}
+		if(list==null) new ArrayList<ItemTaxonomico>(0);
+		return list;
+	}
 }

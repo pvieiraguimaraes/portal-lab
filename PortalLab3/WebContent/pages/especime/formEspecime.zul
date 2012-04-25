@@ -1,6 +1,7 @@
 <zk>
 <window id="formEspecime" title="Formulário de Manutenção Especime" border="normal" xmlns:c="client"
-					closable="false"   visible="true" width="850px">		
+					closable="false"   visible="false" width="850px">
+	<vlayout>		
 			<tabbox id="tb" orient="horizontal">
 			    <tabs id="tabs" width="150px">
 			        <tab id="cadColeta" 			label="Coleta" />
@@ -145,13 +146,8 @@
 							<separator></separator>
 							<vlayout>
 								<label value="Observações"/>
-								<textbox rows="5" cols="90" width="99%"/>
-							</vlayout>
-							<separator></separator>
-							<div align="right">
-								<button label="Próximo" onClick="controller.saveEntity()"/>
-								<button id="btnCancelEdit" label="Cancelar" hflex="1" onClick="controller.cancelEditEntity()"/>
-							</div>
+								<textbox value="@{controller.fldObservacao }" rows="5" cols="90" width="99%"/>
+							</vlayout>							
 						</vlayout>
 			        </tabpanel>
 			        <tabpanel>
@@ -167,19 +163,39 @@
 										<rows>
 											<row>
 												<label value="Páis" />
-												<combobox width="440px"/>
+												<combobox id="cmbPais" hflex="1" selectedItem="@{controller.fldPais }"
+								        			model="@{controller.paisList }"  width="440px"
+								        			>
+								        			<attribute name="onChange">
+								        				cmbEstado.setRawValue(null);
+								        			</attribute>
+												</combobox>
 											</row>
 											<row>
 												<label value="Estado" />
-												<combobox width="440px"/>
+												<combobox id="cmbEstado" hflex="1" 
+								        			model="@{controller.estadoList, load-when='cmbPais.onChange' }"  
+								        			selectedItem="@{controller.fldEstado }"
+								        			width="440px"
+								        			>
+								        			<attribute name="onChange">
+								        				cmbMunicipio.setRawValue(null);
+								        			</attribute>
+												</combobox>
+												<textbox id="fldEstadoHidden" value="@{controller.fldEstado }" visible="false"/>
 											</row>
 											<row>
 												<label value="Município" />
-												<combobox width="440px"/>
+												<combobox id="cmbMunicipio" hflex="1" 
+								        			model="@{controller.municipioList, load-when='cmbEstado.onChange' }"  width="440px"
+								        			selectedItem="@{controller.fldMunicipio }"
+								        			>
+												</combobox>
+												<textbox id="fldMunicipioHidden" value="@{controller.fldMunicipio }" visible="false"/>
 											</row>
 											<row>
 												<label value="Localidade" />
-												<textbox width="437px"/>
+												<textbox value="@{controller.fldLocalidade } " width="437px"/>
 											</row>
 										</rows>
 										</grid>
@@ -200,27 +216,40 @@
 										<rows>
 											<row>
 												<label value="Latitude" />
-												<textbox value="" />
+												<textbox value="@{controller.fldLatitude }" />
 												<label value="Longitude" />
-												<textbox value="" />										
+												<textbox value="@{controller.fldLongitude }" />										
+												
 											</row>
 											<row>
 												<label value="Altitude" />
-												<textbox value="" />
+												<textbox value="@{controller.fldAltitude }" />
 												<label value="Profundidade" />
-												<textbox value="" />
+												<textbox value="@{controller.fldProfundidade }" />
 											</row>
 											<row>
 												<label value="Precisão"/>
-												<textbox value="" />
+												<textbox value="@{controller.fldPrecisao }" />
 											</row>
 											<row>
 												<label value="Massa D'Água" />
-												<cell colspan="2"><combobox width="100%"/></cell>
+												<cell colspan="2">
+												<combobox hflex="1" selectedItem="@{controller.fldMassaDAgua }" width="100%">
+													<attribute name="onCreate">
+														self.setModel(controller.getFKEntityModel("fldMassaDAgua"));
+													</attribute>
+												</combobox>
+												</cell>
 											</row>
 											<row>
 												<label value="Datum" />
-												<cell colspan="2"><combobox width="100%"/></cell>
+												<cell colspan="2">
+													<combobox hflex="1" selectedItem="@{controller.fldDatum }" width="100%">
+														<attribute name="onCreate">
+															self.setModel(controller.getFKEntityModel("fldDatum"));
+														</attribute>
+													</combobox>
+												</cell>
 											</row>
 										</rows>
 									</grid>
@@ -229,7 +258,7 @@
 					        	<groupbox hflex="1" height="194px">
 					        			<caption><label value="Observações"/></caption>
 					        			<vlayout>
-					        			<textbox rows="11" width="100%"/>
+					        			<textbox value="@{controller.fldObservacaoGeografria }" rows="11" width="100%"/>
 					        			</vlayout>
 					        	</groupbox>
 							</hlayout>			        	
@@ -250,38 +279,117 @@
 											<rows>
 												<row>
 													<label value="Reino" />
-													<combobox width="100%"/>
+													<combobox id="cmbReino"  selectedItem="@{controller.fldReino }"
+								        			model="@{controller.reinoList }"  width="100%"
+								        			>
+									        			<attribute name="onChange">
+									        				cmbFilo.setRawValue(null);
+									        			</attribute>
+													</combobox>
 												</row>
 												<row>
 													<label value="Filo" />
-													<combobox width="100%"/>
+														<combobox id="cmbFilo" 
+										        			model="@{controller.filoList, load-when='cmbReino.onChange' }"  
+										        			selectedItem="@{controller.fldFilo }"
+										        			width="100%"
+										        			>
+										        			<attribute name="onChange">
+										        				cmbClasse.setRawValue(null);
+										        			</attribute>
+														</combobox>
 												</row>
 												<row>
 													<label value="Classe" />
-													<combobox width="100%"/>
+													<combobox id="cmbClasse"  
+									        			model="@{controller.classeList, load-when='cmbFilo.onChange' }"  
+									        			selectedItem="@{controller.fldClasse }"
+									        			width="100%"
+									        			>
+									        			<attribute name="onChange">
+									        				cmbSubClasse.setRawValue(null);
+									        				cmbFamilia.setRawValue(null);
+									        			</attribute>
+													</combobox>													
 													<label value="Sub-Classe" />
-													<combobox width="100%"/>
+													<combobox id="cmbSubClasse" 
+									        			model="@{controller.subClasseList, load-when='cmbClasse.onChange' }"  
+									        			selectedItem="@{controller.fldSubClasse }"
+									        			width="100%"
+									        			>
+									        			<attribute name="onChange">
+									        				cmbFamilia.setRawValue(null);
+									        			</attribute>
+													</combobox>
+													
 												</row>
 												<row>
 													<label value="Família" />
-													<combobox width="100%"/>
+													<combobox id="cmbFamilia" 
+									        			model="@{controller.familiaList, load-when='cmbClasse.onChange, cmbSubClasse.onChange' }"  
+									        			selectedItem="@{controller.fldFamilia }"
+									        			width="100%"
+									        			>
+									        			<attribute name="onChange">
+									        				cmbSubFamilia.setRawValue(null);
+									        				cmbOrdem.setRawValue(null);
+									        			</attribute>
+													</combobox>													
 													<label value="Sub-Família" />
-													<combobox width="100%"/>
+													<combobox id="cmbSubFamilia"  
+									        			model="@{controller.subFamiliaList, load-when='cmbFamilia.onChange' }"  
+									        			selectedItem="@{controller.fldSubFamilia }"
+									        			width="100%"
+									        			>
+									        			<attribute name="onChange">
+									        				cmbOrdem.setRawValue(null);
+									        			</attribute>
+													</combobox>													
 												</row>
 												<row>
 													<label value="Ordem" />
-													<combobox width="100%"/>
+													<combobox id="cmbOrdem"  
+									        			model="@{controller.ordemList, load-when='cmbFamilia.onChange, cmbSubFamilia.onChange' }"  
+									        			selectedItem="@{controller.fldOrdem }"
+									        			width="100%"
+									        			>
+									        			<attribute name="onChange">
+									        				cmbSubOrdem.setRawValue(null);
+									        				cmbGenero.setRawValue(null);
+									        			</attribute>
+													</combobox>													
 													<label value="Sub-Ordem" />
-													<combobox width="100%"/>
+													<combobox id="cmbSubOrdem"  
+									        			model="@{controller.subOrdemList, load-when='cmbOrdem.onChange' }"  
+									        			selectedItem="@{controller.fldSubOrdem }"
+									        			width="100%"
+									        			>
+									        			<attribute name="onChange">
+									        				cmbGenero.setRawValue(null);
+									        			</attribute>
+													</combobox>													
 												</row>
 												<row>
 													<label value="Gênero" />
-													<combobox width="100%"/>
+													<combobox id="cmbGenero" 
+									        			model="@{controller.generoList, load-when='cmbOrdem.onChange, cmbSubOrdem.onChange' }"  
+									        			selectedItem="@{controller.fldGenero }"
+									        			width="100%"
+									        			>
+									        			<attribute name="onChange">
+									        				cmbEpitetoEspecifico.setRawValue(null);
+									        			</attribute>
+													</combobox>													
 												</row>
 													<row>
 													<label value="Ep. Específico" />
 													<cell colspan="2">
-														<combobox width="100%"/>
+														<combobox id="cmbEpitetoEspecifico"  
+									        			model="@{controller.epitetoEspecificoList, load-when='cmbOrdem.onChange' }"  
+									        			selectedItem="@{controller.fldEpitetoEspecifico }"
+									        			width="100%"
+									        			>
+														</combobox>													
 													</cell>
 												</row>
 											</rows>
@@ -302,7 +410,12 @@
 												<row>
 													<label value="Determinador" />
 													<cell colspan="2">
-														<combobox width="100%" />
+														<combobox id="cmbDeterminador" hflex="1" 
+									        			model="@{controller.especimeDeterminadorListAvaliable}"  
+									        			selectedItem="@{controller.fldEspecimeDeterminadores }"
+									        			width="100%"
+									        			>
+														</combobox>
 													</cell>
 												</row>
 												<row>
@@ -312,14 +425,13 @@
 												</row>
 												<row>
 													<cell colspan="3">
-														<listbox model="@{controller.coletorList}"										
+														<listbox model="@{controller.especimeDeterminadorList}"										
 															mold="paging" id="lbDeterminadores" 
 															pageSize="3"
 															height="110px"
 															>
 															<listhead id="listheadDeterminadores">
 																<listheader label="Determinador" align="left"/>											
-																<listheader label="Data" align="left" width="70px"/>
 																<listheader label="Op." align="center" width="70px" />							
 															</listhead>
 															<listitem self="@{each=entity}" id="listitemDeterminadores">
@@ -327,12 +439,11 @@
 																			controller.editEntity();
 																</attribute>	
 																<listcell><label value="@{entity }"/></listcell>
-																<listcell></listcell>
 																<listcell>
 																	<button  id="DeterminadorBtnDelete" image="/images/lixeira.png">
 																	<attribute name="onClick"><![CDATA[
 																	self.getParent().getParent().setSelected(true);	
-																	Events.sendEvent(lbColetores,new Event("onSelect",lbColetores));
+																	Events.sendEvent(lbDeterminadores,new Event("onSelect",lbDeterminadores));
 																	
 											 						Listbox lb = (Listbox)self.getParent().getParent().getParent();
 											 						BindingListModelSet lm = ((BindingListModelSet)lb.getModel());
@@ -349,7 +460,7 @@
 												<row>
 													<label value="Imprecisão" />
 													<cell colspan="2">
-														<textbox width="99%" /> 
+														<textbox width="99%" value="@{controller.fldImprecisao }"/> 
 													</cell>
 												</row>
 											</rows>
@@ -367,12 +478,17 @@
 											<rows>
 												<row>
 													<label value="Autor" />
-													<combobox width="100%" />
+													<combobox id="cmbAutor" hflex="1" 
+									        			model="@{controller.autorListAvaliable}"  
+									        			selectedItem="@{controller.fldAutores }"
+									        			width="100%"
+									        			>
+														</combobox>
 													<button label="Adicionar" hflex="1"/>
 												</row>
 												<row>
 													<cell colspan="3">
-														<listbox model="@{controller.coletorList}"										
+														<listbox model="@{controller.autorList}"										
 															mold="paging" id="lbAutores" 
 															pageSize="5"
 															height="172px"
@@ -412,7 +528,16 @@
 								</vlayout>
 							</hlayout>
 							<label value="Observações" />
-							<textbox rows="3" width="100%"/>	        	
+							<textbox rows="3" width="100%"/>
+							<textbox id="fldFiloHidden" value="@{controller.fldFilo }" visible="false"/>
+							<textbox id="fldClasseHidden" value="@{controller.fldClasse }" visible="false"/>
+							<textbox id="fldSubClasseHidden" value="@{controller.fldSubClasse }" visible="false"/>
+							<textbox id="fldFamiliaHidden" value="@{controller.fldFamilia }" visible="false"/>
+							<textbox id="fldSubFamiliaHidden" value="@{controller.fldSubFamilia }" visible="false"/>
+							<textbox id="fldOrdemHidden" value="@{controller.fldOrdem }" visible="false"/>
+							<textbox id="fldSubOrdemHidden" value="@{controller.fldSubOrdem }" visible="false"/>
+							<textbox id="fldGeneroHidden" value="@{controller.fldGenero }" visible="false"/>
+							<textbox id="fldEpitetoEspecificoHidden" value="@{controller.fldEpitetoEspecifico }" visible="false"/>	        	
 				        </vlayout>				        	
 					</tabpanel>
 					 <tabpanel>
@@ -426,5 +551,11 @@
 					</tabpanel>
 				</tabpanels>
 			</tabbox>
-		</window>
+			<separator></separator>
+			<div align="right">
+				<button label="Próximo" onClick="controller.saveEntity()"/>
+				<button id="btnCancelEdit" label="Cancelar" hflex="1" onClick="controller.cancelEditEntity()"/>
+			</div>
+		</vlayout>			
+	</window>
 </zk>
