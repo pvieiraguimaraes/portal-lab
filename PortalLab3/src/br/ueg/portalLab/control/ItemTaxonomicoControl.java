@@ -8,6 +8,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.stereotype.Service;
+
 import br.ueg.builderSoft.control.Control;
 import br.ueg.builderSoft.control.SubControllerManager;
 import br.ueg.builderSoft.model.Entity;
@@ -20,12 +22,16 @@ import br.ueg.portalLab.model.NivelGeografico;
 import br.ueg.portalLab.model.NivelTaxonomico;
 import br.ueg.portalLab.util.control.ItemTaxonomicoValidatorControl;
 
+@Service
 public class ItemTaxonomicoControl<E extends Entity>  extends Control<E> {
 
 	public ItemTaxonomicoControl(MessagesControl pMessagesControl) {
 		super(pMessagesControl);
 	}
 	
+	public ItemTaxonomicoControl(){
+		
+	}
 	
 	/**
 	 * Metodo utilizado para obter a classe root da hierarquia.
