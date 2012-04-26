@@ -260,6 +260,10 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 	public List<E> getList(E entity) {
 		return (List<E>) hibernateTemplate.loadAll(entity.getClass());
 	}
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public List<E> getList(Class entity){
+		return (List<E>) hibernateTemplate.loadAll(entity);
+	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public List getListFK(Class entity) {
