@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 
+import org.hibernate.Hibernate;
+
 import br.ueg.builderSoft.util.annotation.Attribute;
 import br.ueg.builderSoft.util.reflection.Reflection;
 
@@ -51,7 +53,7 @@ public abstract class Entity implements Serializable, Comparable {
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
+		if (Hibernate.getClass(this) != Hibernate.getClass(obj))
 			return false;
 		Entity other = (Entity) obj;
 		if (getId() == null) {
@@ -141,7 +143,7 @@ public abstract class Entity implements Serializable, Comparable {
 	}
 	
 	public boolean isNew(){
-		return this.getId()!=null;
+		return this.getId()==null || this.getId().intValue()==0;
 	}
 	
 	/**

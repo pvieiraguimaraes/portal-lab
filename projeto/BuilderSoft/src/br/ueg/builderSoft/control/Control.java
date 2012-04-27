@@ -66,6 +66,16 @@ public class Control<E extends Entity>{
 		GenericDAO<Entity> genericDAO = SpringFactory.getInstance().getBean("genericDAO", GenericDAO.class);		
 		return genericDAO.getList(entity);		
 	}
+	/**
+	 * Metodo utilizado para buscar um lista de entidade baseado no tipo da entidade passada
+	 * @param entity
+	 * @return retorna uma lista de entity 
+	 */
+	@SuppressWarnings("rawtypes")
+	public List<Entity> getListFKEntity(Class entity){
+		GenericDAO<Entity> genericDAO = SpringFactory.getInstance().getBean("genericDAO", GenericDAO.class);		
+		return genericDAO.getList(entity);		
+	}
 	
 	/**
 	 * Metodo utilizado para buscar uma lista de entidade baseado no tipo da entidade passada
@@ -97,7 +107,7 @@ public class Control<E extends Entity>{
 	 */
 	public boolean actionSave(SubControllerManager<E> subControllerManager) {
 		E entity = (E) this.mapFields.get("entity");
-		if (!entity.isNew()) {
+		if (entity.isNew()) {
 			boolean result = false;
 			try{
 				if (getPersistence().save(entity) != 0) {
