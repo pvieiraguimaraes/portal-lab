@@ -258,11 +258,13 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<E> getList(E entity) {
-		return (List<E>) hibernateTemplate.loadAll(entity.getClass());
+		Criteria criteria = this.getSession().createCriteria(entity.getClass());
+		return (List<E>) criteria.list();
 	}
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public List<E> getList(Class entity){
-		return (List<E>) hibernateTemplate.loadAll(entity);
+		Criteria criteria = this.getSession().createCriteria(entity);
+		return (List<E>) criteria.list();
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })

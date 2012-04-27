@@ -669,4 +669,17 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 		public void setControl(Control<E> control) {
 			this.control = control;
 		}
+		
+		public boolean getIsNew(){
+			if(this.getSelectedEntity()==null){
+				return true;
+			}
+			return this.getSelectedEntity().isNew();
+		}
+		public boolean getIsEdit(){
+			if(this.getSelectedEntity()==null){
+				return false;
+			}
+			return !this.getSelectedEntity().isNew();
+		}
 }

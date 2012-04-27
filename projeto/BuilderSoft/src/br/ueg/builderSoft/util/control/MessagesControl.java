@@ -48,7 +48,12 @@ public abstract class MessagesControl implements SubController{
 	 * @return a mensage correspondente a váriavel.
 	 */
 	protected String getMessage(String typeMessage) {
-		return messages.getString(typeMessage);
+		try{
+			return messages.getString(typeMessage);	
+		}catch(java.util.MissingResourceException e){
+			e.printStackTrace();
+		}
+		return typeMessage;
 	}
 	
 	public boolean existsMessage(String typeMessage){
