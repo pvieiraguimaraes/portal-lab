@@ -266,7 +266,7 @@
 					</tabpanel>
 					<tabpanel>
 				       <vlayout>
-							<groupbox hflex="1">
+							<groupbox>
 				        		<caption><label value="Taxonomia da Espécie"/></caption>
 				        		<vlayout>
 					        			<grid hflex="1">
@@ -528,16 +528,18 @@
 								</vlayout>
 							</hlayout>
 							<label value="Observações" />
-							<textbox rows="3" width="100%"/>
-							<textbox id="fldFiloHidden" value="@{controller.fldFilo }" visible="false"/>
-							<textbox id="fldClasseHidden" value="@{controller.fldClasse }" visible="false"/>
-							<textbox id="fldSubClasseHidden" value="@{controller.fldSubClasse }" visible="false"/>
-							<textbox id="fldFamiliaHidden" value="@{controller.fldFamilia }" visible="false"/>
-							<textbox id="fldSubFamiliaHidden" value="@{controller.fldSubFamilia }" visible="false"/>
-							<textbox id="fldOrdemHidden" value="@{controller.fldOrdem }" visible="false"/>
-							<textbox id="fldSubOrdemHidden" value="@{controller.fldSubOrdem }" visible="false"/>
-							<textbox id="fldGeneroHidden" value="@{controller.fldGenero }" visible="false"/>
-							<textbox id="fldEpitetoEspecificoHidden" value="@{controller.fldEpitetoEspecifico }" visible="false"/>	        	
+								<textbox rows="3" width="100%" value="@{controller.fldObservacaoTaxonomia }"/>
+							<div visible="false">
+								<textbox id="fldFiloHidden" value="@{controller.fldFilo }" visible="false"/>
+								<textbox id="fldClasseHidden" value="@{controller.fldClasse }" visible="false"/>
+								<textbox id="fldSubClasseHidden" value="@{controller.fldSubClasse }" visible="false"/>
+								<textbox id="fldFamiliaHidden" value="@{controller.fldFamilia }" visible="false"/>
+								<textbox id="fldSubFamiliaHidden" value="@{controller.fldSubFamilia }" visible="false"/>
+								<textbox id="fldOrdemHidden" value="@{controller.fldOrdem }" visible="false"/>
+								<textbox id="fldSubOrdemHidden" value="@{controller.fldSubOrdem }" visible="false"/>
+								<textbox id="fldGeneroHidden" value="@{controller.fldGenero }" visible="false"/>
+								<textbox id="fldEpitetoEspecificoHidden" value="@{controller.fldEpitetoEspecifico }" visible="false"/>
+							</div>	        	
 				        </vlayout>				        	
 					</tabpanel>
 					 <tabpanel>
