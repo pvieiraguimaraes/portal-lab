@@ -894,7 +894,7 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	public List<ItemTaxonomico> getSubClasseList(){
 		return this.getEspecimeControl().getFilhoList(this.getFldClasse());
 	}
-	public List<ItemTaxonomico> getFamiliaList(){
+	public List<ItemTaxonomico> getOrdemList(){
 		ArrayList<ItemTaxonomico> resultList = new ArrayList<ItemTaxonomico>(0);
 		List<ItemTaxonomico> filhoList = this.getEspecimeControl().getFilhoList(this.getFldClasse());
 		if(filhoList!=null)
@@ -905,30 +905,30 @@ public class EspecimeComposer extends ComposerController<Especime> {
 			resultList.addAll(filhoList2);
 		return resultList;
 	}
-	public List<ItemTaxonomico> getSubFamiliaList(){
-		return this.getEspecimeControl().getFilhoList(this.getFldFamilia());
-	}
-	public List<ItemTaxonomico> getOrdemList(){
-		ArrayList<ItemTaxonomico> resultList = new ArrayList<ItemTaxonomico>(0);
-		List<ItemTaxonomico> filhoList = this.getEspecimeControl().getFilhoList(this.getFldFamilia());
-		if(filhoList!=null)
-			resultList.addAll(filhoList);
-		
-		List<ItemTaxonomico> filhoList2 = this.getEspecimeControl().getFilhoList(this.getFldSubFamilia());
-		if(filhoList2!=null)
-			resultList.addAll(filhoList2);
-		return resultList;
-	}
 	public List<ItemTaxonomico> getSubOrdemList(){
 		return this.getEspecimeControl().getFilhoList(this.getFldOrdem());
 	}
-	public List<ItemTaxonomico> getGeneroList(){
+	public List<ItemTaxonomico> getFamiliaList(){
 		ArrayList<ItemTaxonomico> resultList = new ArrayList<ItemTaxonomico>(0);
 		List<ItemTaxonomico> filhoList = this.getEspecimeControl().getFilhoList(this.getFldOrdem());
 		if(filhoList!=null)
 			resultList.addAll(filhoList);
 		
 		List<ItemTaxonomico> filhoList2 = this.getEspecimeControl().getFilhoList(this.getFldSubOrdem());
+		if(filhoList2!=null)
+			resultList.addAll(filhoList2);
+		return resultList;
+	}
+	public List<ItemTaxonomico> getSubFamiliaList(){
+		return this.getEspecimeControl().getFilhoList(this.getFldFamilia());
+	}	
+	public List<ItemTaxonomico> getGeneroList(){
+		ArrayList<ItemTaxonomico> resultList = new ArrayList<ItemTaxonomico>(0);
+		List<ItemTaxonomico> filhoList = this.getEspecimeControl().getFilhoList(this.getFldFamilia());
+		if(filhoList!=null)
+			resultList.addAll(filhoList);
+		
+		List<ItemTaxonomico> filhoList2 = this.getEspecimeControl().getFilhoList(this.getFldSubFamilia());
 		if(filhoList2!=null)
 			resultList.addAll(filhoList2);
 		return resultList;
