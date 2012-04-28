@@ -308,7 +308,7 @@
 									        			>
 									        			<attribute name="onChange">
 									        				cmbSubClasse.setRawValue(null);
-									        				cmbFamilia.setRawValue(null);
+									        				cmbOrdem.setRawValue(null);
 									        			</attribute>
 													</combobox>													
 													<label value="Sub-Classe" />
@@ -318,21 +318,44 @@
 									        			width="100%"
 									        			>
 									        			<attribute name="onChange">
-									        				cmbFamilia.setRawValue(null);
+									        				cmbOrdem.setRawValue(null);
 									        			</attribute>
 													</combobox>
 													
 												</row>
 												<row>
+													<label value="Ordem" />
+													<combobox id="cmbOrdem"  
+									        			model="@{controller.ordemList, load-when='cmbClasse.onChange, cmbSubClasse.onChange' }"  
+									        			selectedItem="@{controller.fldOrdem }"
+									        			width="100%"
+									        			>
+									        			<attribute name="onChange">
+									        				cmbSubOrdem.setRawValue(null);
+									        				cmbFamilia.setRawValue(null);
+									        			</attribute>
+													</combobox>													
+													<label value="Sub-Ordem" />
+													<combobox id="cmbSubOrdem"  
+									        			model="@{controller.subOrdemList load-when='cmbOrdem.onChange'}"  
+									        			selectedItem="@{controller.fldSubOrdem }"
+									        			width="100%"
+									        			>
+									        			<attribute name="onChange">
+									        				cmbFamilia.setRawValue(null);
+									        			</attribute>
+													</combobox>													
+												</row>
+												<row>
 													<label value="Família" />
 													<combobox id="cmbFamilia" 
-									        			model="@{controller.familiaList, load-when='cmbClasse.onChange, cmbSubClasse.onChange' }"  
+									        			model="@{controller.familiaList, load-when='cmbOrdem.onChange, cmbSubOrdem.onChange' }"  
 									        			selectedItem="@{controller.fldFamilia }"
 									        			width="100%"
 									        			>
 									        			<attribute name="onChange">
 									        				cmbSubFamilia.setRawValue(null);
-									        				cmbOrdem.setRawValue(null);
+									        				cmbGenero.setRawValue(null);
 									        			</attribute>
 													</combobox>													
 													<label value="Sub-Família" />
@@ -342,37 +365,14 @@
 									        			width="100%"
 									        			>
 									        			<attribute name="onChange">
-									        				cmbOrdem.setRawValue(null);
-									        			</attribute>
-													</combobox>													
-												</row>
-												<row>
-													<label value="Ordem" />
-													<combobox id="cmbOrdem"  
-									        			model="@{controller.ordemList, load-when='cmbFamilia.onChange, cmbSubFamilia.onChange' }"  
-									        			selectedItem="@{controller.fldOrdem }"
-									        			width="100%"
-									        			>
-									        			<attribute name="onChange">
-									        				cmbSubOrdem.setRawValue(null);
 									        				cmbGenero.setRawValue(null);
 									        			</attribute>
 													</combobox>													
-													<label value="Sub-Ordem" />
-													<combobox id="cmbSubOrdem"  
-									        			model="@{controller.subOrdemList, load-when='cmbOrdem.onChange' }"  
-									        			selectedItem="@{controller.fldSubOrdem }"
-									        			width="100%"
-									        			>
-									        			<attribute name="onChange">
-									        				cmbGenero.setRawValue(null);
-									        			</attribute>
-													</combobox>													
-												</row>
+												</row>												
 												<row>
 													<label value="Gênero" />
 													<combobox id="cmbGenero" 
-									        			model="@{controller.generoList, load-when='cmbOrdem.onChange, cmbSubOrdem.onChange' }"  
+									        			model="@{controller.generoList, load-when='cmbFamilia.onChange, cmbSubFamilia.onChange' }"  
 									        			selectedItem="@{controller.fldGenero }"
 									        			width="100%"
 									        			>
@@ -385,7 +385,7 @@
 													<label value="Ep. Específico" />
 													<cell colspan="2">
 														<combobox id="cmbEpitetoEspecifico"  
-									        			model="@{controller.epitetoEspecificoList, load-when='cmbOrdem.onChange' }"  
+									        			model="@{controller.epitetoEspecificoList, load-when='cmbGenero.onChange' }"  
 									        			selectedItem="@{controller.fldEpitetoEspecifico }"
 									        			width="100%"
 									        			>
