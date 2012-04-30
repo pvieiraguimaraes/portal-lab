@@ -1,7 +1,17 @@
-<window width="80%" title="Session Timeout" border="normal">
-	<vbox>
-The page or component you request is no longer available.
-This is normally caused by timeout, opening too many Web pages, or rebooting
-the server.
-	</vbox>
-</window>
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/WEB-INF/layout/template.zul"?>
+<zk>
+
+	<panel self="@{define(content)}" width="80%" title="Sessão Timeout"
+		style="margin-left: 10%;" border="normal">
+		<toolbar>
+			A página requisitada não está disponível no momento.
+			<separator height="5px" />
+			Isto pode ter ocorrido por deixar o site muito tempo ocioso.
+		</toolbar>
+		<toolbar style="text-align: center;">
+			<a href="index.zul" label="Voltar para página inicial"></a>
+		</toolbar>
+	</panel>
+
+</zk>
