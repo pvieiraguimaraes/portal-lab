@@ -232,7 +232,7 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	@Wire
 	protected Listbox divListBoxColetores;
 	
-	protected EspecieImagem especieImagem =  new EspecieImagem("d:\\programas\\PortalLab\\Jellyfish.jpg");
+	protected EspecieImagem especieImagem =  new EspecieImagem();
 	
 	protected AnnotateDataBinder binderForm;
 	/**
@@ -1177,6 +1177,7 @@ public class EspecimeComposer extends ComposerController<Especime> {
 		Listbox lb = (Listbox)this.getEditForm().getFellow("lbEspecimeImagem");
 		ListModelSet<Object> lm = (ListModelSet<Object>)lb.getModel();
 		EspecieImagem ei = new EspecieImagem();
+		ei.setControleInsercaoPadroa(false);
 		ei.setMedia(this.getEspecieImagem().getMedia());
 		ei.setEstacao((Estacao)cb.getSelectedItem().getValue());
 		ei.setId(Long.valueOf(lb.getModel().getSize()+1));

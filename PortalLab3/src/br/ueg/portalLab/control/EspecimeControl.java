@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,6 +18,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.zkoss.util.media.Media;
 
+import br.ueg.builderSoft.config.ConfigPortalLab;
 import br.ueg.builderSoft.control.Control;
 import br.ueg.builderSoft.control.SubControllerManager;
 import br.ueg.builderSoft.model.Entity;
@@ -47,6 +49,44 @@ import br.ueg.portalLab.util.control.UsuarioValidatorControl;
 @Scope("desktop")
 public class EspecimeControl extends Control<Especime> {
 
+	@Override
+	public boolean actionCanceledit(
+			SubControllerManager<Especime> subControllersManager) {
+		
+		ItemTaxonomico itta = ((Especime) this.getMapFields().get("entity")).getEpitetoEspecifico();
+		this.refreshFields(itta);
+		
+		return super.actionCanceledit(subControllersManager);
+	}
+	@SuppressWarnings("unchecked")
+	public void refreshFields(Entity entity){
+		if(entity==null)return;
+		for(Field f: Hibernate.getClass(entity).getDeclaredFields()){
+			if(f.getType().getSimpleName().equalsIgnoreCase("set")){
+				String fieldName = f.getName();
+				try {
+					Set<Entity> fieldValue = (Set<Entity>)Reflection.getFieldValue(entity, fieldName);
+					Set<Entity> aux = new HashSet<Entity>(fieldValue);
+					for(Entity e: aux){
+						if(e.isNew()){
+							fieldValue.remove(e);
+						}
+					}
+					
+				} catch (SecurityException e) {
+					e.printStackTrace();
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+				} catch (NoSuchMethodException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 	@Override
 	public boolean actionSave(
 			SubControllerManager<Especime> subControllerManager) {
@@ -87,6 +127,10 @@ public class EspecimeControl extends Control<Especime> {
 			if(especime.getEpitetoEspecifico()!=null){
 				for(EspecieImagem ei: especieImagens){
 					ei.setItemTaxonomico(especime.getEpitetoEspecifico());
+					
+					String diretorioImagem = ConfigPortalLab.getInstancia().getDireitorioImagem();
+					ei.setCaminho(diretorioImagem.concat("\\").concat(ei.getMedia().getName()));
+					
 					writeImagem(ei.getMedia());
 				}
 				especime.getEpitetoEspecifico().setImagens(especieImagens);
@@ -103,8 +147,9 @@ public class EspecimeControl extends Control<Especime> {
 	private boolean writeImagem(Media media){
 		boolean retorno = false;
 		try {
+			String diretorioImagem = ConfigPortalLab.getInstancia().getDireitorioImagem();
 			OutputStream outputStream = new FileOutputStream(
-					"d:\\programas\\PortalLab\\" + media.getName());
+					diretorioImagem.concat("\\") + media.getName());
 		
 		// OutputStream outputStream = new FileOutputStream("C:\\log\\" +
 		// media.getName());
