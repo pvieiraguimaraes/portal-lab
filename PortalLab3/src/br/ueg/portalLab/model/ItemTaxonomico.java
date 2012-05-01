@@ -48,6 +48,9 @@ public class ItemTaxonomico extends Entity {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pai",cascade = CascadeType.ALL)// mappedBy indica o atributo da entidade many	
 	private Set<ItemTaxonomico> filhosItensTaxonomicos;
 	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "itemTaxonomico",cascade = CascadeType.ALL)// mappedBy indica o atributo da entidade many	
+	private Set<EspecieImagem> imagens;
+	
 	public ItemTaxonomico() {}
 	
 
@@ -110,6 +113,16 @@ public class ItemTaxonomico extends Entity {
 	@Override
 	public String toString(){
 		return this.getNivelTaxonomico().getNome()+" "+this.getNome();
+	}
+
+
+	public Set<EspecieImagem> getImagens() {
+		return imagens;
+	}
+
+
+	public void setImagens(Set<EspecieImagem> imagens) {
+		this.imagens = imagens;
 	}
 
 }

@@ -1,13 +1,13 @@
 <zk>
 <window id="formEspecime" title="Formulário de Manutenção Especime" border="normal" xmlns:c="client"
-					closable="false"   visible="false" width="850px">
+					closable="false"   visible="true" width="850px">
 	<vlayout>		
 			<tabbox id="tb" orient="horizontal">
 			    <tabs id="tabs" width="150px">
 			        <tab id="cadColeta" 			label="Coleta" />
 			        <tab id="cadGeografia" 			label="Geografia"/>
 			        <tab id="cadTaxonomia"			label="Taxonomia" />
-			        <tab id="cadMultimidia"			label="Multímia" />
+			        <tab id="cadMultimidia"			label="Multimídia" selected="true"/>
 			        <tab id="cadConteudoDidatico"	label="Conteúdo Didático" />
 			        <tab id="cadBibliografia"		label="Bibliografia" />			        
 			    </tabs>
@@ -115,15 +115,13 @@
 										mold="paging" id="lbColetores" 
 										pageSize="3"
 										height="130px"
+										zclass="lbColetores z-listbox"
 										>
 										<listhead id="divListhead">
 											<listheader label="Coletores" align="center"/>											
 											<listheader label="Operações" align="center" width="200px" />							
 										</listhead>
-										<listitem self="@{each=entity}" id="divListitem">
-											<attribute name="onDoubleClick">
-														controller.editEntity();
-											</attribute>											
+										<listitem self="@{each=entity}" id="divListitem" value="@{entity }">
 											<listcell><label value="@{entity }"/></listcell>
 											<listcell>
 												<button Label="Excluir" id="coletorBtnDelete" image="/images/lixeira.png">
@@ -131,11 +129,7 @@
 												self.getParent().getParent().setSelected(true);	
 												Events.sendEvent(lbColetores,new Event("onSelect",lbColetores));
 												
-						 						Listbox lb = (Listbox)self.getParent().getParent().getParent();
-						 						BindingListModelSet lm = ((BindingListModelSet)lb.getModel());
-						 						for(Object b: lm.getSelection()){
-													lm.remove(b);
-						 						}
+						 						controller.removeColetor();
 												]]></attribute>
 												</button>
 											</listcell>
@@ -410,9 +404,8 @@
 												<row>
 													<label value="Determinador" />
 													<cell colspan="2">
-														<combobox id="cmbDeterminador" hflex="1" 
+														<combobox id="cmbDeterminadorAvaliable" hflex="1" 
 									        			model="@{controller.especimeDeterminadorListAvaliable}"  
-									        			selectedItem="@{controller.fldEspecimeDeterminadores }"
 									        			width="100%"
 									        			>
 														</combobox>
@@ -420,8 +413,8 @@
 												</row>
 												<row>
 													<label value="Data" />
-													<datebox hflex="1"></datebox>
-													<button label="Adicionar" hflex="1"/>
+													<datebox id="dateBoxData" hflex="1"></datebox>
+													<button label="Adicionar" hflex="1" onClick="controller.addDeterminador()"/>
 												</row>
 												<row>
 													<cell colspan="3">
@@ -434,22 +427,14 @@
 																<listheader label="Determinador" align="left"/>											
 																<listheader label="Op." align="center" width="70px" />							
 															</listhead>
-															<listitem self="@{each=entity}" id="listitemDeterminadores">
-																<attribute name="onDoubleClick">
-																			controller.editEntity();
-																</attribute>	
+															<listitem self="@{each=entity}" id="listitemDeterminadores" value="@{entity }">
 																<listcell><label value="@{entity }"/></listcell>
 																<listcell>
 																	<button  id="DeterminadorBtnDelete" image="/images/lixeira.png">
 																	<attribute name="onClick"><![CDATA[
 																	self.getParent().getParent().setSelected(true);	
 																	Events.sendEvent(lbDeterminadores,new Event("onSelect",lbDeterminadores));
-																	
-											 						Listbox lb = (Listbox)self.getParent().getParent().getParent();
-											 						BindingListModelSet lm = ((BindingListModelSet)lb.getModel());
-											 						for(Object b: lm.getSelection()){
-																		lm.remove(b);
-											 						}
+																	controller.removeDeterminador();											 						
 																	]]></attribute>
 																	</button>
 																</listcell>
@@ -478,13 +463,12 @@
 											<rows>
 												<row>
 													<label value="Autor" />
-													<combobox id="cmbAutor" hflex="1" 
+													<combobox id="cmbAutorListAvaliable" hflex="1" 
 									        			model="@{controller.autorListAvaliable}"  
-									        			selectedItem="@{controller.fldAutores }"
 									        			width="100%"
 									        			>
 														</combobox>
-													<button label="Adicionar" hflex="1"/>
+													<button label="Adicionar" hflex="1" onClick="controller.addAutor()"/>
 												</row>
 												<row>
 													<cell colspan="3">
@@ -495,26 +479,17 @@
 															>
 															<listhead id="listheadAutores">
 																<listheader label="Determinador" align="left"/>											
-																<listheader label="Data" align="left" width="70px"/>
 																<listheader label="Op." align="center" width="70px" />							
 															</listhead>
-															<listitem self="@{each=entity}" id="listitemAutores">
-																<attribute name="onDoubleClick">
-																			controller.editEntity();
-																</attribute>	
+															<listitem self="@{each=entity}" id="listitemAutores" value="@{entity }">
 																<listcell><label value="@{entity }"/></listcell>
-																<listcell></listcell>
 																<listcell>
 																	<button  id="autoresBtnDelete" image="/images/lixeira.png">
 																	<attribute name="onClick"><![CDATA[
 																	self.getParent().getParent().setSelected(true);	
 																	Events.sendEvent(lbColetores,new Event("onSelect",lbColetores));
 																	
-											 						Listbox lb = (Listbox)self.getParent().getParent().getParent();
-											 						BindingListModelSet lm = ((BindingListModelSet)lb.getModel());
-											 						for(Object b: lm.getSelection()){
-																		lm.remove(b);
-											 						}
+											 						controller.removeAutor();
 																	]]></attribute>
 																	</button>
 																</listcell>
@@ -543,7 +518,67 @@
 				        </vlayout>				        	
 					</tabpanel>
 					 <tabpanel>
-				        multimidia
+				        <groupbox id="gbImagem" mold="3d">
+			                <attribute name="onOpen"><![CDATA[
+							    arrowImagem.setSclass("open-" + self.isOpen());
+							]]></attribute>
+			                <caption>
+			                    <div id="arrowImagem" class="open-true">Imagens</div>
+			                </caption>
+			                <hbox>
+			                    <button  label="Selecionar Imagem" upload="true,maxsize=5000" onUpload="controller.addImage(event)"/>
+			                    <label id="camimhoImagem" value="@{controller.especieImagem.caminho }"/>
+			                    <label value="Estação do ano" />
+			                    <combobox model="@{controller.estacaoList }" id="cmbEstacao"></combobox>
+			                    <button label="Adicionar" onClick="controller.adicionarImagem()"/>			                    
+			                </hbox>
+			                <listbox 
+			                	model="@{controller.EspecieImagemList }"
+			                	selectedItem="@{controller.especieImagem }"
+			                	id="lbEspecimeImagem"
+			                >
+			                	<listhead>
+			                		<listheader label="Imagem"/>
+			                		<listheader label="Estação" width="100px"/>
+			                		<listheader label="Operação" width="80px"/>
+			                	</listhead>
+			                	<listitem self="@{each=entity }" value="@{entity }">
+			                		<listcell label="@{entity.caminho }"/>
+			                		<listcell label="@{entity.estacao.descricao }" />
+			                		<listcell>
+			                			<button label="Excluir"/>
+			                		</listcell>
+			                	</listitem>
+			                </listbox>
+			                <image content="@{controller.especieImagem.media }" height="300px" id="imgEspecie"></image>
+			                
+			            </groupbox>
+				       <groupbox id="gbVideo" mold="3d" open="false">
+			                <attribute name="onOpen"><![CDATA[
+							    arrowVideo.setSclass("open-" + self.isOpen());
+							]]></attribute>
+			                <caption>
+			                    <div id="arrowVideo" class="open-false">Vídeos</div>
+			                </caption>
+			                <hbox>
+			                    <label value="Directory:" />
+			                    <textbox value="/home/zk/projects" />
+			                </hbox>
+			                <checkbox label="Compress archived files" />
+			            </groupbox>
+				        <groupbox id="gbSom" mold="3d" open="false">
+			                <attribute name="onOpen"><![CDATA[
+							    arrowSom.setSclass("open-" + self.isOpen());
+							]]></attribute>
+			                <caption>
+			                    <div id="arrowSom" class="open-false">Vídeos</div>
+			                </caption>
+			                <hbox>
+			                    <label value="Directory:" />
+			                    <textbox value="/home/zk/projects" />
+			                </hbox>
+			                <checkbox label="Compress archived files" />
+			            </groupbox>
 					</tabpanel>
 					 <tabpanel>
 				        conteúdo didático

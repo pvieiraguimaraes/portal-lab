@@ -10,10 +10,13 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.zkoss.zul.Image;
+import org.zkoss.zul.Window;
 
 import br.ueg.builderSoft.persistence.GenericDAO;
 import br.ueg.builderSoft.security.access.voter.RoleVoter;
 import br.ueg.builderSoft.util.sets.SpringFactory;
+import br.ueg.portalLab.model.EspecieImagem;
 import br.ueg.portalLab.model.ItemGeografico;
 import br.ueg.portalLab.model.NivelGeografico;
 import br.ueg.portalLab.model.Usuario;
@@ -33,8 +36,17 @@ public class Teste {
 		//listAuto1_1();
 		//testeSpring1();
 		//testeUsuario();
-		insertAuto3();
-		removeAuto3();
+		//insertAuto3();
+		//removeAuto3();
+		testeEspecieImagem();
+		
+	}
+	public static void testeEspecieImagem(){
+		EspecieImagem ei = new EspecieImagem();
+		ei.setCaminho("d:\\programas\\PortalLab\\Jellyfish.jpg");
+		
+		ei.getMedia();
+		System.out.println("X:"+ei.getMedia().getName());
 		
 	}
 	public static void insertAuto3(){

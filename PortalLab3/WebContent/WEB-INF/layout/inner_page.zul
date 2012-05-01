@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
 <zk>
+<div id="message"/>
+<style src="/css/default.css" />
 <div id="content" self="@{insert(content)}" sclass="content" />
 </zk>

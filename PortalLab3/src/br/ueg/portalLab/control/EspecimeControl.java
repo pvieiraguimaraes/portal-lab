@@ -1,22 +1,35 @@
 package br.ueg.portalLab.control;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.Hibernate;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.zkoss.util.media.Media;
 
 import br.ueg.builderSoft.control.Control;
+import br.ueg.builderSoft.control.SubControllerManager;
 import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.persistence.GenericDAO;
 import br.ueg.builderSoft.util.control.MessagesControl;
 import br.ueg.builderSoft.util.control.SubController;
+import br.ueg.builderSoft.util.reflection.Reflection;
 import br.ueg.builderSoft.util.sets.SpringFactory;
 import br.ueg.portalLab.model.Coletor;
+import br.ueg.portalLab.model.EspecieImagem;
 import br.ueg.portalLab.model.Especime;
+import br.ueg.portalLab.model.EspecimeDeterminador;
+import br.ueg.portalLab.model.Estacao;
 import br.ueg.portalLab.model.GrupoEnderecoFisico;
 import br.ueg.portalLab.model.ItemGeografico;
 import br.ueg.portalLab.model.ItemTaxonomico;
@@ -33,6 +46,85 @@ import br.ueg.portalLab.util.control.UsuarioValidatorControl;
 @Service
 @Scope("desktop")
 public class EspecimeControl extends Control<Especime> {
+
+	@Override
+	public boolean actionSave(
+			SubControllerManager<Especime> subControllerManager) {
+		boolean retorno = false;
+		Especime entity = (Especime) this.getMapFields().get("entity");
+
+		if(!entity.isNew()){
+			retorno = saveEspecieImagem(entity);
+			
+			if(retorno){
+				retorno =  super.actionSave(subControllerManager);
+			}else{
+				this.getMessagesControl().addMessageError("especieImage_salvar");
+			}
+		}else{
+			Set<EspecimeDeterminador> espDeterminadores = entity.getEspecimeDeterminadores();
+			entity.setEspecimeDeterminadores(new HashSet<EspecimeDeterminador>());
+			retorno = super.actionSave(subControllerManager);
+			if(retorno){
+				for(EspecimeDeterminador espDet: espDeterminadores){
+					espDet.setEspecime(entity);
+				}
+				entity.setEspecimeDeterminadores(espDeterminadores);
+				retorno = saveEspecieImagem(entity);
+				if(retorno){
+					retorno = super.actionSave(subControllerManager);
+				}else{
+					this.getMessagesControl().addMessageError("especieImage_salvar");
+				}
+			}			
+		}
+		return retorno;
+	}
+	public boolean saveEspecieImagem(Especime especime){
+		boolean retorno = true;
+		Set<EspecieImagem> especieImagens = (Set<EspecieImagem>) this.getMapFields().get("especieImagem");
+		if(especieImagens!=null){
+			if(especime.getEpitetoEspecifico()!=null){
+				for(EspecieImagem ei: especieImagens){
+					ei.setItemTaxonomico(especime.getEpitetoEspecifico());
+					writeImagem(ei.getMedia());
+				}
+				especime.getEpitetoEspecifico().setImagens(especieImagens);
+				try {
+					this.getItemTaxonomicoDAO().update(especime.getEpitetoEspecifico());
+				} catch (Exception e) {
+					e.printStackTrace();
+					retorno = false;
+				}
+			}
+		}
+		return retorno;
+	}
+	private boolean writeImagem(Media media){
+		boolean retorno = false;
+		try {
+			OutputStream outputStream = new FileOutputStream(
+					"d:\\programas\\PortalLab\\" + media.getName());
+		
+		// OutputStream outputStream = new FileOutputStream("C:\\log\\" +
+		// media.getName());
+		
+		java.io.InputStream inputStream = media.getStreamData();
+		byte[] buffer = new byte[1024];
+		for (int count; (count = inputStream.read(buffer)) != -1;) {
+			outputStream.write(buffer, 0, count);
+		}
+		outputStream.flush();
+		outputStream.close();
+		inputStream.close();
+		retorno = true;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return retorno;
+	}
 
 	private Especime selctedEspecime;
 	
@@ -95,13 +187,64 @@ public class EspecimeControl extends Control<Especime> {
 		
 		List<Entity> resultList = new ArrayList<Entity>(0);
 		
-		for(Entity e : genericDAO.getList(entityType)){
+		for(Entity e : genericDAO.getList(Hibernate.getClass(entityType))){
 			if(!this.isEntityPresentInList(e, list)){
 				resultList.add(e);
 			}
 		}
 		
 		return resultList;
+	}
+	
+	/**
+	 * Metodo utilizado para retorar a lista de itens da entidade
+	 * que não estão associados ao Especime ainda.
+	 * O metodo faz uma listagem de objetos do tipo entity passado como parametro
+	 * e remove os itens que pertençam a lista passada, sendo que um atributo de cada 
+	 * item da lista deve ser do tipo da entidade passada.	 
+	 * @param list
+	 * @param entiy
+	 * @return
+	 */
+	
+	public List<Entity> getListToEntityField(Set<Entity> list, Class<? extends Entity> entityClass){
+
+		Set<Entity> auxList = new HashSet<Entity>(0);
+		
+		for(Entity entity : list){
+			Entity auxEntity=null;
+			try {
+				auxEntity = (Entity) Reflection.getFieldValue(entity, entityClass.getSimpleName().toLowerCase());
+			} catch (SecurityException e) {
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (NoSuchMethodException e) {
+				auxEntity = entity;
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			}
+			if(auxEntity!=null){
+				auxList.add(auxEntity);
+			}
+		}
+		if(auxList.size()==0){
+			Entity e;
+			try {
+				e = entityClass.newInstance();
+				e.setId(0L);
+				auxList.add(e);
+			} catch (InstantiationException e1) {				
+				e1.printStackTrace();
+			} catch (IllegalAccessException e1) {
+				e1.printStackTrace();
+			}
+
+		}
+		
+		return this.getListToEntityField(auxList);
 	}
 	/**
 	 * @return
@@ -190,5 +333,10 @@ public class EspecimeControl extends Control<Especime> {
 		}
 		if(list==null) new ArrayList<ItemTaxonomico>(0);
 		return list;
+	}
+	@SuppressWarnings("unchecked")
+	public List<Entity> getEstacaoList(){
+		GenericDAO<Entity> estacaoDAO = (GenericDAO<Entity>) SpringFactory.getInstance().getBean("genericDAO", GenericDAO.class);
+		return estacaoDAO.getList(Estacao.class);
 	}
 }

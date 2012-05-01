@@ -1,8 +1,11 @@
 package br.ueg.portalLab.view.composer;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -11,33 +14,29 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-
-import org.hibernate.annotations.Cascade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.zkoss.image.AImage;
+import org.zkoss.image.Image;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.event.UploadEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zkplus.databind.AnnotateDataBinder;
 import org.zkoss.zkplus.databind.BindingListModelList;
 import org.zkoss.zkplus.databind.BindingListModelSet;
+import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Datebox;
 import org.zkoss.zul.ListModel;
+import org.zkoss.zul.ListModelSet;
 import org.zkoss.zul.Listbox;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import br.ueg.builderSoft.control.Control;
 import br.ueg.builderSoft.model.Entity;
-import br.ueg.builderSoft.util.annotation.Attribute;
 import br.ueg.builderSoft.util.annotation.AttributeView;
 import br.ueg.builderSoft.util.control.MessagesControl;
 import br.ueg.builderSoft.util.sets.SpringFactory;
@@ -46,8 +45,11 @@ import br.ueg.portalLab.control.EspecimeControl;
 import br.ueg.portalLab.model.Autor;
 import br.ueg.portalLab.model.Coletor;
 import br.ueg.portalLab.model.Datum;
+import br.ueg.portalLab.model.Determinador;
+import br.ueg.portalLab.model.EspecieImagem;
 import br.ueg.portalLab.model.Especime;
 import br.ueg.portalLab.model.EspecimeDeterminador;
+import br.ueg.portalLab.model.Estacao;
 import br.ueg.portalLab.model.EstagioDesenvolvimento;
 import br.ueg.portalLab.model.Fenologia;
 import br.ueg.portalLab.model.GrupoEnderecoFisico;
@@ -210,6 +212,9 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	@AttributeView(key = "observacaoTaxonomia", isEntityValue = true, fieldType = String.class, isVisible = true,		 caption = "especime_observacaoTaxonomiaColumn")
 	private String fldObservacaoTaxonomia;
 	
+	@AttributeView(key="especieImagem", isEntityValue=false, fieldType = Set.class, isVisible=true, caption="especime_imagemColumn")
+	private Set<EspecieImagem> fldEspecieImagens = new HashSet<EspecieImagem>(0);
+	
 	
 
 	@Autowired
@@ -226,6 +231,8 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	
 	@Wire
 	protected Listbox divListBoxColetores;
+	
+	protected EspecieImagem especieImagem =  new EspecieImagem("d:\\programas\\PortalLab\\Jellyfish.jpg");
 	
 	protected AnnotateDataBinder binderForm;
 	/**
@@ -262,11 +269,13 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	 */
 	@Override
 	public void setSelectedEntity(Especime selectedEntity) {
-		super.setSelectedEntity(selectedEntity);
-		this.getEspecimeControl().setSelectedEspecime(selectedEntity);
-//		if(selectedEntity!=null && cmbGrupoEnderecoFisico!=null){
-//			binder.loadAttribute(cmbGrupoEnderecoFisico, "model");
-//		}
+		if(selectedEntity!=null){
+			super.setSelectedEntity(selectedEntity);
+			this.getEspecimeControl().setSelectedEspecime(selectedEntity);
+	//		if(selectedEntity!=null && cmbGrupoEnderecoFisico!=null){
+	//			binder.loadAttribute(cmbGrupoEnderecoFisico, "model");
+	//		}
+		}
 	}
 
 	/*
@@ -677,11 +686,8 @@ public class EspecimeComposer extends ComposerController<Especime> {
 						new HashSet<Entity>(fldColetores2)));
 	}
 
-	/**
-	 * Lista todas as funcionalidades cadastrados para a entidade do composer.
-	 * 
-	 * @return List<UsuarioPermissao> Lista de funcionalidades.
-	 */
+
+
 	public ListModel<Coletor> getColetorList() {
 		BindingListModelSet<Coletor> coletoresList = new BindingListModelSet<Coletor>(
 				new HashSet<Coletor>(0), true);
@@ -690,6 +696,9 @@ public class EspecimeComposer extends ComposerController<Especime> {
 				&& this.getSelectedEntity().getId() != null) {
 			coletoresList = new BindingListModelSet<Coletor>(
 					this.selectedEntity.getColetores(), true);
+		}else{
+			coletoresList = new BindingListModelSet<Coletor>(
+					this.getFldColetores(), true);
 		}
 
 		return coletoresList;
@@ -844,22 +853,118 @@ public class EspecimeComposer extends ComposerController<Especime> {
 		setEditForm(null);
 	}
 
-	/* (non-Javadoc)
-	 * @see br.ueg.builderSoft.view.zk.composer.ComposerController#saveEntity()
-	 */
-	@Override
-	public boolean saveEntity() {
-		// TODO Auto-generated method stub
-		return super.saveEntity();
-	}
-
+	
 	public void addColetor(){
 		Combobox cb = (Combobox)this.getEditForm().getFellow("cmbColetorListAvaliable");
 		Listbox lb = (Listbox)this.getEditForm().getFellow("lbColetores");
-		BindingListModelSet<Object> blm = (BindingListModelSet<Object>) lb.getModel();
-		blm.add(cb.getSelectedItem().getValue());
-
+		addItemInListBoxFromCombobox(cb, lb);
+	}
+	
+	public void addAutor(){
+		Combobox cb = (Combobox)this.getEditForm().getFellow("cmbAutorListAvaliable");
+		Listbox lb = (Listbox)this.getEditForm().getFellow("lbAutores");
+		addItemInListBoxFromCombobox(cb, lb);
+	}
+	@SuppressWarnings("unchecked")
+	public void removeAutor(){
+		Combobox cb = (Combobox)this.getEditForm().getFellow("cmbAutorListAvaliable");
+		Listbox lb = (Listbox)this.getEditForm().getFellow("lbAutores");
 		
+		removeSelectedItemFromListbox(cb, lb);
+	}
+
+	/**
+	 * Recebe um combobox e um listbox, 
+	 * pega o item selecionado do combobox e adicionar no model do listbox.
+	 * @param cb
+	 * @param lb
+	 */
+	private void addItemInListBoxFromCombobox(Combobox cb, Listbox lb) {
+		BindingListModelSet<Object> blm = (BindingListModelSet<Object>) lb.getModel();
+		if(cb.getSelectedItem()==null){
+			alert("Selecione um item primeiro!");
+		}
+		blm.add(cb.getSelectedItem().getValue());
+		
+		removeSelectedItem(cb);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void removeColetor(){
+		Combobox cb = (Combobox)this.getEditForm().getFellow("cmbColetorListAvaliable");
+		Listbox lb = (Listbox)this.getEditForm().getFellow("lbColetores");
+		
+		removeSelectedItemFromListbox(cb, lb);
+	}
+
+	/**
+	 * remove o item selecionado do listbox e adiciona o item removido ao combobox
+	 * @param cb
+	 * @param lb
+	 */
+	@SuppressWarnings("unchecked")
+	private void removeSelectedItemFromListbox(Combobox cb, Listbox lb) {
+		BindingListModelSet<Object> modelDeterminadores = (BindingListModelSet<Object>)lb.getModel();
+		BindingListModelList<Entity> modelDeterminadoresAvaliable = (BindingListModelList<Entity>)cb.getModel();
+		
+		for(Object e : modelDeterminadores){
+			Entity entity = (Entity)lb.getSelectedItem().getValue();
+			if(((Entity)e).getId().equals(entity.getId())){
+				modelDeterminadores.remove(entity);
+				modelDeterminadoresAvaliable.add(entity);
+				break;
+			}
+		}
+	}
+
+	/**
+	 * @param cb
+	 */
+	@SuppressWarnings("unchecked")
+	private void removeSelectedItem(Combobox cb) {
+		BindingListModelList<Entity> model = (BindingListModelList<Entity>)cb.getModel();
+		for(Entity e : model){
+			Entity determinador = (Entity)cb.getSelectedItem().getValue();
+			if(e.getId().equals(determinador.getId())){
+				model.remove(determinador);
+				break;
+			}
+		}
+	}
+	@SuppressWarnings("unchecked")
+	public void addDeterminador(){
+		Combobox cb = (Combobox)this.getEditForm().getFellow("cmbDeterminadorAvaliable");
+		Listbox lb = (Listbox)this.getEditForm().getFellow("lbDeterminadores");
+		Date dta = ((Datebox)this.getEditForm().getFellow("dateBoxData")).getValue(); 
+		BindingListModelSet<Object> blm = (BindingListModelSet<Object>) lb.getModel();
+		EspecimeDeterminador ed = new EspecimeDeterminador();
+		ed.setControleInsercaoPadroa(false);
+		ed.setId(Long.valueOf(blm.size()+1));
+		ed.setData(dta);
+		ed.setEspecime(this.getSelectedEntity());
+		ed.setDeterminador((Determinador)cb.getSelectedItem().getValue());
+		blm.add(ed);
+		((Datebox)this.getEditForm().getFellow("dateBoxData")).setValue(null);
+		removeSelectedItem(cb);
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void removeDeterminador(){
+		Combobox cb = (Combobox)this.getEditForm().getFellow("cmbDeterminadorAvaliable");
+		Listbox lb = (Listbox)this.getEditForm().getFellow("lbDeterminadores");
+		
+		BindingListModelSet<Object> modelDeterminadores = (BindingListModelSet<Object>)lb.getModel();
+		BindingListModelList<Entity> modelDeterminadoresAvaliable = (BindingListModelList<Entity>)cb.getModel();
+		
+		for(Object e : modelDeterminadores){
+			EspecimeDeterminador especimeDeterminador = (EspecimeDeterminador)lb.getSelectedItem().getValue();
+			if(((Entity)e).getId().equals(especimeDeterminador.getId())){
+				modelDeterminadores.remove(especimeDeterminador);
+				modelDeterminadoresAvaliable.add(especimeDeterminador.getDeterminador());
+				break;
+			}
+		}
 	}
 
 	/* Fim tratar guia coleta */
@@ -896,13 +1001,16 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	}
 	public List<ItemTaxonomico> getOrdemList(){
 		ArrayList<ItemTaxonomico> resultList = new ArrayList<ItemTaxonomico>(0);
-		List<ItemTaxonomico> filhoList = this.getEspecimeControl().getFilhoList(this.getFldClasse());
-		if(filhoList!=null)
-			resultList.addAll(filhoList);
 		
 		List<ItemTaxonomico> filhoList2 = this.getEspecimeControl().getFilhoList(this.getFldSubClasse());
-		if(filhoList2!=null)
+		if(filhoList2!=null){
 			resultList.addAll(filhoList2);
+		}else{		
+			List<ItemTaxonomico> filhoList = this.getEspecimeControl().getFilhoList(this.getFldClasse());
+			if(filhoList!=null)
+				resultList.addAll(filhoList);
+		}
+		
 		return resultList;
 	}
 	public List<ItemTaxonomico> getSubOrdemList(){
@@ -910,13 +1018,17 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	}
 	public List<ItemTaxonomico> getFamiliaList(){
 		ArrayList<ItemTaxonomico> resultList = new ArrayList<ItemTaxonomico>(0);
-		List<ItemTaxonomico> filhoList = this.getEspecimeControl().getFilhoList(this.getFldOrdem());
-		if(filhoList!=null)
-			resultList.addAll(filhoList);
 		
 		List<ItemTaxonomico> filhoList2 = this.getEspecimeControl().getFilhoList(this.getFldSubOrdem());
-		if(filhoList2!=null)
+		if(filhoList2!=null){
 			resultList.addAll(filhoList2);
+		}else{
+			List<ItemTaxonomico> filhoList = this.getEspecimeControl().getFilhoList(this.getFldOrdem());
+			if(filhoList!=null)
+				resultList.addAll(filhoList);
+		}
+		
+		
 		return resultList;
 	}
 	public List<ItemTaxonomico> getSubFamiliaList(){
@@ -924,13 +1036,17 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	}	
 	public List<ItemTaxonomico> getGeneroList(){
 		ArrayList<ItemTaxonomico> resultList = new ArrayList<ItemTaxonomico>(0);
-		List<ItemTaxonomico> filhoList = this.getEspecimeControl().getFilhoList(this.getFldFamilia());
-		if(filhoList!=null)
-			resultList.addAll(filhoList);
 		
 		List<ItemTaxonomico> filhoList2 = this.getEspecimeControl().getFilhoList(this.getFldSubFamilia());
-		if(filhoList2!=null)
+		if(filhoList2!=null){
 			resultList.addAll(filhoList2);
+		}else{
+			List<ItemTaxonomico> filhoList = this.getEspecimeControl().getFilhoList(this.getFldFamilia());
+			if(filhoList!=null)
+				resultList.addAll(filhoList);
+		}
+		
+		
 		return resultList;
 	}
 	public List<ItemTaxonomico> getEpitetoEspecificoList(){
@@ -945,6 +1061,9 @@ public class EspecimeComposer extends ComposerController<Especime> {
 				&& this.getSelectedEntity().getId() != null) {
 			coletoresList = new BindingListModelSet<EspecimeDeterminador>(
 					this.selectedEntity.getEspecimeDeterminadores(), true);
+		}else{
+			coletoresList = new BindingListModelSet<EspecimeDeterminador>(
+					this.getFldEspecimeDeterminadores(), true);
 		}
 
 		return coletoresList;
@@ -960,7 +1079,7 @@ public class EspecimeComposer extends ComposerController<Especime> {
 			fldDeterminadores2.add(e);
 		}
 		return this.getEntityModel(this.getEspecimeControl()
-										.getListToEntityField(new HashSet<Entity>(fldDeterminadores2))
+										.getListToEntityField(new HashSet<Entity>(fldDeterminadores2), Determinador.class)
 				);
 	}
 	
@@ -972,6 +1091,14 @@ public class EspecimeComposer extends ComposerController<Especime> {
 		this.fldImprecisao = fldImprecisao;
 	}
 
+	public Set<EspecieImagem> getFldEspecieImagens() {
+		return fldEspecieImagens;
+	}
+
+	public void setFldEspecieImagens(Set<EspecieImagem> fldEspecieImagens) {
+		this.fldEspecieImagens = fldEspecieImagens;
+	}
+
 	public ListModel<Autor> getAutorList() {
 		BindingListModelSet<Autor> coletoresList = new BindingListModelSet<Autor>(
 				new HashSet<Autor>(0), true);
@@ -980,25 +1107,81 @@ public class EspecimeComposer extends ComposerController<Especime> {
 				&& this.getSelectedEntity().getId() != null) {
 			coletoresList = new BindingListModelSet<Autor>(
 					this.selectedEntity.getAutores(), true);
+		}else{
+			coletoresList = new BindingListModelSet<Autor>(
+					this.getFldAutores(), true);
 		}
 
 		return coletoresList;
 	}
 	
 	public BindingListModelList<Entity> getAutorListAvaliable() {
-		Set<Autor> fldAutores2 = this.getSelectedEntity()!=null?this.getSelectedEntity().getAutores():null;
+		Set<Autor> autor2 = this.getSelectedEntity()!=null?this.getSelectedEntity().getAutores():new HashSet<Autor>(0);
 		
-		if(fldAutores2==null ||(fldAutores2!=null && fldAutores2.size()==0)){
-			fldAutores2 = new HashSet<Autor>();
-			Autor e = new Autor();
-			e.setId(0L);
-			fldAutores2.add(e);
-		}
+
 		return this.getEntityModel(this.getEspecimeControl()
-										.getListToEntityField(new HashSet<Entity>(fldAutores2))
-				);
+				.getListToEntityField(
+						new HashSet<Entity>(autor2),Autor.class));
 	}
 	
 	/* fim guia taxonomia */
 	
+	/* inicio guia multimidia */
+	public boolean addImage(UploadEvent event){
+		
+		org.zkoss.util.media.Media media = event.getMedia();
+		((Button) event.getTarget()).setLabel(media.getName());
+		if (media instanceof org.zkoss.image.Image) {
+			org.zkoss.zul.Image image = new org.zkoss.zul.Image();
+			image.setContent((Image) media);
+
+			EspecieImagem ei = new EspecieImagem();
+			ei.setMedia((AImage) media);
+			
+			this.setEspecieImagem(ei);
+			this.binderForm.loadComponent(this.getEditForm().getFellow("imgEspecie"));
+
+		} else {
+			Messagebox.show("Somente imagem podem ser incluídas");
+		}
+		
+		return true;
+	}
+
+	public EspecieImagem getEspecieImagem() {
+		return especieImagem;
+	}
+
+	public void setEspecieImagem(EspecieImagem imagem) {
+		this.especieImagem = imagem;
+		this.binderForm.loadComponent(this.getEditForm().getFellow("imgEspecie"));
+	}
+	public BindingListModelList<Entity> getEstacaoList() {
+		return this.getEntityModel(this.getEspecimeControl().getEstacaoList());
+	}
+	public ListModel<EspecieImagem> getEspecieImagemList() {
+		BindingListModelSet<EspecieImagem> especimeImagemList;
+
+		if(this.getFldEpitetoEspecifico()==null){
+			especimeImagemList = new BindingListModelSet<EspecieImagem>(
+					this.getFldEspecieImagens(), true);
+		}else{
+			especimeImagemList = new BindingListModelSet<EspecieImagem>(
+					this.getFldEpitetoEspecifico().getImagens(), true);
+		}
+
+		return especimeImagemList;
+	}
+	public void adicionarImagem(){
+		Combobox cb = (Combobox)this.getEditForm().getFellow("cmbEstacao");
+		Listbox lb = (Listbox)this.getEditForm().getFellow("lbEspecimeImagem");
+		ListModelSet<Object> lm = (ListModelSet<Object>)lb.getModel();
+		EspecieImagem ei = new EspecieImagem();
+		ei.setMedia(this.getEspecieImagem().getMedia());
+		ei.setEstacao((Estacao)cb.getSelectedItem().getValue());
+		ei.setId(Long.valueOf(lb.getModel().getSize()+1));
+		
+		lm.add(ei);
+
+	}
 }

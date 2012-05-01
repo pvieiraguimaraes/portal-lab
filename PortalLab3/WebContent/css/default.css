@@ -64,3 +64,23 @@
 .window-transparent{
 	background-color: transparent;
 }
+
+
+div.z-listbox-body .z-listcell  {
+	padding: 0px;
+}
+
+/* Group box título */
+.z-groupbox-3d .open-false,
+.z-groupbox-3d .open-true {
+  background: url('/PortalLab/images/arrow.png') no-repeat right 0;
+  height: 16px;  
+  padding-right: 20px;
+  font-weight: bold; 
+} 
+.z-groupbox-3d div.open-false {
+  background-position: right -16px;
+}
+.z-groupbox-colpsd .block {
+  display: block;
+}

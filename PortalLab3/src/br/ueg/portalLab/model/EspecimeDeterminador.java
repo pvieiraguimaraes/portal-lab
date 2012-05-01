@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 
 
@@ -40,6 +41,35 @@ public class EspecimeDeterminador extends Entity {
 	@JoinColumn(name = "id_dete_epde", insertable = true, updatable = true, nullable=true)
 	@Attribute(Required = true, SearchField = false)
 	private Determinador determinador; 
+	
+	@Transient
+	private boolean controleInsercaoPadrao = true;
+	/* (non-Javadoc)
+	 * @see br.ueg.builderSoft.model.Entity#isNew()
+	 */
+	@Override
+	public boolean isNew() {
+		if(this.isControleInsercaoPadroa()){
+			return super.isNew();
+		}else{
+			return false;
+		}
+	}
+	/**
+	 * @return the controleInsercaoPadroa
+	 */
+	public boolean isControleInsercaoPadroa() {
+		return controleInsercaoPadrao;
+	}
+	public boolean getControleInsercaoPadrao(){
+		return this.isControleInsercaoPadroa();
+	}
+	/**
+	 * @param controleInsercaoPadroa the controleInsercaoPadroa to set
+	 */
+	public void setControleInsercaoPadroa(boolean controleInsercaoPadroa) {
+		this.controleInsercaoPadrao = controleInsercaoPadroa;
+	}
 	
 	@Override
 	public String toString(){
