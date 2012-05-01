@@ -47,7 +47,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/hibernate3.jar">
+	<classpathentry kind="lib" path="lib/hibernate3.jar" sourcepath="D:/programas/ZK/hibernate-hibernate-orm-4.1.2.Final-58-g779e70d.zip">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
