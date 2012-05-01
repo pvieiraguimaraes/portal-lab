@@ -1,10 +1,13 @@
 package br.ueg.builderSoft.persistence;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Transaction;
 import org.hibernate.classic.Session;
@@ -132,9 +135,37 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 	}
 	public void refresh(E entity){
 		if(entity!=null && entity.getId()!=null){
+			//refreshFields(entity);
 			this.getSession().refresh(entity);
 		}
 	}
+//	@SuppressWarnings("unchecked")
+//	public void refreshFields(E entity){
+//		for(Field f: entity.getClass().getDeclaredFields()){
+//			if(f.getType().getSimpleName().equalsIgnoreCase("set")){
+//				String fieldName = f.getName();
+//				try {
+//					Set<Entity> fieldValue = (Set<Entity>)Reflection.getFieldValue(entity, fieldName);
+//					for(Entity e: fieldValue){
+//						if(e.isNew()){
+//							fieldValue.remove(e);
+//						}
+//					}
+//					
+//				} catch (SecurityException e) {
+//					e.printStackTrace();
+//				} catch (IllegalArgumentException e) {
+//					e.printStackTrace();
+//				} catch (NoSuchMethodException e) {
+//					e.printStackTrace();
+//				} catch (IllegalAccessException e) {
+//					e.printStackTrace();
+//				} catch (InvocationTargetException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+//	}
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -142,7 +173,7 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 		List<E> searchs = new ArrayList<E>();
 		if(entity==null) return searchs;
 		Session session = this.getSession();
-		session.flush();
+		//session.flush();
 		Criteria criteria = session.createCriteria(entity.getClass());
 		int numFilters =  entity.getSearchColumnTable(entity).size();
 		Criterion conds[] = new Criterion[numFilters];
@@ -180,7 +211,7 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 		for (int i = 0; i < entity.getSearchColumnTable(entity).size(); i++) {
 			String hql = "from " + entity.getClass().getSimpleName() + " where "+ entity.getSearchColumnTable(entity).get(i) +" like '%"+value+"%'";
 			Session session = this.getSession();
-			session.flush();
+			//session.flush();
 			Query qry = session.createQuery(hql);
 			searchs.addAll(qry.list());
 		}
@@ -195,7 +226,7 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 	@SuppressWarnings("unchecked")
 	public List<E> findByHQL(String qry){
 		Session session = this.getSession();
-		session.flush();
+		//session.flush();
 		Query vQry = session.createQuery(qry);
 		return vQry.list();
 	}
@@ -250,7 +281,7 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 		}
 
 		
-		session.flush();		
+		//session.flush();		
 		return criteria.list();
 		
 	}
@@ -277,7 +308,7 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 		List<E> searchs = new ArrayList<E>();
 		Session session = this.getSession();
 		Criteria criteria = session.createCriteria(entity.getClass()).add(Restrictions.idEq(id));
-		session.flush();
+		//session.flush();
 		searchs = criteria.list();
 		if(searchs.size()>0){
 			return searchs.get(0);
