@@ -392,7 +392,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 			this.setSelectedEntity(this.initializeEntity());
 			this.genericControl.associateEntityToAttributeView(this.getSelectedEntity());
 			binder.loadAll();
-			binder.saveAll();
+			//binder.saveAll();
 			this.showEditForm();
 		}
 		
