@@ -73,6 +73,7 @@
     			<value>br.ueg.portalLab.model.Sexo</value>
     			<value>br.ueg.portalLab.model.Especime</value>
     			<value>br.ueg.portalLab.model.EspecimeDeterminador</value>
+    			<value>br.ueg.portalLab.model.EspecieImagem</value>
     		</list>
     	</property>
     	<property name="hibernateProperties">
