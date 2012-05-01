@@ -49,7 +49,7 @@ public class CasoDeUsoFuncionalidade extends Entity  {
 		if(this.isControleInsercaoPadroa()){
 			return super.isNew();
 		}else{
-			return false;
+			return true;
 		}
 	}
 
