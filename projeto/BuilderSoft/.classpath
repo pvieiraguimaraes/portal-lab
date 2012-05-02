@@ -12,7 +12,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/org.springframework.context-3.0.2.RELEASE.jar">
+	<classpathentry kind="lib" path="lib/org.springframework.context-3.0.2.RELEASE.jar" sourcepath="C:/Users/guiliano.AEE/Desktop/temp/projetos/spring-framework-3.0.2.RELEASE/spring-framework-3.0.2.RELEASE/src/org.springframework.context-sources-3.0.2.RELEASE.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -132,7 +132,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/zul.jar" sourcepath="D:/programas/ZK/zk-src-6.0.1-FL-2012-03-21.zip">
+	<classpathentry kind="lib" path="lib/zul.jar" sourcepath="C:/Users/guiliano.AEE/Desktop/temp/projetos/zk-src-6.0.1-FL-2012-03-21.zip">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
