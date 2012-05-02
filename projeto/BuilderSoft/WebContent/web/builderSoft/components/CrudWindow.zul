@@ -8,7 +8,7 @@
 						<grid>
 							<rows>
 								<row>					
-									<hlayout >
+									<hlayout id="divAcao">
 										<label value="Nome:" sclass="titulo-coluna" />
 										<textbox name="fldBusca" value="@{controller.fldBusca}" />
 										<button label="Buscar" id="newEntityButton"><attribute name="onClick">

@@ -13,6 +13,7 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zkplus.databind.AnnotateDataBinder;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Div;
+import org.zkoss.zul.Hlayout;
 import org.zkoss.zul.Listcell;
 import org.zkoss.zul.Listhead;
 import org.zkoss.zul.Listheader;
@@ -49,6 +50,9 @@ public class CrudWindow extends Window implements IFormWindow {
 
 	@Wire
 	private FormCrudWindow editFormCrudWindow;
+	
+	@Wire
+	private Hlayout divAcao;
 
 	@Wire
 	private Listhead divListhead;
@@ -150,6 +154,7 @@ public class CrudWindow extends Window implements IFormWindow {
 		}
 		buildListHearder(composer);
 		buildListItem(composer);
+		buildAcaoPainel(composer);
 
 		// inicializar as variaveis de controle de operação baseado no atributo
 		// crudOperation
@@ -202,6 +207,15 @@ public class CrudWindow extends Window implements IFormWindow {
 				"delete");
 
 		// crudWindowComponent.invalidate();
+	}
+	/**
+	 * adiciona no painel de ação uma ação encontrada na proprieadade acaoPainel do composer
+	 * @param composer
+	 */
+	private void buildAcaoPainel(ComposerController<?> composer){
+		if(this.divAcao!=null && composer.getAcaoPainel()!=null){
+			composer.getAcaoPainel().setParent(this.divAcao);
+		}
 	}
 
 	/**

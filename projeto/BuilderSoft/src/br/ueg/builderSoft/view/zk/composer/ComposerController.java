@@ -69,6 +69,9 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 	
 	@Wire
 	protected Listitem listitem;
+	
+	@Wire
+	protected Div acaoPainel;
 
 	protected Div searchForm;
 
@@ -499,6 +502,20 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 			return form;
 		}	
 		
+		/**
+		 * @return the acaoPainel
+		 */
+		public Div getAcaoPainel() {
+			return acaoPainel;
+		}
+
+		/**
+		 * @param acaoPainel the acaoPainel to set
+		 */
+		public void setAcaoPainel(Div acaoPainel) {
+			this.acaoPainel = acaoPainel;
+		}
+
 		protected void processRecursive(Component comp, Object composer) {
 			Selectors.wireComponents(comp, composer, false);
 			Selectors.wireEventListeners(comp, composer);
