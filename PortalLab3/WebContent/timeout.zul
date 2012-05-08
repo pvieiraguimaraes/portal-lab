@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?init class="org.zkoss.zk.ui.util.Composition" arg0="/WEB-INF/layout/template.zul"?>
 <zk>
-
+<separator spacing="20px" />
 	<panel self="@{define(content)}" width="80%" title="Sessão Timeout"
-		style="margin-left: 10%;" border="normal">
+		style="margin-left: 10%; margin-top: 10px; margin-bottom: 10px;" border="normal">
 		<toolbar>
 			A página requisitada não está disponível no momento.
-			<separator height="5px" />
+			<separator height="7px" />
 			Isto pode ter ocorrido por deixar o site muito tempo ocioso.
 		</toolbar>
+		
 		<toolbar style="text-align: center;">
 			<a href="index.zul" label="Voltar para página inicial"></a>
 		</toolbar>
