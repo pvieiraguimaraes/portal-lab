@@ -92,7 +92,7 @@ private GenericDAO<CasoDeUsoFuncionalidade> getCasoDeUsoFuncionalidadeDAO() {
 				casoDeUsoFuncionalidade.setControleInsercaoPadroa(false);
 				casoDeUsoFuncionalidade.setCasoDeUso(this.getSelectedCasoDeUso());
 				casoDeUsoFuncionalidade.setFuncionalidade(f);
-				casoDeUsoFuncionalidade.setId(numFuncs++);
+				casoDeUsoFuncionalidade.setId(numFuncs--);
 				listCasoDeUsoFuncionalidade.add(casoDeUsoFuncionalidade);
 			}
 		}
