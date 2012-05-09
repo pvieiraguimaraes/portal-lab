@@ -50,7 +50,7 @@ public abstract class EspecieMultimidia<TYPE extends Media> extends Entity {
 	 */
 	@Column(name="caminho_mult", length=1000, nullable=false)
 	@Attribute(Required = true, SearchField=false)
-	protected String caminho;
+	protected String nome;
 	
 	@ManyToOne(optional = true, fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_esta_mult", insertable = true, updatable = true, nullable=true)
@@ -63,8 +63,8 @@ public abstract class EspecieMultimidia<TYPE extends Media> extends Entity {
 	@Override
 	public String toString(){
 		String imagem="";
-		if(this.getCaminho()!=null)
-			imagem+=this.getCaminho();
+		if(this.getNome()!=null)
+			imagem+=this.getNome();
 		
 		if(this.getItemTaxonomico()!=null){
 			imagem+="( ".concat(this.getItemTaxonomico().getNome().concat(")"));
@@ -92,7 +92,7 @@ public abstract class EspecieMultimidia<TYPE extends Media> extends Entity {
 		}else{
 			media = this.getFileFromCaminho();
 			if(media!=null){
-				this.setCaminho(media.getName());
+				this.setNome(media.getName());
 			}else{
 				String diretorioImagem = ConfigPortalLab.getInstancia().getDireitorioImagem();
 				try {
@@ -106,16 +106,16 @@ public abstract class EspecieMultimidia<TYPE extends Media> extends Entity {
 	}
 
 	public void setMedia(TYPE media) {
-		this.setCaminho(media.getName());
+		this.setNome(media.getName());
 		this.media = media;
 	}
 
-	public String getCaminho() {
-		return caminho;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setCaminho(String caminho) {
-		this.caminho = caminho;
+	public void setNome(String caminho) {
+		this.nome = caminho;
 	}
 
 	public ItemTaxonomico getItemTaxonomico() {

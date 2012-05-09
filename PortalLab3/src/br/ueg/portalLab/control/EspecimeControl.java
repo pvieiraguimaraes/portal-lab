@@ -8,7 +8,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,7 +26,6 @@ import br.ueg.builderSoft.util.control.MessagesControl;
 import br.ueg.builderSoft.util.control.SubController;
 import br.ueg.builderSoft.util.reflection.Reflection;
 import br.ueg.builderSoft.util.sets.SpringFactory;
-import br.ueg.portalLab.model.Coletor;
 import br.ueg.portalLab.model.EspecieImagem;
 import br.ueg.portalLab.model.Especime;
 import br.ueg.portalLab.model.EspecimeDeterminador;
@@ -36,14 +34,7 @@ import br.ueg.portalLab.model.GrupoEnderecoFisico;
 import br.ueg.portalLab.model.ItemGeografico;
 import br.ueg.portalLab.model.ItemTaxonomico;
 import br.ueg.portalLab.model.Laboratorio;
-import br.ueg.portalLab.model.Usuario;
-import br.ueg.portalLab.security.model.CasoDeUso;
-import br.ueg.portalLab.security.model.CasoDeUsoFuncionalidade;
-import br.ueg.portalLab.security.model.Funcionalidade;
-import br.ueg.portalLab.security.model.GrupoUsuario;
-import br.ueg.portalLab.security.model.UsuarioPermissao;
 import br.ueg.portalLab.util.control.EspecimeValidatorControl;
-import br.ueg.portalLab.util.control.UsuarioValidatorControl;
 
 @Service
 @Scope("desktop")
@@ -92,54 +83,84 @@ public class EspecimeControl extends Control<Especime> {
 			SubControllerManager<Especime> subControllerManager) {
 		boolean retorno = false;
 		Especime entity = (Especime) this.getMapFields().get("entity");
+		Set<EspecieImagem> especieImagens = (Set<EspecieImagem>) this.getMapFields().get("especieImagem");
+		ItemTaxonomico selectedItemTaxonomicoMedia = (ItemTaxonomico) this.getMapFields().get("selectedItemTaxonomicoMedia");
+		
 
 		if(!entity.isNew()){
-			retorno = saveEspecieImagem(entity);
-			
+			retorno = saveEspecieImagem(especieImagens, selectedItemTaxonomicoMedia);			
 			if(retorno){
 				retorno =  super.actionSave(subControllerManager);
-			}else{
-				this.getMessagesControl().addMessageError("especieImage_salvar");
 			}
 		}else{
-			Set<EspecimeDeterminador> espDeterminadores = entity.getEspecimeDeterminadores();
-			entity.setEspecimeDeterminadores(new HashSet<EspecimeDeterminador>());
-			retorno = super.actionSave(subControllerManager);
+			retorno = this.saveDeterminadoresForNewEntity(entity, subControllerManager);			
 			if(retorno){
-				for(EspecimeDeterminador espDet: espDeterminadores){
-					espDet.setEspecime(entity);
-				}
-				entity.setEspecimeDeterminadores(espDeterminadores);
-				retorno = saveEspecieImagem(entity);
-				if(retorno){
-					retorno = super.actionSave(subControllerManager);
-				}else{
-					this.getMessagesControl().addMessageError("especieImage_salvar");
-				}
+				retorno = saveEspecieImagem(especieImagens, selectedItemTaxonomicoMedia);				
 			}			
 		}
 		return retorno;
 	}
-	public boolean saveEspecieImagem(Especime especime){
+	
+	public boolean saveDeterminadoresForNewEntity(Especime entity, SubControllerManager<Especime> subControllerManager){
+		boolean retorno = false;
+		Set<EspecimeDeterminador> espDeterminadores = entity.getEspecimeDeterminadores();
+		entity.setEspecimeDeterminadores(new HashSet<EspecimeDeterminador>());
+		retorno = super.actionSave(subControllerManager);
+		if(retorno){
+			for(EspecimeDeterminador espDet: espDeterminadores){
+				espDet.setEspecime(entity);
+			}
+			entity.setEspecimeDeterminadores(espDeterminadores);
+			retorno = super.actionSave(subControllerManager);
+		}				
+		return retorno;
+	}
+	
+	public boolean saveEspecieImagem(Set<EspecieImagem> especieImagens,ItemTaxonomico selectedItemTaxonomicoMedia){
 		boolean retorno = true;
-		Set<EspecieImagem> especieImagens = (Set<EspecieImagem>) this.getMapFields().get("especieImagem");
+		if(selectedItemTaxonomicoMedia==null) return false;
+		
+		GenericDAO<EspecieImagem> especieImagemDAO = (GenericDAO<EspecieImagem>) SpringFactory.getInstance().getBean("genericDAO",GenericDAO.class);
+		GenericDAO<ItemTaxonomico> itemTaxonomicoDAO = (GenericDAO<ItemTaxonomico>) SpringFactory.getInstance().getBean("genericDAO",GenericDAO.class);
+		
+		
 		if(especieImagens!=null){
-			if(especime.getEpitetoEspecifico()!=null){
-				for(EspecieImagem ei: especieImagens){
-					ei.setItemTaxonomico(especime.getEpitetoEspecifico());
+			for(EspecieImagem ei: especieImagens){
+				if(ei.isNew()){
+					ei.setItemTaxonomico(selectedItemTaxonomicoMedia);
 					
-					String diretorioImagem = ConfigPortalLab.getInstancia().getDireitorioImagem();
-					ei.setCaminho(diretorioImagem.concat("\\").concat(ei.getMedia().getName()));
+					ei.setNome(ei.getMedia().getName());
 					
-					writeImagem(ei.getMedia());
+					if(writeImagem(ei.getMedia())){
+						try {
+							especieImagemDAO.save(ei);
+						} catch (Exception e) {
+							this.getMessagesControl().addMessageError("especieImage_salvar");
+							e.printStackTrace();
+							return false;
+						}
+					}else{
+						this.getMessagesControl().addMessageError("especieImage_salvar");
+						return false;
+					}
+				}								
+			}
+			
+			boolean especieImagemExiste = false;;
+			//remove as imagens removidas
+			itemTaxonomicoDAO.refresh(selectedItemTaxonomicoMedia);
+			for(EspecieImagem itemEspecieImage : new ArrayList<EspecieImagem>(selectedItemTaxonomicoMedia.getImagens())){
+				for(EspecieImagem vEspecieImagem: especieImagens){
+					if(itemEspecieImage.getId().equals(vEspecieImagem.getId())){
+						especieImagemExiste = true;
+						break;
+					}
 				}
-				especime.getEpitetoEspecifico().setImagens(especieImagens);
-				try {
-					this.getItemTaxonomicoDAO().update(especime.getEpitetoEspecifico());
-				} catch (Exception e) {
-					e.printStackTrace();
-					retorno = false;
+				if(!especieImagemExiste){
+					especieImagemDAO.delete(itemEspecieImage);
+					//TODO EspecieImagem remover imagem do diretório
 				}
+				especieImagemExiste = false;
 			}
 		}
 		return retorno;
@@ -169,6 +190,13 @@ public class EspecimeControl extends Control<Especime> {
 			e.printStackTrace();
 		}
 		return retorno;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Set<EspecieImagem> getEspecieImagemFromItemTaxonomico(ItemTaxonomico it){
+		GenericDAO<ItemTaxonomico> itemTaxonomicoDAO = (GenericDAO<ItemTaxonomico>) SpringFactory.getInstance().getBean("genericDAO",GenericDAO.class);
+		itemTaxonomicoDAO.refresh(it);
+		return it.getImagens();
 	}
 
 	private Especime selctedEspecime;

@@ -62,7 +62,7 @@ import br.ueg.portalLab.model.Sexo;
 import br.ueg.portalLab.model.TipoDeMontagem;
 
 @Component
-@Scope("desktop")
+@Scope("session")
 public class EspecimeComposer extends ComposerController<Especime> {
 
 	@Override
@@ -212,10 +212,12 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	@AttributeView(key = "observacaoTaxonomia", isEntityValue = true, fieldType = String.class, isVisible = true,		 caption = "especime_observacaoTaxonomiaColumn")
 	private String fldObservacaoTaxonomia;
 	
+	
+	
 	@AttributeView(key="especieImagem", isEntityValue=false, fieldType = Set.class, isVisible=true, caption="especime_imagemColumn")
 	private Set<EspecieImagem> fldEspecieImagens = new HashSet<EspecieImagem>(0);
-	
-	
+	@AttributeView(key="selectedItemTaxonomicoMedia", isEntityValue = false, fieldType = ItemTaxonomico.class, isVisible = false)
+	private ItemTaxonomico fldSelectedItemTaxonomicoMedia;
 
 	@Autowired
 	protected EspecimeControl especimeControl;
@@ -1156,22 +1158,22 @@ public class EspecimeComposer extends ComposerController<Especime> {
 		this.especieImagem = imagem;
 		this.binderForm.loadComponent(this.getEditForm().getFellow("imgEspecie"));
 	}
+	
+
+	
 	public BindingListModelList<Entity> getEstacaoList() {
 		return this.getEntityModel(this.getEspecimeControl().getEstacaoList());
 	}
+	
 	public ListModel<EspecieImagem> getEspecieImagemList() {
 		BindingListModelSet<EspecieImagem> especimeImagemList;
 
-		if(this.getFldEpitetoEspecifico()==null){
-			especimeImagemList = new BindingListModelSet<EspecieImagem>(
-					this.getFldEspecieImagens(), true);
-		}else{
-			especimeImagemList = new BindingListModelSet<EspecieImagem>(
-					this.getFldEpitetoEspecifico().getImagens(), true);
-		}
-
+		especimeImagemList = new BindingListModelSet<EspecieImagem>(
+				this.getFldEspecieImagens(), true);
+		
 		return especimeImagemList;
 	}
+	
 	public void adicionarImagem(){
 		Combobox cb = (Combobox)this.getEditForm().getFellow("cmbEstacao");
 		Listbox lb = (Listbox)this.getEditForm().getFellow("lbEspecimeImagem");
@@ -1184,5 +1186,82 @@ public class EspecimeComposer extends ComposerController<Especime> {
 		
 		lm.add(ei);
 
+	}
+
+	public ItemTaxonomico getFldSelectedItemTaxonomicoMedia() {
+		if(this.fldSelectedItemTaxonomicoMedia==null){
+			this.fldSelectedItemTaxonomicoMedia =  new ItemTaxonomico();
+			this.fldSelectedItemTaxonomicoMedia.setId(0L);
+		}
+		return fldSelectedItemTaxonomicoMedia;
+	}
+
+	public void setFldSelectedItemTaxonomicoMedia(
+			ItemTaxonomico fldSelectedItemTaxonomicoMedia) {		
+		this.fldSelectedItemTaxonomicoMedia = fldSelectedItemTaxonomicoMedia;
+		this.fldEspecieImagens = this.getEspecimeControl().getEspecieImagemFromItemTaxonomico(this.fldSelectedItemTaxonomicoMedia); 
+	}
+
+	@Override
+	public boolean saveEntity() {		
+		return super.saveEntity();
+	}
+	
+	public List<ItemTaxonomico> getListItemTaxonomicoMedia(){
+		ArrayList<ItemTaxonomico> resultList = new ArrayList<ItemTaxonomico>(0);
+		if(this.getFldReino()!=null){
+			resultList.add(this.getFldReino());
+		}else{
+			return resultList;
+		}
+		
+		if(this.getFldFilo()!=null){
+			resultList.add(this.getFldFilo());
+		}else{
+			return resultList;
+		}
+		
+		if(this.getFldClasse()!=null){
+			resultList.add(this.getFldClasse());
+		}else{
+			return resultList;
+		}
+		
+		if(this.getFldSubClasse()!=null){
+			resultList.add(this.getFldSubClasse());
+		}
+		
+		if(this.getFldOrdem()!=null){
+			resultList.add(this.getFldOrdem());
+		}else{
+			return resultList;
+		}
+		
+		if(this.getFldSubOrdem()!=null){
+			resultList.add(this.getFldSubOrdem());
+		}
+		
+		if(this.getFldFamilia()!=null){
+			resultList.add(this.getFldFamilia());
+		}else{
+			return resultList;
+		}
+		
+		if(this.getFldSubFamilia()!=null){
+			resultList.add(this.getFldSubFamilia());
+		}
+		
+		if(this.getFldGenero()!=null){
+			resultList.add(this.getFldGenero());
+		}else{
+			return resultList;
+		}
+		
+		if(this.getFldEpitetoEspecifico()!=null){
+			resultList.add(this.getFldEpitetoEspecifico());
+		}else{
+			return resultList;
+		}
+		return resultList;
 	}
 }
