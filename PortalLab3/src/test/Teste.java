@@ -43,7 +43,7 @@ public class Teste {
 	}
 	public static void testeEspecieImagem(){
 		EspecieImagem ei = new EspecieImagem();
-		ei.setCaminho("d:\\programas\\PortalLab\\Jellyfish.jpg");
+		ei.setNome("d:\\programas\\PortalLab\\Jellyfish.jpg");
 		
 		ei.getMedia();
 		System.out.println("X:"+ei.getMedia().getName());

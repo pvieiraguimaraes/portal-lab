@@ -4,12 +4,16 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 
+import javax.imageio.ImageIO;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Transient;
 
 import org.zkoss.image.AImage;
 import org.zkoss.image.Image;
+
+import br.ueg.builderSoft.config.ConfigPortalLab;
 @javax.persistence.Entity
 @DiscriminatorValue("imagem")
 public class EspecieImagem extends EspecieMultimidia<Image> {
@@ -43,7 +47,7 @@ public class EspecieImagem extends EspecieMultimidia<Image> {
 
 	private static final long serialVersionUID = 1962064058618011238L;
 	public EspecieImagem(String caminho){
-		this.setCaminho(caminho);		
+		this.setNome(caminho);		
 	}
 	public EspecieImagem(){
 		
@@ -51,11 +55,15 @@ public class EspecieImagem extends EspecieMultimidia<Image> {
 
 	@Override
 	public Image getFileFromCaminho() {
-		if(this.getCaminho()!=null && this.getCaminho().length()>0){
+		String path = ConfigPortalLab.getInstancia().getDireitorioImagem().concat("\\");
+		if(this.getNome()!=null && this.getNome().length()>0){
 			
 
 			try {
-				media = new AImage(this.getCaminho());
+				File file = new File(path.concat(this.getNome()));
+				
+				FileInputStream is = new FileInputStream ( file);
+				media =(Image) new AImage(this.getName(),is);
 
 			} catch (IOException e) {
 				System.err.println(e.getCause());

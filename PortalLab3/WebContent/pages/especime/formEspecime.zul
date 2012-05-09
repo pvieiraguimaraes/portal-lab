@@ -518,12 +518,19 @@
 				        </vlayout>				        	
 					</tabpanel>
 					 <tabpanel>
-				        <groupbox id="gbImagem" mold="3d">
+						 <hlayout>
+						 	<label value="Selecione o item Taxonomico para ver os itens multímidia:"/>
+						 	<combobox id="cmbSelectedItemTaxonomicoMedia" model="@{controller.listItemTaxonomicoMedia, load-when='cmbEpitetoEspecifico.onChange, cmbGenero.onChange, cmbFamilia.onChange, cmbSubFamilia.onChange, cmbOrdem.onChange, cmbSubOrdem.onChange, cmbClasse.onChange, cmbSubClasse.onChange, cmbFilo.onChange, cmbReino.onChange' }"
+						 	selectedItem = "@{controller.fldSelectedItemTaxonomicoMedia }">
+						 		<comboitem value="@{each }" />
+						 	</combobox>
+						 </hlayout>
+				        <groupbox id="gbImagem" mold="3d" open="false">
 			                <attribute name="onOpen"><![CDATA[
 							    arrowImagem.setSclass("open-" + self.isOpen());
 							]]></attribute>
 			                <caption>
-			                    <div id="arrowImagem" class="open-true">Imagens</div>
+			                    <div id="arrowImagem" class="open-false">Imagens</div>
 			                </caption>
 			                <hbox>
 			                    <button  label="Selecionar Imagem" upload="true,maxsize=5000" onUpload="controller.addImage(event)"/>
@@ -533,7 +540,7 @@
 			                    <button label="Adicionar" onClick="controller.adicionarImagem()"/>			                    
 			                </hbox>
 			                <listbox 
-			                	model="@{controller.EspecieImagemList }"
+			                	model="@{controller.EspecieImagemList, load-when='cmbSelectedItemTaxonomicoMedia.onChange' }"
 			                	selectedItem="@{controller.especieImagem }"
 			                	id="lbEspecimeImagem"
 			                >
@@ -571,7 +578,7 @@
 							    arrowSom.setSclass("open-" + self.isOpen());
 							]]></attribute>
 			                <caption>
-			                    <div id="arrowSom" class="open-false">Vídeos</div>
+			                    <div id="arrowSom" class="open-false">Som</div>
 			                </caption>
 			                <hbox>
 			                    <label value="Directory:" />
