@@ -553,7 +553,7 @@
 			                		<listcell label="@{entity.caminho }"/>
 			                		<listcell label="@{entity.estacao.descricao }" />
 			                		<listcell>
-			                			<button label="Excluir"/>
+			                			<button label="Excluir" onClick="controller.removeImagem()"/>
 			                		</listcell>
 			                	</listitem>
 			                </listbox>

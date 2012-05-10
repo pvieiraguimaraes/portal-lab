@@ -874,6 +874,15 @@ public class EspecimeComposer extends ComposerController<Especime> {
 		
 		removeSelectedItemFromListbox(cb, lb);
 	}
+	public void removeImagem(){
+		Listbox lb = (Listbox)this.getEditForm().getFellow("lbEspecimeImagem");
+		
+		BindingListModelSet<Object> especieImagens = (BindingListModelSet<Object>)lb.getModel();
+		
+		Entity entity = (Entity)lb.getSelectedItem().getValue();
+		especieImagens.remove(entity);
+
+	}
 
 	/**
 	 * Recebe um combobox e um listbox, 
