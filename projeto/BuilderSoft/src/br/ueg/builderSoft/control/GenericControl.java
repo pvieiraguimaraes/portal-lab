@@ -159,7 +159,24 @@ public class GenericControl <E extends Entity> {
 						String fieldName = field.getAnnotation(br.ueg.builderSoft.util.annotation.AttributeView.class).key();
 						Class fieldType = field.getAnnotation(br.ueg.builderSoft.util.annotation.AttributeView.class).fieldType();
 						if (field.getAnnotation(br.ueg.builderSoft.util.annotation.AttributeView.class).isEntityValue()) {
-							Reflection.setFieldValue(entity, fieldName, fieldValue, fieldType);
+							
+							Method methods[] = entity.getClass().getMethods();
+							String methodName ="set" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+							boolean exists = false;
+							for(Method tempMethod :Arrays.asList(methods)){
+								if( tempMethod.getName().equals(methodName) ) {
+									exists = true;
+									break;
+								}
+							}
+							if(exists){
+								Reflection.setFieldValue(entity, fieldName, fieldValue, fieldType);
+							}else{
+								System.out.println("Campo:"+fieldName+" não existe na entidade:"+entity.getClass().getSimpleName());
+							}
+							
+							
+							
 						}
 					} catch (SecurityException e) {
 						e.printStackTrace();
