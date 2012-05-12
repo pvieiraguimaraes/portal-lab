@@ -525,7 +525,7 @@
 						 		<comboitem value="@{each }" />
 						 	</combobox>
 						 </hlayout>
-				        <groupbox id="gbImagem" mold="3d" open="false">
+				        <groupbox id="gbImagem" mold="3d" open="true">
 			                <attribute name="onOpen"><![CDATA[
 							    arrowImagem.setSclass("open-" + self.isOpen());
 							]]></attribute>

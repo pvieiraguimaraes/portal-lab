@@ -55,7 +55,7 @@ public class EspecieImagem extends EspecieMultimidia<Image> {
 
 	@Override
 	public Image getFileFromCaminho() {
-		String path = ConfigPortalLab.getInstancia().getDireitorioImagem().concat("\\");
+		String path = ConfigPortalLab.getInstancia().getDireitorioImagem().concat(System.getProperty("file.separator"));
 		if(this.getNome()!=null && this.getNome().length()>0){
 			
 
@@ -63,7 +63,7 @@ public class EspecieImagem extends EspecieMultimidia<Image> {
 				File file = new File(path.concat(this.getNome()));
 				
 				FileInputStream is = new FileInputStream ( file);
-				media =(Image) new AImage(this.getName(),is);
+				media =(Image) new AImage(this.getNome(),is);
 
 			} catch (IOException e) {
 				System.err.println(e.getCause());
@@ -72,6 +72,17 @@ public class EspecieImagem extends EspecieMultimidia<Image> {
 			}
 		}
 		return this.media;
+	}
+	@Override
+	public Image getDefaultMedia() {
+		String diretorioImagem = ConfigPortalLab.getInstancia().getDireitorioImagem();
+		try {
+			media = (Image) new AImage(diretorioImagem.concat(System.getProperty("file.separator")).concat("especies.jpg"));
+		} catch (IOException e) {
+			e.printStackTrace();
+			media = (Image) new org.zkoss.zul.Image();
+		}
+		return media;
 	}
 
 }

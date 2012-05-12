@@ -158,7 +158,7 @@ public class EspecimeControl extends Control<Especime> {
 				}
 				if(!especieImagemExiste){
 					especieImagemDAO.delete(itemEspecieImage);
-					//TODO EspecieImagem remover imagem do diretório
+					//TODO EspecieImagem remover imagem do diretï¿½rio
 				}
 				especieImagemExiste = false;
 			}
@@ -170,7 +170,7 @@ public class EspecimeControl extends Control<Especime> {
 		try {
 			String diretorioImagem = ConfigPortalLab.getInstancia().getDireitorioImagem();
 			OutputStream outputStream = new FileOutputStream(
-					diretorioImagem.concat("\\") + media.getName());
+					diretorioImagem.concat(System.getProperty("file.separator")) + media.getName());
 		
 		// OutputStream outputStream = new FileOutputStream("C:\\log\\" +
 		// media.getName());
@@ -194,6 +194,7 @@ public class EspecimeControl extends Control<Especime> {
 	
 	@SuppressWarnings("unchecked")
 	public Set<EspecieImagem> getEspecieImagemFromItemTaxonomico(ItemTaxonomico it){
+		if(it==null) return null;
 		GenericDAO<ItemTaxonomico> itemTaxonomicoDAO = (GenericDAO<ItemTaxonomico>) SpringFactory.getInstance().getBean("genericDAO",GenericDAO.class);
 		itemTaxonomicoDAO.refresh(it);
 		return it.getImagens();
@@ -223,8 +224,8 @@ public class EspecimeControl extends Control<Especime> {
 	
 	
 	/**
-	 * Verifica se a entidade passada está presente na lista(feito por 
-	 * problemas de utilização de Lazy no hibernate)
+	 * Verifica se a entidade passada estï¿½ presente na lista(feito por 
+	 * problemas de utilizaï¿½ï¿½o de Lazy no hibernate)
 	 * @param entity
 	 * @param list
 	 * @return
@@ -242,11 +243,11 @@ public class EspecimeControl extends Control<Especime> {
 	
 	/**
 	 * Metodo utilizado para retorar a lista de itens da entidade
-	 * que não estão associados ao Especime ainda.
+	 * que nï¿½o estï¿½o associados ao Especime ainda.
 	 * O metodo pega o tipo do item da lista e solicita uma listagem 
 	 * dessa entidade removendo os itens presente na lista.
 	 * Obs.: Esse metodo deve ser chamada com um lista que tenha
-	 * pelo menos um item, pois o item será utilizado para determinar o tipo
+	 * pelo menos um item, pois o item serï¿½ utilizado para determinar o tipo
 	 * @param list
 	 * @return
 	 */
@@ -271,9 +272,9 @@ public class EspecimeControl extends Control<Especime> {
 	
 	/**
 	 * Metodo utilizado para retorar a lista de itens da entidade
-	 * que não estão associados ao Especime ainda.
+	 * que nï¿½o estï¿½o associados ao Especime ainda.
 	 * O metodo faz uma listagem de objetos do tipo entity passado como parametro
-	 * e remove os itens que pertençam a lista passada, sendo que um atributo de cada 
+	 * e remove os itens que pertenï¿½am a lista passada, sendo que um atributo de cada 
 	 * item da lista deve ser do tipo da entidade passada.	 
 	 * @param list
 	 * @param entiy
