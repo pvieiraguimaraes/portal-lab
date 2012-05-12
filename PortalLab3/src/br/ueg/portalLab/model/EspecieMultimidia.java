@@ -45,7 +45,7 @@ public abstract class EspecieMultimidia<TYPE extends Media> extends Entity {
 	protected ItemTaxonomico itemTaxonomico;
 	
 	/**
-	 * O caminho incui o caminho completo, isso é 
+	 * O caminho incui o caminho completo, isso ï¿½ 
 	 * inclui o nome do arquivo de midia
 	 */
 	@Column(name="caminho_mult", length=1000, nullable=false)
@@ -94,12 +94,7 @@ public abstract class EspecieMultimidia<TYPE extends Media> extends Entity {
 			if(media!=null){
 				this.setNome(media.getName());
 			}else{
-				String diretorioImagem = ConfigPortalLab.getInstancia().getDireitorioImagem();
-				try {
-					media = (TYPE) new AImage(diretorioImagem.concat("\\especies.jpg"));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				media = this.getDefaultMedia();
 			}
 			return media;
 		}
@@ -135,10 +130,17 @@ public abstract class EspecieMultimidia<TYPE extends Media> extends Entity {
 	}
 	
 	/**
-	 * Esse método deve ser implementado para retornar um
+	 * Esse mï¿½todo deve ser implementado para retornar um
 	 *  objeto que implemente a interface Media
-	 *  será utilizado para pegar o caminho e carregar
+	 *  serï¿½ utilizado para pegar o caminho e carregar
 	 *  o objeto com o seu conteudo.
 	 */
 	public abstract TYPE getFileFromCaminho();
+	
+	/** Metodo utilizado para retornar uma multimidia padrÃ£o 
+	 * caso nÃ£o seja selecionadon nenhum outro multimidia.
+	 * 
+	 * @return
+	 */
+	public abstract TYPE getDefaultMedia();
 }

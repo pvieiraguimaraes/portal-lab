@@ -29,6 +29,7 @@ import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.ListModel;
+import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.ListModelSet;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
@@ -238,7 +239,7 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	
 	protected AnnotateDataBinder binderForm;
 	/**
-	 * 
+	 * Filo Cnidaria
 	 */
 	private static final long serialVersionUID = 6642681501922054728L;
 
@@ -734,8 +735,8 @@ public class EspecimeComposer extends ComposerController<Especime> {
 		this.genericControl.associateEntityToAttributeView(this.getSelectedEntity());
 		
 		binder.loadComponent(this.getEditForm());
-		//TODO descobrir uma forma de não fazer isso(ler tudo, deveria funcionar só com o comando acima, 
-		//quando o formulário é construido automaticamente.
+		//TODO descobrir uma forma de nï¿½o fazer isso(ler tudo, deveria funcionar sï¿½ com o comando acima, 
+		//quando o formulï¿½rio ï¿½ construido automaticamente.
 		binder.loadAll();
 		//binder.saveAll();
 		this.showEditForm();
@@ -778,9 +779,15 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	/* (non-Javadoc)
 	 * @see br.ueg.builderSoft.view.zk.composer.ComposerController#showEditForm()
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
 	public void showEditForm() {
 		// TODO Auto-generated method stub
+		this.setFldSelectedItemTaxonomicoMedia(null);
+		especieImagem =  new EspecieImagem();
+		Listbox  lb = (Listbox) this.getEditForm().getFellow("lbEspecimeImagem");
+		lb.setModel(new BindingListModelList(new ArrayList<Entity>(), true));
+		
 		super.showEditForm();
 		Textbox tb = (Textbox)this.getEditForm().getFellow("fldGrupoEnderecoFisicoHidden");
 		Combobox cb = (Combobox) this.getEditForm().getFellow("cmbGrupoEnderecoFisico");		
@@ -1153,7 +1160,7 @@ public class EspecimeComposer extends ComposerController<Especime> {
 			this.binderForm.loadComponent(this.getEditForm().getFellow("imgEspecie"));
 
 		} else {
-			Messagebox.show("Somente imagem podem ser incluídas");
+			Messagebox.show("Somente imagem podem ser incluï¿½das");
 		}
 		
 		return true;
