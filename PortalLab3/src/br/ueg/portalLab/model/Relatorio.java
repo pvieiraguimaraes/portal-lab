@@ -13,6 +13,15 @@ public class Relatorio extends Entity {
 	private String path;
 	@Attribute(Required = true, SearchField = false)
 	private ServletOutputStream servletOutputStream;
+	
+	public Relatorio() {
+		
+	}
+	
+	public Relatorio(String path,ServletOutputStream servletOutputStream) {
+		this.path = path;
+		this.servletOutputStream = servletOutputStream;
+	}
 
 	@Override
 	public Long getId() {
