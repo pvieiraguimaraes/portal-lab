@@ -36,8 +36,8 @@ public class Control<E extends Entity>{
 	private HashMap<String, Object> mapFields;
 	private MessagesControl messagesControl;
 	//construtores do subcontroller mandaram algo +
-	//controlador principal para fazer modificações
-	//DUVIDA: criar todos validadores para chamar seu método principal no construtor
+	//controlador principal para fazer modificaï¿½ï¿½es
+	//DUVIDA: criar todos validadores para chamar seu mï¿½todo principal no construtor
 	//e mandar a instancia desse control pra ele setar o booleano continue
 	//tenod que verificar esse a todo momento
 	//assim no control terei um for para percorrer a lista de subcontrolers
@@ -45,7 +45,7 @@ public class Control<E extends Entity>{
 	
 	/*
 	 * Criar classe que extenda control, e dentro do construtor do filho da super do filho
-	 * e aumentar no arraylist de validações.
+	 * e aumentar no arraylist de validaï¿½ï¿½es.
 	 */
 	public Control(MessagesControl pMessagesControl) {
 		//this.persistence = (GenericDAO<E>) SpringFactory.getInstance().getBean("genericDAO", GenericDAO.class);
@@ -90,7 +90,7 @@ public class Control<E extends Entity>{
 	}
 	
 	/**
-	 * @param mapFields hashMap de fields da visão
+	 * @param mapFields hashMap de fields da visï¿½o
 	 */
 	public void setMapFields(HashMap<String, Object> mapFields) {
 		this.mapFields = mapFields;
@@ -101,8 +101,8 @@ public class Control<E extends Entity>{
 	}
 
 	/**
-	 * Método que executa a ação de incluir, fazendo as validações e logo depois chama a persitencia
-	 * para salvar, caso seja a ação de atualizar, chama o método responsável para isso.
+	 * Mï¿½todo que executa a aï¿½ï¿½o de incluir, fazendo as validaï¿½ï¿½es e logo depois chama a persitencia
+	 * para salvar, caso seja a aï¿½ï¿½o de atualizar, chama o mï¿½todo responsï¿½vel para isso.
 	 * @param Lista de sub-controladores.
 	 */
 	public boolean actionSave(SubControllerManager<E> subControllerManager) {
@@ -128,11 +128,11 @@ public class Control<E extends Entity>{
 	}
 	
 	/**
-	 * Método que executa a ação de atualizar, fazendo as validações e logo depois chama a persitencia
-	 * para a ação.
+	 * Mï¿½todo que executa a aï¿½ï¿½o de atualizar, fazendo as validaï¿½ï¿½es e logo depois chama a persitencia
+	 * para a aï¿½ï¿½o.
 	 * @param Lista de sub-controladores.
 	 */
-	private boolean actionUpdate(SubControllerManager<E> subControllerManager) {
+	protected boolean actionUpdate(SubControllerManager<E> subControllerManager) {
 		E entity = (E) this.mapFields.get("entity");
 
 		boolean result = false;
@@ -152,8 +152,8 @@ public class Control<E extends Entity>{
 	}
 	
 	/**
-	 * Método que executa a ação de deletar, fazendo as validações e logo depois chama a persitencia
-	 * para a ação.
+	 * Mï¿½todo que executa a aï¿½ï¿½o de deletar, fazendo as validaï¿½ï¿½es e logo depois chama a persitencia
+	 * para a aï¿½ï¿½o.
 	 * @param Lista de sub-controladores.
 	 */
 	public boolean actionDelete(SubControllerManager<E> subControllerManager) {
@@ -168,8 +168,8 @@ public class Control<E extends Entity>{
 	}
 	
 	/**
-	 * Método que executa a ação de buscar, fazendo as validações e logo depois chama a persitencia
-	 * para a ação. É uma busca usando Criteria
+	 * Mï¿½todo que executa a aï¿½ï¿½o de buscar, fazendo as validaï¿½ï¿½es e logo depois chama a persitencia
+	 * para a aï¿½ï¿½o. ï¿½ uma busca usando Criteria
 	 * @param Lista de sub-controladores.
 	 */
 	public boolean actionFindByCriteria(SubControllerManager<E> subControllerManager) {//TODO: reescrever
@@ -185,8 +185,8 @@ public class Control<E extends Entity>{
 	}
 	
 	/**
-	 * Método que executa a ação de buscar, fazendo as validações e logo depois chama a persitencia
-	 * para a ação. É uma busca usando HQL
+	 * Mï¿½todo que executa a aï¿½ï¿½o de buscar, fazendo as validaï¿½ï¿½es e logo depois chama a persitencia
+	 * para a aï¿½ï¿½o. ï¿½ uma busca usando HQL
 	 * @param Lista de sub-controladores.
 	 */
 	public boolean actionFindByHQL(SubControllerManager<E> subControllerManager) {//TODO: reescrever
@@ -202,8 +202,8 @@ public class Control<E extends Entity>{
 	}
 	
 	/**
-	 * Método que executa a ação de listar, fazendo as validações e logo depois chama a persitencia
-	 * para a ação.
+	 * Mï¿½todo que executa a aï¿½ï¿½o de listar, fazendo as validaï¿½ï¿½es e logo depois chama a persitencia
+	 * para a aï¿½ï¿½o.
 	 * @param Lista de sub-controladores.
 	 */
 	public boolean actionList(SubControllerManager<E> subControllerManager) {
@@ -216,10 +216,10 @@ public class Control<E extends Entity>{
 	}
 	
 	/**
-	 * Método que executa a ação de Busca, fazendo as validações e logo depois chama a 
-	 * persitencia para a ação
+	 * Mï¿½todo que executa a aï¿½ï¿½o de Busca, fazendo as validaï¿½ï¿½es e logo depois chama a 
+	 * persitencia para a aï¿½ï¿½o
 	 * @param Lista de subControlers
-	 * @return se a ação foi executada
+	 * @return se a aï¿½ï¿½o foi executada
 	 */
 	public boolean actionSearch(SubControllerManager<E> subControllerManager) {
 		if (actionFindByCriteria(subControllerManager)) {
@@ -232,8 +232,8 @@ public class Control<E extends Entity>{
 	}
 	
 	/**
-	 * Método que executa a ação de listar as Foreign Keys, fazendo as validações e logo depois 
-	 * chama a persitencia para a ação.
+	 * Mï¿½todo que executa a aï¿½ï¿½o de listar as Foreign Keys, fazendo as validaï¿½ï¿½es e logo depois 
+	 * chama a persitencia para a aï¿½ï¿½o.
 	 * @param Lista de sub-controladores.
 	 */
 	@SuppressWarnings("rawtypes")
@@ -243,9 +243,9 @@ public class Control<E extends Entity>{
 	}
 	
 	/**
-	 * Método que é necessário executar antes de qualquer método dentro do Control
-	 * executa as validações e aciona as mensagens caso haja algum erro
-	 * @return true caso tudo esteja validado, false caso contrário.
+	 * Mï¿½todo que ï¿½ necessï¿½rio executar antes de qualquer mï¿½todo dentro do Control
+	 * executa as validaï¿½ï¿½es e aciona as mensagens caso haja algum erro
+	 * @return true caso tudo esteja validado, false caso contrï¿½rio.
 	 */
 	public boolean doAnyAction(SubControllerManager<E> subControllersManager, String action) {
 		boolean validatorSucess = true;
