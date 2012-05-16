@@ -1,5 +1,6 @@
 package br.ueg.portalLab.control;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -88,9 +89,10 @@ public class EspecimeControl extends Control<Especime> {
 		
 
 		if(!entity.isNew()){
-			retorno = saveEspecieImagem(especieImagens, selectedItemTaxonomicoMedia);			
+			retorno = saveEspecieImagem(especieImagens, selectedItemTaxonomicoMedia);	
 			if(retorno){
 				retorno =  super.actionSave(subControllerManager);
+								
 			}
 		}else{
 			retorno = this.saveDeterminadoresForNewEntity(entity, subControllerManager);			
@@ -118,7 +120,8 @@ public class EspecimeControl extends Control<Especime> {
 	
 	public boolean saveEspecieImagem(Set<EspecieImagem> especieImagens,ItemTaxonomico selectedItemTaxonomicoMedia){
 		boolean retorno = true;
-		if(selectedItemTaxonomicoMedia==null) return false;
+		if(selectedItemTaxonomicoMedia==null ) return false;
+		if(selectedItemTaxonomicoMedia.getId().equals(0L)) return true;
 		
 		GenericDAO<EspecieImagem> especieImagemDAO = (GenericDAO<EspecieImagem>) SpringFactory.getInstance().getBean("genericDAO",GenericDAO.class);
 		GenericDAO<ItemTaxonomico> itemTaxonomicoDAO = (GenericDAO<ItemTaxonomico>) SpringFactory.getInstance().getBean("genericDAO",GenericDAO.class);
@@ -131,7 +134,8 @@ public class EspecimeControl extends Control<Especime> {
 					
 					ei.setNome(ei.getMedia().getName());
 					
-					if(writeImagem(ei.getMedia())){
+					int writeImagemToDiskReturn = ei.writeImagemToDisk();
+					if(writeImagemToDiskReturn==1){
 						try {
 							especieImagemDAO.save(ei);
 						} catch (Exception e) {
@@ -140,7 +144,10 @@ public class EspecimeControl extends Control<Especime> {
 							return false;
 						}
 					}else{
-						this.getMessagesControl().addMessageError("especieImage_salvar");
+						if(writeImagemToDiskReturn==0)
+							this.getMessagesControl().addMessageError("especieImage_salvar");
+						if(writeImagemToDiskReturn==2)
+							this.getMessagesControl().addMessageError("especieImage_salvar_existe");
 						return false;
 					}
 				}								
@@ -165,36 +172,11 @@ public class EspecimeControl extends Control<Especime> {
 		}
 		return retorno;
 	}
-	private boolean writeImagem(Media media){
-		boolean retorno = false;
-		try {
-			String diretorioImagem = ConfigPortalLab.getInstancia().getDireitorioImagem();
-			OutputStream outputStream = new FileOutputStream(
-					diretorioImagem.concat(System.getProperty("file.separator")) + media.getName());
-		
-		// OutputStream outputStream = new FileOutputStream("C:\\log\\" +
-		// media.getName());
-		
-		java.io.InputStream inputStream = media.getStreamData();
-		byte[] buffer = new byte[1024];
-		for (int count; (count = inputStream.read(buffer)) != -1;) {
-			outputStream.write(buffer, 0, count);
-		}
-		outputStream.flush();
-		outputStream.close();
-		inputStream.close();
-		retorno = true;
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return retorno;
-	}
+	
 	
 	@SuppressWarnings("unchecked")
 	public Set<EspecieImagem> getEspecieImagemFromItemTaxonomico(ItemTaxonomico it){
-		if(it==null) return null;
+		if(it==null) return new HashSet<EspecieImagem>();
 		GenericDAO<ItemTaxonomico> itemTaxonomicoDAO = (GenericDAO<ItemTaxonomico>) SpringFactory.getInstance().getBean("genericDAO",GenericDAO.class);
 		itemTaxonomicoDAO.refresh(it);
 		return it.getImagens();

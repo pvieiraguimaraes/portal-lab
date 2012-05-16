@@ -17,7 +17,7 @@ import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.util.annotation.Attribute;
 
 /**
- * Classe Teste que contém relacionamento com Reino.
+ * Classe Teste que contï¿½m relacionamento com Reino.
  * @author Diego
  *
  */
@@ -123,6 +123,17 @@ public class ItemTaxonomico extends Entity {
 
 	public void setImagens(Set<EspecieImagem> imagens) {
 		this.imagens = imagens;
+	}
+	public String getNomeCompleto(){
+		String retorno = null;
+		String separator = System.getProperty("file.separator");
+		if(this.getPai()!=null){
+			retorno = this.getPai().getNomeCompleto() + separator + this.getNome();
+		}else{
+			retorno = this.getNome();	
+		}
+		
+		return retorno;
 	}
 
 }
