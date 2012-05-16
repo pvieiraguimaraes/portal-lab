@@ -47,6 +47,7 @@
 						onSelect="controller.selectEntity()"
 						mold="paging" 
 						id="especimeListbox"
+						height="300px"
 						>
 						<listhead id="divListhead">
 							<listheader label="Espécime" align="center"/>

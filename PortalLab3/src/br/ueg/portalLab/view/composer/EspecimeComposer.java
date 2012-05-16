@@ -1193,11 +1193,12 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	public void adicionarImagem(){
 		Combobox cb = (Combobox)this.getEditForm().getFellow("cmbEstacao");
 		Listbox lb = (Listbox)this.getEditForm().getFellow("lbEspecimeImagem");
-		ListModelSet<Object> lm = (ListModelSet<Object>)lb.getModel();
+		ListModelSet<Object> lm = (ListModelSet<Object>)lb.getModel();//TODO Tratar quando não está definido o itemtaxonomico
 		EspecieImagem ei = new EspecieImagem();
 		ei.setControleInsercaoPadroa(false);
 		ei.setMedia(this.getEspecieImagem().getMedia());
-		ei.setEstacao((Estacao)cb.getSelectedItem().getValue());
+		if(cb.getSelectedItem()!=null)
+			ei.setEstacao((Estacao)cb.getSelectedItem().getValue());
 		ei.setId(Long.valueOf(lb.getModel().getSize()+1));
 		
 		lm.add(ei);
