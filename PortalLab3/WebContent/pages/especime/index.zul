@@ -48,13 +48,14 @@
 						mold="paging" 
 						id="especimeListbox"
 						height="300px"
+						width="98%"
 						>
 						<listhead id="divListhead">
 							<listheader label="Espécime" align="center"/>
 							<listheader label="Localidade" align="center" width="250px" />
 							<listheader label="Coletor" align="center" width="200px" />
 							<listheader label="Data" align="center" width="100px" />
-							<listheader label="Operações" align="center" width="200px" />							
+							<listheader label="Operações" align="center" width="195px" />							
 						</listhead>
 						<listitem self="@{each=entity}" id="divListitem">
 							<attribute name="onDoubleClick">
