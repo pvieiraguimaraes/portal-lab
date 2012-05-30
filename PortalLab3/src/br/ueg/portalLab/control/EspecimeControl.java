@@ -164,7 +164,16 @@ public class EspecimeControl extends Control<Especime> {
 					}
 				}
 				if(!especieImagemExiste){
-					especieImagemDAO.delete(itemEspecieImage);
+					int deleteImagemFromDiscReturn = itemEspecieImage.deleteImagemFromDisk();
+					if(deleteImagemFromDiscReturn==1){
+						especieImagemDAO.delete(itemEspecieImage);
+					}else if(deleteImagemFromDiscReturn==0){
+						this.getMessagesControl().addMessageError("especieImage_remove");
+						return false;
+					}else if(deleteImagemFromDiscReturn==2){
+						this.getMessagesControl().addMessageError("especieImage_remove_ano_existe");
+						return false;
+					}
 					//TODO EspecieImagem remover imagem do diret�rio
 				}
 				especieImagemExiste = false;

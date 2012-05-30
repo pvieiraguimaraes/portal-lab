@@ -86,10 +86,12 @@ public class EspecieImagem extends EspecieMultimidia<Image> {
 	@Override
 	public Image getDefaultMedia() {
 		String diretorioImagem = ConfigPortalLab.getInstancia()
-				.getDireitorioImagem();
+				.getDireitorioMedia();
+		String separator = System.getProperty("file.separator");
+		diretorioImagem = ConfigPortalLab.getInstancia().getRootApplicationPath().concat(separator).concat(diretorioImagem);
 		try {
 			media = (Image) new AImage(diretorioImagem.concat(
-					System.getProperty("file.separator"))
+					separator)
 					.concat("especies.jpg"));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -102,11 +104,16 @@ public class EspecieImagem extends EspecieMultimidia<Image> {
 		String separator = System.getProperty("file.separator");
 
 		String diretorioImagem = ConfigPortalLab.getInstancia()
-				.getDireitorioImagem();
+				.getDireitorioMedia();
+		String diretorioRoot = ConfigPortalLab.getInstancia().getRootApplicationPath();
 
-		return diretorioImagem
+		return diretorioRoot
+				.concat(separator)
+				.concat(diretorioImagem)
 				.concat(separator)
 				.concat(this.getItemTaxonomico().getNomeCompleto())
+				.concat(separator)
+				.concat("imagens")
 				.concat(separator)
 				.concat(this.getEstacao()!=null?this.getEstacao().getDescricao():"")
 				.concat(endWithSeparator ? separator : "");
@@ -155,6 +162,36 @@ public class EspecieImagem extends EspecieMultimidia<Image> {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return retorno;
+	}
+	
+	/**
+	 * Metódo que remove a imagem tual do disco
+	 * 
+	 * @return 1 se a imagem for apagada do disco com sucesso 2 se a imagem não
+	 *         existe(no diretorio do item taxonomico e estação) 0 se houve
+	 *         errao ao remover a imagem;
+	 */
+	public int deleteImagemFromDisk() {
+		int retorno = 0;
+			
+			File file = new File(getDirectoryImage(false));
+			if(!file.exists()){
+				return 2;
+			}
+
+			String absoluteFilePath = getDirectoryImage(true)
+					+ this.getMedia().getName();
+			File fileMedia = new File(absoluteFilePath);
+			if (fileMedia.exists()){
+				if(fileMedia.delete()){
+					retorno = 1;
+				}else{
+					retorno = 0;
+				}
+				
+			}
+
 		return retorno;
 	}
 }
