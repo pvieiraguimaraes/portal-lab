@@ -95,9 +95,9 @@ public class EspecimeControl extends Control<Especime> {
 								
 			}
 		}else{
-			retorno = this.saveDeterminadoresForNewEntity(entity, subControllerManager);			
+			retorno = saveEspecieImagem(especieImagens, selectedItemTaxonomicoMedia);
 			if(retorno){
-				retorno = saveEspecieImagem(especieImagens, selectedItemTaxonomicoMedia);				
+				retorno = this.saveDeterminadoresForNewEntity(entity, subControllerManager);					
 			}			
 		}
 		return retorno;
@@ -136,13 +136,13 @@ public class EspecimeControl extends Control<Especime> {
 					
 					int writeImagemToDiskReturn = ei.writeImagemToDisk();
 					if(writeImagemToDiskReturn==1){
-						try {
-							especieImagemDAO.save(ei);
+						/*try {
+							//especieImagemDAO.save(ei);
 						} catch (Exception e) {
 							this.getMessagesControl().addMessageError("especieImage_salvar");
 							e.printStackTrace();
 							return false;
-						}
+						}*/
 					}else{
 						if(writeImagemToDiskReturn==0)
 							this.getMessagesControl().addMessageError("especieImage_salvar");
@@ -154,6 +154,15 @@ public class EspecimeControl extends Control<Especime> {
 			}
 			
 			boolean especieImagemExiste = false;;
+			try {
+				itemTaxonomicoDAO.update(selectedItemTaxonomicoMedia);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block				
+				this.getMessagesControl().addMessageError("especieImage_salvar");
+				e.printStackTrace();
+				return false;
+				
+			}
 			//remove as imagens removidas
 			itemTaxonomicoDAO.refresh(selectedItemTaxonomicoMedia);
 			for(EspecieImagem itemEspecieImage : new ArrayList<EspecieImagem>(selectedItemTaxonomicoMedia.getImagens())){
