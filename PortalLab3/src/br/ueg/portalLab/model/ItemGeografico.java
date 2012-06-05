@@ -17,7 +17,7 @@ import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.util.annotation.Attribute;
 
 /**
- * Classe Teste que contém relacionamento com Reino.
+ * Classe Teste que contem relacionamento com Reino.
  * @author Diego
  *
  */

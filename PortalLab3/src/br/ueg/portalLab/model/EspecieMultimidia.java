@@ -130,9 +130,9 @@ public abstract class EspecieMultimidia<TYPE extends Media> extends Entity {
 	}
 	
 	/**
-	 * Esse m�todo deve ser implementado para retornar um
+	 * Esse método deve ser implementado para retornar um
 	 *  objeto que implemente a interface Media
-	 *  ser� utilizado para pegar o caminho e carregar
+	 *  será utilizado para pegar o caminho e carregar
 	 *  o objeto com o seu conteudo.
 	 */
 	public abstract TYPE getFileFromCaminho();
@@ -140,7 +140,7 @@ public abstract class EspecieMultimidia<TYPE extends Media> extends Entity {
 	/** Metodo utilizado para retornar uma multimidia padrão 
 	 * caso não seja selecionadon nenhum outro multimidia.
 	 * 
-	 * @return
+	 * @return TYPE tipo definido na herança
 	 */
 	public abstract TYPE getDefaultMedia();
 }

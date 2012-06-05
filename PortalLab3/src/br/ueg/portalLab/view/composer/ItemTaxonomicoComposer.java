@@ -49,7 +49,7 @@ public class ItemTaxonomicoComposer extends ComposerController<ItemTaxonomico> {
 	@Autowired
 	protected Control<ItemTaxonomico> controlItemTaxonomico;
 	
-	//para acesso ao formulário de edição
+	//para acesso ao formulario de edicao
 	@Wire
 	protected Window winItemTaxonomico;
 	
@@ -71,7 +71,7 @@ public class ItemTaxonomicoComposer extends ComposerController<ItemTaxonomico> {
 		//return (Window) this.editFormCrudWindow;
 	}
 	
-	//TODO gambiarra porque não estava fazendo wire
+	//TODO gambiarra porque nao estava fazendo wire
 	@Override
 	public void setEditForm(Window form) {
 		this.winItemTaxonomico  =  form;

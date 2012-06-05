@@ -22,7 +22,7 @@ public class TesteControl<E extends Entity> extends Control<E> {
 	}
 	
 	public boolean actionGuiliano(List<SubController> subControlers) {
-		System.out.println("Voc  passou por aki");
+		System.out.println("Voce passou por aki");
 		return true;
 	}
 }

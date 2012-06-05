@@ -227,6 +227,9 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	protected Window formEspecime;
 	
 	@Wire
+	protected Window showImage;
+	
+	@Wire
 	protected Window controlEspecime;
 	
 	@Wire
@@ -656,7 +659,7 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	 * dos componentes devem ter o mesmo nome da classe que o representa. Caso decida utilizar um nome diferente, este
 	 * método deve ser sobreescrito na classe que herdar esta.
 	 * 
-	 * @return
+	 * @return Reader
 	 * @throws UnsupportedEncodingException 
 	 */
 	protected Reader getZulReader() throws UnsupportedEncodingException {
@@ -1280,5 +1283,32 @@ public class EspecimeComposer extends ComposerController<Especime> {
 			return resultList;
 		}
 		return resultList;
+	}
+	
+	public void openImage(){
+		if(this.showImage==null){
+			this.showImage = getFormByName("imageView");
+			
+			//this.formEspecime.setParent(this.controlEspecime);
+			//this.controlEspecime.appendChild(this.formEspecime);
+			
+			AnnotateDataBinder binder= new AnnotateDataBinder(this.showImage);
+			binder.setLoadOnSave(false);
+			binder.bindBean("controller", this);
+			binder.loadComponent(this.showImage);
+			showImage.setMode(Window.MODAL);
+			showImage.setVisible(true);
+			showImage.doModal();
+			
+		}
+		
+	}
+	public void closeImage(){
+		if(this.showImage!=null){
+			showImage.setVisible(false);
+			showImage.detach();
+			controlEspecime.removeChild(showImage);
+			showImage=null;
+		}
 	}
 }

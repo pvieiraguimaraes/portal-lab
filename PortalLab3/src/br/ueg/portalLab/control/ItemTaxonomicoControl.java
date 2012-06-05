@@ -35,7 +35,7 @@ public class ItemTaxonomicoControl<E extends Entity>  extends Control<E> {
 	
 	/**
 	 * Metodo utilizado para obter a classe root da hierarquia.
-	 * @return
+	 * @return ItemTaxonomico
 	 */
 	@SuppressWarnings("unchecked")
 	public ItemTaxonomico getRootClasseAtividade(){

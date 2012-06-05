@@ -8,7 +8,7 @@ import br.ueg.portalLab.model.Reino;
 
 /**
  * Classe que converte um Objeto em String e vice-versa
- * Conversor necessário para alguns componentes JSF
+ * Conversor necessario para alguns componentes JSF
  * @author Diego
  *
  */

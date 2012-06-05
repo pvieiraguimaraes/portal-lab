@@ -61,7 +61,7 @@ public class UsuarioControl extends Control<Usuario> {
 
 	}
 	/**
-	 * @return
+	 * @return GenericDAO<CasoDeUsoFuncionalidade> GenericDAO para manipular CasoDeUsoFuncionalidade
 	 */
 	private GenericDAO<CasoDeUsoFuncionalidade> getCasoDeUsoFuncionalidadeDAO() {
 		return (GenericDAO<CasoDeUsoFuncionalidade>)SpringFactory.getInstance().getBean("genericDAO", GenericDAO.class);

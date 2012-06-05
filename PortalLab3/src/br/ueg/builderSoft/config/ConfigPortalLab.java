@@ -18,7 +18,12 @@ public class ConfigPortalLab extends Config {
 		if(instancia==null){
 			instancia = new ConfigPortalLab();
 			String realPath = Executions.getCurrent().getDesktop().getWebApp().getRealPath("/");
+			System.out.println("realPath:"+realPath);			
 			String contextName = Executions.getCurrent().getDesktop().getWebApp().getServletContext().getContextPath();
+			String separator = System.getProperty("file.separator");
+			contextName = separator.concat(contextName.substring(1)).concat(separator);
+			
+			System.out.println("contextName:"+contextName+"**");
 			realPath = realPath.replace(contextName, "");
 			instancia.setRootApplicationPath(realPath);
 		}
@@ -33,5 +38,22 @@ public class ConfigPortalLab extends Config {
 	}
 	public void setRootApplicationPath(String rootApplicationPath) {
 		this.rootApplicationPath = rootApplicationPath;
+	}
+	
+	public int getImageWidth(){
+		String width = this.getKey("imageWidth");
+		int retorno = 300;
+		if(width!=null){
+			retorno = Integer.parseInt(width);
+		}
+		return retorno;
+	}
+	public int getImageHeight(){
+		String height = this.getKey("imageHeight");
+		int retorno = 300;
+		if(height!=null){
+			retorno = Integer.parseInt(height);
+		}
+		return retorno;
 	}
 }

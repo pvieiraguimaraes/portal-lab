@@ -41,7 +41,7 @@ public class CategoriaUsuarioMB extends TabelaMB {
 		return fldIsCPFObrigatorio;
 	}
 	
-	// compatibilização coma a forma de execução do parse
+	// compatibilizacao coma a forma de execucao do parse
 	//TODO mudar no mapBean para chamar conforme o tipo no caso de boolean
 	public boolean getFldIsCPFObrigatorio(){
 		return this.isFldIsCPFObrigatorio();

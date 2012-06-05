@@ -141,7 +141,7 @@ public static void insertAuto2(){
 	
 	
 	
-	ItemGeografico ite = new ItemGeografico(0,"Goiás",nivel,itemPai);
+	ItemGeografico ite = new ItemGeografico(0,"Goias",nivel,itemPai);
 	
 	try {
 		itemGeoDAO.save(ite);

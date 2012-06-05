@@ -13,7 +13,7 @@ import br.ueg.builderSoft.util.annotation.AttributeView;
 public class ReinoMB extends MB<Reino>{
 	
 	/*TODO GenericControl acessa o MB para indentificar os campos especificos do MB
-	 * e trata ele/ e entrega ele para o control específico 
+	 * e trata ele/ e entrega ele para o control especafico 
 	 */
 	
 	@AttributeView(key = "reino", isEntityValue = true, fieldType = String.class, isVisible=true, caption="reino_reinoColumn")
@@ -43,7 +43,7 @@ public class ReinoMB extends MB<Reino>{
 		return Reino.class;
 	}
 	
-	//TODO Fazer alterações no .xhtml
+	//TODO Fazer alteracaes no .xhtml
 
 	/*@Override
 	protected void initializeEntity() {

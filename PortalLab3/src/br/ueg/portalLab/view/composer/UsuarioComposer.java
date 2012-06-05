@@ -257,11 +257,11 @@ public class UsuarioComposer extends TabelaComposerController<Usuario> {
 		return this.usuarioControl;
 	}
 	
-	/* metodod de permissão */
+	/* metodod de permissao */
 	
 	
 	/**
-	 * Lista todas as permissões do removendo as que o usuário já possua
+	 * Lista todas as permissoes do removendo as que o usuario ja possua
 	 * 
 	 * @return List<FunctionalityUseCase> Lista de funcionalidades.
 	 */
@@ -296,7 +296,7 @@ public class UsuarioComposer extends TabelaComposerController<Usuario> {
 	}
 	
 	/**
-	 * Lista todas os Grupos de Usuários  do removendo as que o usuário já esteja
+	 * Lista todas os Grupos de Usuarios  do removendo as que o usuario ja esteja
 	 * 
 	 * @return List<GrupoUsuario> Lista de funcionalidades.
 	 */
@@ -318,7 +318,7 @@ public class UsuarioComposer extends TabelaComposerController<Usuario> {
 	/**
 	 * Lista todas os grupos de usuario cadastrados para a entidade do composer.
 	 * 
-	 * @return List<GrupoUsuario> Lista de grupo de usuários.
+	 * @return List<GrupoUsuario> Lista de grupo de usuarios.
 	 */
 	public ListModel<GrupoUsuario> getUsuarioGrupoUsuarioList() {
 		BindingListModelSet<GrupoUsuario> listGrupos =  new BindingListModelSet<GrupoUsuario>(new HashSet<GrupoUsuario>(0),true);;

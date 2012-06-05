@@ -84,7 +84,7 @@ public class Laboratorio extends Entity {
 		if(this.getNome()!=null && this.getSigla()!=null){
 			return this.getNome().concat(" ( ").concat(this.getSigla()).concat(" )");
 		}else{
-			return "Não informado";
+			return "Nao informado";
 		}
 	}
 	
