@@ -24,13 +24,13 @@ public class SpringSecurityManager implements Serializable {
 	private ProfileManager profileManager;
 
 	/**
-	 * @author Johnys Verifica se um profile contem uma UseCase.
+	 * author Johnys Verifica se um profile contem uma UseCase.
 	 * @param profile
 	 *            Nome do Profile que sera verificado.
 	 * @param useCase
 	 *            Nome do UseCase que sera verificado.
 	 * @param user
-	 * 			  Nome do suuário que sera verificado.
+	 * 			  Nome do usuario que sera verificado.
 	 * @return True caso o Profile contenha a UseCase, false caso contrario.
 	 */
 	public boolean isGrantedUseCase(String user, String profile, String useCase) {
@@ -45,7 +45,7 @@ public class SpringSecurityManager implements Serializable {
 	}
 
 	/**
-	 * @author Johnys Verifica se a Profile contem a Functionality para a UseCase especificada.
+	 * author Johnys Verifica se a Profile contem a Functionality para a UseCase especificada.
 	 * @param profile
 	 *            Nome da Profile que sera verificada.
 	 * @param useCase
@@ -67,7 +67,7 @@ public class SpringSecurityManager implements Serializable {
 	}
 
 	/**
-	 * @author Johnys Verifica se a Profile contem a Functionality para a UseCase especificada no banco de dados.
+	 * author Johnys Verifica se a Profile contem a Functionality para a UseCase especificada no banco de dados.
 	 * @param profile
 	 *            Nome da Profile que sera verificada.
 	 * @param useCase
@@ -85,15 +85,13 @@ public class SpringSecurityManager implements Serializable {
 	}
 
 	/**
-	 * @author Johnys Verifica se a Profile contem a UseCase no banco de dados.
+	 * author Johnys Verifica se a Profile contem a UseCase no banco de dados.
 	 * @param profile
 	 *            Nome da Profile que sera verificada.
 	 * @param useCase
 	 *            Nome da UseCase que sera verificada.
 	 * @param user
 	 * 			  Nome do Usuario que sera verificado.
-	 * @param user
-	 * 			  Nome do usuario que sera verificado
 	 * @return True caso o Profile contenha a UseCase, false caso contrario.
 	 */
 	private boolean isPermissionForUseCase(String user, String profile, String useCase) {

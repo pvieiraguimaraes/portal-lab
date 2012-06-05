@@ -59,7 +59,7 @@ public class CasoDeUsoControl extends Control<CasoDeUso> {
 
 	}
 /**
- * @return
+ * @return GenericDAO<CasoDeUsoFuncionalidade> dao para manipular CasoDeUsoFuncionalidade
  */
 @SuppressWarnings("unchecked")
 private GenericDAO<CasoDeUsoFuncionalidade> getCasoDeUsoFuncionalidadeDAO() {
