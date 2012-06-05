@@ -19,8 +19,8 @@ public class ClasseMB extends MB<Classe> {
 	private List<Filo> filos;
 	//private Control<Filo> localControl;	
 	
-	//Criar entidades não persistidas que será o que vai aparecer na visão
-	//e depois essas entidades transformarão nas entidades que serão persistidas.
+	//Criar entidades nao persistidas que sera o que vai aparecer na visao
+	//e depois essas entidades transformarao nas entidades que serao persistidas.
 	
 	public ClasseMB() {
 		super();
@@ -43,7 +43,7 @@ public class ClasseMB extends MB<Classe> {
 		return Classe.class;
 	}
 	
-	//pesquisar de como fazer comboBox dinâmico
+	//pesquisar de como fazer comboBox dinamico
 	/*public SelectItemGroup getComboBox(String id) {
 		SelectItemGroup se = new SelectItemGroup();
 		se.set

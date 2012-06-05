@@ -20,7 +20,7 @@ import br.ueg.builderSoft.util.annotation.Attribute;
 
 /**
  * @author guiliano
- * são os Papeis(roles) do springSecurity
+ * sao os Papeis(roles) do springSecurity
  */
 @SuppressWarnings("serial")
 @javax.persistence.Entity

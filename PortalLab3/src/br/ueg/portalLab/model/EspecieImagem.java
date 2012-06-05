@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import javax.imageio.ImageIO;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Transient;
 
@@ -16,13 +15,19 @@ import org.zkoss.image.AImage;
 import org.zkoss.image.Image;
 
 import br.ueg.builderSoft.config.ConfigPortalLab;
+import br.ueg.portalLab.utils.ImageUtil;
 
 @javax.persistence.Entity
 @DiscriminatorValue("imagem")
 public class EspecieImagem extends EspecieMultimidia<Image> {
 
+	private static final String ESPECIES_DEFAULT_IMG_NAME = "especies.jpg";
+
 	@Transient
 	private boolean controleInsercaoPadrao = true;
+	
+	@Transient
+	private Image thumbMedia;
 
 	@Override
 	public boolean isNew() {
@@ -59,20 +64,36 @@ public class EspecieImagem extends EspecieMultimidia<Image> {
 	}
 
 	public EspecieImagem() {
-
+			this.nome = ESPECIES_DEFAULT_IMG_NAME;
 	}
 
 	@Override
 	public Image getFileFromCaminho() {
-
-		if (this.getNome() != null && this.getNome().length() > 0) {
+		return getFileFromCaminho(1, this.getNome());
+	}
+	
+	/**
+	 * retorna um imagem, podendo ser imagem principal, caso type=1 ou thumb caso type=2
+	 * @param type
+	 * @return Image a partir do nome do arquivo
+	 */
+	public Image getFileFromCaminho(int type, String fileName){
+		Image imageAux = null;
+		if (fileName != null && fileName.length() > 0) {
 
 			String path = this.getDirectoryImage(true);
+			String aux = "";
+			
 			try {
-				File file = new File(path.concat(this.getNome()));
+				if(type==1){ 
+					aux="";				
+				}else{
+					aux="thumb_";
+				}
+				File file = new File(path.concat(aux).concat(fileName));
 
 				FileInputStream is = new FileInputStream(file);
-				media = (Image) new AImage(this.getNome(), is);
+				imageAux = (Image) new AImage(this.getNome(), is);
 
 			} catch (IOException e) {
 				System.err.println(e.getCause());
@@ -80,7 +101,21 @@ public class EspecieImagem extends EspecieMultimidia<Image> {
 				e.printStackTrace();
 			}
 		}
-		return this.media;
+		return imageAux;
+	}
+	@SuppressWarnings("unchecked")
+	public Image getThumbMedia() {
+		if(this.thumbMedia!=null){
+			return thumbMedia;
+		}else{
+			thumbMedia = this.getFileFromCaminho(2,this.getNome());
+			if(thumbMedia!=null){
+				this.setNome(thumbMedia.getName());
+			}else{
+				thumbMedia = this.getDefaultMedia();
+			}
+			return thumbMedia;
+		}
 	}
 
 	@Override
@@ -88,11 +123,13 @@ public class EspecieImagem extends EspecieMultimidia<Image> {
 		String diretorioImagem = ConfigPortalLab.getInstancia()
 				.getDireitorioMedia();
 		String separator = System.getProperty("file.separator");
-		diretorioImagem = ConfigPortalLab.getInstancia().getRootApplicationPath().concat(separator).concat(diretorioImagem);
+		diretorioImagem = ConfigPortalLab.getInstancia()
+				.getRootApplicationPath().concat(separator)
+				.concat(diretorioImagem);
+		System.out.println("diretorioImagem:" + diretorioImagem);
 		try {
-			media = (Image) new AImage(diretorioImagem.concat(
-					separator)
-					.concat("especies.jpg"));
+			media = (Image) new AImage(diretorioImagem.concat(separator)
+					.concat(ESPECIES_DEFAULT_IMG_NAME));
 		} catch (IOException e) {
 			e.printStackTrace();
 			media = (Image) new org.zkoss.zul.Image();
@@ -100,25 +137,76 @@ public class EspecieImagem extends EspecieMultimidia<Image> {
 		return media;
 	}
 
+	/** 
+	 * @param endWithSeparator indica se é para adicionar o separador de diretório no final
+	 * @return retorna o diretorio onde as imagens devem ser salvas conforme a taxonomia
+	 */
 	public String getDirectoryImage(boolean endWithSeparator) {
 		String separator = System.getProperty("file.separator");
 
-		String diretorioImagem = ConfigPortalLab.getInstancia()
-				.getDireitorioMedia();
-		String diretorioRoot = ConfigPortalLab.getInstancia().getRootApplicationPath();
+		
+		String diretorioRoot = ConfigPortalLab.getInstancia()
+				.getRootApplicationPath();
+		
+		String contextPathImage = getContextPathImage(endWithSeparator,false);
 
 		return diretorioRoot
 				.concat(separator)
+				.concat(contextPathImage);
+	}
+
+	/** retorno o path dentro do contexto da aplicação, só que utilizando o 
+	 * caracere de separação de diretório do sistema operacional 
+	 * e não o separador de url
+	 * @param endWithSeparator
+	 * @param url indica se é para retornar camiha de url ou de sistema operacional, true-> url, false-> sistema
+	 * @return String Caminho do path de imagem
+	 */
+	public String getContextPathImage(boolean endWithSeparator, boolean url) {
+		String separator = System.getProperty("file.separator");
+		String diretorioImagem = ConfigPortalLab.getInstancia()
+				.getDireitorioMedia();
+		ItemTaxonomico itemTaxonomico2 = this.getItemTaxonomico();
+		String nomeCompleto  = "";
+		if(itemTaxonomico2!=null){
+			nomeCompleto = itemTaxonomico2.getNomeCompleto();
+		}
+		String contextPathImage = separator
 				.concat(diretorioImagem)
 				.concat(separator)
-				.concat(this.getItemTaxonomico().getNomeCompleto())
+				.concat(nomeCompleto)
 				.concat(separator)
 				.concat("imagens")
 				.concat(separator)
-				.concat(this.getEstacao()!=null?this.getEstacao().getDescricao():"")
+				.concat(this.getEstacao() != null ? this.getEstacao()
+						.getDescricao() : "")
 				.concat(endWithSeparator ? separator : "");
+		if(url){
+			contextPathImage = contextPathImage.replace(separator, "/");
+		}
+		return contextPathImage;
 	}
 	
+	/**
+	 * @return String url da imagem direto da aplicação de media
+	 */
+	public String getImageURLPath(){
+		String auxPath = this.getContextPathImage(true, true);
+		auxPath = auxPath.concat(this.getNome());
+		return auxPath;
+	}
+
+	/**
+	 * Esse método devolve a extensão do arquivo representado pelo objeto File
+	 * passado como parâmetro.
+	 * 
+	 * @param file
+	 * @return
+	 */
+	private static String getExtension(String pathfile) {
+		String ext = pathfile.substring(pathfile.lastIndexOf('.') + 1);
+		return ext;
+	}
 
 	/**
 	 * Metódo que grava a imagem tual no disco
@@ -127,44 +215,94 @@ public class EspecieImagem extends EspecieMultimidia<Image> {
 	 *         existe(no diretorio do item taxonomico e estação) 0 se houve
 	 *         errao ao gravar a imagem;
 	 */
+	/**
+	 * @return
+	 */
+	/**
+	 * @return
+	 */
 	public int writeImagemToDisk() {
 		int retorno = 0;
 		try {
-			
+
 			File file = new File(getDirectoryImage(false));
-			if(!file.exists()){
+			if (!file.exists()) {
 				boolean ok = file.mkdirs();
 				if (!ok)
 					return 0;
 			}
 
-			String absoluteFilePath = getDirectoryImage(true)
-					+ this.getMedia().getName();
-			if (new File(absoluteFilePath).exists())
-				return 2;
+			InputStream streamMedia = this.getMedia().getStreamData();
 
-			OutputStream outputStream = new FileOutputStream(absoluteFilePath);
+			// Nome do arquivo da imgem original
+			String absoluteFilePath = getFileImageName();
+			// nome doa rquivo da imagem do thumb
+			String absoluteFilePathThumb = getFileThumbImageName();
 
-			// OutputStream outputStream = new FileOutputStream("C:\\log\\" +
-			// media.getName());
+			// grava o arquivo da imagem postada
+			retorno = writeInputStreamToDisk(absoluteFilePath, streamMedia);
+			
+			streamMedia = this.getMedia().getStreamData();
+			InputStream isThumb = getThumbImageInputStream(streamMedia);
+			// Grava o arquivo da imagem thumb
+			retorno = writeInputStreamToDisk(absoluteFilePathThumb, isThumb);
 
-			java.io.InputStream inputStream = this.getMedia().getStreamData();
-			byte[] buffer = new byte[1024];
-			for (int count; (count = inputStream.read(buffer)) != -1;) {
-				outputStream.write(buffer, 0, count);
-			}
-			outputStream.flush();
-			outputStream.close();
-			inputStream.close();
-			retorno = 1;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+			retorno = 0;
 		} catch (IOException e) {
 			e.printStackTrace();
+			retorno = 0;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			retorno = 0;
 		}
 		return retorno;
 	}
-	
+
+	protected String getFileThumbImageName() {
+		return getDirectoryImage(true) + "thumb_"
+				+ this.getMedia().getName();
+	}
+
+	protected String getFileImageName() {
+		return getDirectoryImage(true)
+				+ this.getMedia().getName();
+	}
+
+	public InputStream getThumbImageInputStream(InputStream streamMedia) throws Exception {
+		
+		int width = ConfigPortalLab.getInstancia().getImageWidth();
+		int height = ConfigPortalLab.getInstancia().getImageHeight();
+		
+		return ImageUtil.scaleImage(streamMedia, width, height);
+	}
+
+	private int writeInputStreamToDisk(String absoluteFilePath,
+			InputStream media) throws FileNotFoundException, IOException {
+		int retorno;
+
+		if (new File(absoluteFilePath).exists())
+			return 2;
+
+		OutputStream outputStream = new FileOutputStream(absoluteFilePath);
+
+		// OutputStream outputStream = new FileOutputStream("C:\\log\\" +
+		// media.getName());
+
+		java.io.InputStream inputStream = media;
+		byte[] buffer = new byte[1024];
+		for (int count; (count = inputStream.read(buffer)) != -1;) {
+			outputStream.write(buffer, 0, count);
+		}
+		outputStream.flush();
+		outputStream.close();
+		inputStream.close();
+		retorno = 1;
+		return retorno;
+	}
+
 	/**
 	 * Metódo que remove a imagem tual do disco
 	 * 
@@ -174,24 +312,39 @@ public class EspecieImagem extends EspecieMultimidia<Image> {
 	 */
 	public int deleteImagemFromDisk() {
 		int retorno = 0;
-			
-			File file = new File(getDirectoryImage(false));
-			if(!file.exists()){
-				return 2;
-			}
 
-			String absoluteFilePath = getDirectoryImage(true)
-					+ this.getMedia().getName();
-			File fileMedia = new File(absoluteFilePath);
-			if (fileMedia.exists()){
-				if(fileMedia.delete()){
-					retorno = 1;
-				}else{
-					retorno = 0;
-				}
-				
-			}
+		File file = new File(getDirectoryImage(false));
+		if (!file.exists()) {
+			return 2;
+		}
 
+		String absoluteFilePath = getFileImageName();		
+		retorno = deleteFileFromDisk(absoluteFilePath);
+		
+		
+		if(retorno == 1){			
+			String absoluteFileThumbPath = getFileThumbImageName();	
+			retorno = deleteFileFromDisk(absoluteFileThumbPath);
+		}
+		
 		return retorno;
+	}
+
+	protected int deleteFileFromDisk( String absoluteFilePath) {
+		int retorno=0;
+		File fileMedia = new File(absoluteFilePath);
+		
+		if (fileMedia.exists()) {
+			if (fileMedia.delete()) {
+				retorno = 1;
+			} else {
+				retorno = 0;
+			}
+
+		}
+		return retorno;
+	}
+	public int getResizedWidth(){
+		return ConfigPortalLab.getInstancia().getImageWidth();
 	}
 }

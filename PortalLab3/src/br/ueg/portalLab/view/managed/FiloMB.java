@@ -20,8 +20,8 @@ public class FiloMB extends MB<Filo> {
 	private List<Reino> reinos;
 	//private Control<Reino> localControl;	
 	
-	//Criar entidades não persistidas que será o que vai aparecer na visão
-	//e depois essas entidades transformarão nas entidades que serão persistidas.
+	//Criar entidades nao persistidas que sera o que vai aparecer na visao
+	//e depois essas entidades transformarao nas entidades que serao persistidas.
 	
 	public FiloMB() {
 		super();
@@ -43,7 +43,7 @@ public class FiloMB extends MB<Filo> {
 		return Filo.class;
 	}
 	
-	//pesquisar de como fazer comboBox dinâmico
+	//pesquisar de como fazer comboBox dinamico
 	/*public SelectItemGroup getComboBox(String id) {
 		SelectItemGroup se = new SelectItemGroup();
 		se.set

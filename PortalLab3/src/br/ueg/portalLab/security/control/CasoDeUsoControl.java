@@ -55,7 +55,7 @@ public class CasoDeUsoControl extends Control<CasoDeUso> {
 
 	}
 /**
- * @return
+ * @return retorna o dão de CasoDeUsoFucionalidade
  */
 private GenericDAO<CasoDeUsoFuncionalidade> getCasoDeUsoFuncionalidadeDAO() {
 	return (GenericDAO<CasoDeUsoFuncionalidade>)SpringFactory.getInstance().getBean("genericDAO", GenericDAO.class);

@@ -52,7 +52,7 @@ public class GrupoUsuarioControl extends Control<GrupoUsuario> {
 
 	}
 	/**
-	 * @return
+	 * @return retorna o DAO CasoDeUsofuncionaldiade
 	 */
 	private GenericDAO<CasoDeUsoFuncionalidade> getCasoDeUsoFuncionalidadeDAO() {
 		return (GenericDAO<CasoDeUsoFuncionalidade>)SpringFactory.getInstance().getBean("genericDAO", GenericDAO.class);

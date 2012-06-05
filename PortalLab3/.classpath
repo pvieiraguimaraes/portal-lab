@@ -21,10 +21,10 @@
 	<classpathentry kind="lib" path="/BuilderSoft/lib/org.springframework.transaction-3.0.2.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/BuilderSoft/lib/org.springframework.web-3.0.2.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/BuilderSoft/lib/sqljdbc4.jar"/>
-	<classpathentry kind="lib" path="/BuilderSoft/lib/zcommon.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/zcommon.jar" sourcepath="/media/dados/programas/ZK/zk-src-6.0.1-FL-2012-03-21.zip"/>
 	<classpathentry kind="lib" path="/BuilderSoft/lib/zel.jar"/>
 	<classpathentry kind="lib" path="/BuilderSoft/lib/zhtml.jar"/>
-	<classpathentry kind="lib" path="/BuilderSoft/lib/zk.jar" sourcepath="E:/programas/zk/zk-src-6.0.1-FL-2012-03-21.zip"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/zk.jar" sourcepath="/media/dados/programas/ZK/zk-src-6.0.1-FL-2012-03-21.zip"/>
 	<classpathentry kind="lib" path="/BuilderSoft/lib/zkbind.jar"/>
 	<classpathentry kind="lib" path="/BuilderSoft/lib/zkplus.jar" sourcepath="E:/programas/zk/zk-src-6.0.1-FL-2012-03-21.zip"/>
 	<classpathentry kind="lib" path="/BuilderSoft/lib/zkspring-core-3.0.jar"/>
@@ -33,16 +33,6 @@
 	<classpathentry kind="lib" path="/BuilderSoft/lib/zweb.jar"/>
 	<classpathentry kind="lib" path="/BuilderSoft/lib/antlr-2.7.5.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jta-1.1.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v7.0">
-		<attributes>
-			<attribute name="owner.project.facets" value="jst.web"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk16">
-		<attributes>
-			<attribute name="owner.project.facets" value="java"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/BuilderSoft"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/BuilderSoft-security"/>
 	<classpathentry kind="lib" path="/BuilderSoft-security/lib/aopalliance-1.0.jar"/>
@@ -55,5 +45,15 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-digester-1.8.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/groovy-all-1.5.5.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jasperreports-3.7.4.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v7.0">
+		<attributes>
+			<attribute name="owner.project.facets" value="jst.web"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk16">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

@@ -539,25 +539,32 @@
 			                    <combobox model="@{controller.estacaoList }" id="cmbEstacao"></combobox>
 			                    <button label="Adicionar" onClick="controller.adicionarImagem()"/>			                    
 			                </hbox>
-			                <listbox 
-			                	model="@{controller.EspecieImagemList, load-when='cmbSelectedItemTaxonomicoMedia.onChange' }"
-			                	selectedItem="@{controller.especieImagem }"
-			                	id="lbEspecimeImagem"
-			                >
-			                	<listhead>
-			                		<listheader label="Imagem"/>
-			                		<listheader label="Estação" width="100px"/>
-			                		<listheader label="Operação" width="80px"/>
-			                	</listhead>
-			                	<listitem self="@{each=entity }" value="@{entity }">
-			                		<listcell label="@{entity.caminho }"/>
-			                		<listcell label="@{entity.estacao.descricao }" />
-			                		<listcell>
-			                			<button label="Excluir" onClick="controller.removeImagem()"/>
-			                		</listcell>
-			                	</listitem>
-			                </listbox>
-			                <image content="@{controller.especieImagem.media }" height="300px" id="imgEspecie"></image>
+			                <hbox xmlns:h="native">
+				                <image content="@{controller.especieImagem.thumbMedia }" width="300px" id="imgEspecie" >
+					                <attribute name="onClick">
+					                	controller.openImage();
+					                </attribute>					                
+				                </image>				                
+				                <listbox 
+				                	model="@{controller.EspecieImagemList, load-when='cmbSelectedItemTaxonomicoMedia.onChange' }"
+				                	selectedItem="@{controller.especieImagem }"
+				                	id="lbEspecimeImagem"
+				                	width="500px"
+				                >
+				                	<listhead>
+				                		<listheader label="Imagem"/>
+				                		<listheader label="Estação" width="100px"/>
+				                		<listheader label="Operação" width="80px"/>
+				                	</listhead>
+				                	<listitem self="@{each=entity }" value="@{entity }">
+				                		<listcell label="@{entity.caminho }"/>
+				                		<listcell label="@{entity.estacao.descricao }" />
+				                		<listcell>
+				                			<button label="Excluir" onClick="controller.removeImagem()"/>
+				                		</listcell>
+				                	</listitem>
+				                </listbox>			                
+			                </hbox>
 			                
 			            </groupbox>
 				       <groupbox id="gbVideo" mold="3d" open="false">

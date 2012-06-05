@@ -16,8 +16,8 @@ import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.util.annotation.Attribute;
 
 /**
- * Classe utilizada para modelar os níveis geográficos(pais, estado, cidade, localidade), mas pode iniciar até com o nível continente se desjar
- * é um exemplo de controle com hierarquia.
+ * Classe utilizada para modelar os niveis geograficos(pais, estado, cidade, localidade), mas pode iniciar atï¿½ com o nï¿½vel continente se desjar
+ * e um exemplo de controle com hierarquia.
  * @author Diego
  *
  */

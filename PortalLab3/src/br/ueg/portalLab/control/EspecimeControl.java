@@ -224,11 +224,11 @@ public class EspecimeControl extends Control<Especime> {
 	
 	
 	/**
-	 * Verifica se a entidade passada est� presente na lista(feito por 
-	 * problemas de utiliza��o de Lazy no hibernate)
+	 * Verifica se a entidade passada está presente na lista(feito por 
+	 * problemas de utilização de Lazy no hibernate)
 	 * @param entity
 	 * @param list
-	 * @return
+	 * @return boolean retorno se a entidade está presente
 	 */
 	public boolean isEntityPresentInList(Entity entity, Set<Entity> list){
 		if(list== null) return false;
@@ -243,13 +243,13 @@ public class EspecimeControl extends Control<Especime> {
 	
 	/**
 	 * Metodo utilizado para retorar a lista de itens da entidade
-	 * que n�o est�o associados ao Especime ainda.
+	 * que não estão associados ao Especime ainda.
 	 * O metodo pega o tipo do item da lista e solicita uma listagem 
 	 * dessa entidade removendo os itens presente na lista.
 	 * Obs.: Esse metodo deve ser chamada com um lista que tenha
-	 * pelo menos um item, pois o item ser� utilizado para determinar o tipo
+	 * pelo menos um item, pois o item será utilizado para determinar o tipo
 	 * @param list
-	 * @return
+	 * @return List<Entity> lista de entidades 
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Entity> getListToEntityField(Set<Entity> list){
@@ -272,13 +272,13 @@ public class EspecimeControl extends Control<Especime> {
 	
 	/**
 	 * Metodo utilizado para retorar a lista de itens da entidade
-	 * que n�o est�o associados ao Especime ainda.
+	 * que não estão associados ao Especime ainda.
 	 * O metodo faz uma listagem de objetos do tipo entity passado como parametro
-	 * e remove os itens que perten�am a lista passada, sendo que um atributo de cada 
+	 * e remove os itens que pertençam a lista passada, sendo que um atributo de cada 
 	 * item da lista deve ser do tipo da entidade passada.	 
 	 * @param list
-	 * @param entiy
-	 * @return
+	 * @param entityClass
+	 * @return List<Entity> Lista de entidade
 	 */
 	
 	public List<Entity> getListToEntityField(Set<Entity> list, Class<? extends Entity> entityClass){
@@ -321,7 +321,7 @@ public class EspecimeControl extends Control<Especime> {
 		return this.getListToEntityField(auxList);
 	}
 	/**
-	 * @return
+	 * @return GenericDAO<GrupoEnderecoFisico> DAO
 	 */
 	private GenericDAO<GrupoEnderecoFisico> getGrupoEnderecoFisicoDAO() {
 		return (GenericDAO<GrupoEnderecoFisico>)SpringFactory.getInstance().getBean("genericDAO", GenericDAO.class);
