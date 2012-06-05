@@ -47,7 +47,7 @@ public class FormCrudWindow extends Window implements IFormWindow {
 	private Button formCrudWindowBtnSave;
 
 
-	private String titulo = "Manutenção";
+	private String titulo = "ManutenÃ§Ã£o";
 	
 	private CrudWindow crudWindow;
 	
@@ -78,7 +78,7 @@ public class FormCrudWindow extends Window implements IFormWindow {
 	}
 
 	/**
-	 * Faz a inicialização do compoente de FormCrudWindow
+	 * Faz a inicializaÃ§Ã£o do compoente de FormCrudWindow
 	 * @param composer
 	 */
 	private void initFormCrudWindow(ComposerController<?> composer) {

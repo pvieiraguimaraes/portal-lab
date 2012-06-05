@@ -13,8 +13,8 @@ import br.ueg.builderSoft.util.annotation.Attribute;
 import br.ueg.builderSoft.util.reflection.Reflection;
 
 /**
- * Classe genÈrica de entidade Tem apenas o mÈtodo que difere de todas as outras
- * entidades (ID) e reescreve os mÈtodos de comparaÁ„o usando o Id como
+ * Classe gen√©rica de entidade Tem apenas o m√©todo que difere de todas as outras
+ * entidades (ID) e reescreve os m√©todos de compara√ß√£o usando o Id como
  * atributo.
  * 
  * @author Diego
@@ -24,16 +24,16 @@ import br.ueg.builderSoft.util.reflection.Reflection;
 public abstract class Entity implements Serializable, Comparable {
 
 	/**
-	 * MÈtodo que retorna a chave prim·ria
+	 * M√©todo que retorna a chave prim√°ria
 	 * 
 	 * @return a PK
 	 */
 	public abstract Long getId();
 	
 	/**
-	 * MÈtodo que configurar a chave prim·ria
+	 * M√©todo que configurar a chave prim√°ria
 	 * 
-	 * @author guiliano 
+	 * author guiliano 
 	 * 
 	 */
 	public abstract void setId(Long id);
@@ -65,7 +65,7 @@ public abstract class Entity implements Serializable, Comparable {
 	}
 
 	/**
-	 * MÈtodo que retorna a lista de possÌveis campos de pesquisa com o nome no
+	 * M√©todo que retorna a lista de poss√≠veis campos de pesquisa com o nome no
 	 * banco de dados
 	 * 
 	 * @return List<String>
@@ -87,7 +87,7 @@ public abstract class Entity implements Serializable, Comparable {
 	}
 
 	/**
-	 * MÈtodo que retorna a lista de possÌveis campos de pesquisa com o nome do
+	 * M√©todo que retorna a lista de poss√≠veis campos de pesquisa com o nome do
 	 * atributo da entidade
 	 * 
 	 * @return List<String>
@@ -113,7 +113,7 @@ public abstract class Entity implements Serializable, Comparable {
 	}
 	
 	/**
-	 * Faz a compraÁ„o entre duas entidades retorna 0 se for igual
+	 * Faz a compra√ß√£o entre duas entidades retorna 0 se for igual
 	 * <0 se a entidade passada for menor
 	 * >0 se a entidade passada for maior 
 	 * @param e Entity -> entidade para ser comparada
@@ -147,7 +147,7 @@ public abstract class Entity implements Serializable, Comparable {
 	}
 	
 	/**
-	 * @return retorna a string utilizada para comprarar as entidades para efeito de ordenaÁ„o.
+	 * @return retorna a string utilizada para comprarar as entidades para efeito de ordena√ß√£o.
 	 */
 	protected String getColumnCompare(){
 		return String.valueOf(getId());

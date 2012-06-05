@@ -1,9 +1,9 @@
 package br.ueg.builderSoft.util.validators;
 
 /**
- * Classe com mÈtodo para validaÁ„o de CPF
+ * Classe com m√©todo para valida√ß√£o de CPF
  * 
- * Pode ser utilizada livremente e modificada para se integrar ‡ sistemas mais
+ * Pode ser utilizada livremente e modificada para se integrar √© sistemas mais
  * complexos.
  * 
  * @version 1.0
@@ -12,11 +12,11 @@ package br.ueg.builderSoft.util.validators;
 public class Cpf {
 
 	/**
-	 * Realiza a validaÁ„o do CPF.
+	 * Realiza a valida√ß√£o do CPF.
 	 * 
-	 * @param strCPF
-	 *            n˙mero de CPF a ser validado
-	 * @return true se o CPF È v·lido e false se n„o È v·lido
+	 * @param strCpf
+	 *            n√∫mero de CPF a ser validado
+	 * @return true se o CPF √© v√°lido e false se n√°o √© v√°lido
 	 */
 	static public boolean CPF(String strCpf) {
 		int d1, d2;
@@ -40,10 +40,10 @@ public class Cpf {
 		}
 		;
 
-		// Primeiro resto da divis„o por 11.
+		// Primeiro resto da divis√£o por 11.
 		resto = (d1 % 11);
 
-		// Se o resultado for 0 ou 1 o digito È 0 caso contr·rio o digito È 11
+		// Se o resultado for 0 ou 1 o digito √© 0 caso contr√°rio o digito √© 11
 		// menos o resultado anterior.
 		if (resto < 2)
 			digito1 = 0;
@@ -52,17 +52,17 @@ public class Cpf {
 
 		d2 += 2 * digito1;
 
-		// Segundo resto da divis„o por 11.
+		// Segundo resto da divis√£o por 11.
 		resto = (d2 % 11);
 
-		// Se o resultado for 0 ou 1 o digito È 0 caso contr·rio o digito È 11
+		// Se o resultado for 0 ou 1 o digito √© 0 caso contr√°rio o digito √© 11
 		// menos o resultado anterior.
 		if (resto < 2)
 			digito2 = 0;
 		else
 			digito2 = 11 - resto;
 
-		// Digito verificador do CPF que est· sendo validado.
+		// Digito verificador do CPF que est√° sendo validado.
 		String nDigVerific = strCpf.substring(strCpf.length() - 2, strCpf.length());
 
 		// Concatenando o primeiro resto com o segundo.

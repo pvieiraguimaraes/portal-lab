@@ -54,8 +54,8 @@ public interface IGenericMB<E extends Entity> {
 	public abstract void setSelectedEntity(E selectedEntity);
 
 	/**
-	 * MÈtodo que verifica se j· h· uma listagem ou n„o
-	 * @return true se h· uma listagem, ou false caso contr·rio
+	 * M√©todo que verifica se j√° h√° uma listagem ou n√£o
+	 * @return true se h√° uma listagem, ou false caso contr√°rio
 	 */
 	public abstract boolean isListing();
 

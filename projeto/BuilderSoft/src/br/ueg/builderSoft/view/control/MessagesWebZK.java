@@ -18,7 +18,7 @@ import br.ueg.builderSoft.util.constant.MessagesType;
 import br.ueg.builderSoft.util.control.MessagesControl;
 
 /**
- * Classe que fica responsável por exibir as mensagens da visão WEB.
+ * Classe que fica responsavel por exibir as mensagens da visao WEB.
  * 
  * @author Diego/Guiliano
  * 
@@ -74,7 +74,7 @@ public class MessagesWebZK extends MessagesControl {
 		try{
 			 w = (Window) Executions.getCurrent().getDesktop().getFirstPage().getFirstRoot().getFellow(MessagesWebZK.ID_WINDOW);
 		}catch (org.zkoss.zk.ui.ComponentNotFoundException e) {
-			//se não achar ok não tem problema
+			//se nao achar ok nao tem problema
 		}
 		
 		if(w==null){

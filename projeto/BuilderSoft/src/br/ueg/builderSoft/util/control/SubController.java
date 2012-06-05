@@ -10,10 +10,10 @@ import java.util.HashMap;
 public interface SubController {
 	
 	/**
-	 * MÈtodo que executa a aÁ„o do subControlador.
-	 * @param entity
+	 * M√©todo que executa a a√ß√£o do subControlador.
+	 * @param mapFields
 	 * @param action
-	 * @return 
+	 * @return boolean que indica se a a√ß√£o foi executada com sucesso
 	 */
 	public boolean doAction(HashMap<String, Object> mapFields, String action);
 

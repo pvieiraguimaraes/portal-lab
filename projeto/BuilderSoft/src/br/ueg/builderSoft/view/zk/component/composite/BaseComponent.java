@@ -45,7 +45,7 @@ public abstract class BaseComponent extends Div implements IdSpace {
 	 * dos componentes devem ter o mesmo nome da classe que o representa. Caso decida utilizar um nome diferente, este
 	 * método deve ser sobreescrito na classe que herdar esta.
 	 * 
-	 * @return
+	 * @return Reader leitor de ZUL
 	 */
 	protected Reader getZulReader() {
 		return new InputStreamReader(this.getClass().getResourceAsStream(

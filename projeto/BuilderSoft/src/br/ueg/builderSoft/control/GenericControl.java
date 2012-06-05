@@ -17,8 +17,8 @@ import br.ueg.builderSoft.util.reflection.Reflection;
 import br.ueg.builderSoft.view.managed.IGenericMB;
 
 /**
- * Controlador principal, onde contÈm a lista de outros controladores
- * e faz as aÁıes por reflection
+ * Controlador principal, onde cont√©m a lista de outros controladores
+ * e faz as a√ß√µes por reflection
  * @author Diego
  *
  */
@@ -61,7 +61,7 @@ public class GenericControl <E extends Entity> {
 	}
 	
 	/**
-	 * MÈtodo que seta o controlador (Spring ainda n„o utilizado)
+	 * M√©todo que seta o controlador (Spring ainda n√£o utilizado)
 	 * @param control
 	 */
 	public void setControl(Control<E> control) {
@@ -94,9 +94,10 @@ public class GenericControl <E extends Entity> {
 	
 
 	/**
-	 * MÈtodo que faz qualquer aÁ„o vinda da vis„o por reflection
-	 * @param action, String que representa o ID do componente
-	 * @return se aÁ„o foi executada ou n„o
+	 * M√©todo que faz qualquer a√ß√£o vinda da vis√£o por reflection
+	 * @param action  String que representa o ID do componente
+	 * @param entity
+	 * @return boolean se a√ß√£o foi executada ou n√£o
 	 */
 	public final boolean doAction(String action, E entity) {
 		boolean result = false;
@@ -144,7 +145,6 @@ public class GenericControl <E extends Entity> {
 	
 	/**
 	 * Metodo para receber a entidade e mapear com os dados do managed bean
-	 * @author Guiliano
 	 * @param entity
 	 * @param vMB
 	 */
@@ -172,7 +172,7 @@ public class GenericControl <E extends Entity> {
 							if(exists){
 								Reflection.setFieldValue(entity, fieldName, fieldValue, fieldType);
 							}else{
-								System.out.println("Campo:"+fieldName+" n„o existe na entidade:"+entity.getClass().getSimpleName());
+								System.out.println("Campo:"+fieldName+" n√£o existe na entidade:"+entity.getClass().getSimpleName());
 							}
 							
 							
@@ -195,10 +195,10 @@ public class GenericControl <E extends Entity> {
 	}
 	
 	/**
-	 * MÈtodo respons·vel por analisar a vis„o e trazer os campos que tem a annotation
+	 * M√©todo respons√°vel por analisar a vis√£o e trazer os campos que tem a annotation
 	 * AttributeView e os envia para o control	 
 	 * @param entity
-	 * @return HashMap com todos atributes que contÈm a annotation
+	 * @return HashMap com todos atributes que cont√©m a annotation
 	 */
 	private HashMap<String, Object> createMapFields(E entity) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -231,9 +231,9 @@ public class GenericControl <E extends Entity> {
 	}
 	
 	/**
-	 * MÈtodo que recebe uma Entidade com par‚metros setados (ou um novo) e seta cada
-	 * campo a seu respectivo representante na vis„o.
-	 * @param E extends Entity, entidade
+	 * M√©todo que recebe uma Entidade com par√¢metros setados (ou um novo) e seta cada
+	 * campo a seu respectivo representante na vis√£o.
+	 * @param selectedEntity extends Entity, entidade
 	 * @return true se conseguiu setar todos campos, false caso contrario
 	 */
 	public boolean associateEntityToAttributeView(E selectedEntity) {

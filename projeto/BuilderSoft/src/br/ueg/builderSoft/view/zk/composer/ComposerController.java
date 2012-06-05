@@ -62,7 +62,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 	
 	protected String useCase;
 	
-	//atributos para componetizaÁ„o
+	//atributos para componetiza√ß√£o
 	
 	@Wire
 	protected Listhead listhead;
@@ -83,7 +83,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 	
 	
 	/**
-	 * usado para pegar chamar o zk para passar os parametros da vis„o para o composer
+	 * usado para pegar chamar o zk para passar os parametros da vis√£o para o composer
 	 */
 	protected AnnotateDataBinder binder;
 	protected Component component;
@@ -115,9 +115,9 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 	}
 	
 	/**Metodo utilizado para instanciar o controlador que sera utilizado
-	 * Caso ele return null Ser· utilizado o controlador padr„o de crud(br.ueg.builderSoft.control.Control)
-	 * @param genericControl TODO
-	 * @return
+	 * Caso ele return null Ser√° utilizado o controlador padr√£o de crud(br.ueg.builderSoft.control.Control)
+	 * @param pMessagesControl TODO remover esse metodo
+	 * @return Control<E> um novo controlador para o tipo E
 	 */
 	public abstract Control<E> getNewControl(MessagesControl pMessagesControl);
 	
@@ -141,7 +141,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 	{
 		super.doAfterCompose(comp);
 			processRecursive(comp,  this);
-		//TODO depois sÛ pode haver um(avaliar quest„o de desempenho antes da remoÁ„o, sÛ remover se tiver problema de desempenho)
+		//TODO depois s√≥ pode haver um(avaliar quest√£o de desempenho antes da remo√ß√£o, s√≥ remover se tiver problema de desempenho)
 		comp.setAttribute(comp.getId() + "Controller", this, true);
 		comp.setAttribute("controller", this, true);
 		
@@ -162,7 +162,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 	 * 
 	 * @param component
 	 * @param name
-	 * @return
+	 * @return Component componte caso seja localiado
 	 */
 	public static Component getFellow(Component component, String name)
 	{
@@ -194,7 +194,6 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 	 * 
 	 */
 	/**
-	 * @param genericControl TODO
 	 * @return o controlador
 	 */
 	protected GenericControl<E> getGenericControl() {
@@ -275,8 +274,8 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 	}
 
 	/**
-	 * MÈtodo que verifica no ListingControl se foi feito uma listagem e atualiza/seta
-	 * a lista da vis„o
+	 * M√©todo que verifica no ListingControl se foi feito uma listagem e atualiza/seta
+	 * a lista da vis√£o
 	 */
 	protected void verifyListing(String action) {
 		
@@ -287,8 +286,8 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 	}
 
 	/**
-	 * MÈtodo que verifica se j· h· uma listagem ou n„o
-	 * @return true se h· uma listagem, ou false caso contr·rio
+	 * M√©todo que verifica se j√° h√° uma listagem ou n√£o
+	 * @return true se h√° uma listagem, ou false caso contr√°rio
 	 */
 	public boolean isListing() {
 		return listingControl.doAction(null, null);
@@ -351,11 +350,11 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 	
 	/*
 	 * Metodos do MBZK 
-	 * TODO n„o sei se precisa das anotaÁıes daqui para baixo mas n„o retirei ainda. 
+	 * TODO n√£o sei se precisa das anota√ß√µes daqui para baixo mas n√£o retirei ainda. 
 	 */
 	
 	
-	//TODO mudanÁa ZK
+	//TODO mudan√ßa ZK
 		//@Command("select")
 		//@NotifyChange({ "selectedEntity", "vm" })	
 		public void selectEntity(){
@@ -364,9 +363,9 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 		}
 
 		/**
-		 * MÈtodo respons·vel por receber a "action" dos botıes, chamando o controle para 
-		 * execut·-la
-		 * @param ActionEvent
+		 * M√©todo respons√°vel por receber a "action" dos bot√µes, chamando o controle para 
+		 * execut√°-la
+		 * @param action
 		 */
 		//@Command
 		//@NotifyChange({ "listEntity", "vm" })
@@ -386,8 +385,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 		
 		
 		/**
-		 * MÈtodo para os botıes que inicia uma nova vari·vel
-		 * @param event
+		 * M√©todo para os bot√µes que inicia uma nova vari√°vel
 		 */
 		//@Command
 		//@NotifyChange({ "selectedEntity", "vm", "viewFormEdit" })
@@ -413,8 +411,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 
 		
 		/**
-		 * MÈtodo para cancelar uma aÁ„o
-		 * @param event
+		 * M√©todo para cancelar uma a√ß√£o
 		 */
 		//@Command
 		public void cancelAction() {
@@ -482,8 +479,8 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 			//this.doAction("ASSOCIATE");
 			this.genericControl.associateEntityToAttributeView(this.getSelectedEntity());
 			binder.loadComponent(this.getEditForm());
-			//TODO descobrir uma forma de n„o fazer isso(ler tudo, deveria funcionar sÛ com o comando acima, 
-			//quando o formul·rio È construido automaticamente.
+			//TODO descobrir uma forma de n√£o fazer isso(ler tudo, deveria funcionar s√≥ com o comando acima, 
+			//quando o formul√°rio √© construido automaticamente.
 			binder.loadAll();
 			//binder.saveAll();
 			this.showEditForm();
@@ -529,11 +526,11 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 		}
 		
 		/**
-		 *obtem o reader do arquivo passado considerando que o arquivo est· no mesmo diretÛrio que a pagina index.zul do 
+		 *obtem o reader do arquivo passado considerando que o arquivo est√° no mesmo diret√≥rio que a pagina index.zul do 
 		 *caso de uso
 		 *exemplo: /pages/casodeuso/file.zul
 		 * 
-		 * @return
+		 * @return Reader leitor de Zul
 		 * @throws UnsupportedEncodingException 
 		 */
 		protected Reader getZulReader(String file) throws UnsupportedEncodingException {
@@ -547,10 +544,10 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 		}
 		
 		/**
-		 * obtem um formul·rio passando o nome, 
-		 * o formul·rio ser· procurando um arquivo zul que deve ter um window declarado no inicio logo apos o zk
-		 * @param name
-		 * @return
+		 * obtem um formul√°rio passando o nome, 
+		 * o formul√°rio ser√° procurando um arquivo zul que deve ter um window declarado no inicio logo apos o zk
+		 * @param name nome da janela a ser localizada
+		 * @return Window janela localizado pela nae passado
 		 */
 		public Window getFormByName(String name) {
 			Window formName = null;
@@ -620,7 +617,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 		
 		/**
 		 * @param field nome do atributo que contem a entidade extrangeira(chave estrangeir)
-		 * @return
+		 * @return BindingListModelList<Entity> BindingListModelList com a lista de entidade do field especificado
 		 */
 		public BindingListModelList<Entity> getFKEntityModel(String field) {
 			

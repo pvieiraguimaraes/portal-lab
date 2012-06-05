@@ -11,8 +11,8 @@ import br.ueg.builderSoft.util.control.ListingControl;
 import br.ueg.builderSoft.util.reflection.Reflection;
 
 /**
- * Super Classe criado para permitir que o ManageBeam possa ser utilizado sem acomplamento com o tipo de Vis„o.
- * Foi testado esssa aplicaÁ„o para integraÁ„o com JSF e ZK
+ * Super Classe criado para permitir que o ManageBeam possa ser utilizado sem acomplamento com o tipo de Vis√£o.
+ * Foi testado esssa aplica√ß√£o para integra√ß√£o com JSF e ZK
  * @author guiliano
  *
  * @param <E>
@@ -130,8 +130,8 @@ public abstract class GenericMB<E extends Entity> implements IGenericMB<E> {
 	}
 
 	/**
-	 * MÈtodo que verifica no ListingControl se foi feito uma listagem e atualiza/seta
-	 * a lista da vis„o
+	 * M√©todo que verifica no ListingControl se foi feito uma listagem e atualiza/seta
+	 * a lista da vis√£o
 	 */
 	protected void verifyListing(String action) {
 		

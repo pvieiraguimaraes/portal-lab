@@ -10,7 +10,7 @@ import br.ueg.builderSoft.util.control.ListingControl;
 import br.ueg.builderSoft.view.control.MessagesWeb;
 
 /**
- * ManagedBean genÈrico, contendo os mÈtodos comuns, deve ser herdado por todos
+ * ManagedBean gen√©rico, contendo os m√©todos comuns, deve ser herdado por todos
  * outros ManagedBeans
  * @author Diego
  *
@@ -26,9 +26,9 @@ public abstract class MB<E extends Entity> extends GenericMB<E> {
 	}
 
 	/**
-	 * MÈtodo respons·vel por receber a "action" dos botıes, chamando o controle para 
-	 * execut·-la
-	 * @param ActionEvent
+	 * M√©todo respons√°vel por receber a "action" dos bot√µes, chamando o controle para 
+	 * execut√°-la
+	 * @param e
 	 */
 	public void doAction(ActionEvent e) {
 		if (control.doAction(e.getComponent().getId(), initializeEntity())) {
@@ -37,7 +37,7 @@ public abstract class MB<E extends Entity> extends GenericMB<E> {
 	}
 	
 	/**
-	 * MÈtodo para os botıes que inicia uma nova vari·vel
+	 * M√©todo para os bot√µes que inicia uma nova vari√°vel
 	 * @param event
 	 */
 	public void newEntity(ActionEvent event) {
@@ -45,7 +45,7 @@ public abstract class MB<E extends Entity> extends GenericMB<E> {
 	}
 	
 	/**
-	 * MÈtodo para cancelar uma aÁ„o
+	 * M√©todo para cancelar uma a√ß√£o
 	 * @param event
 	 */
 	public void cancelAction(ActionEvent event) {
@@ -57,7 +57,7 @@ public abstract class MB<E extends Entity> extends GenericMB<E> {
 		return listingControl.getSearchFields();
 	}*/
 	
-	/*MÈtodo dinamico de construÁ„o do SelectOne -- n„o funciona
+	/*M√©todo dinamico de constru√ß√£o do SelectOne -- n√£o funciona
 	 * public HtmlSelectOneListbox selectSearch() {
 		HtmlSelectOneListbox select = new HtmlSelectOneListbox();
 		select.setId("select" + entity.toString());

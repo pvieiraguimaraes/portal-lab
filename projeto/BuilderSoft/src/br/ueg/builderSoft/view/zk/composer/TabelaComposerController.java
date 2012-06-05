@@ -9,7 +9,7 @@ import br.ueg.builderSoft.model.Entity;
 public abstract class TabelaComposerController<E extends Entity> extends ComposerController<E> {
 	
 	
-	//para acesso ao formul·rio de ediÁ„o
+	//para acesso ao formul√°rio de edi√ß√£o
 	@Wire
 	protected Window crudFormWindow;
 
