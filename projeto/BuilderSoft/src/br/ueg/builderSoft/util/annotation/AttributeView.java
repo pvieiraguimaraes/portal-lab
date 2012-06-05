@@ -6,8 +6,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation para as os campos da visão
- * Responsável por definir a chave do campo e se é um campo de entidade
+ * Annotation para as os campos da visao
+ * Responsavel por definir a chave do campo e se e um campo de entidade
  * @author Diego
  *
  */
@@ -16,7 +16,7 @@ import java.lang.annotation.Target;
 public @interface AttributeView {
 
 	/**
-	 * representação do valor, nome do atributo
+	 * representacao do valor, nome do atributo
 	 * @return key
 	 */
 	String key();
@@ -41,13 +41,13 @@ public @interface AttributeView {
 	@SuppressWarnings("rawtypes")
 	Class fieldType() default Object.class;
 	/**
-	 * Tipo de componente que o representará no formulário
+	 * Tipo de componente que o representara no formulario
 	 * @return ComponentType (inteiro) do componente
 	 */
 	int component() default 0;
 	/**
-	 * Ordem de exibição da campo, o primeiro a ser exibido deve ser 0
-	 * @return ordem do compomente na visão
+	 * Ordem de exibicaoo da campo, o primeiro a ser exibido deve ser 0
+	 * @return ordem do compomente na visao
 	 */
 	int order() default 0;
 	

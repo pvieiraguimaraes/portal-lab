@@ -21,10 +21,10 @@ public class SubControllerManager<E extends Entity> {
 	
 
 	/**
-	 * Adiciona um subcontrollador ao manager, se for do tipo validator pode ser adicionados v·rios,
-	 * dos demais n„o È possÌvel adicionar mais de um
+	 * Adiciona um subcontrollador ao manager, se for do tipo validator pode ser adicionados v√°rios,
+	 * dos demais nao e poss√≠vel adicionar mais de um
 	 * @param subController
-	 * @return
+	 * @return boolean indica se a a√ß√£o foi realizada com sucesso
 	 */
 	public boolean addController(SubController subController) {
 		boolean retorno = false;
@@ -42,10 +42,10 @@ public class SubControllerManager<E extends Entity> {
 		return retorno;
 	}
 	/**
-	 * MÈtodo que retorna um subControlador da lista se tiver a mesma assinatura que a classe
-	 * enviado por par‚metro
-	 * @param pClass, .class que deseja analisar se contÈm na lista.
-	 * @return o subControlador desejado ou null caso n„o seja encontrado.
+	 * M√©todo que retorna um subControlador da lista se tiver a mesma assinatura que a classe
+	 * enviado por par√¢metro
+	 * @param pClass  .class que deseja analisar se cont√©m na lista.
+	 * @return SubController o subControlador desejado ou null caso n√£o seja encontrado.
 	 */
 	@SuppressWarnings("rawtypes")
 	public SubController getController(Class pClass) {

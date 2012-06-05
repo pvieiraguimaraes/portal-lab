@@ -10,7 +10,7 @@ import br.ueg.builderSoft.util.annotation.Attribute;
 import br.ueg.builderSoft.util.reflection.Reflection;
 
 /**
- * SubControlador que faz as validaÁıes
+ * SubControlador que faz as valida√ß√£es
  * @author Diego
  *
  */
@@ -27,15 +27,15 @@ public class ValidatorControl extends AbstractValidatorControl {
 	}
 
 	/**
-	 * MÈtodo que valida a entidade buscando por campos n„o preenchidos
-	 * Adiciona o campo n„o preenchido a lista de emptyFields
+	 * M√©todo que valida a entidade buscando por campos n√£o preenchidos
+	 * Adiciona o campo n√£o preenchido a lista de emptyFields
 	 * @param entity
-	 * @return true se tudo for v·lido e false caso haja algum campo n„o preenchido
+	 * @return true se tudo for v√°lido e false caso haja algum campo n√£o preenchido
 	 */
 	public boolean validate(Entity entity) {
 		boolean isValide = true;
 		String classeName =  Reflection.getClassName(entity.getClass()).toLowerCase();
-		for (Class<?> reflectedClass = entity.getClass(); reflectedClass != null; reflectedClass = reflectedClass.getSuperclass()) {//adicionado para verificar com heranÁa		
+		for (Class<?> reflectedClass = entity.getClass(); reflectedClass != null; reflectedClass = reflectedClass.getSuperclass()) {//adicionado para verificar com heran√ßa		
 			Field[] fields = reflectedClass.getDeclaredFields();
 			for (Field currentField:fields) {
 				try {
@@ -69,10 +69,10 @@ public class ValidatorControl extends AbstractValidatorControl {
 	}
 	
 	/**
-	 * MÈtodo que valida a entidade buscando por algum campo para efetuar a busca.
-	 * Adiciona o campo n„o preenchido (busca) a lista de emptyFields
+	 * M√©todo que valida a entidade buscando por algum campo para efetuar a busca.
+	 * Adiciona o campo n√£o preenchido (busca) a lista de emptyFields
 	 * @param entity
-	 * @return true se algum campo de busca foi preenchido ou false caso contr·rio
+	 * @return true se algum campo de busca foi preenchido ou false caso contr√°rio
 	 */
 	@SuppressWarnings("rawtypes")
 	public boolean validateSearch(Entity entity) {

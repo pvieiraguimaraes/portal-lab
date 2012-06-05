@@ -2,7 +2,7 @@ package br.ueg.builderSoft.view.managed;
 
 /**
  * @author Guiliano
- * Classe utilizada para obeter a listagem de campos do magedbean para ser utilizado no compoente de formul·roCRUD
+ * Classe utilizada para obeter a listagem de campos do magedbean para ser utilizado no compoente de formul√°roCRUD
  */
 public class ManagedBeanField {
 	private String key;

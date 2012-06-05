@@ -41,11 +41,11 @@ public abstract class MessagesControl implements SubController{
 	}
 
 	/**
-	 * MÈtodo que retorna a mensagem correspondente a vari·vel enviada
+	 * M√©todo que retorna a mensagem correspondente a vari√°vel enviada
 	 * 
 	 * @param typeMessage
-	 *            , vari·vel da mensagem
-	 * @return a mensage correspondente a v·riavel.
+	 *            , vari√°vel da mensagem
+	 * @return a mensage correspondente a v√°riavel.
 	 */
 	protected String getMessage(String typeMessage) {
 		try{
@@ -71,7 +71,7 @@ public abstract class MessagesControl implements SubController{
 	}
 
 	/**
-	 * MÈtodo que adiciona uma mensagem de erro
+	 * M√©todo que adiciona uma mensagem de erro
 	 * 
 	 * @param key
 	 *            chave que representa a mensagem no bundle
@@ -81,7 +81,7 @@ public abstract class MessagesControl implements SubController{
 	}
 
 	/**
-	 * MÈtodo que adiciona uma mensagem de sucesso
+	 * M√©todo que adiciona uma mensagem de sucesso
 	 * 
 	 * @param key
 	 *            chave que representa a mensagem no bundle
@@ -91,7 +91,7 @@ public abstract class MessagesControl implements SubController{
 	}
 
 	/**
-	 * MÈtodo que adiciona uma mensagem de cancelamento
+	 * M√©todo que adiciona uma mensagem de cancelamento
 	 * 
 	 * @param key
 	 *            chave que representa a mensagem no bundle
@@ -101,19 +101,19 @@ public abstract class MessagesControl implements SubController{
 	}
 
 	/**
-	 * MÈtodo que retorna a Locale do bundle
+	 * M√©todo que retorna a Locale do bundle
 	 * 
 	 * @return locale do bundle, ex: en_US, pt_BR
 	 */
 	protected abstract Locale getLocale();
 
 	/**
-	 * MÈtodo que adiciona a mensagem ‡ vis„o
+	 * M√©todo que adiciona a mensagem √© vis√£o
 	 * 
 	 * @param message
-	 *            mensagem que ser· exibida
+	 *            mensagem que ser√° exibida
 	 * @param type
-	 *            corresponde ao tipo de mensagem (Ìcone da mensagem)
+	 *            corresponde ao tipo de mensagem (icone da mensagem)
 	 */
 	public abstract void addMessage(String message, int type);
 	

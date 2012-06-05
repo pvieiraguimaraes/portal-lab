@@ -7,8 +7,8 @@ import java.lang.annotation.Target;
 
 /**
  * Annotation para as entidades.
- * Responsável por definir se o atributo (campo) da tabela 
- * é obrigatório ou não e se é um campo de busca.
+ * Responsavel por definir se o atributo (campo) da tabela 
+ * E obrigatario ou nao e se e um campo de busca.
  * @author Diego
  *
  */

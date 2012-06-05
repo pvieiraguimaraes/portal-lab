@@ -4,8 +4,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.web.context.request.SessionScope;
 
 /**
- * Classe que carrega as configurações do Spring
- * Através dela que se faz a injeção de dependências
+ * Classe que carrega as configuraÃ§Ã£es do Spring
+ * AtravÃ©s dela que se faz a injeÃ§Ã£o de dependÃ©ncias
  * @author Diego
  *
  */
@@ -14,7 +14,7 @@ public class SpringFactory extends ClassPathXmlApplicationContext {
 	private static ClassPathXmlApplicationContext instance = null;
 	
 	/**
-	 * @return Instancia do Spring com informaçoes do xml lidas
+	 * @return Instancia do Spring com informaÃ§Ãµes do xml lidas
 	 */
 	public static ClassPathXmlApplicationContext getInstance() {
 		if (instance == null) {

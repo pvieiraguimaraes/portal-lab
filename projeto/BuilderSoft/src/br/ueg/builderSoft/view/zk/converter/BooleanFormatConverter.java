@@ -26,7 +26,7 @@ public class BooleanFormatConverter implements TypeConverter {
 	    if (annot != null) {
 	      valores = annot.getAttribute("value");
 	    }else{
-	    	valores="sim:n„o";
+	    	valores="sim:n√£o";
 	    }
 
 	    String retorno[] = valores.split(":");

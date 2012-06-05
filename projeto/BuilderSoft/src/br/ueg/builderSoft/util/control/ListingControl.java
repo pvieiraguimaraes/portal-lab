@@ -6,8 +6,8 @@ import java.util.List;
 import br.ueg.builderSoft.model.Entity;
 
 /**
- * Classe que È respons·vel por responder se na vis„o est· sendo listado
- * a entidade ou n„o.
+ * Classe que √© respons√°vel por responder se na vis√£o est√© sendo listado
+ * a entidade ou n√£o.
  * 
  * @author Diego
  *
@@ -81,7 +81,7 @@ public class ListingControl<E extends Entity> implements IListingControl<E>{
 	}
 	
 	/**
-	 * MÈtodo ir· buscar a lista de campos de busca para preencher a combo box
+	 * M√©todo ir√° buscar a lista de campos de busca para preencher a combo box
 	 * @param entity
 	 * @return Lista de campos de buscas
 	 */

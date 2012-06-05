@@ -74,12 +74,12 @@ public class CrudWindow extends Window implements IFormWindow {
 	
 	private String listBoxSize="9";
 
-	private String titulo = "ManutenÁ„o";
+	private String titulo = "Manuten√ß√£oo";
 
 	/**
-	 * Atributo para indicar quais operaÁıes estaram disponÌvel no formul·rio de
-	 * crud Valor padr„o È "create,read,update,delete" ou seja todas as
-	 * operaÁıes disponÌveis
+	 * Atributo para indicar quais opera√ß√µes estaram dispon√≠vel no formul√°rio de
+	 * crud Valor padr√£o √© "create,read,update,delete" ou seja todas as
+	 * opera√ß√µes dispon√≠veis
 	 */
 	private String crudOperation = "create,read,update,delete";
 
@@ -132,7 +132,7 @@ public class CrudWindow extends Window implements IFormWindow {
 	}
 
 	/**
-	 * Faz a inicializaÁ„o do compoente de CrudWindow
+	 * Faz a inicializa√ß√£o do compoente de CrudWindow
 	 * 
 	 * @param composer
 	 */
@@ -156,7 +156,7 @@ public class CrudWindow extends Window implements IFormWindow {
 		buildListItem(composer);
 		buildAcaoPainel(composer);
 
-		// inicializar as variaveis de controle de operaÁ„o baseado no atributo
+		// inicializar as variaveis de controle de opera√ß√£o baseado no atributo
 		// crudOperation
 		initCrudOpeartion();
 
@@ -176,8 +176,8 @@ public class CrudWindow extends Window implements IFormWindow {
 	}
 
 	/**
-	 * Metodo utilizado para pegar as operaÁıes do crudOperation e configurar os
-	 * botıes
+	 * Metodo utilizado para pegar as opera√ß√µes do crudOperation e configurar os
+	 * bot√µes
 	 */
 	private void updateComponents() {
 
@@ -209,7 +209,7 @@ public class CrudWindow extends Window implements IFormWindow {
 		// crudWindowComponent.invalidate();
 	}
 	/**
-	 * adiciona no painel de aÁ„o uma aÁ„o encontrada na proprieadade acaoPainel do composer
+	 * adiciona no painel de a√ß√£o uma a√ß√£o encontrada na proprieadade acaoPainel do composer
 	 * @param composer
 	 */
 	private void buildAcaoPainel(ComposerController<?> composer){
@@ -219,8 +219,8 @@ public class CrudWindow extends Window implements IFormWindow {
 	}
 
 	/**
-	 * faz a construÁ„o dos itens(listitem) da janela, pegando o conteudo da div
-	 * listitem (que est· na definiÁ„o da janela utilizando o componente
+	 * faz a constru√ß√£o dos itens(listitem) da janela, pegando o conteudo da div
+	 * listitem (que est√° na defini√ß√£o da janela utilizando o componente
 	 * crudWindow) e adiciona na jenela gerada pelo components
 	 * 
 	 * @param composer
@@ -234,7 +234,7 @@ public class CrudWindow extends Window implements IFormWindow {
 	}
 
 	/**
-	 * faz a construÁ„o dos itens(listitem) da janela, baseando no entity do
+	 * faz a constru√ß√£o dos itens(listitem) da janela, baseando no entity do
 	 * composer
 	 * 
 	 * @param composer
@@ -295,8 +295,8 @@ public class CrudWindow extends Window implements IFormWindow {
 	}
 
 	/**
-	 * Faz a construÁ„o dos itens(listemitem) da listagem, pegando o conteudo da
-	 * div listitem (que est· na definiÁ„od a janela utilizando o compoente
+	 * Faz a constru√ß√£o dos itens(listemitem) da listagem, pegando o conteudo da
+	 * div listitem (que est√° na defini√ß√£o  da janela utilizando o compoente
 	 * crudWindow) e adiciona na janela gerada pela componente
 	 * 
 	 * @param composer
@@ -317,8 +317,8 @@ public class CrudWindow extends Window implements IFormWindow {
 	}
 
 	/**
-	 * faz a construÁ„o do cabeÁalho(listheader) da janela, pegando o conteudo
-	 * da div listhead (que est· na definiÁ„o da janela utilizando o componente
+	 * faz a constru√ß√£oo do cabe√ßalho(listheader) da janela, pegando o conteudo
+	 * da div listhead (que est√° na defini√ß√£o da janela utilizando o componente
 	 * crudWindow) e adiciona na jenela gerada pelo componente
 	 * 
 	 * @param composer
@@ -337,7 +337,7 @@ public class CrudWindow extends Window implements IFormWindow {
 	/**
 	 * Metodo que constroi o Listheader baseado nos campos da Entity
 	 * 
-	 * @param composer2
+	 * @param composer composer para construir a lista de campos
 	 */
 	private void builderListHeaderFromEntity(ComposerController<?> composer) {
 		if (this.divListhead.getChildren().size() == 1) {
@@ -357,7 +357,7 @@ public class CrudWindow extends Window implements IFormWindow {
 	}
 
 	/**
-	 * Metodo que constroi o ListHeader pegando o conte˙do da div listheader do
+	 * Metodo que constroi o ListHeader pegando o conte√∫do da div listheader do
 	 * composer
 	 * 
 	 * @param composer
@@ -398,10 +398,10 @@ public class CrudWindow extends Window implements IFormWindow {
 	/**
 	 * *
 	 * 
-	 * @return the crudOperation , que È uma string separada por virgula que
-	 *         pode ter: create - para mostrar o bot„o de novo read - para
-	 *         mostrar partes de leitura update - para mostrar o bot„o de editar
-	 *         delete - para mostra o bot„o de remoÁ„o
+	 * @return the crudOperation , que √© uma string separada por virgula que
+	 *         pode ter: create - para mostrar o bot√£o de novo read - para
+	 *         mostrar partes de leitura update - para mostrar o bot√£o de editar
+	 *         delete - para mostra o bot√£o de remo√ß√£o
 	 */
 	public String getCrudOperation() {
 		return crudOperation;

@@ -10,7 +10,7 @@ import java.lang.reflect.Method;
  */
 public class Reflection {
 	/**
-	 * Método que executa o método get*Field* por reflection, devolvendo o valor do campo.
+	 * MÃ©todo que executa o mÃ©todo get*Field* por reflection, devolvendo o valor do campo.
 	 * @param entity
 	 * @param fieldName
 	 * @return o valor associado ao campo.
@@ -34,7 +34,7 @@ public class Reflection {
 		return method.getReturnType();		
 	}
 	/**
-	 * Método que executa o método get*Field* por reflection.
+	 * MÃ©todo que executa o mÃ©todo get*Field* por reflection.
 	 * sobrecarga do metodo setFieldValue(Object entity, String fieldName, Object fieldValue, Class paramType)
 	 * @param entity
 	 * @param fieldName
@@ -49,7 +49,7 @@ public class Reflection {
 		Reflection.setFieldValue(entity, fieldName, fieldValue, fieldValue.getClass());
 	}
 	/**
-	 * Método que executa o método get*Field* por reflection.
+	 * Mï¿½todo que executa o mï¿½todo get*Field* por reflection.
 	 * @param entity
 	 * @param fieldName
 	 * @param fieldValue

@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 /**
- * Classe utilizada pelo Spring para gerar a conex„o com o 
+ * Classe utilizada pelo Spring para gerar a conex√£o com o 
  * banco de dados
  * @author Diego
  *

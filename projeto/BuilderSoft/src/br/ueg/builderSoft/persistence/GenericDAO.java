@@ -26,13 +26,12 @@ import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.util.annotation.Attribute;
 import br.ueg.builderSoft.util.reflection.Reflection;
 
+
 /**
- * Classe responsável pela persistência, faz o CRUD para qualquer entidade que extenda
- * Entity
- * 
+ * Classe responsavel pela persistancia, faz o CRUD para qualquer entidade que extenda Entity
  * @author Diego
  *
- * @param <Entity>
+ * @param <E> Tipo de entidade utilizada pelo GenericDAO
  */
 public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 
@@ -42,7 +41,7 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 	Transaction currentTransaction;
 	
 	/**
-	 * Método para setar o HibernateTemplate, necessário para ser instanciado pelo Spring
+	 * Metodo para setar o HibernateTemplate, necessario para ser instanciado pelo Spring
 	 * @param hibernateTemplate
 	 */
 	public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
@@ -68,17 +67,17 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 			e.printStackTrace();
 			if(ta!=null) ta.rollback();
 			this.getSession().close();
-			throw new DataIntegrityViolationException("(1)Violação de Integridade na Entidade:"+Reflection.getClassName(entity.getClass()));			
+			throw new DataIntegrityViolationException("(1)ViolaÃ§Ã£o de Integridade na Entidade:"+Reflection.getClassName(entity.getClass()));			
 		}catch(org.springframework.dao.DataIntegrityViolationException e){
 			e.printStackTrace();
 			if(ta!=null) ta.rollback();
 			this.getSession().close();
-			throw new DataIntegrityViolationException("(2)Violação de Integridade na Entidade:"+Reflection.getClassName(entity.getClass()));
+			throw new DataIntegrityViolationException("(2)ViolaÃ§Ã£o de Integridade na Entidade:"+Reflection.getClassName(entity.getClass()));
 		}catch(org.springframework.dao.InvalidDataAccessResourceUsageException e){
 			e.printStackTrace();
 			if(ta!=null) ta.rollback();
 			this.getSession().close();
-			throw new DataIntegrityViolationException("(3)Violação de Integridade na Entidade:"+Reflection.getClassName(entity.getClass()));
+			throw new DataIntegrityViolationException("(3)ViolaÃ§Ã£o de Integridade na Entidade:"+Reflection.getClassName(entity.getClass()));
 		}catch (Exception e) {
 			e.printStackTrace();
 			if(ta!=null) ta.rollback();
@@ -102,17 +101,17 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 			e.printStackTrace();
 			if(ta!=null) ta.rollback();
 			this.getSession().close();
-			throw new DataIntegrityViolationException("(1)Violação de Integridade na Entidade:"+Reflection.getClassName(entity.getClass()));			
+			throw new DataIntegrityViolationException("(1)ViolaÃ§Ã£o de Integridade na Entidade:"+Reflection.getClassName(entity.getClass()));			
 		}catch(org.springframework.dao.DataIntegrityViolationException e){
 			e.printStackTrace();
 			if(ta!=null) ta.rollback();
 			this.getSession().close();
-			throw new DataIntegrityViolationException("(2)Violação de Integridade na Entidade:"+Reflection.getClassName(entity.getClass()));
+			throw new DataIntegrityViolationException("(2)ViolaÃ§Ã£o de Integridade na Entidade:"+Reflection.getClassName(entity.getClass()));
 		}catch(org.springframework.dao.InvalidDataAccessResourceUsageException e){
 			e.printStackTrace();
 			if(ta!=null) ta.rollback();
 			this.getSession().close();
-			throw new DataIntegrityViolationException("(3)Violação de Integridade na Entidade:"+Reflection.getClassName(entity.getClass()));
+			throw new DataIntegrityViolationException("(3)ViolaÃ§Ã£o de Integridade na Entidade:"+Reflection.getClassName(entity.getClass()));
 		}catch (Exception e) {
 			e.printStackTrace();
 			if(ta!=null) ta.rollback();
@@ -220,8 +219,8 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 	
 	/**
 	 * Executa uma Query livre.
-	 * @param qry
-	 * @return
+	 * @param qry Consulta HQL
+	 * @return List<E> lista de entidades localizadas pela Query HQL
 	 */
 	@SuppressWarnings("unchecked")
 	public List<E> findByHQL(String qry){

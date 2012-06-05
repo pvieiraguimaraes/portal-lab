@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
 import br.ueg.builderSoft.model.Entity;
 
 /**
- * Classe que lê arquivos .properties
+ * Classe que lÃª arquivos .properties
  * @author Diego
  *
  */
@@ -21,7 +21,7 @@ public class PropertiesReader {
 	}
 	
 	/**
-	 * Método que retorna os searchField dentro do bundle iniciado com o nome da Entidade
+	 * MÃ©todo que retorna os searchField dentro do bundle iniciado com o nome da Entidade
 	 * @param entity
 	 * @return Lista de nomes dos campos de busca
 	 */

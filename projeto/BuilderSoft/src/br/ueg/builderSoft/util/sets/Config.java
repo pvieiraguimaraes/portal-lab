@@ -3,7 +3,7 @@ package br.ueg.builderSoft.util.sets;
 import java.util.ResourceBundle;
 
 /**
- * Classe para servir de base para as configurações do sistema. 
+ * Classe para servir de base para as configuraÃ§Ã£es do sistema. 
  * banco de dados
  * @author Guiliano
  *

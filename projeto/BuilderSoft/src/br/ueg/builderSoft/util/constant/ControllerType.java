@@ -1,7 +1,7 @@
 package br.ueg.builderSoft.util.constant;
 
 /**
- * Classe que contém as constantes dos tipos de controladores
+ * Classe que contÃ©m as constantes dos tipos de controladores
  * @author Diego
  *
  */

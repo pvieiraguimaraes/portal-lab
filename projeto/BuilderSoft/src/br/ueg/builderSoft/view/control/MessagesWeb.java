@@ -10,7 +10,7 @@ import br.ueg.builderSoft.util.constant.MessagesType;
 import br.ueg.builderSoft.util.control.MessagesControl;
 
 /**
- * Classe que fica responsável por exibir as mensagens da visão WEB.
+ * Classe que fica responsavel por exibir as mensagens da visao WEB.
  * 
  * @author Diego
  * 
