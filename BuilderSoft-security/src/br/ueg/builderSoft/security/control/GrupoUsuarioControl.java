@@ -61,7 +61,7 @@ public class GrupoUsuarioControl extends Control<GrupoUsuario> {
 
 	}
 	/**
-	 * @return
+	 * @return GenericDAO<CasoDeUsoFuncionalidade> genericDAO para manipular CasoDeUsoFuncionalidade
 	 */
 	@SuppressWarnings({ "unused", "unchecked" })
 	private GenericDAO<CasoDeUsoFuncionalidade> getCasoDeUsoFuncionalidadeDAO() {
