@@ -60,11 +60,15 @@ public class MessagesWebZK extends MessagesControl {
 			context.addMessage(null, messageWeb);*/
 		//if(type == )
 		String message_type = null;
+		//int timeDelay = 10000;
+		String position = "center";
 		if (type == MessagesType.ERROR) {
 			message_type = Messagebox.ERROR;
 		}
 		if (type == MessagesType.INFO) {
 			message_type = Messagebox.INFORMATION;
+		//	timeDelay = 5000;
+			position = "top,right";
 		}
 		if (type == MessagesType.WARNING) {
 			message_type = Messagebox.EXCLAMATION;
@@ -95,12 +99,14 @@ public class MessagesWebZK extends MessagesControl {
 			});
 				 
 			
-			w.setPosition("top,right");
+			w.setPosition(position);
 
 			w.setClosable(true);
 			w.setVisible(true);
 			w.setParent(Executions.getCurrent().getDesktop().getFirstPage().getFirstRoot());
 			w.doPopup();
+		} else {
+			w.setPosition(position);
 		}
 		//w.setWidth("200px");
 		Hlayout layout = new Hlayout();
