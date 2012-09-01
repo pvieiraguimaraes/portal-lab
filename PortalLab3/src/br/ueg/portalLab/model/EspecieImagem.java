@@ -79,6 +79,7 @@ public class EspecieImagem extends EspecieMultimidia<Image> {
 	 */
 	public Image getFileFromCaminho(int type, String fileName){
 		Image imageAux = null;
+		InputStream is = null;;
 		if (fileName != null && fileName.length() > 0) {
 
 			String path = this.getDirectoryImage(true);
@@ -90,13 +91,22 @@ public class EspecieImagem extends EspecieMultimidia<Image> {
 				}else{
 					aux="thumb_";
 				}
-				File file = new File(path.concat(aux).concat(fileName));
-
-				FileInputStream is = new FileInputStream(file);
+				if(this.isNew()){
+					
+					InputStream streamMedia = this.media.getStreamData();
+					is = getThumbImageInputStream(streamMedia);
+				}else{
+					File file = new File(path.concat(aux).concat(fileName));
+	
+					 is = new FileInputStream(file);
+				}
 				imageAux = (Image) new AImage(this.getNome(), is);
 
 			} catch (IOException e) {
 				System.err.println(e.getCause());
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

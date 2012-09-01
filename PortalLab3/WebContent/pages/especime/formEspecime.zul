@@ -24,10 +24,10 @@
 				        			<combobox id="cmdLaboratorio" hflex="1" selectedItem="@{controller.fldLaboratorio }"
 				        			model="@{controller.laboratorioList }"
 				        			>
-				        			<attribute name="onChange">
-				        				cmbGrupoEnderecoFisico.setRawValue(null);
-				        			</attribute>
-										</combobox>
+					        			<attribute name="onChange">
+					        				cmbGrupoEnderecoFisico.setRawValue(null);
+					        			</attribute>
+									</combobox>
 				        			<combobox hflex="1" id="cmbGrupoEnderecoFisico"
 				        				model="@{controller.grupoEnderecoFisicoList, load-when='cmdLaboratorio.onChange'}"
 				        				selectedItem = "@{controller.fldGrupoEnderecoFisico }"/>
@@ -520,7 +520,7 @@
 					 <tabpanel>
 						 <hlayout>
 						 	<label value="Selecione o item Taxonomico para ver os itens multímidia:"/>
-						 	<combobox id="cmbSelectedItemTaxonomicoMedia" model="@{controller.listItemTaxonomicoMedia, load-when='cmbEpitetoEspecifico.onChange, cmbGenero.onChange, cmbFamilia.onChange, cmbSubFamilia.onChange, cmbOrdem.onChange, cmbSubOrdem.onChange, cmbClasse.onChange, cmbSubClasse.onChange, cmbFilo.onChange, cmbReino.onChange' }"
+						 	<combobox  id="cmbSelectedItemTaxonomicoMedia" model="@{controller.listItemTaxonomicoMedia, load-when='cmbEpitetoEspecifico.onChange, cmbGenero.onChange, cmbFamilia.onChange, cmbSubFamilia.onChange, cmbOrdem.onChange, cmbSubOrdem.onChange, cmbClasse.onChange, cmbSubClasse.onChange, cmbFilo.onChange, cmbReino.onChange' }"
 						 	selectedItem = "@{controller.fldSelectedItemTaxonomicoMedia }">
 						 		<comboitem value="@{each }" />
 						 	</combobox>

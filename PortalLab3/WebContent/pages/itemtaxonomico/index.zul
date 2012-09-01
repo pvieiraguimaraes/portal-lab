@@ -89,7 +89,8 @@
 				</div>
 			</north>
 			<center>
-				<tree id="treeItemTaxonomico" 
+				<tree id="treeItemTaxonomico"
+					rows="10" 
 					hflex="1" 
 					model="@{itemTaxonomicoController.itemTaxonomicoTreeModel}" 
 					onSelect="itemTaxonomicoController.selectEntity()"					
