@@ -792,6 +792,7 @@ public class EspecimeComposer extends ComposerController<Especime> {
 		lb.setModel(new BindingListModelList(new ArrayList<Entity>(), true));
 		
 		super.showEditForm();
+		
 		Textbox tb = (Textbox)this.getEditForm().getFellow("fldGrupoEnderecoFisicoHidden");
 		Combobox cb = (Combobox) this.getEditForm().getFellow("cmbGrupoEnderecoFisico");		
 		cb.setValue(tb.getValue());
@@ -1196,15 +1197,20 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	public void adicionarImagem(){
 		Combobox cb = (Combobox)this.getEditForm().getFellow("cmbEstacao");
 		Listbox lb = (Listbox)this.getEditForm().getFellow("lbEspecimeImagem");
-		ListModelSet<Object> lm = (ListModelSet<Object>)lb.getModel();//TODO Tratar quando não está definido o itemtaxonomico
-		EspecieImagem ei = new EspecieImagem();
-		ei.setControleInsercaoPadroa(false);
-		ei.setMedia(this.getEspecieImagem().getMedia());
-		if(cb.getSelectedItem()!=null)
-			ei.setEstacao((Estacao)cb.getSelectedItem().getValue());
-		ei.setId(Long.valueOf(lb.getModel().getSize()+1));
-		
-		lm.add(ei);
+		//if(lb.getSelectedItem()!=null){
+			ListModelSet<Object> lm = (ListModelSet<Object>)lb.getModel();//TODO Tratar quando não está definido o itemtaxonomico
+			EspecieImagem ei = new EspecieImagem();
+			ei.setControleInsercaoPadroa(false);
+			ei.setMedia(this.getEspecieImagem().getMedia());
+			if(cb.getSelectedItem()!=null)
+				ei.setEstacao((Estacao)cb.getSelectedItem().getValue());
+			ei.setId(Long.valueOf(lb.getModel().getSize()+1));
+			
+			lm.add(ei);
+		/*}else{
+			this.getControl().getMessagesControl().addMessageError("selecione_item_taxonomico_primeiro");
+		}*/
+			
 
 	}
 
