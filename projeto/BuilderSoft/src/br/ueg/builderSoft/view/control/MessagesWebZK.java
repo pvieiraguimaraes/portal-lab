@@ -59,11 +59,13 @@ public class MessagesWebZK extends MessagesControl {
 			FacesMessage messageWeb = new FacesMessage(severity, "", message);
 			context.addMessage(null, messageWeb);*/
 		//if(type == )
+		boolean isError = false;
 		String message_type = null;
 		//int timeDelay = 10000;
 		String position = "center";
 		if (type == MessagesType.ERROR) {
 			message_type = Messagebox.ERROR;
+			isError = true;
 		}
 		if (type == MessagesType.INFO) {
 			message_type = Messagebox.INFORMATION;
@@ -104,7 +106,11 @@ public class MessagesWebZK extends MessagesControl {
 			w.setClosable(true);
 			w.setVisible(true);
 			w.setParent(Executions.getCurrent().getDesktop().getFirstPage().getFirstRoot());
-			w.doPopup();
+			if (isError) {
+				w.doModal();
+			} else {
+				w.doPopup();
+			}
 		} else {
 			w.setPosition(position);
 		}
