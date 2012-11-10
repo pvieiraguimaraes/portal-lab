@@ -1,11 +1,8 @@
 package br.ueg.portalLab.view.composer;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -29,7 +26,6 @@ import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.ListModel;
-import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.ListModelSet;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
@@ -782,7 +778,7 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	/* (non-Javadoc)
 	 * @see br.ueg.builderSoft.view.zk.composer.ComposerController#showEditForm()
 	 */
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void showEditForm() {
 		// TODO Auto-generated method stub
@@ -878,7 +874,7 @@ public class EspecimeComposer extends ComposerController<Especime> {
 		Listbox lb = (Listbox)this.getEditForm().getFellow("lbAutores");
 		addItemInListBoxFromCombobox(cb, lb);
 	}
-	@SuppressWarnings("unchecked")
+	
 	public void removeAutor(){
 		Combobox cb = (Combobox)this.getEditForm().getFellow("cmbAutorListAvaliable");
 		Listbox lb = (Listbox)this.getEditForm().getFellow("lbAutores");
@@ -911,7 +907,6 @@ public class EspecimeComposer extends ComposerController<Especime> {
 		removeSelectedItem(cb);
 	}
 	
-	@SuppressWarnings("unchecked")
 	public void removeColetor(){
 		Combobox cb = (Combobox)this.getEditForm().getFellow("cmbColetorListAvaliable");
 		Listbox lb = (Listbox)this.getEditForm().getFellow("lbColetores");
@@ -924,10 +919,9 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	 * @param cb
 	 * @param lb
 	 */
-	@SuppressWarnings("unchecked")
 	private void removeSelectedItemFromListbox(Combobox cb, Listbox lb) {
 		BindingListModelSet<Object> modelDeterminadores = (BindingListModelSet<Object>)lb.getModel();
-		BindingListModelList<Entity> modelDeterminadoresAvaliable = (BindingListModelList<Entity>)cb.getModel();
+		BindingListModelList<Object> modelDeterminadoresAvaliable = (BindingListModelList<Object>)cb.getModel();
 		
 		for(Object e : modelDeterminadores){
 			Entity entity = (Entity)lb.getSelectedItem().getValue();
@@ -942,18 +936,17 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	/**
 	 * @param cb
 	 */
-	@SuppressWarnings("unchecked")
 	private void removeSelectedItem(Combobox cb) {
-		BindingListModelList<Entity> model = (BindingListModelList<Entity>)cb.getModel();
-		for(Entity e : model){
+		BindingListModelList<Object> model = (BindingListModelList<Object>)cb.getModel();
+		for(Object e : model){
+			Entity e2 = (Entity) e;
 			Entity determinador = (Entity)cb.getSelectedItem().getValue();
-			if(e.getId().equals(determinador.getId())){
+			if(e2.getId().equals(determinador.getId())){
 				model.remove(determinador);
 				break;
 			}
 		}
 	}
-	@SuppressWarnings("unchecked")
 	public void addDeterminador(){
 		Combobox cb = (Combobox)this.getEditForm().getFellow("cmbDeterminadorAvaliable");
 		Listbox lb = (Listbox)this.getEditForm().getFellow("lbDeterminadores");
@@ -971,13 +964,12 @@ public class EspecimeComposer extends ComposerController<Especime> {
 		
 	}
 	
-	@SuppressWarnings("unchecked")
 	public void removeDeterminador(){
 		Combobox cb = (Combobox)this.getEditForm().getFellow("cmbDeterminadorAvaliable");
 		Listbox lb = (Listbox)this.getEditForm().getFellow("lbDeterminadores");
 		
 		BindingListModelSet<Object> modelDeterminadores = (BindingListModelSet<Object>)lb.getModel();
-		BindingListModelList<Entity> modelDeterminadoresAvaliable = (BindingListModelList<Entity>)cb.getModel();
+		BindingListModelList<Object> modelDeterminadoresAvaliable = (BindingListModelList<Object>)cb.getModel();
 		
 		for(Object e : modelDeterminadores){
 			EspecimeDeterminador especimeDeterminador = (EspecimeDeterminador)lb.getSelectedItem().getValue();
