@@ -29,6 +29,8 @@ import org.zkoss.zul.ListModel;
 import org.zkoss.zul.ListModelSet;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Tab;
+import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
@@ -69,8 +71,11 @@ public class EspecimeComposer extends ComposerController<Especime> {
 		this.setEditForm(null);
 	}
 
-	/* (non-Javadoc)
-	 * @see br.ueg.builderSoft.view.zk.composer.ComposerController#cancelEditEntity()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.ueg.builderSoft.view.zk.composer.ComposerController#cancelEditEntity()
 	 */
 	@Override
 	public void cancelEditEntity() {
@@ -80,7 +85,6 @@ public class EspecimeComposer extends ComposerController<Especime> {
 
 	@AttributeView(key = "laboratorio", isEntityValue = true, fieldType = Laboratorio.class, isVisible = true, caption = "especime_laboratorioColumn")
 	private Laboratorio fldLaboratorio;
-
 
 	@AttributeView(key = "grupoEnderecoFisico", isEntityValue = true, fieldType = GrupoEnderecoFisico.class, isVisible = true, caption = "especime_grupoEnderecoFisicoColumn")
 	private GrupoEnderecoFisico fldGrupoEnderecoFisico;
@@ -126,94 +130,92 @@ public class EspecimeComposer extends ComposerController<Especime> {
 
 	@AttributeView(key = "buscaCatalogo", isEntityValue = false, fieldType = String.class, isVisible = true, caption = "especime_buscaCatalogoColumn")
 	private String fldBuscaCatalogo;
-	
+
 	/* geografia */
 	@AttributeView(key = "pais", isEntityValue = true, fieldType = ItemGeografico.class, isVisible = true, caption = "especime_paisColumn")
 	private ItemGeografico fldPais;
-	
+
 	@AttributeView(key = "estado", isEntityValue = true, fieldType = ItemGeografico.class, isVisible = true, caption = "especime_estadoColumn")
 	private ItemGeografico fldEstado;
-	
+
 	@AttributeView(key = "municipio", isEntityValue = true, fieldType = ItemGeografico.class, isVisible = true, caption = "especime_municipioColumn")
 	private ItemGeografico fldMunicipio;
-	
+
 	@AttributeView(key = "localidade", isEntityValue = true, fieldType = String.class, isVisible = true, caption = "especime_localidadeColumn")
 	private String fldLocalidade;
-	
+
 	@AttributeView(key = "latitude", isEntityValue = true, fieldType = String.class, isVisible = true, caption = "especime_latitudeColumn")
 	private String fldLatitude;
-	
+
 	@AttributeView(key = "longitude", isEntityValue = true, fieldType = String.class, isVisible = true, caption = "especime_longitudeColumn")
 	private String fldLongitude;
-	
+
 	@AttributeView(key = "altitude", isEntityValue = true, fieldType = String.class, isVisible = true, caption = "especime_altitudeColumn")
 	private String fldAltitude;
-	
+
 	@AttributeView(key = "profundidade", isEntityValue = true, fieldType = String.class, isVisible = true, caption = "especime_profundidadeColumn")
 	private String fldProfundidade;
-	
+
 	@AttributeView(key = "precisao", isEntityValue = true, fieldType = String.class, isVisible = true, caption = "especime_precisaoColumn")
 	private String fldPrecisao;
-	
+
 	@AttributeView(key = "massaDAgua", isEntityValue = true, fieldType = MassaDAgua.class, isVisible = true, caption = "especime_massaDAguaColumn")
 	private MassaDAgua fldMassaDAgua;
-	
+
 	@AttributeView(key = "datum", isEntityValue = true, fieldType = Datum.class, isVisible = true, caption = "especime_datumColumn")
 	private Datum fldDatum;
-	
+
 	@AttributeView(key = "observacaoGeografria", isEntityValue = true, fieldType = String.class, isVisible = true, caption = "especime_observacaoGeografriaColumn")
 	private String fldObservacaoGeografria;
-	
-	
-	//Atributos guia taxonomia
-	
-	@AttributeView(key = "reino", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true, 		caption = "especime_reinoColumn")
-	private ItemTaxonomico fldReino;
-	
-	@AttributeView(key = "filo", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true,	 		caption = "especime_filoColumn")
-	private ItemTaxonomico fldFilo;
-	
-	@AttributeView(key = "classe", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true, 		caption = "especime_classeColumn")
-	private ItemTaxonomico fldClasse;
-	
-	@AttributeView(key = "subClasse", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true,		caption = "especime_subClasseColumn")
-	private ItemTaxonomico fldSubClasse;
-	
-	@AttributeView(key = "familia", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true, 		caption = "especime_familiaColumn")
-	private ItemTaxonomico fldFamilia;
-	
-	@AttributeView(key = "subFamilia", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true,	caption = "especime_subFamiliaColumn")
-	private ItemTaxonomico fldSubFamilia;
-	
-	@AttributeView(key = "ordem", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true,			caption = "especime_ordemColumn")
-	private ItemTaxonomico fldOrdem;
-	
-	@AttributeView(key = "subOrdem", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true,		 caption = "especime_subOrdemColumn")
-	private ItemTaxonomico fldSubOrdem;
-	
-	@AttributeView(key = "genero", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true,		 caption = "especime_generoColumn")
-	private ItemTaxonomico fldGenero;
-	
-	@AttributeView(key = "epitetoEspecifico", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true,		 caption = "especime_epitetoEspecificoColumn")
-	private ItemTaxonomico fldEpitetoEspecifico;
-	
-	@AttributeView(key = "especimeDeterminadores", isEntityValue = true, fieldType = Set.class, isVisible = true,		 caption = "especime_especimeDeterminadoresColumn")
-	private Set<EspecimeDeterminador> fldEspecimeDeterminadores = new HashSet<EspecimeDeterminador>(0);
 
-	@AttributeView(key = "imprecisao", isEntityValue = true, fieldType = String.class, isVisible = true,		 caption = "especime_imprecisaoColumn")
+	// Atributos guia taxonomia
+
+	@AttributeView(key = "reino", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true, caption = "especime_reinoColumn")
+	private ItemTaxonomico fldReino;
+
+	@AttributeView(key = "filo", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true, caption = "especime_filoColumn")
+	private ItemTaxonomico fldFilo;
+
+	@AttributeView(key = "classe", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true, caption = "especime_classeColumn")
+	private ItemTaxonomico fldClasse;
+
+	@AttributeView(key = "subClasse", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true, caption = "especime_subClasseColumn")
+	private ItemTaxonomico fldSubClasse;
+
+	@AttributeView(key = "familia", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true, caption = "especime_familiaColumn")
+	private ItemTaxonomico fldFamilia;
+
+	@AttributeView(key = "subFamilia", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true, caption = "especime_subFamiliaColumn")
+	private ItemTaxonomico fldSubFamilia;
+
+	@AttributeView(key = "ordem", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true, caption = "especime_ordemColumn")
+	private ItemTaxonomico fldOrdem;
+
+	@AttributeView(key = "subOrdem", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true, caption = "especime_subOrdemColumn")
+	private ItemTaxonomico fldSubOrdem;
+
+	@AttributeView(key = "genero", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true, caption = "especime_generoColumn")
+	private ItemTaxonomico fldGenero;
+
+	@AttributeView(key = "epitetoEspecifico", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true, caption = "especime_epitetoEspecificoColumn")
+	private ItemTaxonomico fldEpitetoEspecifico;
+
+	@AttributeView(key = "especimeDeterminadores", isEntityValue = true, fieldType = Set.class, isVisible = true, caption = "especime_especimeDeterminadoresColumn")
+	private Set<EspecimeDeterminador> fldEspecimeDeterminadores = new HashSet<EspecimeDeterminador>(
+			0);
+
+	@AttributeView(key = "imprecisao", isEntityValue = true, fieldType = String.class, isVisible = true, caption = "especime_imprecisaoColumn")
 	private String fldImprecisao;
-	
-	@AttributeView(key = "autores", isEntityValue = true, fieldType = Set.class, isVisible = true,		 caption = "especime_autoresColumn")
+
+	@AttributeView(key = "autores", isEntityValue = true, fieldType = Set.class, isVisible = true, caption = "especime_autoresColumn")
 	private Set<Autor> fldAutores = new HashSet<Autor>(0);
-	
-	@AttributeView(key = "observacaoTaxonomia", isEntityValue = true, fieldType = String.class, isVisible = true,		 caption = "especime_observacaoTaxonomiaColumn")
+
+	@AttributeView(key = "observacaoTaxonomia", isEntityValue = true, fieldType = String.class, isVisible = true, caption = "especime_observacaoTaxonomiaColumn")
 	private String fldObservacaoTaxonomia;
-	
-	
-	
-	@AttributeView(key="especieImagem", isEntityValue=false, fieldType = Set.class, isVisible=true, caption="especime_imagemColumn")
+
+	@AttributeView(key = "especieImagem", isEntityValue = false, fieldType = Set.class, isVisible = true, caption = "especime_imagemColumn")
 	private Set<EspecieImagem> fldEspecieImagens = new HashSet<EspecieImagem>(0);
-	@AttributeView(key="selectedItemTaxonomicoMedia", isEntityValue = false, fieldType = ItemTaxonomico.class, isVisible = false)
+	@AttributeView(key = "selectedItemTaxonomicoMedia", isEntityValue = false, fieldType = ItemTaxonomico.class, isVisible = false)
 	private ItemTaxonomico fldSelectedItemTaxonomicoMedia;
 
 	@Autowired
@@ -221,21 +223,21 @@ public class EspecimeComposer extends ComposerController<Especime> {
 
 	@Wire
 	protected Window formEspecime;
-	
+
 	@Wire
 	protected Window showImage;
-	
+
 	@Wire
 	protected Window controlEspecime;
-	
+
 	@Wire
 	protected Combobox cmbGrupoEnderecoFisico;
-	
+
 	@Wire
 	protected Listbox divListBoxColetores;
-	
-	protected EspecieImagem especieImagem =  new EspecieImagem();
-	
+
+	protected EspecieImagem especieImagem = new EspecieImagem();
+
 	protected AnnotateDataBinder binderForm;
 	/**
 	 * Filo Cnidaria
@@ -271,12 +273,12 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	 */
 	@Override
 	public void setSelectedEntity(Especime selectedEntity) {
-		if(selectedEntity!=null){
+		if (selectedEntity != null) {
 			super.setSelectedEntity(selectedEntity);
 			this.getEspecimeControl().setSelectedEspecime(selectedEntity);
-	//		if(selectedEntity!=null && cmbGrupoEnderecoFisico!=null){
-	//			binder.loadAttribute(cmbGrupoEnderecoFisico, "model");
-	//		}
+			// if(selectedEntity!=null && cmbGrupoEnderecoFisico!=null){
+			// binder.loadAttribute(cmbGrupoEnderecoFisico, "model");
+			// }
 		}
 	}
 
@@ -631,40 +633,47 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	@Override
 	public Window getEditForm() {
 		try {
-			if(this.formEspecime==null){
-				this.formEspecime = (Window) Executions.createComponentsDirectly(getZulReader(), null, this.controlEspecime, null);
-				
-				//this.formEspecime.setParent(this.controlEspecime);
-				//this.controlEspecime.appendChild(this.formEspecime);
-				
+			if (this.formEspecime == null) {
+				this.formEspecime = (Window) Executions
+						.createComponentsDirectly(getZulReader(), null,
+								this.controlEspecime, null);
+
+				// this.formEspecime.setParent(this.controlEspecime);
+				// this.controlEspecime.appendChild(this.formEspecime);
+
 				this.binderForm = new AnnotateDataBinder(this.formEspecime);
 				this.binderForm.setLoadOnSave(false);
 				this.binderForm.bindBean("controller", this);
 				this.binderForm.loadComponent(this.formEspecime);
-				
+
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return this.formEspecime;
 	}
+
 	/**
-	 * Obtém o nome do arquivo zul ao qual o componente está assossiado. Por padrão, o nome adotado para os arquivos zul
-	 * dos componentes devem ter o mesmo nome da classe que o representa. Caso decida utilizar um nome diferente, este
-	 * método deve ser sobreescrito na classe que herdar esta.
+	 * Obtém o nome do arquivo zul ao qual o componente está assossiado. Por
+	 * padrão, o nome adotado para os arquivos zul dos componentes devem ter o
+	 * mesmo nome da classe que o representa. Caso decida utilizar um nome
+	 * diferente, este método deve ser sobreescrito na classe que herdar esta.
 	 * 
 	 * @return Reader
-	 * @throws UnsupportedEncodingException 
+	 * @throws UnsupportedEncodingException
 	 */
 	protected Reader getZulReader() throws UnsupportedEncodingException {
-		String name = this.getPathToFormZulFile()+"/form"+this.getEntityClass().getSimpleName() +".zul";
-		InputStream resourceAsStream = this.controlEspecime.getDesktop().getWebApp().getResourceAsStream(name);
+		String name = this.getPathToFormZulFile() + "/form"
+				+ this.getEntityClass().getSimpleName() + ".zul";
+		InputStream resourceAsStream = this.controlEspecime.getDesktop()
+				.getWebApp().getResourceAsStream(name);
 		return new InputStreamReader(resourceAsStream, "UTF-8");
 	}
-	protected String getPathToFormZulFile(){
-		return "/pages/"+this.getEntityClass().getSimpleName().toLowerCase();
+
+	protected String getPathToFormZulFile() {
+		return "/pages/" + this.getEntityClass().getSimpleName().toLowerCase();
 	}
 
 	@Override
@@ -672,23 +681,21 @@ public class EspecimeComposer extends ComposerController<Especime> {
 		this.formEspecime = form;
 	}
 
-
 	/* Para tratar a Guia Coleata */
 	public BindingListModelList<Entity> getColetorListAvaliable() {
-		Set<Coletor> fldColetores2 = this.getSelectedEntity()!=null?this.getSelectedEntity().getColetores():null;
-		
-		if(fldColetores2==null ||(fldColetores2!=null && fldColetores2.size()==0)){
+		Set<Coletor> fldColetores2 = this.getSelectedEntity() != null ? this
+				.getSelectedEntity().getColetores() : null;
+
+		if (fldColetores2 == null
+				|| (fldColetores2 != null && fldColetores2.size() == 0)) {
 			fldColetores2 = new HashSet<Coletor>();
 			Coletor e = new Coletor();
 			e.setId(0L);
 			fldColetores2.add(e);
 		}
 		return this.getEntityModel(this.getEspecimeControl()
-				.getListToEntityField(
-						new HashSet<Entity>(fldColetores2)));
+				.getListToEntityField(new HashSet<Entity>(fldColetores2)));
 	}
-
-
 
 	public ListModel<Coletor> getColetorList() {
 		BindingListModelSet<Coletor> coletoresList = new BindingListModelSet<Coletor>(
@@ -698,7 +705,7 @@ public class EspecimeComposer extends ComposerController<Especime> {
 				&& this.getSelectedEntity().getId() != null) {
 			coletoresList = new BindingListModelSet<Coletor>(
 					this.selectedEntity.getColetores(), true);
-		}else{
+		} else {
 			coletoresList = new BindingListModelSet<Coletor>(
 					this.getFldColetores(), true);
 		}
@@ -710,63 +717,66 @@ public class EspecimeComposer extends ComposerController<Especime> {
 		BindingListModelSet<GrupoEnderecoFisico> resultList = new BindingListModelSet<GrupoEnderecoFisico>(
 				new HashSet<GrupoEnderecoFisico>(0), true);
 		;
-			List<GrupoEnderecoFisico> grupoEnderecoFisicoList = this
-					.getEspecimeControl().getGrupoEnderecoFisicoList(
-							this.getFldLaboratorio());
-			
-			resultList = new BindingListModelSet<GrupoEnderecoFisico>(
-					new HashSet<GrupoEnderecoFisico>(grupoEnderecoFisicoList),
-					true);
-		
+		List<GrupoEnderecoFisico> grupoEnderecoFisicoList = this
+				.getEspecimeControl().getGrupoEnderecoFisicoList(
+						this.getFldLaboratorio());
+
+		resultList = new BindingListModelSet<GrupoEnderecoFisico>(
+				new HashSet<GrupoEnderecoFisico>(grupoEnderecoFisicoList), true);
 
 		return resultList;
 	}
-	public BindingListModelList<Entity> getLaboratorioList(){
+
+	public BindingListModelList<Entity> getLaboratorioList() {
 		return this.getFKEntityModel("fldLaboratorio");
 	}
-
 
 	@Override
 	public boolean editEntity() {
 		binder.saveAll();
-		
-		//this.doAction("ASSOCIATE");
-		this.genericControl.associateEntityToAttributeView(this.getSelectedEntity());
-		
+
+		// this.doAction("ASSOCIATE");
+		this.genericControl.associateEntityToAttributeView(this
+				.getSelectedEntity());
+
 		binder.loadComponent(this.getEditForm());
-		//TODO descobrir uma forma de n�o fazer isso(ler tudo, deveria funcionar s� com o comando acima, 
-		//quando o formul�rio � construido automaticamente.
+		// TODO descobrir uma forma de n�o fazer isso(ler tudo, deveria
+		// funcionar s� com o comando acima,
+		// quando o formul�rio � construido automaticamente.
 		binder.loadAll();
-		//binder.saveAll();
+		// binder.saveAll();
 		this.showEditForm();
-		
 
-
-
-
-//		if(this.getSelectedEntity()!=null&& this.getSelectedEntity().getGrupoEnderecoFisico()!=null){
-//			cmbGrupoEnderecoFisico.setValue(this.getSelectedEntity().getGrupoEnderecoFisico().getNome());
-//		}
+		// if(this.getSelectedEntity()!=null&&
+		// this.getSelectedEntity().getGrupoEnderecoFisico()!=null){
+		// cmbGrupoEnderecoFisico.setValue(this.getSelectedEntity().getGrupoEnderecoFisico().getNome());
+		// }
 		return true;
 	}
-	
-	/* (non-Javadoc)
-	 * @see br.ueg.builderSoft.view.zk.composer.ComposerController#doAction(java.lang.String)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.ueg.builderSoft.view.zk.composer.ComposerController#doAction(java.
+	 * lang.String)
 	 */
 	@Override
 	public boolean doAction(String action) {
-		boolean result=false;
-		binder.saveAll();	
+		boolean result = false;
+		binder.saveAll();
 		if (genericControl.doAction(action, initializeEntity())) {
 			verifyListing(action);
-			//hideEditForm();
-			result = true;				
+			// hideEditForm();
+			result = true;
 		}
 		binder.loadAll();
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see br.ueg.builderSoft.view.zk.composer.ComposerController#newEntity()
 	 */
 	@Override
@@ -775,84 +785,93 @@ public class EspecimeComposer extends ComposerController<Especime> {
 		super.newEntity();
 	}
 
-	/* (non-Javadoc)
-	 * @see br.ueg.builderSoft.view.zk.composer.ComposerController#showEditForm()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.ueg.builderSoft.view.zk.composer.ComposerController#showEditForm()
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void showEditForm() {
 		// TODO Auto-generated method stub
 		this.setFldSelectedItemTaxonomicoMedia(null);
-		especieImagem =  new EspecieImagem();
-		Listbox  lb = (Listbox) this.getEditForm().getFellow("lbEspecimeImagem");
+		especieImagem = new EspecieImagem();
+		Listbox lb = (Listbox) this.getEditForm().getFellow("lbEspecimeImagem");
 		lb.setModel(new BindingListModelList(new ArrayList<Entity>(), true));
-		
+
 		super.showEditForm();
-		
-		Textbox tb = (Textbox)this.getEditForm().getFellow("fldGrupoEnderecoFisicoHidden");
-		Combobox cb = (Combobox) this.getEditForm().getFellow("cmbGrupoEnderecoFisico");		
-		cb.setValue(tb.getValue());
-		
-		//estado
-		tb = (Textbox)this.getEditForm().getFellow("fldEstadoHidden");
-		cb = (Combobox) this.getEditForm().getFellow("cmbEstado");		
-		cb.setValue(tb.getValue());
-		
-		//municipio
-		tb = (Textbox)this.getEditForm().getFellow("fldMunicipioHidden");
-		cb = (Combobox) this.getEditForm().getFellow("cmbMunicipio");		
-		cb.setValue(tb.getValue());
-		
-		//Filo
-		tb = (Textbox)this.getEditForm().getFellow("fldFiloHidden");
-		cb = (Combobox) this.getEditForm().getFellow("cmbFilo");		
-		cb.setValue(tb.getValue());
-		
-		//Classe
-		tb = (Textbox)this.getEditForm().getFellow("fldClasseHidden");
-		cb = (Combobox) this.getEditForm().getFellow("cmbClasse");		
+
+		Textbox tb = (Textbox) this.getEditForm().getFellow(
+				"fldGrupoEnderecoFisicoHidden");
+		Combobox cb = (Combobox) this.getEditForm().getFellow(
+				"cmbGrupoEnderecoFisico");
 		cb.setValue(tb.getValue());
 
-		//SubClasse
-		tb = (Textbox)this.getEditForm().getFellow("fldSubClasseHidden");
-		cb = (Combobox) this.getEditForm().getFellow("cmbSubClasse");		
-		cb.setValue(tb.getValue());		
-
-		//Familia
-		tb = (Textbox)this.getEditForm().getFellow("fldFamiliaHidden");
-		cb = (Combobox) this.getEditForm().getFellow("cmbFamilia");		
-		cb.setValue(tb.getValue());		
-
-		//SubFamilia
-		tb = (Textbox)this.getEditForm().getFellow("fldSubFamiliaHidden");
-		cb = (Combobox) this.getEditForm().getFellow("cmbSubFamilia");		
-		cb.setValue(tb.getValue());		
-
-		//Ordem
-		tb = (Textbox)this.getEditForm().getFellow("fldOrdemHidden");
-		cb = (Combobox) this.getEditForm().getFellow("cmbOrdem");		
-		cb.setValue(tb.getValue());		
-		
-		//SubOrdem
-		tb = (Textbox)this.getEditForm().getFellow("fldSubOrdemHidden");
-		cb = (Combobox) this.getEditForm().getFellow("cmbSubOrdem");		
-		cb.setValue(tb.getValue());		
-		
-		//Genero
-		tb = (Textbox)this.getEditForm().getFellow("fldGeneroHidden");
-		cb = (Combobox) this.getEditForm().getFellow("cmbGenero");		
-		cb.setValue(tb.getValue());		
-
-		//EpitetoEspecifico
-		tb = (Textbox)this.getEditForm().getFellow("fldEpitetoEspecificoHidden");
-		cb = (Combobox) this.getEditForm().getFellow("cmbEpitetoEspecifico");		
+		// estado
+		tb = (Textbox) this.getEditForm().getFellow("fldEstadoHidden");
+		cb = (Combobox) this.getEditForm().getFellow("cmbEstado");
 		cb.setValue(tb.getValue());
-		
-		//this.binder.
+
+		// municipio
+		tb = (Textbox) this.getEditForm().getFellow("fldMunicipioHidden");
+		cb = (Combobox) this.getEditForm().getFellow("cmbMunicipio");
+		cb.setValue(tb.getValue());
+
+		// Filo
+		tb = (Textbox) this.getEditForm().getFellow("fldFiloHidden");
+		cb = (Combobox) this.getEditForm().getFellow("cmbFilo");
+		cb.setValue(tb.getValue());
+
+		// Classe
+		tb = (Textbox) this.getEditForm().getFellow("fldClasseHidden");
+		cb = (Combobox) this.getEditForm().getFellow("cmbClasse");
+		cb.setValue(tb.getValue());
+
+		// SubClasse
+		tb = (Textbox) this.getEditForm().getFellow("fldSubClasseHidden");
+		cb = (Combobox) this.getEditForm().getFellow("cmbSubClasse");
+		cb.setValue(tb.getValue());
+
+		// Familia
+		tb = (Textbox) this.getEditForm().getFellow("fldFamiliaHidden");
+		cb = (Combobox) this.getEditForm().getFellow("cmbFamilia");
+		cb.setValue(tb.getValue());
+
+		// SubFamilia
+		tb = (Textbox) this.getEditForm().getFellow("fldSubFamiliaHidden");
+		cb = (Combobox) this.getEditForm().getFellow("cmbSubFamilia");
+		cb.setValue(tb.getValue());
+
+		// Ordem
+		tb = (Textbox) this.getEditForm().getFellow("fldOrdemHidden");
+		cb = (Combobox) this.getEditForm().getFellow("cmbOrdem");
+		cb.setValue(tb.getValue());
+
+		// SubOrdem
+		tb = (Textbox) this.getEditForm().getFellow("fldSubOrdemHidden");
+		cb = (Combobox) this.getEditForm().getFellow("cmbSubOrdem");
+		cb.setValue(tb.getValue());
+
+		// Genero
+		tb = (Textbox) this.getEditForm().getFellow("fldGeneroHidden");
+		cb = (Combobox) this.getEditForm().getFellow("cmbGenero");
+		cb.setValue(tb.getValue());
+
+		// EpitetoEspecifico
+		tb = (Textbox) this.getEditForm().getFellow(
+				"fldEpitetoEspecificoHidden");
+		cb = (Combobox) this.getEditForm().getFellow("cmbEpitetoEspecifico");
+		cb.setValue(tb.getValue());
+
+		// this.binder.
 	}
 
-	/* (non-Javadoc)
-	 * @see br.ueg.builderSoft.view.zk.composer.ComposerController#hideEditForm()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.ueg.builderSoft.view.zk.composer.ComposerController#hideEditForm()
 	 */
 	@Override
 	public void hideEditForm() {
@@ -862,70 +881,81 @@ public class EspecimeComposer extends ComposerController<Especime> {
 		setEditForm(null);
 	}
 
-	
-	public void addColetor(){
-		Combobox cb = (Combobox)this.getEditForm().getFellow("cmbColetorListAvaliable");
-		Listbox lb = (Listbox)this.getEditForm().getFellow("lbColetores");
+	public void addColetor() {
+		Combobox cb = (Combobox) this.getEditForm().getFellow(
+				"cmbColetorListAvaliable");
+		Listbox lb = (Listbox) this.getEditForm().getFellow("lbColetores");
 		addItemInListBoxFromCombobox(cb, lb);
 	}
-	
-	public void addAutor(){
-		Combobox cb = (Combobox)this.getEditForm().getFellow("cmbAutorListAvaliable");
-		Listbox lb = (Listbox)this.getEditForm().getFellow("lbAutores");
+
+	public void addAutor() {
+		Combobox cb = (Combobox) this.getEditForm().getFellow(
+				"cmbAutorListAvaliable");
+		Listbox lb = (Listbox) this.getEditForm().getFellow("lbAutores");
 		addItemInListBoxFromCombobox(cb, lb);
 	}
-	
-	public void removeAutor(){
-		Combobox cb = (Combobox)this.getEditForm().getFellow("cmbAutorListAvaliable");
-		Listbox lb = (Listbox)this.getEditForm().getFellow("lbAutores");
-		
+
+	public void removeAutor() {
+		Combobox cb = (Combobox) this.getEditForm().getFellow(
+				"cmbAutorListAvaliable");
+		Listbox lb = (Listbox) this.getEditForm().getFellow("lbAutores");
+
 		removeSelectedItemFromListbox(cb, lb);
 	}
-	public void removeImagem(){
-		Listbox lb = (Listbox)this.getEditForm().getFellow("lbEspecimeImagem");
-		
-		BindingListModelSet<Object> especieImagens = (BindingListModelSet<Object>)lb.getModel();
-		
-		Entity entity = (Entity)lb.getSelectedItem().getValue();
+
+	public void removeImagem() {
+		Listbox lb = (Listbox) this.getEditForm().getFellow("lbEspecimeImagem");
+
+		BindingListModelSet<Object> especieImagens = (BindingListModelSet<Object>) lb
+				.getModel();
+
+		Entity entity = (Entity) lb.getSelectedItem().getValue();
 		especieImagens.remove(entity);
 
 	}
 
 	/**
-	 * Recebe um combobox e um listbox, 
-	 * pega o item selecionado do combobox e adicionar no model do listbox.
+	 * Recebe um combobox e um listbox, pega o item selecionado do combobox e
+	 * adicionar no model do listbox.
+	 * 
 	 * @param cb
 	 * @param lb
 	 */
 	private void addItemInListBoxFromCombobox(Combobox cb, Listbox lb) {
-		BindingListModelSet<Object> blm = (BindingListModelSet<Object>) lb.getModel();
-		if(cb.getSelectedItem()==null){
+		BindingListModelSet<Object> blm = (BindingListModelSet<Object>) lb
+				.getModel();
+		if (cb.getSelectedItem() == null) {
 			alert("Selecione um item primeiro!");
 		}
 		blm.add(cb.getSelectedItem().getValue());
-		
+
 		removeSelectedItem(cb);
 	}
-	
-	public void removeColetor(){
-		Combobox cb = (Combobox)this.getEditForm().getFellow("cmbColetorListAvaliable");
-		Listbox lb = (Listbox)this.getEditForm().getFellow("lbColetores");
-		
+
+	public void removeColetor() {
+		Combobox cb = (Combobox) this.getEditForm().getFellow(
+				"cmbColetorListAvaliable");
+		Listbox lb = (Listbox) this.getEditForm().getFellow("lbColetores");
+
 		removeSelectedItemFromListbox(cb, lb);
 	}
 
 	/**
-	 * remove o item selecionado do listbox e adiciona o item removido ao combobox
+	 * remove o item selecionado do listbox e adiciona o item removido ao
+	 * combobox
+	 * 
 	 * @param cb
 	 * @param lb
 	 */
 	private void removeSelectedItemFromListbox(Combobox cb, Listbox lb) {
-		BindingListModelSet<Object> modelDeterminadores = (BindingListModelSet<Object>)lb.getModel();
-		BindingListModelList<Object> modelDeterminadoresAvaliable = (BindingListModelList<Object>)cb.getModel();
-		
-		for(Object e : modelDeterminadores){
-			Entity entity = (Entity)lb.getSelectedItem().getValue();
-			if(((Entity)e).getId().equals(entity.getId())){
+		BindingListModelSet<Object> modelDeterminadores = (BindingListModelSet<Object>) lb
+				.getModel();
+		BindingListModelList<Object> modelDeterminadoresAvaliable = (BindingListModelList<Object>) cb
+				.getModel();
+
+		for (Object e : modelDeterminadores) {
+			Entity entity = (Entity) lb.getSelectedItem().getValue();
+			if (((Entity) e).getId().equals(entity.getId())) {
 				modelDeterminadores.remove(entity);
 				modelDeterminadoresAvaliable.add(entity);
 				break;
@@ -937,136 +967,158 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	 * @param cb
 	 */
 	private void removeSelectedItem(Combobox cb) {
-		BindingListModelList<Object> model = (BindingListModelList<Object>)cb.getModel();
-		for(Object e : model){
+		BindingListModelList<Object> model = (BindingListModelList<Object>) cb
+				.getModel();
+		for (Object e : model) {
 			Entity e2 = (Entity) e;
-			Entity determinador = (Entity)cb.getSelectedItem().getValue();
-			if(e2.getId().equals(determinador.getId())){
+			Entity determinador = (Entity) cb.getSelectedItem().getValue();
+			if (e2.getId().equals(determinador.getId())) {
 				model.remove(determinador);
 				break;
 			}
 		}
 	}
-	public void addDeterminador(){
-		Combobox cb = (Combobox)this.getEditForm().getFellow("cmbDeterminadorAvaliable");
-		Listbox lb = (Listbox)this.getEditForm().getFellow("lbDeterminadores");
-		Date dta = ((Datebox)this.getEditForm().getFellow("dateBoxData")).getValue(); 
-		BindingListModelSet<Object> blm = (BindingListModelSet<Object>) lb.getModel();
+
+	public void addDeterminador() {
+		Combobox cb = (Combobox) this.getEditForm().getFellow(
+				"cmbDeterminadorAvaliable");
+		Listbox lb = (Listbox) this.getEditForm().getFellow("lbDeterminadores");
+		Date dta = ((Datebox) this.getEditForm().getFellow("dateBoxData"))
+				.getValue();
+		BindingListModelSet<Object> blm = (BindingListModelSet<Object>) lb
+				.getModel();
 		EspecimeDeterminador ed = new EspecimeDeterminador();
 		ed.setControleInsercaoPadroa(false);
-		ed.setId(Long.valueOf(blm.size()+1));
+		ed.setId(Long.valueOf(blm.size() + 1));
 		ed.setData(dta);
 		ed.setEspecime(this.getSelectedEntity());
-		ed.setDeterminador((Determinador)cb.getSelectedItem().getValue());
+		ed.setDeterminador((Determinador) cb.getSelectedItem().getValue());
 		blm.add(ed);
-		((Datebox)this.getEditForm().getFellow("dateBoxData")).setValue(null);
+		((Datebox) this.getEditForm().getFellow("dateBoxData")).setValue(null);
 		removeSelectedItem(cb);
-		
+
 	}
-	
-	public void removeDeterminador(){
-		Combobox cb = (Combobox)this.getEditForm().getFellow("cmbDeterminadorAvaliable");
-		Listbox lb = (Listbox)this.getEditForm().getFellow("lbDeterminadores");
-		
-		BindingListModelSet<Object> modelDeterminadores = (BindingListModelSet<Object>)lb.getModel();
-		BindingListModelList<Object> modelDeterminadoresAvaliable = (BindingListModelList<Object>)cb.getModel();
-		
-		for(Object e : modelDeterminadores){
-			EspecimeDeterminador especimeDeterminador = (EspecimeDeterminador)lb.getSelectedItem().getValue();
-			if(((Entity)e).getId().equals(especimeDeterminador.getId())){
+
+	public void removeDeterminador() {
+		Combobox cb = (Combobox) this.getEditForm().getFellow(
+				"cmbDeterminadorAvaliable");
+		Listbox lb = (Listbox) this.getEditForm().getFellow("lbDeterminadores");
+
+		BindingListModelSet<Object> modelDeterminadores = (BindingListModelSet<Object>) lb
+				.getModel();
+		BindingListModelList<Object> modelDeterminadoresAvaliable = (BindingListModelList<Object>) cb
+				.getModel();
+
+		for (Object e : modelDeterminadores) {
+			EspecimeDeterminador especimeDeterminador = (EspecimeDeterminador) lb
+					.getSelectedItem().getValue();
+			if (((Entity) e).getId().equals(especimeDeterminador.getId())) {
 				modelDeterminadores.remove(especimeDeterminador);
-				modelDeterminadoresAvaliable.add(especimeDeterminador.getDeterminador());
+				modelDeterminadoresAvaliable.add(especimeDeterminador
+						.getDeterminador());
 				break;
 			}
 		}
 	}
 
 	/* Fim tratar guia coleta */
-	
+
 	/* inicio geografia */
-	public List<ItemGeografico> getPaisList(){		
+	public List<ItemGeografico> getPaisList() {
 		return this.getEspecimeControl().getPaisList();
 	}
-	
-	public List<ItemGeografico> getEstadoList(){
+
+	public List<ItemGeografico> getEstadoList() {
 		return this.getEspecimeControl().getFilhoList(this.getFldPais());
 	}
-	public List<ItemGeografico> getMunicipioList(){
+
+	public List<ItemGeografico> getMunicipioList() {
 		return this.getEspecimeControl().getFilhoList(this.getFldEstado());
 	}
-	
-	
+
 	/* fim geografia */
-	
+
 	/* inicio guia taxonomia */
-	
-	public List<ItemTaxonomico> getReinoList(){		
+
+	public List<ItemTaxonomico> getReinoList() {
 		return this.getEspecimeControl().getReinoList();
 	}
-	
-	public List<ItemTaxonomico> getFiloList(){
+
+	public List<ItemTaxonomico> getFiloList() {
 		return this.getEspecimeControl().getFilhoList(this.getFldReino());
 	}
-	public List<ItemTaxonomico> getClasseList(){
+
+	public List<ItemTaxonomico> getClasseList() {
 		return this.getEspecimeControl().getFilhoList(this.getFldFilo());
 	}
-	public List<ItemTaxonomico> getSubClasseList(){
+
+	public List<ItemTaxonomico> getSubClasseList() {
 		return this.getEspecimeControl().getFilhoList(this.getFldClasse());
 	}
-	public List<ItemTaxonomico> getOrdemList(){
+
+	public List<ItemTaxonomico> getOrdemList() {
 		ArrayList<ItemTaxonomico> resultList = new ArrayList<ItemTaxonomico>(0);
-		
-		List<ItemTaxonomico> filhoList2 = this.getEspecimeControl().getFilhoList(this.getFldSubClasse());
-		if(filhoList2!=null){
+
+		List<ItemTaxonomico> filhoList2 = this.getEspecimeControl()
+				.getFilhoList(this.getFldSubClasse());
+		if (filhoList2 != null) {
 			resultList.addAll(filhoList2);
-		}else{		
-			List<ItemTaxonomico> filhoList = this.getEspecimeControl().getFilhoList(this.getFldClasse());
-			if(filhoList!=null)
+		} else {
+			List<ItemTaxonomico> filhoList = this.getEspecimeControl()
+					.getFilhoList(this.getFldClasse());
+			if (filhoList != null)
 				resultList.addAll(filhoList);
 		}
-		
+
 		return resultList;
 	}
-	public List<ItemTaxonomico> getSubOrdemList(){
+
+	public List<ItemTaxonomico> getSubOrdemList() {
 		return this.getEspecimeControl().getFilhoList(this.getFldOrdem());
 	}
-	public List<ItemTaxonomico> getFamiliaList(){
+
+	public List<ItemTaxonomico> getFamiliaList() {
 		ArrayList<ItemTaxonomico> resultList = new ArrayList<ItemTaxonomico>(0);
-		
-		List<ItemTaxonomico> filhoList2 = this.getEspecimeControl().getFilhoList(this.getFldSubOrdem());
-		if(filhoList2!=null){
+
+		List<ItemTaxonomico> filhoList2 = this.getEspecimeControl()
+				.getFilhoList(this.getFldSubOrdem());
+		if (filhoList2 != null) {
 			resultList.addAll(filhoList2);
-		}else{
-			List<ItemTaxonomico> filhoList = this.getEspecimeControl().getFilhoList(this.getFldOrdem());
-			if(filhoList!=null)
+		} else {
+			List<ItemTaxonomico> filhoList = this.getEspecimeControl()
+					.getFilhoList(this.getFldOrdem());
+			if (filhoList != null)
 				resultList.addAll(filhoList);
 		}
-		
-		
+
 		return resultList;
 	}
-	public List<ItemTaxonomico> getSubFamiliaList(){
+
+	public List<ItemTaxonomico> getSubFamiliaList() {
 		return this.getEspecimeControl().getFilhoList(this.getFldFamilia());
-	}	
-	public List<ItemTaxonomico> getGeneroList(){
+	}
+
+	public List<ItemTaxonomico> getGeneroList() {
 		ArrayList<ItemTaxonomico> resultList = new ArrayList<ItemTaxonomico>(0);
-		
-		List<ItemTaxonomico> filhoList2 = this.getEspecimeControl().getFilhoList(this.getFldSubFamilia());
-		if(filhoList2!=null){
+
+		List<ItemTaxonomico> filhoList2 = this.getEspecimeControl()
+				.getFilhoList(this.getFldSubFamilia());
+		if (filhoList2 != null) {
 			resultList.addAll(filhoList2);
-		}else{
-			List<ItemTaxonomico> filhoList = this.getEspecimeControl().getFilhoList(this.getFldFamilia());
-			if(filhoList!=null)
+		} else {
+			List<ItemTaxonomico> filhoList = this.getEspecimeControl()
+					.getFilhoList(this.getFldFamilia());
+			if (filhoList != null)
 				resultList.addAll(filhoList);
 		}
-		
-		
+
 		return resultList;
 	}
-	public List<ItemTaxonomico> getEpitetoEspecificoList(){
+
+	public List<ItemTaxonomico> getEpitetoEspecificoList() {
 		return this.getEspecimeControl().getFilhoList(this.getFldGenero());
 	}
-	
+
 	public ListModel<EspecimeDeterminador> getEspecimeDeterminadorList() {
 		BindingListModelSet<EspecimeDeterminador> coletoresList = new BindingListModelSet<EspecimeDeterminador>(
 				new HashSet<EspecimeDeterminador>(0), true);
@@ -1075,28 +1127,30 @@ public class EspecimeComposer extends ComposerController<Especime> {
 				&& this.getSelectedEntity().getId() != null) {
 			coletoresList = new BindingListModelSet<EspecimeDeterminador>(
 					this.selectedEntity.getEspecimeDeterminadores(), true);
-		}else{
+		} else {
 			coletoresList = new BindingListModelSet<EspecimeDeterminador>(
 					this.getFldEspecimeDeterminadores(), true);
 		}
 
 		return coletoresList;
 	}
-	
+
 	public BindingListModelList<Entity> getEspecimeDeterminadorListAvaliable() {
-		Set<EspecimeDeterminador> fldDeterminadores2 = this.getSelectedEntity()!=null?this.getSelectedEntity().getEspecimeDeterminadores():null;
-		
-		if(fldDeterminadores2==null ||(fldDeterminadores2!=null && fldDeterminadores2.size()==0)){
+		Set<EspecimeDeterminador> fldDeterminadores2 = this.getSelectedEntity() != null ? this
+				.getSelectedEntity().getEspecimeDeterminadores() : null;
+
+		if (fldDeterminadores2 == null
+				|| (fldDeterminadores2 != null && fldDeterminadores2.size() == 0)) {
 			fldDeterminadores2 = new HashSet<EspecimeDeterminador>();
 			EspecimeDeterminador e = new EspecimeDeterminador();
 			e.setId(0L);
 			fldDeterminadores2.add(e);
 		}
 		return this.getEntityModel(this.getEspecimeControl()
-										.getListToEntityField(new HashSet<Entity>(fldDeterminadores2), Determinador.class)
-				);
+				.getListToEntityField(new HashSet<Entity>(fldDeterminadores2),
+						Determinador.class));
 	}
-	
+
 	public String getFldImprecisao() {
 		return fldImprecisao;
 	}
@@ -1121,28 +1175,28 @@ public class EspecimeComposer extends ComposerController<Especime> {
 				&& this.getSelectedEntity().getId() != null) {
 			coletoresList = new BindingListModelSet<Autor>(
 					this.selectedEntity.getAutores(), true);
-		}else{
+		} else {
 			coletoresList = new BindingListModelSet<Autor>(
 					this.getFldAutores(), true);
 		}
 
 		return coletoresList;
 	}
-	
-	public BindingListModelList<Entity> getAutorListAvaliable() {
-		Set<Autor> autor2 = this.getSelectedEntity()!=null?this.getSelectedEntity().getAutores():new HashSet<Autor>(0);
-		
 
-		return this.getEntityModel(this.getEspecimeControl()
-				.getListToEntityField(
-						new HashSet<Entity>(autor2),Autor.class));
+	public BindingListModelList<Entity> getAutorListAvaliable() {
+		Set<Autor> autor2 = this.getSelectedEntity() != null ? this
+				.getSelectedEntity().getAutores() : new HashSet<Autor>(0);
+
+		return this
+				.getEntityModel(this.getEspecimeControl().getListToEntityField(
+						new HashSet<Entity>(autor2), Autor.class));
 	}
-	
+
 	/* fim guia taxonomia */
-	
+
 	/* inicio guia multimidia */
-	public boolean addImage(UploadEvent event){
-		
+	public boolean addImage(UploadEvent event) {
+
 		org.zkoss.util.media.Media media = event.getMedia();
 		((Button) event.getTarget()).setLabel(media.getName());
 		if (media instanceof org.zkoss.image.Image) {
@@ -1151,14 +1205,15 @@ public class EspecimeComposer extends ComposerController<Especime> {
 
 			EspecieImagem ei = new EspecieImagem();
 			ei.setMedia((AImage) media);
-			
+
 			this.setEspecieImagem(ei);
-			this.binderForm.loadComponent(this.getEditForm().getFellow("imgEspecie"));
+			this.binderForm.loadComponent(this.getEditForm().getFellow(
+					"imgEspecie"));
 
 		} else {
 			Messagebox.show("Somente imagem podem ser inclu�das");
 		}
-		
+
 		return true;
 	}
 
@@ -1168,145 +1223,184 @@ public class EspecimeComposer extends ComposerController<Especime> {
 
 	public void setEspecieImagem(EspecieImagem imagem) {
 		this.especieImagem = imagem;
-		this.binderForm.loadComponent(this.getEditForm().getFellow("imgEspecie"));
+		this.binderForm.loadComponent(this.getEditForm()
+				.getFellow("imgEspecie"));
 	}
-	
 
-	
 	public BindingListModelList<Entity> getEstacaoList() {
 		return this.getEntityModel(this.getEspecimeControl().getEstacaoList());
 	}
-	
+
 	public ListModel<EspecieImagem> getEspecieImagemList() {
 		BindingListModelSet<EspecieImagem> especimeImagemList;
 
 		especimeImagemList = new BindingListModelSet<EspecieImagem>(
 				this.getFldEspecieImagens(), true);
-		
+
 		return especimeImagemList;
 	}
-	
-	public void adicionarImagem(){
-		Combobox cb = (Combobox)this.getEditForm().getFellow("cmbEstacao");
-		Listbox lb = (Listbox)this.getEditForm().getFellow("lbEspecimeImagem");
-		//if(lb.getSelectedItem()!=null){
-			ListModelSet<Object> lm = (ListModelSet<Object>)lb.getModel();//TODO Tratar quando não está definido o itemtaxonomico
-			EspecieImagem ei = new EspecieImagem();
-			ei.setControleInsercaoPadroa(false);
-			ei.setMedia(this.getEspecieImagem().getMedia());
-			if(cb.getSelectedItem()!=null)
-				ei.setEstacao((Estacao)cb.getSelectedItem().getValue());
-			ei.setId(Long.valueOf(lb.getModel().getSize()+1));
-			
-			lm.add(ei);
-		/*}else{
-			this.getControl().getMessagesControl().addMessageError("selecione_item_taxonomico_primeiro");
-		}*/
-			
+
+	public void adicionarImagem() {
+		Combobox cb = (Combobox) this.getEditForm().getFellow("cmbEstacao");
+		Listbox lb = (Listbox) this.getEditForm().getFellow("lbEspecimeImagem");
+		// if(lb.getSelectedItem()!=null){
+		ListModelSet<Object> lm = (ListModelSet<Object>) lb.getModel();// TODO
+																		// Tratar
+																		// quando
+																		// não
+																		// está
+																		// definido
+																		// o
+																		// itemtaxonomico
+		EspecieImagem ei = new EspecieImagem();
+		ei.setControleInsercaoPadroa(false);
+		ei.setMedia(this.getEspecieImagem().getMedia());
+		if (cb.getSelectedItem() != null)
+			ei.setEstacao((Estacao) cb.getSelectedItem().getValue());
+		ei.setId(Long.valueOf(lb.getModel().getSize() + 1));
+
+		lm.add(ei);
+		/*
+		 * }else{ this.getControl().getMessagesControl().addMessageError(
+		 * "selecione_item_taxonomico_primeiro"); }
+		 */
 
 	}
 
 	public ItemTaxonomico getFldSelectedItemTaxonomicoMedia() {
-		if(this.fldSelectedItemTaxonomicoMedia==null){
-			this.fldSelectedItemTaxonomicoMedia =  new ItemTaxonomico();
+		if (this.fldSelectedItemTaxonomicoMedia == null) {
+			this.fldSelectedItemTaxonomicoMedia = new ItemTaxonomico();
 			this.fldSelectedItemTaxonomicoMedia.setId(0L);
 		}
 		return fldSelectedItemTaxonomicoMedia;
 	}
 
 	public void setFldSelectedItemTaxonomicoMedia(
-			ItemTaxonomico fldSelectedItemTaxonomicoMedia) {		
+			ItemTaxonomico fldSelectedItemTaxonomicoMedia) {
 		this.fldSelectedItemTaxonomicoMedia = fldSelectedItemTaxonomicoMedia;
-		this.fldEspecieImagens = this.getEspecimeControl().getEspecieImagemFromItemTaxonomico(this.fldSelectedItemTaxonomicoMedia); 
+		this.fldEspecieImagens = this.getEspecimeControl()
+				.getEspecieImagemFromItemTaxonomico(
+						this.fldSelectedItemTaxonomicoMedia);
 	}
 
 	@Override
-	public boolean saveEntity() {		
+	public boolean saveEntity() {
 		return super.saveEntity();
 	}
-	
-	public List<ItemTaxonomico> getListItemTaxonomicoMedia(){
+
+	public void setButtonsNextTab() {
+		Tabbox tabBox = getTabboxEspecime();
+		Tab tabSelected = tabBox.getSelectedTab();
+		if (tabSelected.getId().equals("cadMultimidia")) {
+			formEspecime.getFellow("btnSalvar").setVisible(true);
+			formEspecime.getFellow("btnNextTab").setVisible(false);
+		} else {
+			formEspecime.getFellow("btnSalvar").setVisible(false);
+			formEspecime.getFellow("btnNextTab").setVisible(true);
+		}
+
+		if (tabSelected.getId().equals("cadBibliografia"))
+			((Button) getFellow(formEspecime, "btnNextTab")).setDisabled(true);
+		else
+			((Button) getFellow(formEspecime, "btnNextTab")).setDisabled(false);
+	}
+
+	public Tabbox getTabboxEspecime() {
+		return (Tabbox) this.getEditForm().getFellow("tb");
+	}
+
+	public void nextTab() {
+		Tabbox tabBox = getTabboxEspecime();
+		Tab tabSelected = tabBox.getSelectedTab();
+		tabBox.setSelectedTab((Tab) tabSelected.getNextSibling());
+		setButtonsNextTab();
+		if (tabSelected.getNextSibling() != null)
+			tabBox.setSelectedTab((Tab) tabSelected.getNextSibling());
+	}
+
+	public List<ItemTaxonomico> getListItemTaxonomicoMedia() {
 		ArrayList<ItemTaxonomico> resultList = new ArrayList<ItemTaxonomico>(0);
-		if(this.getFldReino()!=null){
+		if (this.getFldReino() != null) {
 			resultList.add(this.getFldReino());
-		}else{
+		} else {
 			return resultList;
 		}
-		
-		if(this.getFldFilo()!=null){
+
+		if (this.getFldFilo() != null) {
 			resultList.add(this.getFldFilo());
-		}else{
+		} else {
 			return resultList;
 		}
-		
-		if(this.getFldClasse()!=null){
+
+		if (this.getFldClasse() != null) {
 			resultList.add(this.getFldClasse());
-		}else{
+		} else {
 			return resultList;
 		}
-		
-		if(this.getFldSubClasse()!=null){
+
+		if (this.getFldSubClasse() != null) {
 			resultList.add(this.getFldSubClasse());
 		}
-		
-		if(this.getFldOrdem()!=null){
+
+		if (this.getFldOrdem() != null) {
 			resultList.add(this.getFldOrdem());
-		}else{
+		} else {
 			return resultList;
 		}
-		
-		if(this.getFldSubOrdem()!=null){
+
+		if (this.getFldSubOrdem() != null) {
 			resultList.add(this.getFldSubOrdem());
 		}
-		
-		if(this.getFldFamilia()!=null){
+
+		if (this.getFldFamilia() != null) {
 			resultList.add(this.getFldFamilia());
-		}else{
+		} else {
 			return resultList;
 		}
-		
-		if(this.getFldSubFamilia()!=null){
+
+		if (this.getFldSubFamilia() != null) {
 			resultList.add(this.getFldSubFamilia());
 		}
-		
-		if(this.getFldGenero()!=null){
+
+		if (this.getFldGenero() != null) {
 			resultList.add(this.getFldGenero());
-		}else{
+		} else {
 			return resultList;
 		}
-		
-		if(this.getFldEpitetoEspecifico()!=null){
+
+		if (this.getFldEpitetoEspecifico() != null) {
 			resultList.add(this.getFldEpitetoEspecifico());
-		}else{
+		} else {
 			return resultList;
 		}
 		return resultList;
 	}
-	
-	public void openImage(){
-		if(this.showImage==null){
+
+	public void openImage() {
+		if (this.showImage == null) {
 			this.showImage = getFormByName("imageView");
-			
-			//this.formEspecime.setParent(this.controlEspecime);
-			//this.controlEspecime.appendChild(this.formEspecime);
-			
-			AnnotateDataBinder binder= new AnnotateDataBinder(this.showImage);
+
+			// this.formEspecime.setParent(this.controlEspecime);
+			// this.controlEspecime.appendChild(this.formEspecime);
+
+			AnnotateDataBinder binder = new AnnotateDataBinder(this.showImage);
 			binder.setLoadOnSave(false);
 			binder.bindBean("controller", this);
 			binder.loadComponent(this.showImage);
 			showImage.setMode(Window.MODAL);
 			showImage.setVisible(true);
 			showImage.doModal();
-			
+
 		}
-		
+
 	}
-	public void closeImage(){
-		if(this.showImage!=null){
+
+	public void closeImage() {
+		if (this.showImage != null) {
 			showImage.setVisible(false);
 			showImage.detach();
 			controlEspecime.removeChild(showImage);
-			showImage=null;
+			showImage = null;
 		}
 	}
 }
