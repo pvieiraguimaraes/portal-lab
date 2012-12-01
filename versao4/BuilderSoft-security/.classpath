@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/antlr-2.7.5.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/ejb3-persistence.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/hibernate-annotations.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/hibernate-commons-annotations.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/hibernate-core.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/hibernate-entitymanager.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/hibernate-tools.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/hibernate3.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/jsf-api.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/jta-1.1.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/sqljdbc4.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/zcommon.jar" sourcepath="C:/Users/guiliano.AEE/Desktop/temp/projetos/zk-src-6.0.1-FL-2012-03-21.zip"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/zel.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/zhtml.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/zk.jar" sourcepath="C:/Users/guiliano.AEE/Desktop/temp/projetos/zk-src-6.0.1-FL-2012-03-21.zip"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/zkbind.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/zkplus.jar" sourcepath="C:/Users/guiliano.AEE/Desktop/temp/projetos/zk-src-6.0.1-FL-2012-03-21.zip"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/zkspring-core-3.0.jar" sourcepath="C:/Users/guiliano.AEE/Desktop/temp/projetos/zk-spring-core-src-3.1.zip"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/zkspring-webflow-3.0.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/zul.jar" sourcepath="C:/Users/guiliano.AEE/Desktop/temp/projetos/zk-src-6.0.1-FL-2012-03-21.zip"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/zweb.jar" sourcepath="C:/Users/guiliano.AEE/Desktop/temp/projetos/zk-src-6.0.1-FL-2012-03-21.zip"/>
+	<classpathentry kind="lib" path="lib/spring-security-acl-3.1.3.RELEASE.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/spring-security-config-3.1.3.RELEASE.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/spring-security-core-3.1.3.RELEASE.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/spring-security-taglibs-3.1.3.RELEASE.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/spring-security-web-3.1.3.RELEASE.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="lib/aopalliance-1.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry combineaccessrules="false" kind="src" path="/BuilderSoft"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk16">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/spring-aop-3.1.3.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/spring-asm-3.1.3.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/spring-beans-3.1.3.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/spring-context-3.1.3.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/spring-core-3.1.3.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/spring-expression-3.1.3.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/spring-jdbc-3.1.3.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/spring-orm-3.1.3.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/spring-web-3.1.3.RELEASE.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
