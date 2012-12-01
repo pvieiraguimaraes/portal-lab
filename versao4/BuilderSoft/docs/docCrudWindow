@@ -1,0 +1,26 @@
+Documentação sobre o Componete CrudWindow:
+Atributos Suportados:
+* titulo
+** Tipo: 		String
+** Definição 	--> Será o título da janela
+
+* composer 
+** Tipo: 		br.ueg.builderSoft.view.zk.composer.ComposerController
+** Definição 	--> Componser(MB) que será utilizado para manipular as chamadas deve ser um composer que extende o br.ueg.builderSoft.view.zk.composer.ComposerController
+
+*  listBoxSize
+** Tipo:		String
+** Definição	--> Indica quantos linhas devem ser utilizadas antes de ter a barra de paginação
+
+* height
+** Tipo:		String
+** Definição	--> Indica o tamanho da janela(geralmente em px) 
+
+* crudOperation 
+** Tipo: String
+** Valor padrão	--> "create,read,update,delete"
+** Definição 	--> utilizado para indicar quais operações estaram disponiveis é uma string, as operacões devem ser separadas por virgula
+
+
+Os atributos devem aparecer na ordem
+* titulo, crudOperation e composer
