@@ -2,8 +2,8 @@
 <window id="formEspecime" title="Formulário de Manutenção Especime" border="normal" xmlns:c="client"
 					closable="false"   visible="true" width="850px">
 	<vlayout>		
-			<tabbox id="tb" orient="horizontal">
-			    <tabs id="tabs" width="150px">
+			<tabbox id="tb" orient="horizontal" onSelect="controller.setButtonsNextTab()">
+			    <tabs id="tabs" width="150px" >
 			        <tab id="cadColeta" 			label="Coleta" />
 			        <tab id="cadGeografia" 			label="Geografia"/>
 			        <tab id="cadTaxonomia"			label="Taxonomia" />
@@ -604,7 +604,8 @@
 			</tabbox>
 			<separator></separator>
 			<div align="right">
-				<button label="Próximo" onClick="controller.saveEntity()"/>
+				<button id="btnNextTab" label="Próximo" hflex="1" onClick="controller.nextTab()"/>
+				<button id="btnSalvar" label="Salvar" hflex="1" onClick="controller.saveEntity()" visible="false"/>
 				<button id="btnCancelEdit" label="Cancelar" hflex="1" onClick="controller.cancelEditEntity()"/>
 			</div>
 		</vlayout>			
