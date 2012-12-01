@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:bio="http://facelets.portalvirtual.com">
+	
+	<ui:composition>
+	
+		 <h:form id="formView">
+	   		<h:panelGrid columns="2">
+		   		<p:commandButton value="#{msg.button_add}" oncomplete="dlg.show();" update="formCad" actionListener="#{managedBean.newEntity}"/>
+	    		<p:commandButton id="LIST" value="#{msg.button_list}" ajax="false" actionListener="#{managedBean.doAction}" update="tableList, messagesUseCase"/>
+	    		<p:inputText value="#{managedBean.fldBusca}" />
+	    		<p:commandButton id="SEARCH" value="#{msg.button_search}" ajax="false" actionListener="#{managedBean.doAction}"/>	    	
+	    	</h:panelGrid>
+	    	<p:dataTable id="tableList" rendered="#{true}" value="#{managedBean.listEntity}" var="entitys" rows="5" emptyMessage="#{msg[entityEmpty]}" paginator="true">
+	    		<c:forEach var="i" items="#{managedBean.listColumns}">
+		    		<p:column headerText="#{msg[i.fieldCaption]}" rendered="#{i.visible}">
+		    			<h:outputText value="#{entitys[i.key]}"/>
+		    		</p:column>
+		    	</c:forEach>	
+	    		<p:column headerText="#{msg.column_edit}">
+	    			<p:commandLink oncomplete="updateCommand(); dlg.show();">
+						<f:setPropertyActionListener target="#{managedBean.selectedEntity}" value="#{entitys}"/>
+	    				<p:graphicImage value="#{pageContext.servletContext.contextPath}/images/editar.png"
+								title="#{msg.column_edit}"  />
+	    			</p:commandLink>
+	    		</p:column>
+	    		<p:column headerText="#{msg.column_delete}">
+	    			<p:commandLink onclick="confirmDelete.show();" update="tableList, messagesUseCase">
+	    				<p:graphicImage value="#{pageContext.servletContext.contextPath}/images/lixeira.png"
+								title="#{msg.column_delete}"  />
+						<f:setPropertyActionListener target="#{managedBean.selectedEntity}" value="#{entitys}" />
+	    			</p:commandLink>
+	    		</p:column>
+	    	</p:dataTable>
+	    	
+	    	<p:growl id="messagesUseCase" showDetail="true" showSummary="false" life="5000"/>
+	    	<bio:deleteDialog mBean="#{managedBean}" cancelAction="newEntity" action="doAction" updateMessageID="messagesUseCase, formView"/>
+	    	
+	    	<p:remoteCommand name="updateCommand" update="formCad, messagesUseCase" actionListener="#{managedBean.doAction}" id="ASSOCIATE" />
+		
+	    	
+	    </h:form>
+	    
+	     <p:dialog widgetVar="dlg" modal="true" closable="true" header="#{msg[useCase]}" minWidth="500">
+	    	<h:form id="formCad">
+	    	<h:panelGrid columns="2">
+	    		<c:forEach var="i" items="#{managedBean.listColumns}">	 
+	    			<h:outputText value="#{msg[i.fieldCaption]}" rendered="#{i.visible}"/>
+	    			<f:attribute name="campo" value="#{managedBean[i.fieldName]}" />
+	    			<c:choose>
+	    				<c:when test="#{i.component==3}">	    					
+    						<h:selectOneRadio value="#{managedBean[i.fieldName]}" rendered="#{i.visible}">
+    							<f:selectItem itemLabel="#{msg.confirm_yes}" itemValue="true"/>
+    							<f:selectItem itemLabel="#{msg.confirm_no}" itemValue="false"/>
+    						</h:selectOneRadio>	    					
+	    				</c:when>
+	    				<c:otherwise>
+			    				<p:inputText value="#{managedBean[i.fieldName]}" rendered="#{i.visible}"/>
+	    				</c:otherwise>
+    				</c:choose>	    		
+	    		</c:forEach>
+	    		<c:forEach var="i" items="#{managedBean.listColumns('reino', campo)}">	 
+	    			<h:outputText value="#{msg[i.fieldCaption]}" rendered="#{i.visible}"/>
+	    			<c:choose>
+	    				<c:when test="#{i.component==3}">	    					
+    						<h:selectOneRadio value="#{managedBean[i.fieldName]}" rendered="#{i.visible}">
+    							<f:selectItem itemLabel="#{msg.confirm_yes}" itemValue="true"/>
+    							<f:selectItem itemLabel="#{msg.confirm_no}" itemValue="false"/>
+    						</h:selectOneRadio>	    					
+	    				</c:when>
+	    				<c:otherwise>
+			    				<p:inputText value="#{managedBean[i.fieldName]}" rendered="#{i.visible}"/>
+	    				</c:otherwise>
+    				</c:choose>	    		
+	    		</c:forEach>
+	    	</h:panelGrid>
+    			<p:commandButton id="SAVE" value="#{msg.button_save}" actionListener="#{managedBean.doAction}" ajax="false" update="formView"/>
+	    	</h:form>
+	    </p:dialog>
+	</ui:composition>
+</html>
