@@ -21,6 +21,9 @@ public class ConfigPortalLab extends Config {
 			System.out.println("realPath:"+realPath);			
 			String contextName = Executions.getCurrent().getDesktop().getWebApp().getServletContext().getContextPath();
 			String separator = System.getProperty("file.separator");
+			if(realPath.indexOf(".war")>-1){
+				contextName = contextName.concat(".war");
+			}
 			contextName = separator.concat(contextName.substring(1)).concat(separator);
 			
 			System.out.println("contextName:"+contextName+"**");
@@ -30,7 +33,12 @@ public class ConfigPortalLab extends Config {
 		return instancia;
 	}
 	public String getDireitorioMedia(){
-		return this.getKey("diretorioMedia");
+		String diretorio = this.getKey("diretorioMedia");
+		//TODO procurar por forma de olhar o container
+		if(Executions.getCurrent().getDesktop().getWebApp().getRealPath("/").indexOf(".war")>-1){
+			diretorio = diretorio.concat(".war");
+		}
+		return diretorio;
 	}
 	
 	public String getRootApplicationPath() {
