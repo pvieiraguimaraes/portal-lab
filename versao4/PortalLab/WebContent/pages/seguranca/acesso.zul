@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Acesso ao Sistema ao Portal Virtual do Cerrado" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+	<window id="logonwin" title="Aceso ao Sistema Portal Virtual do Cerrado" border="normal" width="300px"
+		mode="modal" position="center" onCreate="j_username.focus();">
+		<groupbox>
+			<caption>Acesso</caption>
+			<h:form id="f" name="f" action="/PortalLab/j_spring_security_check" method="POST">
+				<grid>
+					<rows>
+						<row>
+							<label value="Usuário:" onClick="j_username.focus();" />
+							<textbox id="j_username" name="j_username" />
+						</row>
+						<row>
+							<label value="Senha:" onClick="j_password.focus();" />
+							<textbox id="j_password" type="password" name="j_password" />
+						</row>
+						<row spans="2" if="${not empty param.error}">
+							<hbox style="color: red;">Dados inválidos!</hbox>
+						</row>
+						<row spans="2">
+							<hbox>
+								<h:input type="submit" value="Login" />
+								<h:input type="reset" value="Redefinir" />
+							</hbox>
+						</row>
+					</rows>
+				</grid>
+			</h:form>
+		</groupbox>
+	</window>
+</zk>

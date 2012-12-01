@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:bio="http://facelets.portalvirtual.com">
+
+<ui:composition template="../template/template.xhtml">
+	<ui:define name="title"> <h:outputText value="#{msg.reino_title}"/> </ui:define>
+
+	<ui:define name="context">
+	    <h:form id="formView">
+	   		<h:panelGrid columns="2">
+		   		<p:commandButton value="#{msg.reino_add}" oncomplete="dlg.show();" update="formCad" actionListener="#{reinoMB.newEntity}"/>
+	    		<p:commandButton id="LIST" value="#{msg.button_list}" ajax="false" actionListener="#{reinoMB.doAction}" update="tableList, messagesReino"/>
+	    		<p:inputText value="#{reinoMB.fldBusca}" />
+	    		<p:commandButton id="SEARCH" value="#{msg.button_search}" ajax="false" actionListener="#{reinoMB.doAction}"/>
+	    	</h:panelGrid>
+	    	<p:dataTable id="tableList" rendered="#{reinoMB.listing}" value="#{reinoMB.listEntity}" var="reinos" rows="5" emptyMessage="#{msg.reino_empty}" paginator="true">
+	    		<p:column headerText="#{msg.reino_reinoColumn}">
+	    			<h:outputText value="#{reinos.reino}"/>
+	    		</p:column>
+	    		<p:column headerText="#{msg.column_edit}">
+	    			<p:commandLink oncomplete="updateCommand(); dlg.show();">
+						<f:setPropertyActionListener target="#{reinoMB.selectedEntity}" value="#{reinos}"/>
+	    				<p:graphicImage value="#{pageContext.servletContext.contextPath}/images/editar.png"
+								title="#{msg.column_edit}"  />
+	    			</p:commandLink>
+	    		</p:column>
+	    		<p:column headerText="#{msg.column_delete}">
+	    			<p:commandLink onclick="confirmDelete.show();" update="tableList, messagesReino">
+	    				<p:graphicImage value="#{pageContext.servletContext.contextPath}/images/lixeira.png"
+								title="#{msg.column_delete}"  />
+						<f:setPropertyActionListener target="#{reinoMB.selectedEntity}" value="#{reinos}" />
+	    			</p:commandLink>
+	    		</p:column>
+	    	</p:dataTable>
+	    	
+	    	<p:growl id="messagesReino" showDetail="true" showSummary="false" life="3000"/>
+	    	<bio:deleteDialog mBean="#{reinoMB}" cancelAction="newEntity" action="doAction" updateMessageID="messagesReino, formView"/>
+	    	
+	    	<p:remoteCommand name="updateCommand" update="formCad, messagesReino" actionListener="#{reinoMB.doAction}" id="ASSOCIATE" />
+		
+	    </h:form>
+	    
+	    <p:dialog widgetVar="dlg" modal="true" closable="true" header="#{msg.reino_header}" >
+	    	<h:form id="formCad">
+	    		<h:panelGrid columns="2">
+	    			<h:outputText value="#{msg.reino_reino}"/>
+	    			<p:inputText value="#{reinoMB.fldReino}"/>
+	    		</h:panelGrid>
+	    		<p:column>
+	    			<p:commandButton id="SAVE" value="#{msg.button_save}" actionListener="#{reinoMB.doAction}" ajax="false" update="formView"/>
+	    		</p:column>
+	    	</h:form>
+	    </p:dialog>
+	    
+	    	
+	    
+	</ui:define>
+</ui:composition>
+
+</html>

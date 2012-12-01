@@ -1,0 +1,612 @@
+<zk>
+<window id="formEspecime" title="Formulário de Manutenção Especime" border="normal" xmlns:c="client"
+					closable="false"   visible="true" width="850px">
+	<vlayout>		
+			<tabbox id="tb" orient="horizontal">
+			    <tabs id="tabs" width="150px">
+			        <tab id="cadColeta" 			label="Coleta" />
+			        <tab id="cadGeografia" 			label="Geografia"/>
+			        <tab id="cadTaxonomia"			label="Taxonomia" />
+			        <tab id="cadMultimidia"			label="Multimídia" selected="true"/>
+			        <tab id="cadConteudoDidatico"	label="Conteúdo Didático" />
+			        <tab id="cadBibliografia"		label="Bibliografia" />			        
+			    </tabs>
+			    <tabpanels>
+			        <tabpanel>
+			        	<vlayout>
+				        	<vlayout>
+				        		<hlayout >
+				        			<label value="Laboratório" hflex="1"/>
+				        			<label value="Grupo Endereço" hflex="1"/>
+				        			<div hflex="1"/>
+				        		</hlayout>
+				        		<hlayout >
+				        			<combobox id="cmdLaboratorio" hflex="1" selectedItem="@{controller.fldLaboratorio }"
+				        			model="@{controller.laboratorioList }"
+				        			>
+					        			<attribute name="onChange">
+					        				cmbGrupoEnderecoFisico.setRawValue(null);
+					        			</attribute>
+									</combobox>
+				        			<combobox hflex="1" id="cmbGrupoEnderecoFisico"
+				        				model="@{controller.grupoEnderecoFisicoList, load-when='cmdLaboratorio.onChange'}"
+				        				selectedItem = "@{controller.fldGrupoEnderecoFisico }"/>
+				        			<textbox id="fldGrupoEnderecoFisicoHidden" value="@{controller.fldGrupoEnderecoFisico }" visible="false"/>
+				        			<div hflex="1"/>
+				        		</hlayout>
+				        	</vlayout>
+				        	<separator/>
+			        		<hlayout>
+			        			<hlayout hflex="1">
+			        				<label value="Código do Catálogo:"/>
+			        				<textbox hflex="1" value="@{controller.fldCodigoCatalogo }"/>
+			        			</hlayout>
+			        			<hlayout hflex="1">
+			        				<label value="Código de Coleta:"/>
+			        				<textbox hflex="1" value="@{controller.fldCodigoColeta }"/>
+			        			</hlayout>
+			        			<hlayout hflex="1">
+			        				<label value="Data da Coleta:"/>
+			        				<datebox hflex="1" value="@{controller.fldDataColeta }"/>
+			        			</hlayout>
+			        		</hlayout>
+			        		<separator/>
+			        		<grid>
+								<columns>
+									<column width="172px"/>
+									<column align="left"/>
+									<column width="120px" align="left"/>
+									<column align="left"/>
+								</columns>
+								<rows>
+									<row>								
+										<label value="Estágio de Desenvolvimento:"/>
+										<combobox hflex="1" selectedItem="@{controller.fldEstagioDesenvolvimento }">
+											<attribute name="onCreate">
+												self.setModel(controller.getFKEntityModel("fldEstagioDesenvolvimento"));
+											</attribute>
+										</combobox>
+										<label value="Fenologia" />
+										<combobox hflex="1" selectedItem="@{controller.fldFenologia }" >
+											<attribute name="onCreate">
+												self.setModel(controller.getFKEntityModel("fldFenologia"));
+											</attribute>
+										</combobox>
+									</row>
+									<row>								
+										<label value="Método:"/>
+										<combobox hflex="1"  selectedItem="@{controller.fldMetodoColeta }">
+											<attribute name="onCreate">
+												self.setModel(controller.getFKEntityModel("fldMetodoColeta"));
+											</attribute>
+										</combobox>
+										<label value="Sexo" />
+										<combobox hflex="1" selectedItem="@{controller.fldSexo }" >
+											<attribute name="onCreate">
+												self.setModel(controller.getFKEntityModel("fldSexo"));
+											</attribute>
+										</combobox>
+									</row>
+									<row>
+										<label value="Tipo de Montagem:"/>
+										<combobox hflex="1"  selectedItem="@{controller.fldTipoDeMontagem }">
+											<attribute name="onCreate">
+												self.setModel(controller.getFKEntityModel("fldTipoDeMontagem"));
+											</attribute>
+										</combobox>
+										<label value="nº de Indíviduos" />
+										<textbox value="@{controller.fldNumeroIndividuo }" />							
+									</row>
+								</rows>
+							</grid>
+							<separator></separator>
+			        		<groupbox hflex="1">
+			        			<caption><label value="Coletores"/></caption>
+			        			<vlayout>
+				        			<hlayout>
+				        				<combobox id="cmbColetorListAvaliable" model="@{controller.coletorListAvaliable}" width="300px"/>
+				        				<button label="Adicionar">
+				        					<attribute name="onClick">
+				        						controller.addColetor();
+				        					</attribute>
+				        				</button>			        								        				
+				        			</hlayout>
+				        			<listbox model="@{controller.coletorList}"										
+										mold="paging" id="lbColetores" 
+										pageSize="3"
+										height="130px"
+										zclass="lbColetores z-listbox"
+										>
+										<listhead id="divListhead">
+											<listheader label="Coletores" align="center"/>											
+											<listheader label="Operações" align="center" width="200px" />							
+										</listhead>
+										<listitem self="@{each=entity}" id="divListitem" value="@{entity }">
+											<listcell><label value="@{entity }"/></listcell>
+											<listcell>
+												<button Label="Excluir" id="coletorBtnDelete" image="/images/lixeira.png">
+												<attribute name="onClick"><![CDATA[
+												self.getParent().getParent().setSelected(true);	
+												Events.sendEvent(lbColetores,new Event("onSelect",lbColetores));
+												
+						 						controller.removeColetor();
+												]]></attribute>
+												</button>
+											</listcell>
+										</listitem>
+									</listbox>
+				        		</vlayout>
+							</groupbox>
+							<separator></separator>
+							<vlayout>
+								<label value="Observações"/>
+								<textbox value="@{controller.fldObservacao }" rows="5" cols="90" width="99%"/>
+							</vlayout>							
+						</vlayout>
+			        </tabpanel>
+			        <tabpanel>
+				        <vlayout>
+					        <groupbox hflex="1">
+				        			<caption><label value="Área Geográfica"/></caption>
+				        			<vlayout>
+				        			<grid>
+										<columns>
+											<column width="85px"/>
+											<column align="left"/>
+										</columns>
+										<rows>
+											<row>
+												<label value="Páis" />
+												<combobox id="cmbPais" hflex="1" selectedItem="@{controller.fldPais }"
+								        			model="@{controller.paisList }"  width="440px"
+								        			>
+								        			<attribute name="onChange">
+								        				cmbEstado.setRawValue(null);
+								        			</attribute>
+												</combobox>
+											</row>
+											<row>
+												<label value="Estado" />
+												<combobox id="cmbEstado" hflex="1" 
+								        			model="@{controller.estadoList, load-when='cmbPais.onChange' }"  
+								        			selectedItem="@{controller.fldEstado }"
+								        			width="440px"
+								        			>
+								        			<attribute name="onChange">
+								        				cmbMunicipio.setRawValue(null);
+								        			</attribute>
+												</combobox>
+												<textbox id="fldEstadoHidden" value="@{controller.fldEstado }" visible="false"/>
+											</row>
+											<row>
+												<label value="Município" />
+												<combobox id="cmbMunicipio" hflex="1" 
+								        			model="@{controller.municipioList, load-when='cmbEstado.onChange' }"  width="440px"
+								        			selectedItem="@{controller.fldMunicipio }"
+								        			>
+												</combobox>
+												<textbox id="fldMunicipioHidden" value="@{controller.fldMunicipio }" visible="false"/>
+											</row>
+											<row>
+												<label value="Localidade" />
+												<textbox value="@{controller.fldLocalidade } " width="437px"/>
+											</row>
+										</rows>
+										</grid>
+				        			
+				        			</vlayout>
+				        	</groupbox>
+							<hlayout>
+								<groupbox hflex="2">
+				        			<caption><label value="Coordenada Geográfica"/></caption>
+				        			<vlayout>
+				        			<grid>
+										<columns>
+											<column width="92px"/>
+											<column align="left"/>
+											<column width="85px" align="left"/>
+											<column align="left"/>
+										</columns>
+										<rows>
+											<row>
+												<label value="Latitude" />
+												<textbox value="@{controller.fldLatitude }" />
+												<label value="Longitude" />
+												<textbox value="@{controller.fldLongitude }" />										
+												
+											</row>
+											<row>
+												<label value="Altitude" />
+												<textbox value="@{controller.fldAltitude }" />
+												<label value="Profundidade" />
+												<textbox value="@{controller.fldProfundidade }" />
+											</row>
+											<row>
+												<label value="Precisão"/>
+												<textbox value="@{controller.fldPrecisao }" />
+											</row>
+											<row>
+												<label value="Massa D'Água" />
+												<cell colspan="2">
+												<combobox hflex="1" selectedItem="@{controller.fldMassaDAgua }" width="100%">
+													<attribute name="onCreate">
+														self.setModel(controller.getFKEntityModel("fldMassaDAgua"));
+													</attribute>
+												</combobox>
+												</cell>
+											</row>
+											<row>
+												<label value="Datum" />
+												<cell colspan="2">
+													<combobox hflex="1" selectedItem="@{controller.fldDatum }" width="100%">
+														<attribute name="onCreate">
+															self.setModel(controller.getFKEntityModel("fldDatum"));
+														</attribute>
+													</combobox>
+												</cell>
+											</row>
+										</rows>
+									</grid>
+				        		</vlayout>
+					        	</groupbox>
+					        	<groupbox hflex="1" height="194px">
+					        			<caption><label value="Observações"/></caption>
+					        			<vlayout>
+					        			<textbox value="@{controller.fldObservacaoGeografria }" rows="11" width="100%"/>
+					        			</vlayout>
+					        	</groupbox>
+							</hlayout>			        	
+				        </vlayout>
+					</tabpanel>
+					<tabpanel>
+				       <vlayout>
+							<groupbox>
+				        		<caption><label value="Taxonomia da Espécie"/></caption>
+				        		<vlayout>
+					        			<grid hflex="1">
+											<columns>
+												<column width="90px"/>
+												<column align="left"/>
+												<column align="left" width="90px"/>
+												<column align="left" />
+											</columns>
+											<rows>
+												<row>
+													<label value="Reino" />
+													<combobox id="cmbReino"  selectedItem="@{controller.fldReino }"
+								        			model="@{controller.reinoList }"  width="100%"
+								        			>
+									        			<attribute name="onChange">
+									        				cmbFilo.setRawValue(null);
+									        			</attribute>
+													</combobox>
+												</row>
+												<row>
+													<label value="Filo" />
+														<combobox id="cmbFilo" 
+										        			model="@{controller.filoList, load-when='cmbReino.onChange' }"  
+										        			selectedItem="@{controller.fldFilo }"
+										        			width="100%"
+										        			>
+										        			<attribute name="onChange">
+										        				cmbClasse.setRawValue(null);
+										        			</attribute>
+														</combobox>
+												</row>
+												<row>
+													<label value="Classe" />
+													<combobox id="cmbClasse"  
+									        			model="@{controller.classeList, load-when='cmbFilo.onChange' }"  
+									        			selectedItem="@{controller.fldClasse }"
+									        			width="100%"
+									        			>
+									        			<attribute name="onChange">
+									        				cmbSubClasse.setRawValue(null);
+									        				cmbOrdem.setRawValue(null);
+									        			</attribute>
+													</combobox>													
+													<label value="Sub-Classe" />
+													<combobox id="cmbSubClasse" 
+									        			model="@{controller.subClasseList, load-when='cmbClasse.onChange' }"  
+									        			selectedItem="@{controller.fldSubClasse }"
+									        			width="100%"
+									        			>
+									        			<attribute name="onChange">
+									        				cmbOrdem.setRawValue(null);
+									        			</attribute>
+													</combobox>
+													
+												</row>
+												<row>
+													<label value="Ordem" />
+													<combobox id="cmbOrdem"  
+									        			model="@{controller.ordemList, load-when='cmbClasse.onChange, cmbSubClasse.onChange' }"  
+									        			selectedItem="@{controller.fldOrdem }"
+									        			width="100%"
+									        			>
+									        			<attribute name="onChange">
+									        				cmbSubOrdem.setRawValue(null);
+									        				cmbFamilia.setRawValue(null);
+									        			</attribute>
+													</combobox>													
+													<label value="Sub-Ordem" />
+													<combobox id="cmbSubOrdem"  
+									        			model="@{controller.subOrdemList load-when='cmbOrdem.onChange'}"  
+									        			selectedItem="@{controller.fldSubOrdem }"
+									        			width="100%"
+									        			>
+									        			<attribute name="onChange">
+									        				cmbFamilia.setRawValue(null);
+									        			</attribute>
+													</combobox>													
+												</row>
+												<row>
+													<label value="Família" />
+													<combobox id="cmbFamilia" 
+									        			model="@{controller.familiaList, load-when='cmbOrdem.onChange, cmbSubOrdem.onChange' }"  
+									        			selectedItem="@{controller.fldFamilia }"
+									        			width="100%"
+									        			>
+									        			<attribute name="onChange">
+									        				cmbSubFamilia.setRawValue(null);
+									        				cmbGenero.setRawValue(null);
+									        			</attribute>
+													</combobox>													
+													<label value="Sub-Família" />
+													<combobox id="cmbSubFamilia"  
+									        			model="@{controller.subFamiliaList, load-when='cmbFamilia.onChange' }"  
+									        			selectedItem="@{controller.fldSubFamilia }"
+									        			width="100%"
+									        			>
+									        			<attribute name="onChange">
+									        				cmbGenero.setRawValue(null);
+									        			</attribute>
+													</combobox>													
+												</row>												
+												<row>
+													<label value="Gênero" />
+													<combobox id="cmbGenero" 
+									        			model="@{controller.generoList, load-when='cmbFamilia.onChange, cmbSubFamilia.onChange' }"  
+									        			selectedItem="@{controller.fldGenero }"
+									        			width="100%"
+									        			>
+									        			<attribute name="onChange">
+									        				cmbEpitetoEspecifico.setRawValue(null);
+									        			</attribute>
+													</combobox>													
+												</row>
+													<row>
+													<label value="Ep. Específico" />
+													<cell colspan="2">
+														<combobox id="cmbEpitetoEspecifico"  
+									        			model="@{controller.epitetoEspecificoList, load-when='cmbGenero.onChange' }"  
+									        			selectedItem="@{controller.fldEpitetoEspecifico }"
+									        			width="100%"
+									        			>
+														</combobox>													
+													</cell>
+												</row>
+											</rows>
+										</grid>
+														        		
+				        		</vlayout>
+				        	</groupbox>
+							<hlayout>
+								<vlayout hflex="1">
+									<hlayout>
+										<grid hflex="1">
+											<columns>
+												<column width="95px"/>
+												<column align="left"/>
+												<column align="left" width="90px"/>
+											</columns>
+											<rows>
+												<row>
+													<label value="Determinador" />
+													<cell colspan="2">
+														<combobox id="cmbDeterminadorAvaliable" hflex="1" 
+									        			model="@{controller.especimeDeterminadorListAvaliable}"  
+									        			width="100%"
+									        			>
+														</combobox>
+													</cell>
+												</row>
+												<row>
+													<label value="Data" />
+													<datebox id="dateBoxData" hflex="1"></datebox>
+													<button label="Adicionar" hflex="1" onClick="controller.addDeterminador()"/>
+												</row>
+												<row>
+													<cell colspan="3">
+														<listbox model="@{controller.especimeDeterminadorList}"										
+															mold="paging" id="lbDeterminadores" 
+															pageSize="3"
+															height="110px"
+															>
+															<listhead id="listheadDeterminadores">
+																<listheader label="Determinador" align="left"/>											
+																<listheader label="Op." align="center" width="70px" />							
+															</listhead>
+															<listitem self="@{each=entity}" id="listitemDeterminadores" value="@{entity }">
+																<listcell><label value="@{entity }"/></listcell>
+																<listcell>
+																	<button  id="DeterminadorBtnDelete" image="/images/lixeira.png">
+																	<attribute name="onClick"><![CDATA[
+																	self.getParent().getParent().setSelected(true);	
+																	Events.sendEvent(lbDeterminadores,new Event("onSelect",lbDeterminadores));
+																	controller.removeDeterminador();											 						
+																	]]></attribute>
+																	</button>
+																</listcell>
+															</listitem>
+														</listbox>
+													</cell>
+												</row>
+												<row>
+													<label value="Imprecisão" />
+													<cell colspan="2">
+														<textbox width="99%" value="@{controller.fldImprecisao }"/> 
+													</cell>
+												</row>
+											</rows>
+										</grid>
+									</hlayout>
+								</vlayout>
+								<vlayout hflex="1">
+									<hlayout>
+										<grid hflex="1">
+											<columns>
+												<column width="95px"/>
+												<column align="left"/>
+												<column align="left" width="90px"/>
+											</columns>
+											<rows>
+												<row>
+													<label value="Autor" />
+													<combobox id="cmbAutorListAvaliable" hflex="1" 
+									        			model="@{controller.autorListAvaliable}"  
+									        			width="100%"
+									        			>
+														</combobox>
+													<button label="Adicionar" hflex="1" onClick="controller.addAutor()"/>
+												</row>
+												<row>
+													<cell colspan="3">
+														<listbox model="@{controller.autorList}"										
+															mold="paging" id="lbAutores" 
+															pageSize="5"
+															height="172px"
+															>
+															<listhead id="listheadAutores">
+																<listheader label="Determinador" align="left"/>											
+																<listheader label="Op." align="center" width="70px" />							
+															</listhead>
+															<listitem self="@{each=entity}" id="listitemAutores" value="@{entity }">
+																<listcell><label value="@{entity }"/></listcell>
+																<listcell>
+																	<button  id="autoresBtnDelete" image="/images/lixeira.png">
+																	<attribute name="onClick"><![CDATA[
+																	self.getParent().getParent().setSelected(true);	
+																	Events.sendEvent(lbColetores,new Event("onSelect",lbColetores));
+																	
+											 						controller.removeAutor();
+																	]]></attribute>
+																	</button>
+																</listcell>
+															</listitem>
+														</listbox>
+													</cell>
+												</row>
+											</rows>
+										</grid>
+									</hlayout>
+								</vlayout>
+							</hlayout>
+							<label value="Observações" />
+								<textbox rows="3" width="100%" value="@{controller.fldObservacaoTaxonomia }"/>
+							<div visible="false">
+								<textbox id="fldFiloHidden" value="@{controller.fldFilo }" visible="false"/>
+								<textbox id="fldClasseHidden" value="@{controller.fldClasse }" visible="false"/>
+								<textbox id="fldSubClasseHidden" value="@{controller.fldSubClasse }" visible="false"/>
+								<textbox id="fldFamiliaHidden" value="@{controller.fldFamilia }" visible="false"/>
+								<textbox id="fldSubFamiliaHidden" value="@{controller.fldSubFamilia }" visible="false"/>
+								<textbox id="fldOrdemHidden" value="@{controller.fldOrdem }" visible="false"/>
+								<textbox id="fldSubOrdemHidden" value="@{controller.fldSubOrdem }" visible="false"/>
+								<textbox id="fldGeneroHidden" value="@{controller.fldGenero }" visible="false"/>
+								<textbox id="fldEpitetoEspecificoHidden" value="@{controller.fldEpitetoEspecifico }" visible="false"/>
+							</div>	        	
+				        </vlayout>				        	
+					</tabpanel>
+					 <tabpanel>
+						 <hlayout>
+						 	<label value="Selecione o item Taxonomico para ver os itens multímidia:"/>
+						 	<combobox  id="cmbSelectedItemTaxonomicoMedia" model="@{controller.listItemTaxonomicoMedia, load-when='cmbEpitetoEspecifico.onChange, cmbGenero.onChange, cmbFamilia.onChange, cmbSubFamilia.onChange, cmbOrdem.onChange, cmbSubOrdem.onChange, cmbClasse.onChange, cmbSubClasse.onChange, cmbFilo.onChange, cmbReino.onChange' }"
+						 	selectedItem = "@{controller.fldSelectedItemTaxonomicoMedia }">
+						 		<comboitem value="@{each }" />
+						 	</combobox>
+						 </hlayout>
+				        <groupbox id="gbImagem" mold="3d" open="true">
+			                <attribute name="onOpen"><![CDATA[
+							    arrowImagem.setSclass("open-" + self.isOpen());
+							]]></attribute>
+			                <caption>
+			                    <div id="arrowImagem" class="open-false">Imagens</div>
+			                </caption>
+			                <hbox>
+			                    <button  label="Selecionar Imagem" upload="true,maxsize=5000" onUpload="controller.addImage(event)"/>
+			                    <label id="camimhoImagem" value="@{controller.especieImagem.caminho }"/>
+			                    <label value="Estação do ano" />
+			                    <combobox model="@{controller.estacaoList }" id="cmbEstacao"></combobox>
+			                    <button label="Adicionar" onClick="controller.adicionarImagem()"/>			                    
+			                </hbox>
+			                <hbox xmlns:h="native">
+				                <image content="@{controller.especieImagem.thumbMedia }" width="300px" id="imgEspecie" >
+					                <attribute name="onClick">
+					                	controller.openImage();
+					                </attribute>					                
+				                </image>				                
+				                <listbox 
+				                	model="@{controller.EspecieImagemList, load-when='cmbSelectedItemTaxonomicoMedia.onChange' }"
+				                	selectedItem="@{controller.especieImagem }"
+				                	id="lbEspecimeImagem"
+				                	width="500px"
+				                >
+				                	<listhead>
+				                		<listheader label="Imagem"/>
+				                		<listheader label="Estação" width="100px"/>
+				                		<listheader label="Operação" width="80px"/>
+				                	</listhead>
+				                	<listitem self="@{each=entity }" value="@{entity }">
+				                		<listcell label="@{entity.caminho }"/>
+				                		<listcell label="@{entity.estacao.descricao }" />
+				                		<listcell>
+				                			<button label="Excluir" onClick="controller.removeImagem()"/>
+				                		</listcell>
+				                	</listitem>
+				                </listbox>			                
+			                </hbox>
+			                
+			            </groupbox>
+				       <groupbox id="gbVideo" mold="3d" open="false">
+			                <attribute name="onOpen"><![CDATA[
+							    arrowVideo.setSclass("open-" + self.isOpen());
+							]]></attribute>
+			                <caption>
+			                    <div id="arrowVideo" class="open-false">Vídeos</div>
+			                </caption>
+			                <hbox>
+			                    <label value="Directory:" />
+			                    <textbox value="/home/zk/projects" />
+			                </hbox>
+			                <checkbox label="Compress archived files" />
+			            </groupbox>
+				        <groupbox id="gbSom" mold="3d" open="false">
+			                <attribute name="onOpen"><![CDATA[
+							    arrowSom.setSclass("open-" + self.isOpen());
+							]]></attribute>
+			                <caption>
+			                    <div id="arrowSom" class="open-false">Som</div>
+			                </caption>
+			                <hbox>
+			                    <label value="Directory:" />
+			                    <textbox value="/home/zk/projects" />
+			                </hbox>
+			                <checkbox label="Compress archived files" />
+			            </groupbox>
+					</tabpanel>
+					 <tabpanel>
+				        conteúdo didático
+					</tabpanel>
+					 <tabpanel>
+				        Bibliografia
+					</tabpanel>
+				</tabpanels>
+			</tabbox>
+			<separator></separator>
+			<div align="right">
+				<button label="Próximo" onClick="controller.saveEntity()"/>
+				<button id="btnCancelEdit" label="Cancelar" hflex="1" onClick="controller.cancelEditEntity()"/>
+			</div>
+		</vlayout>			
+	</window>
+</zk>
