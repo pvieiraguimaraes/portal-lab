@@ -2,15 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="/BuilderSoft/lib/antlr-2.7.5.jar"/>
-	<classpathentry kind="lib" path="/BuilderSoft/lib/ejb3-persistence.jar"/>
-	<classpathentry kind="lib" path="/BuilderSoft/lib/hibernate-annotations.jar"/>
-	<classpathentry kind="lib" path="/BuilderSoft/lib/hibernate-commons-annotations.jar"/>
-	<classpathentry kind="lib" path="/BuilderSoft/lib/hibernate-core.jar"/>
-	<classpathentry kind="lib" path="/BuilderSoft/lib/hibernate-entitymanager.jar"/>
-	<classpathentry kind="lib" path="/BuilderSoft/lib/hibernate-tools.jar"/>
-	<classpathentry kind="lib" path="/BuilderSoft/lib/hibernate3.jar"/>
 	<classpathentry kind="lib" path="/BuilderSoft/lib/jsf-api.jar"/>
-	<classpathentry kind="lib" path="/BuilderSoft/lib/jta-1.1.jar"/>
 	<classpathentry kind="lib" path="/BuilderSoft/lib/sqljdbc4.jar"/>
 	<classpathentry kind="lib" path="/BuilderSoft/lib/zcommon.jar" sourcepath="C:/Users/guiliano.AEE/Desktop/temp/projetos/zk-src-6.0.1-FL-2012-03-21.zip"/>
 	<classpathentry kind="lib" path="/BuilderSoft/lib/zel.jar"/>
@@ -68,5 +60,10 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/hibernate-commons-annotations-4.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/hibernate-core-4.1.7.Final.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/hibernate-entitymanager-4.1.7.Final.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/hibernate-jpa-2.0-api-1.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/hibernate-validator-4.2.0.Final.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,29 +1,23 @@
 package br.ueg.builderSoft.persistence;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import org.hibernate.Criteria;
-import org.hibernate.Hibernate;
-import org.hibernate.Query;
-import org.hibernate.Transaction;
-import org.hibernate.classic.Session;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.LogicalExpression;
-import org.hibernate.criterion.Restrictions;
-import org.springframework.orm.hibernate3.HibernateTemplate;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 import javax.persistence.Transient;
 
+import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.LogicalExpression;
+import org.hibernate.criterion.Restrictions;
+
 import br.ueg.builderSoft.model.Entity;
-import br.ueg.builderSoft.util.annotation.Attribute;
 import br.ueg.builderSoft.util.reflection.Reflection;
 
 
@@ -35,22 +29,18 @@ import br.ueg.builderSoft.util.reflection.Reflection;
  */
 public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 
-	private HibernateTemplate hibernateTemplate;
+	SessionFactory sessionFactory;
 	
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
 	Session currentSession;
 	Transaction currentTransaction;
 	
-	/**
-	 * Metodo para setar o HibernateTemplate, necessario para ser instanciado pelo Spring
-	 * @param hibernateTemplate
-	 */
-	public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
-		this.hibernateTemplate = hibernateTemplate;
-		
-	}
 	public Session getSession(){
 		if(currentSession==null || !currentSession.isOpen()){
-			currentSession = this.hibernateTemplate.getSessionFactory().openSession();
+			currentSession = this.sessionFactory.openSession();
 		}
 		return currentSession;
 	}	
