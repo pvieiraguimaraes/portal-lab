@@ -604,7 +604,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 			if(list!=null && !list.isEmpty()){
 				Collections.sort( list, new Comparator<Entity>(){
 				    public int compare( Entity e1, Entity e2 ) {
-				      return e1.compare(e2);
+				      return e1.compareTo(e2);
 				    }
 				  });
 			 }else{

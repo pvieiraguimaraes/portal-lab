@@ -78,8 +78,7 @@ public class Usuario extends Entity {
 			)
 	private Set<GrupoUsuario> grupos = new HashSet<GrupoUsuario>(0);
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario",cascade = CascadeType.ALL)// mappedBy indica o atributo da entidade many
-	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario",cascade = CascadeType.ALL, orphanRemoval=true)// mappedBy indica o atributo da entidade many
 	@Attribute(Required = false, SearchField = false)
 	private Set<UsuarioPermissao> permissoes = new HashSet<UsuarioPermissao>(0);
 	
