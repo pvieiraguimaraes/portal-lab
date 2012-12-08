@@ -1,7 +1,5 @@
 package br.ueg.portalLab.model;
 
-import java.io.IOException;
-
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -17,14 +15,12 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.zkoss.image.AImage;
 import org.zkoss.util.media.Media;
 
-import br.ueg.builderSoft.config.ConfigPortalLab;
 import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.util.annotation.Attribute;
 
-@javax.persistence.Entity
+//@javax.persistence.Entity
 
 @SuppressWarnings("serial")
 @MappedSuperclass
@@ -85,7 +81,6 @@ public abstract class EspecieMultimidia<TYPE extends Media> extends Entity {
 	}
 	
 
-	@SuppressWarnings("unchecked")
 	public TYPE getMedia() {
 		if(this.media!=null){
 			return media;

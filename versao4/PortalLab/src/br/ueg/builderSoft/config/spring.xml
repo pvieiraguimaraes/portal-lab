@@ -35,20 +35,17 @@
 	<bean id="dataSource" class="br.ueg.builderSoft.util.sets.Connect" />
 		
 	<!-- Hibernate -->
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
     	<property name="annotatedClasses">
     		<list>
     		
 
     			<value>br.ueg.portalLab.security.model.GrupoUsuario</value>
     			<value>br.ueg.portalLab.security.model.CasoDeUso</value>
-    			<value>br.ueg.portalLab.security.model.CasoDeUsoFuncionalidade</value>
     			<value>br.ueg.portalLab.security.model.Funcionalidade</value>
+    			<value>br.ueg.portalLab.security.model.CasoDeUsoFuncionalidade</value>
     			<value>br.ueg.portalLab.security.model.UsuarioPermissao</value>
     			
-    			<value>br.ueg.portalLab.model.Reino</value>
-    			<value>br.ueg.portalLab.model.Filo</value>
-    			<value>br.ueg.portalLab.model.Classe</value>
     			<value>br.ueg.portalLab.model.TipoDeMontagem</value>
     			<value>br.ueg.portalLab.model.Datum</value>
     			<value>br.ueg.portalLab.model.Fenologia</value>
@@ -78,23 +75,18 @@
     	</property>
     	<property name="hibernateProperties">
     		<props>
-    			<prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>
+    			<prop key="hibernate.dialect">org.hibernate.dialect.SQLServer2008Dialect</prop>
     			<prop key="hibernate.show_sql">true</prop>  
     			<prop key="hibernate.hbm2ddl.auto">update</prop> 			
     		</props>
     	</property>
     	<property name="dataSource" ref="dataSource" />
     </bean>
-
-	<!-- Injeta uma sessão do hibernate -->
-	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
-  		<property name="sessionFactory" ref="sessionFactory" />
-	</bean> 
 	 
 	<!-- DAOs -->
     <bean id="genericDAO" class="br.ueg.builderSoft.persistence.GenericDAO">
     	<!-- Injeta esse objeto hibernateTemplate dentro do DAO -->
-    	<property name="hibernateTemplate" ref="hibernateTemplate" />
+    	<property name="sessionFactory" ref="sessionFactory" />
     </bean>
     
         
@@ -104,7 +96,7 @@
     <!--     beans para utilização do builderSoft-Security -->
     <bean id="profiler" class="br.ueg.portalLab.persistence.ControleAcesso" >
     <!-- Injeta esse objeto hibernateTemplate dentro do DAO -->
-    	<property name="hibernateTemplate" ref="hibernateTemplate" />
+    	<property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
     
