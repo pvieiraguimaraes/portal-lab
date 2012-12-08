@@ -101,7 +101,7 @@ public class ItemGeograficoComposer extends TabelaComposerController<ItemGeograf
 			listFKEntity = new ArrayList(listPais); 
 			Collections.sort( listFKEntity, new Comparator<Entity>(){
 			    public int compare( Entity e1, Entity e2 ) {
-			      return e1.compare(e2);
+			      return e1.compareTo(e2);
 			    }
 			  });
 		}else{

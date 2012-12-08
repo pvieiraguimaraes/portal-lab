@@ -201,8 +201,7 @@ public class Especime extends Entity {
 	@Attribute(Required = false, SearchField = false)
 	private ItemTaxonomico epitetoEspecifico;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "especime",cascade = CascadeType.ALL)// mappedBy indica o atributo da entidade many
-	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "especime",cascade = CascadeType.ALL, orphanRemoval=true)// mappedBy indica o atributo da entidade many
 	@Attribute(Required = false, SearchField = false)
 	private Set<EspecimeDeterminador> especimeDeterminadores = new HashSet<EspecimeDeterminador>(0);
 	
