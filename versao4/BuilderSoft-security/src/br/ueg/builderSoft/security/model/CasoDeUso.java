@@ -3,19 +3,13 @@ package br.ueg.builderSoft.security.model;
 import java.util.HashSet;
 import java.util.Set;
 
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
-import javax.persistence.JoinColumn;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Cascade;
-
 
 import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.util.annotation.Attribute;
@@ -48,8 +42,7 @@ public class CasoDeUso extends Entity  {
 	@Attribute(Required = true, SearchField = false)
 	private Boolean status;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "casoDeUso",cascade =CascadeType.ALL )// mappedBy indica o atributo da entidade many
-	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "casoDeUso",cascade =CascadeType.ALL, orphanRemoval=true )// mappedBy indica o atributo da entidade many
 	@Attribute(Required = false, SearchField = false)
 	private Set<CasoDeUsoFuncionalidade> funcionalidades = new HashSet<CasoDeUsoFuncionalidade>(0);
 	
