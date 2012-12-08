@@ -12,10 +12,6 @@ import javax.imageio.ImageIO;
 
 import org.apache.commons.io.output.ByteArrayOutputStream;
 
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGEncodeParam;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
-
 public class ImageUtil {
 	public static final String IMAGE_JPG = "jpg";
 	public static InputStream scaleImage(InputStream p_image, int p_width,
@@ -41,6 +37,12 @@ public class ImageUtil {
 		// Draw the scaled image
 		BufferedImage thumbImage = new BufferedImage(thumbWidth, thumbHeight,
 				BufferedImage.TYPE_INT_RGB);
+		
+		
+		
+		
+		
+		
 		Graphics2D graphics2D = thumbImage.createGraphics();
 		graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
 				RenderingHints.VALUE_INTERPOLATION_BILINEAR);
@@ -48,14 +50,15 @@ public class ImageUtil {
 
 		// Write the scaled image to the outputstream
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
+		//ImageIO.write(thumbImage, IMAGE_JPG, out);
+		/*JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
 		JPEGEncodeParam param = encoder.getDefaultJPEGEncodeParam(thumbImage);
 		int quality = 100; // Use between 1 and 100, with 100 being highest
 							// quality
 		quality = Math.max(0, Math.min(quality, 100));
 		param.setQuality((float) quality / 100.0f, false);
 		encoder.setJPEGEncodeParam(param);
-		encoder.encode(thumbImage);
+		encoder.encode(thumbImage);*/
 		ImageIO.write(thumbImage, IMAGE_JPG, out);
 
 		// Read the outputstream into the inputstream for the return value
