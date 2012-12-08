@@ -11,6 +11,7 @@ import java.io.OutputStream;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Transient;
 
+import org.jboss.logging.Logger;
 import org.zkoss.image.AImage;
 import org.zkoss.image.Image;
 
@@ -92,8 +93,12 @@ public class EspecieImagem extends EspecieMultimidia<Image> {
 					aux="thumb_";
 				}
 				if(this.isNew()){
-					
-					InputStream streamMedia = this.media.getStreamData();
+					InputStream streamMedia ;
+					if(this.media!=null){
+						streamMedia = this.media.getStreamData();
+					}else{
+						streamMedia = this.getDefaultMedia().getStreamData();
+					}
 					is = getThumbImageInputStream(streamMedia);
 				}else{
 					File file = new File(path.concat(aux).concat(fileName));
@@ -133,10 +138,11 @@ public class EspecieImagem extends EspecieMultimidia<Image> {
 		String diretorioImagem = ConfigPortalLab.getInstancia()
 				.getDireitorioMedia();
 		String separator = System.getProperty("file.separator");
-		diretorioImagem = ConfigPortalLab.getInstancia()
+		/*diretorioImagem = ConfigPortalLab.getInstancia()
 				.getRootApplicationPath().concat(separator)
-				.concat(diretorioImagem);
-		System.out.println("diretorioImagem:" + diretorioImagem);
+				.concat(diretorioImagem);*/
+		System.err.println("diretorioImagem:" + diretorioImagem);
+
 		try {
 			media = (Image) new AImage(diretorioImagem.concat(separator)
 					.concat(ESPECIES_DEFAULT_IMG_NAME));
@@ -155,8 +161,8 @@ public class EspecieImagem extends EspecieMultimidia<Image> {
 		String separator = System.getProperty("file.separator");
 
 		
-		String diretorioRoot = ConfigPortalLab.getInstancia()
-				.getRootApplicationPath();
+		//String diretorioRoot = ConfigPortalLab.getInstancia().getRootApplicationPath();
+		String diretorioRoot = ConfigPortalLab.getInstancia().getDireitorioMedia();
 		
 		String contextPathImage = getContextPathImage(endWithSeparator,false);
 
@@ -174,15 +180,15 @@ public class EspecieImagem extends EspecieMultimidia<Image> {
 	 */
 	public String getContextPathImage(boolean endWithSeparator, boolean url) {
 		String separator = System.getProperty("file.separator");
-		String diretorioImagem = ConfigPortalLab.getInstancia()
-				.getDireitorioMedia();
+		String diretorioImagem = ConfigPortalLab.getInstancia().getMediaWebPath();
 		ItemTaxonomico itemTaxonomico2 = this.getItemTaxonomico();
 		String nomeCompleto  = "";
 		if(itemTaxonomico2!=null){
 			nomeCompleto = itemTaxonomico2.getNomeCompleto();
 		}
-		String contextPathImage = separator
-				.concat(diretorioImagem)
+		String auxPath = url?separator.concat(diretorioImagem):"";
+		
+		String contextPathImage = auxPath
 				.concat(separator)
 				.concat(nomeCompleto)
 				.concat(separator)
