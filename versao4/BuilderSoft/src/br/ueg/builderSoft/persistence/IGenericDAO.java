@@ -61,5 +61,12 @@ public interface IGenericDAO<E extends Entity> {
 	 * @return List<E> lista de entidade
 	 */
 	public List<E> findByEntity(Entity entity);
+	
+	/**
+	 * Método utilizado para retornar uma lista fazendo busca por uma SQL nativa.
+	 * @param sql SQL para pesquisa no banco
+	 * @return List<E> lista de resultados
+	 */
+	public List<E> findByNativeSQL(String sql);
 
 }
