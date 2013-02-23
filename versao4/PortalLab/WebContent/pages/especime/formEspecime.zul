@@ -22,10 +22,10 @@
 				        		</hlayout>
 				        		<hlayout >
 				        			<combobox id="cmdLaboratorio" hflex="1" selectedItem="@{controller.fldLaboratorio }"
-				        			model="@{controller.laboratorioList }"
-				        			>
+				        			model="@{controller.laboratorioList }" >
 					        			<attribute name="onChange">
 					        				cmbGrupoEnderecoFisico.setRawValue(null);
+					        				controller.setCodigoCatalogoOnZul();
 					        			</attribute>
 									</combobox>
 				        			<combobox hflex="1" id="cmbGrupoEnderecoFisico"
@@ -39,7 +39,7 @@
 			        		<hlayout>
 			        			<hlayout hflex="1">
 			        				<label value="Código do Catálogo:"/>
-			        				<textbox hflex="1" value="@{controller.fldCodigoCatalogo }"/>
+			        				<textbox hflex="1" value="@{controller.fldCodigoCatalogo }" readonly="true"/>
 			        			</hlayout>
 			        			<hlayout hflex="1">
 			        				<label value="Código de Coleta:"/>
