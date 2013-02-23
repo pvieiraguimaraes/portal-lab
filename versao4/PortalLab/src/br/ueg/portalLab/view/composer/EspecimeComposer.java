@@ -235,6 +235,9 @@ public class EspecimeComposer extends ComposerController<Especime> {
 
 	@Wire
 	protected Listbox divListBoxColetores;
+	
+	@Wire
+	protected Textbox fldCatalogoCodigo;
 
 	protected EspecieImagem especieImagem = new EspecieImagem();
 
@@ -729,6 +732,12 @@ public class EspecimeComposer extends ComposerController<Especime> {
 
 	public BindingListModelList<Entity> getLaboratorioList() {
 		return this.getFKEntityModel("fldLaboratorio");
+	}
+	
+	public void setCodigoCatalogoOnZul(){
+		Laboratorio lab = this.getFldLaboratorio();
+		setFldCodigoCatalogo(this.getEspecimeControl().getLastLabList(lab));
+		binderForm.loadAll();
 	}
 
 	@Override
