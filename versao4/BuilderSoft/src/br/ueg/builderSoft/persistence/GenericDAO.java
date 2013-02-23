@@ -306,5 +306,12 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 		}
 		return null;
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<E> findByNativeSQL(String sql){
+		Session session = this.getSession();
+		return session.createSQLQuery(sql).list();
+	}
 
 }
