@@ -1,13 +1,13 @@
 <zk>
 <window id="formEspecime" title="Formulário de Manutenção Especime" border="normal" xmlns:c="client"
-					closable="false"   visible="true" width="850px">
-	<vlayout>		
-			<tabbox id="tb" orient="horizontal" onSelect="controller.setButtonsNextTab()">
+					closable="false"   visible="true" width="1050px">
+	<hlayout>		
+			<tabbox id="tb" orient="horizontal" onSelect="controller.setButtonsNextTab()" width="850px">
 			    <tabs id="tabs" width="150px" >
-			        <tab id="cadColeta" 			label="Coleta" />
+			        <tab id="cadColeta" 			label="Coleta"  selected="true"/>
 			        <tab id="cadGeografia" 			label="Geografia"/>
 			        <tab id="cadTaxonomia"			label="Taxonomia" />
-			        <tab id="cadMultimidia"			label="Multimídia" selected="true"/>
+			        <tab id="cadMultimidia"			label="Multimídia"/>
 			        <tab id="cadConteudoDidatico"	label="Conteúdo Didático" />
 			        <tab id="cadBibliografia"		label="Bibliografia" />			        
 			    </tabs>
@@ -32,13 +32,16 @@
 				        				model="@{controller.grupoEnderecoFisicoList, load-when='cmdLaboratorio.onChange'}"
 				        				selectedItem = "@{controller.fldGrupoEnderecoFisico }"/>
 				        			<textbox id="fldGrupoEnderecoFisicoHidden" value="@{controller.fldGrupoEnderecoFisico }" visible="false"/>
-				        			<div hflex="1"/>
+				        			<hlayout hflex="1">
+				        				<label value="Data da Coleta:"/>
+				        				<datebox hflex="1" value="@{controller.fldDataColeta }"/>
+			        				</hlayout>
 				        		</hlayout>
 				        	</vlayout>
 				        	<separator/>
 			        		<hlayout>
 			        			<hlayout hflex="1">
-			        				<label value="Código do Catálogo:"/>
+			        				<label value="Código do Catálogo:" />
 			        				<textbox hflex="1" value="@{controller.fldCodigoCatalogo }" readonly="true"/>
 			        			</hlayout>
 			        			<hlayout hflex="1">
@@ -46,8 +49,8 @@
 			        				<textbox hflex="1" value="@{controller.fldCodigoColeta }"/>
 			        			</hlayout>
 			        			<hlayout hflex="1">
-			        				<label value="Data da Coleta:"/>
-			        				<datebox hflex="1" value="@{controller.fldDataColeta }"/>
+			        				<label value="Número de Tombo:"/>
+			        				<textbox hflex="1" value="@{controller.fldNumeroDeTombo }"/>
 			        			</hlayout>
 			        		</hlayout>
 			        		<separator/>
@@ -602,12 +605,12 @@
 					</tabpanel>
 				</tabpanels>
 			</tabbox>
-			<separator></separator>
-			<div align="right">
-				<button id="btnNextTab" label="Próximo" hflex="1" onClick="controller.nextTab()"/>
+			<vlayout width="170px">
+				<separator></separator><separator></separator>
+				<button id="btnNextTab" label="Próximo" hflex="1" onClick="controller.nextTab()" />
 				<button id="btnSalvar" label="Salvar" hflex="1" onClick="controller.saveEntity()" visible="false"/>
 				<button id="btnCancelEdit" label="Cancelar" hflex="1" onClick="controller.cancelEditEntity()"/>
-			</div>
-		</vlayout>			
+			</vlayout>
+		</hlayout>			
 	</window>
 </zk>

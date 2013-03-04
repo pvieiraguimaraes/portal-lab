@@ -34,7 +34,7 @@ public class Especime extends Entity {
 	
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_laboratorio", insertable = true, updatable = true, nullable=false)
-	@Attribute(Required = true, SearchField = false)
+	@Attribute(Required = true, SearchField = true)
 	private Laboratorio laboratorio;
 	
 	@ManyToOne(optional = true, fetch = FetchType.LAZY)
@@ -49,6 +49,10 @@ public class Especime extends Entity {
 	@Column(name = "codigo_coleta", length=20, nullable=true)
 	@Attribute(Required = false, SearchField = true)
 	private String codigoColeta;
+	
+	@Column(name = "numero_de_tombo", length=20, nullable=true)
+	@Attribute(Required = false, SearchField = true)
+	private String numeroDeTombo;
 	
 	@Column(name = "data_coleta")
 	@Attribute(Required = false, SearchField = false)
@@ -81,7 +85,7 @@ public class Especime extends Entity {
 	
 	@Attribute(Required = true, SearchField = false)
 	@Column(name="numero_individuo")
-	private Integer numeroIndividuo = new Integer(1);
+	private Integer numeroIndividuo;// = new Integer(1);
 	
 	@ManyToMany(cascade ={CascadeType.PERSIST})
 	@JoinTable(name="especime_coletor", 
@@ -262,6 +266,20 @@ public class Especime extends Entity {
 
 	public void setCodigoColeta(String codigoColeta) {
 		this.codigoColeta = codigoColeta;
+	}
+
+	/**
+	 * @return the numeroDeTombo
+	 */
+	public String getNumeroDeTombo() {
+		return numeroDeTombo;
+	}
+
+	/**
+	 * @param numeroDeTombo the numeroDeTombo to set
+	 */
+	public void setNumeroDeTombo(String numeroDeTombo) {
+		this.numeroDeTombo = numeroDeTombo;
 	}
 
 	public Date getDataColeta() {

@@ -12,26 +12,53 @@
 					<vlayout>
 						<button label="Novo Especime" onClick="controller.newEntity()" id="crudWindowBtnNew" image="../../images/editar.png" width="200px"/>
 						<hlayout >
-							<grid width="500px">
+							<grid >
 								<columns>
+									<column width="125px"/>
+									<column align="left"/>
 									<column width="119px"/>
 									<column align="left"/>
 								</columns>
 								<rows>
-									<row>								
-										<label value="Local Coleta:"/>
-										<textbox value="@{controller.fldBuscaLocal}" width="300px"/>
-									</row>
-									<row>								
-										<label value="Nome da espécime:"/>
-										<textbox value="@{controller.fldBuscaEspecime}" width="300px"/>
-									</row>
 									<row>
-										<label value="Codigo do catálogo:"/>
-										<hbox width="300px">
-											<textbox value="@{controller.fldBuscaCatalogo}" hflex="1"/>										
-											<button label="Buscar" hflex="1" onClick="controller.searchEntity()"/>										
-										</hbox>									
+										<label value="Laboratório" hflex="1"/>
+										<combobox
+											id="cmdLaboratorio" hflex="1"
+											selectedItem="@{controller.fldLaboratorio }"
+											model="@{controller.laboratorioList }">
+											<attribute name="onChange">
+												cmbGrupoEnderecoFisico.setRawValue(null);
+											</attribute>
+										</combobox>
+										<label value="Grupo Endereço" hflex="1"/>
+										<combobox hflex="1"
+											id="cmbGrupoEnderecoFisico"
+											model="@{controller.grupoEnderecoFisicoList, load-when='cmdLaboratorio.onChange'}"
+											selectedItem="@{controller.fldGrupoEnderecoFisico }" />
+										
+									</row>
+									<row>								
+										<label value="Código do Catálogo:"/>
+			        					<textbox id="tbCodigoCatalogo" hflex="1" value="@{controller.fldCodigoCatalogo }" />
+			        					<label value="Código de Coleta:"/>
+			        					<textbox id="tbCodigoColeta" hflex="1" value="@{controller.fldCodigoColeta }"/>																													
+									</row>
+									<row>								
+										<label value="Número de Tombo:"/>
+			        					<textbox id="tbNumeroDeTombo" hflex="1" value="@{controller.fldNumeroDeTombo }" />
+			        																																
+									</row>
+									<row spans="2">
+										<button label="Buscar" hflex="1" onClick="controller.searchEntity()"/>
+										<button label="Nova Busca" hflex="1">
+											<attribute name="onClick"> 
+												cmdLaboratorio.setValue(null); 
+												cmbGrupoEnderecoFisico.setValue(null);
+												tbCodigoColeta.setValue(null);
+												tbCodigoCatalogo.setValue(null);
+												tbNumeroDeTombo.setValue(null);
+											</attribute>
+										</button>
 									</row>
 								</rows>
 							</grid>
@@ -51,10 +78,12 @@
 						width="98%"
 						>
 						<listhead id="divListhead">
-							<listheader label="Espécime" align="center"/>
-							<listheader label="Localidade" align="center" width="250px" />
-							<listheader label="Coletor" align="center" width="200px" />
-							<listheader label="Data" align="center" width="100px" />
+							<listheader label="Código do Catálogo" align="center"  width="120px" />
+							<listheader label="Grupo Endereço" align="center"  width="200px" />
+							<listheader label="Código de Coleta" align="center" width="120px" />
+							<listheader label="Data" align="center" width="100px" />							
+							<listheader label="Tipo de Montagem" align="center"  width="200px" />
+							<listheader label="Localidade" align="left"  />
 							<listheader label="Operações" align="center" width="195px" />							
 						</listhead>
 						<listitem self="@{each=entity}" id="divListitem">
@@ -62,13 +91,16 @@
 										controller.editEntity();
 							</attribute>
 							<listcell><label value="@{entity.codigoCatalogo }"/></listcell>
-							<listcell></listcell>
-							<listcell></listcell>
+							<listcell><label value="@{entity.grupoEnderecoFisico}" /></listcell>
+							<listcell><label value="@{entity.codigoColeta }"/></listcell>
 							<listcell><label value="@{entity.dataColeta, converter='org.zkoss.zkplus.databind.DateFormatConverter'}"
 					self="@{format(dd/MM/yyyy)}"/></listcell>
+							<listcell><label value="@{entity.tipoDeMontagem }"/></listcell>
+							<listcell><label value="@{entity.localidade }"/></listcell>
 							<listcell>
 								<button Label="Editar" id="crudWindowBtnEdit" image="/images/editar.png">
 									<attribute name="onClick">
+									    controller.setSelectedEntity(null);
 										self.getParent().getParent().setSelected(true);
 										Events.sendEvent(especimeListbox,new Event("onSelect",especimeListbox));
 										controller.editEntity();
