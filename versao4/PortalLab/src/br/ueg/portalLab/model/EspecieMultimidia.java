@@ -61,12 +61,16 @@ public abstract class EspecieMultimidia<TYPE extends Media> extends Entity {
 		String imagem="";
 		if(this.getNome()!=null)
 			imagem+=this.getNome();
-		
-		if(this.getItemTaxonomico()!=null){
-			imagem+="( ".concat(this.getItemTaxonomico().getNome().concat(")"));
-		}
-		if(this.getEstacao()!=null){
-			imagem+=" - ".concat(this.getEstacao().getDescricao());
+		try {
+			if (this.getItemTaxonomico() != null) {
+				imagem += "( ".concat(this.getItemTaxonomico().getNome()
+						.concat(")"));
+			}
+			if (this.getEstacao() != null) {
+				imagem += " - ".concat(this.getEstacao().getDescricao());
+			}
+		} catch (Exception e) {
+			
 		}
 		return imagem;
 	}

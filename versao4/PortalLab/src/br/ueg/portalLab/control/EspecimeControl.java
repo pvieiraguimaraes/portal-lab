@@ -23,6 +23,7 @@ import br.ueg.builderSoft.control.Control;
 import br.ueg.builderSoft.control.SubControllerManager;
 import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.persistence.GenericDAO;
+import br.ueg.builderSoft.util.control.ListingControl;
 import br.ueg.builderSoft.util.control.MessagesControl;
 import br.ueg.builderSoft.util.control.SubController;
 import br.ueg.builderSoft.util.reflection.Reflection;
@@ -50,6 +51,7 @@ public class EspecimeControl extends Control<Especime> {
 		
 		return super.actionCanceledit(subControllersManager);
 	}
+
 	@SuppressWarnings("unchecked")
 	public void refreshFields(Entity entity){
 		if(entity==null)return;
@@ -79,6 +81,33 @@ public class EspecimeControl extends Control<Especime> {
 			}
 		}
 	}
+	/* (non-Javadoc)
+	 * @see br.ueg.builderSoft.control.Control#actionSearch(br.ueg.builderSoft.control.SubControllerManager)
+	 */
+	@Override
+	public boolean actionSearch(
+			SubControllerManager<Especime> subControllerManager) {
+		// TODO Auto-generated method stub
+		return super.actionSearch(subControllerManager);
+	}
+	
+	/* (non-Javadoc)
+	 * @see br.ueg.builderSoft.control.Control#actionFindByCriteria(br.ueg.builderSoft.control.SubControllerManager)
+	 */
+	@Override
+	public boolean actionFindByCriteria(
+			SubControllerManager<Especime> subControllerManager) {
+		if ( this.getMapFields().get("searchEntity") != null ) {
+			ListingControl<Especime> listingControl = (ListingControl<Especime>) subControllerManager.getListingControl();
+			listingControl.setList(getPersistence().findByEntity((Especime) this.getMapFields().get("searchEntity")));
+			listingControl.setListing(true);
+			return true;
+		} else {
+			subControllerManager.getMessagesControl().addMessageError("Busca");
+			return false;
+		}
+	}
+
 	@Override
 	public boolean actionSave(
 			SubControllerManager<Especime> subControllerManager) {
@@ -196,11 +225,14 @@ public class EspecimeControl extends Control<Especime> {
 	public Set<EspecieImagem> getEspecieImagemFromItemTaxonomico(ItemTaxonomico it){
 		if(it==null) return new HashSet<EspecieImagem>();
 		GenericDAO<ItemTaxonomico> itemTaxonomicoDAO = (GenericDAO<ItemTaxonomico>) SpringFactory.getInstance().getBean("genericDAO",GenericDAO.class);
-		itemTaxonomicoDAO.refresh(it);
+		//itemTaxonomicoDAO.refresh(it);
+		ItemTaxonomico it2 = new ItemTaxonomico();
+		it2.setId(it.getId());
+		it = itemTaxonomicoDAO.findByEntity(it2).get(0);
 		return it.getImagens();
 	}
 
-	private Especime selctedEspecime;
+	private Especime selectedEspecime;
 	
 	
 	public EspecimeControl(MessagesControl control) {
@@ -350,13 +382,15 @@ public class EspecimeControl extends Control<Especime> {
 	 * @return the selectedGrupoUsuario
 	 */
 	public Especime getSelectedEspecime() {
-		return selctedEspecime;
+		//this.getPersistence().refresh(selectedEspecime);
+		//selectedEspecime =  (Especime) this.getPersistence().findByEntity(selectedEspecime).get(0);
+		return selectedEspecime;
 	}
 	/**
 	 * @param selectedEspecime the selectedGrupoUsuario to set
 	 */
 	public void setSelectedEspecime(Especime selectedEspecime) {
-		this.selctedEspecime = selectedEspecime;
+		this.selectedEspecime = selectedEspecime;
 	}
 	
 	/* metodos para aba geografia */

@@ -1,5 +1,6 @@
 package br.ueg.portalLab.model;
 
+import java.awt.event.InvocationEvent;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -112,7 +113,14 @@ public class ItemTaxonomico extends Entity {
 	
 	@Override
 	public String toString(){
-		return this.getNivelTaxonomico().getNome()+" "+this.getNome();
+		String retorno = "";
+		//System.err.println(this.getNome());
+		try{
+			retorno = this.getNivelTaxonomico().getNome();
+		}catch(Exception e){
+			//e.printStackTrace();
+		}
+		return retorno+" "+this.getNome();
 	}
 
 

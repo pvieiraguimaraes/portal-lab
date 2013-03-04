@@ -61,8 +61,16 @@ import br.ueg.portalLab.model.Sexo;
 import br.ueg.portalLab.model.TipoDeMontagem;
 
 @Component
-@Scope("session")
+@Scope("prototype")
 public class EspecimeComposer extends ComposerController<Especime> {
+
+	/* (non-Javadoc)
+	 * @see br.ueg.builderSoft.view.zk.composer.ComposerController#searchEntity()
+	 */
+	@Override
+	public boolean searchEntity() {
+		return super.searchEntity();
+	}
 
 	@Override
 	public void doAfterCompose(org.zkoss.zk.ui.Component comp) throws Exception {
@@ -81,19 +89,22 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	public void cancelEditEntity() {
 		// TODO Auto-generated method stub
 		super.cancelEditEntity();
-	}
+	}	
 
-	@AttributeView(key = "laboratorio", isEntityValue = true, fieldType = Laboratorio.class, isVisible = true, caption = "especime_laboratorioColumn")
+	@AttributeView(key = "laboratorio", isEntityValue = true, fieldType = Laboratorio.class, isVisible = true, caption = "especime_laboratorioColumn", isSearchField=true)
 	private Laboratorio fldLaboratorio;
 
-	@AttributeView(key = "grupoEnderecoFisico", isEntityValue = true, fieldType = GrupoEnderecoFisico.class, isVisible = true, caption = "especime_grupoEnderecoFisicoColumn")
+	@AttributeView(key = "grupoEnderecoFisico", isEntityValue = true, fieldType = GrupoEnderecoFisico.class, isVisible = true, caption = "especime_grupoEnderecoFisicoColumn", isSearchField=true)
 	private GrupoEnderecoFisico fldGrupoEnderecoFisico;
 
-	@AttributeView(key = "codigoCatalogo", isEntityValue = true, fieldType = String.class, isVisible = true, caption = "especime_codigoCatalogoColumn")
+	@AttributeView(key = "codigoCatalogo", isEntityValue = true, fieldType = String.class, isVisible = true, caption = "especime_codigoCatalogoColumn", isSearchField=true)
 	private String fldCodigoCatalogo;
 
-	@AttributeView(key = "codigoColeta", isEntityValue = true, fieldType = String.class, isVisible = true, caption = "especime_codigoColetaColumn")
+	@AttributeView(key = "codigoColeta", isEntityValue = true, fieldType = String.class, isVisible = true, caption = "especime_codigoColetaColumn", isSearchField=true)
 	private String fldCodigoColeta;
+	
+	@AttributeView(key = "numeroDeTombo", isEntityValue = true, fieldType = String.class, isVisible = true, caption = "especime_numeroDeTomboColumn", isSearchField=true)
+	private String fldNumeroDeTombo;
 
 	@AttributeView(key = "dataColeta", isEntityValue = true, fieldType = Date.class, isVisible = true, caption = "especime_dataColetaColumn")
 	private Date fldDataColeta;
@@ -114,7 +125,7 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	private TipoDeMontagem fldTipoDeMontagem;
 
 	@AttributeView(key = "numeroIndividuo", isEntityValue = true, fieldType = Integer.class, isVisible = true, caption = "especime_numeroIndividuoColumn")
-	private Integer fldNumeroIndividuo = new Integer(1);
+	private Integer fldNumeroIndividuo;// = new Integer(1);
 
 	@AttributeView(key = "coletores", isEntityValue = true, fieldType = Set.class, isVisible = true, caption = "especime_coletoresColumn")
 	private Set<Coletor> fldColetores = new HashSet<Coletor>(0);
@@ -328,6 +339,20 @@ public class EspecimeComposer extends ComposerController<Especime> {
 
 	public void setFldCodigoColeta(String fldCodigoColeta) {
 		this.fldCodigoColeta = fldCodigoColeta;
+	}
+
+	/**
+	 * @return the fldNumeroDeTombo
+	 */
+	public String getFldNumeroDeTombo() {
+		return fldNumeroDeTombo;
+	}
+
+	/**
+	 * @param fldNumeroDeTombo the fldNumeroDeTombo to set
+	 */
+	public void setFldNumeroDeTombo(String fldNumeroDeTombo) {
+		this.fldNumeroDeTombo = fldNumeroDeTombo;
 	}
 
 	public Date getFldDataColeta() {
@@ -647,6 +672,14 @@ public class EspecimeComposer extends ComposerController<Especime> {
 				this.binderForm = new AnnotateDataBinder(this.formEspecime);
 				this.binderForm.setLoadOnSave(false);
 				this.binderForm.bindBean("controller", this);
+				
+
+/*				this.setFldSelectedItemTaxonomicoMedia(null);
+				Combobox cmbSelected = ((Combobox)this.formEspecime.getFellow("cmbSelectedItemTaxonomicoMedia"));
+				cmbSelected.setValue(null);
+				cmbSelected.setModel(null);
+				cmbSelected.setModel(new ListModelSet<>(this.getListItemTaxonomicoMedia()));*/
+				
 				this.binderForm.loadComponent(this.formEspecime);
 
 			}
@@ -1241,7 +1274,7 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	}
 
 	public ListModel<EspecieImagem> getEspecieImagemList() {
-		BindingListModelSet<EspecieImagem> especimeImagemList;
+		BindingListModelSet<EspecieImagem> especimeImagemList;//= new BindingListModelSet<EspecieImagem>(new HashSet<EspecieImagem>(0), true);
 
 		especimeImagemList = new BindingListModelSet<EspecieImagem>(
 				this.getFldEspecieImagens(), true);
