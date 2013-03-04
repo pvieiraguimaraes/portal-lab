@@ -101,9 +101,26 @@ public class GenericControl <E extends Entity> {
 	 */
 	public final boolean doAction(String action, E entity) {
 		boolean result = false;
-		this.mapManagerBeanToEntity(entity, this.view);
+		this.mapManagerBeanToEntity(entity, this.view, false);
 		HashMap<String, Object> map = this.createMapFields(entity);
+		
+		//para fazer busca por entity
+		E searchEntity = null;
+		try {
+			searchEntity = (E) entity.getClass().newInstance();
+		} catch (InstantiationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IllegalAccessException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		this.mapManagerBeanToEntity(searchEntity, this.view, true);
+		map.put("searchEntity", searchEntity);
+		//fim para busca por entity
+		
 		this.control.setMapFields(map);
+		
 		if (control.doAnyAction(this.subControllerManager, action)) {
 			Class reflectedClass = control.getClass();
 			try {
@@ -130,6 +147,7 @@ public class GenericControl <E extends Entity> {
 				IListingControl<E> listingControl = (IListingControl<E>) this.subControllerManager.getListingControl();
 				map.put("searchValue", listingControl.getSearchValue());
 				map.put("entity", entity);
+				map.put("searchEntity", searchEntity);
 				this.control.setMapFields(map);
 				if (listingControl.isSearch()) {
 					this.control.actionSearch(this.subControllerManager);
@@ -148,7 +166,7 @@ public class GenericControl <E extends Entity> {
 	 * @param entity
 	 * @param vMB
 	 */
-	public void mapManagerBeanToEntity(E entity, IGenericMB<E> vMB){ 
+	public void mapManagerBeanToEntity(E entity, IGenericMB<E> vMB, boolean onlySearchViewAttribute){ 
 		if (entity==null) return ;
 		for (Class<?> reflectedClass = vMB.getClass(); reflectedClass != null; reflectedClass = reflectedClass.getSuperclass()) {
 			Field[] fields = reflectedClass.getDeclaredFields();
@@ -169,8 +187,16 @@ public class GenericControl <E extends Entity> {
 									break;
 								}
 							}
+							
 							if(exists){
-								Reflection.setFieldValue(entity, fieldName, fieldValue, fieldType);
+								//verificar se È para atribuir todos os campos ou apenas os campos de buscas.
+								if (onlySearchViewAttribute == false ||										 
+									(onlySearchViewAttribute && field.getAnnotation(br.ueg.builderSoft.util.annotation.AttributeView.class).isSearchField() )
+									) {
+									Reflection.setFieldValue(entity, fieldName,
+											fieldValue, fieldType);
+								}
+								
 							}else{
 								System.out.println("Campo:"+fieldName+" n√£o existe na entidade:"+entity.getClass().getSimpleName());
 							}

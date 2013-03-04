@@ -51,4 +51,10 @@ public @interface AttributeView {
 	 */
 	int order() default 0;
 	
+	/**
+	 * indica se o campo é utilizado na visão para busca.
+	 * @return
+	 */
+	boolean isSearchField() default false;
+	
 }
