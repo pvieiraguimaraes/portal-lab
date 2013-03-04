@@ -22,6 +22,7 @@ import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.databind.AnnotateDataBinder;
 import org.zkoss.zkplus.databind.BindingListModelList;
 import org.zkoss.zul.Div;
+import org.zkoss.zul.Listcell;
 import org.zkoss.zul.Listhead;
 import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Window;
@@ -52,7 +53,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 	
 	protected List<E> listEntity;
 	
-	@AttributeView(key = "searchValue")
+	@AttributeView(key = "searchValue", isSearchField=true)
 	private String fldBusca = "%";
 	
 	protected ListingControl<E> listingControl;
@@ -461,7 +462,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 			this.genericControl.associateEntityToAttributeView(entity);
 		}
 		
-		public boolean searchEntity(){
+		public boolean searchEntity(){	
 			return this.doAction("SEARCH");
 		}
 		
@@ -695,5 +696,28 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 				return false;
 			}
 			return !this.getSelectedEntity().isNew();
+		}
+		
+		public void resetFields(){
+			for (ManagedBeanField field : this.getListColumns()) {
+				try {
+					Reflection.setFieldValue(this, field.getFieldName(),null);
+				} catch (SecurityException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NoSuchMethodException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 }

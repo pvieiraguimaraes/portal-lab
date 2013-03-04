@@ -13,6 +13,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.collection.internal.PersistentSet;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.LogicalExpression;
 import org.hibernate.criterion.Restrictions;
@@ -75,7 +76,8 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 			throw new Exception(e.getCause());
 		}
 		this.getSession().flush();
-		getSession().clear();
+		//getSession().clear();
+		getSession().close();
 		
 		return retorno;
 	}
@@ -108,8 +110,8 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 			this.getSession().close();
 			throw new Exception(e.getCause());
 		}
-		this.getSession().flush();
-		getSession().clear();
+		//getSession().clear();
+		getSession().close();
 	}
 
 	@Override
@@ -119,7 +121,8 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 		getSession().clear();
 		this.getSession().delete(entity);
 		ta.commit();
-		this.getSession().flush();
+		//this.getSession().flush();
+		this.getSession().close();
 		
 	}
 	public void refresh(E entity){
@@ -222,7 +225,7 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 	
 	@SuppressWarnings("unchecked")
 	public List<E> findByEntity(Entity entity){
-		List<E> searchs = new ArrayList<E>();
+		//List<E> searchs = new ArrayList<E>();
 		
 		Session session = this.getSession();
 		Criteria criteria = session.createCriteria(entity.getClass());
@@ -238,7 +241,7 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 				Object fieldValue=null;
 				try {
 					fieldValue = Reflection.getFieldValue(entity, fields[i].getName());
-					if(fieldValue!=null && fieldValue instanceof HashSet){
+					if(fieldValue!=null && (fieldValue instanceof HashSet || fieldValue instanceof PersistentSet ||(fieldValue instanceof String && fieldValue.equals("")))){
 //						if( ((Long)fieldValue).doubleValue()==0L){
 							fieldValue = null;
 //						}
