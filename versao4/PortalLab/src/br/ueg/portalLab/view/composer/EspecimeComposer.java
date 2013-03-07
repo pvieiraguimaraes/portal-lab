@@ -46,6 +46,7 @@ import br.ueg.portalLab.model.Coletor;
 import br.ueg.portalLab.model.Datum;
 import br.ueg.portalLab.model.Determinador;
 import br.ueg.portalLab.model.EspecieImagem;
+import br.ueg.portalLab.model.EspecieMultimidia;
 import br.ueg.portalLab.model.Especime;
 import br.ueg.portalLab.model.EspecimeDeterminador;
 import br.ueg.portalLab.model.Estacao;
@@ -250,7 +251,7 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	@Wire
 	protected Textbox fldCatalogoCodigo;
 
-	protected EspecieImagem especieImagem = new EspecieImagem();
+	protected EspecieMultimidia<Image> especieImagem = new EspecieImagem();
 
 	protected AnnotateDataBinder binderForm;
 	/**
@@ -1245,7 +1246,7 @@ public class EspecimeComposer extends ComposerController<Especime> {
 			org.zkoss.zul.Image image = new org.zkoss.zul.Image();
 			image.setContent((Image) media);
 
-			EspecieImagem ei = new EspecieImagem();
+			EspecieMultimidia<Image> ei = new EspecieImagem();
 			ei.setMedia((AImage) media);
 
 			this.setEspecieImagem(ei);
@@ -1259,11 +1260,11 @@ public class EspecimeComposer extends ComposerController<Especime> {
 		return true;
 	}
 
-	public EspecieImagem getEspecieImagem() {
+	public EspecieMultimidia<Image> getEspecieImagem() {
 		return especieImagem;
 	}
 
-	public void setEspecieImagem(EspecieImagem imagem) {
+	public void setEspecieImagem(EspecieMultimidia<Image> imagem) {
 		this.especieImagem = imagem;
 		this.binderForm.loadComponent(this.getEditForm()
 				.getFellow("imgEspecie"));
@@ -1294,7 +1295,7 @@ public class EspecimeComposer extends ComposerController<Especime> {
 																		// definido
 																		// o
 																		// itemtaxonomico
-		EspecieImagem ei = new EspecieImagem();
+		EspecieMultimidia<Image> ei = new EspecieImagem();
 		ei.setControleInsercaoPadroa(false);
 		ei.setMedia(this.getEspecieImagem().getMedia());
 		if (cb.getSelectedItem() != null)

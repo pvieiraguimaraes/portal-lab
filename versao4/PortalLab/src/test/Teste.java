@@ -17,6 +17,7 @@ import br.ueg.builderSoft.persistence.GenericDAO;
 import br.ueg.builderSoft.security.access.voter.RoleVoter;
 import br.ueg.builderSoft.util.sets.SpringFactory;
 import br.ueg.portalLab.model.EspecieImagem;
+import br.ueg.portalLab.model.EspecieMultimidia;
 import br.ueg.portalLab.model.ItemGeografico;
 import br.ueg.portalLab.model.NivelGeografico;
 import br.ueg.portalLab.model.Usuario;
@@ -42,7 +43,7 @@ public class Teste {
 		
 	}
 	public static void testeEspecieImagem(){
-		EspecieImagem ei = new EspecieImagem();
+		EspecieMultimidia<org.zkoss.image.Image> ei = new EspecieImagem();
 		ei.setNome("d:\\programas\\PortalLab\\Jellyfish.jpg");
 		
 		ei.getMedia();

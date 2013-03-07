@@ -163,7 +163,7 @@ public class EspecimeControl extends Control<Especime> {
 					
 					ei.setNome(ei.getMedia().getName());
 					
-					int writeImagemToDiskReturn = ei.writeImagemToDisk();
+					int writeImagemToDiskReturn = ei.writeMediaToDisk();
 					if(writeImagemToDiskReturn==1){
 						/*try {
 							//especieImagemDAO.save(ei);
@@ -202,7 +202,7 @@ public class EspecimeControl extends Control<Especime> {
 					}
 				}
 				if(!especieImagemExiste){
-					int deleteImagemFromDiscReturn = itemEspecieImage.deleteImagemFromDisk();
+					int deleteImagemFromDiscReturn = itemEspecieImage.deleteMediaFromDisk();
 					if(deleteImagemFromDiscReturn==1){
 						especieImagemDAO.delete(itemEspecieImage);
 					}else if(deleteImagemFromDiscReturn==0){
@@ -210,7 +210,7 @@ public class EspecimeControl extends Control<Especime> {
 						return false;
 					}else if(deleteImagemFromDiscReturn==2){
 						this.getMessagesControl().addMessageError("especieImage_remove_ano_existe");
-						return false;
+						return true;
 					}
 					//TODO EspecieImagem remover imagem do diret�rio
 				}
