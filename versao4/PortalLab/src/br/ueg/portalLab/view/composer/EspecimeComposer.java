@@ -826,6 +826,7 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	@Override
 	public void newEntity() {
 		// TODO Auto-generated method stub
+		this.newSearch();
 		super.newEntity();
 	}
 	
@@ -1358,7 +1359,7 @@ public class EspecimeComposer extends ComposerController<Especime> {
 				// quando o formul�rio � construido automaticamente.
 				binder.loadAll();*/
 		boolean retorno =  super.saveEntity();
-		binder.saveAll();
+		//binderForm.saveAll();
 		return retorno;
 	}
 
