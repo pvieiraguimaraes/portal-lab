@@ -76,13 +76,12 @@
 						width="98%"
 						>
 						<listhead id="divListhead">
-							<listheader label="Código do Catálogo" align="center"  width="120px" />
-							<listheader label="Grupo Endereço" align="center"  width="200px" />
-							<listheader label="Código de Coleta" align="center" width="120px" />
-							<listheader label="Data" align="center" width="100px" />							
-							<listheader label="Tipo de Montagem" align="center"  width="200px" />
-							<listheader label="Localidade" align="left"  />
-							<listheader label="Operações" align="center" width="195px" />							
+							<listheader label="Cód. Catálogo" align="center"  width="100px" />
+							<listheader label="Grupo Endereço" align="center"  width="180px" />
+							<listheader label="Cód. Coleta" align="center" width="100px" />
+							<listheader label="Data" align="center" width="80px" />														
+							<listheader label="Taxonomia" align="left"  />
+							<listheader label="Operações" align="center" width="160px" />							
 						</listhead>
 						<listitem self="@{each=entity}" id="divListitem">
 							<attribute name="onDoubleClick">
@@ -93,8 +92,7 @@
 							<listcell><label value="@{entity.codigoColeta }"/></listcell>
 							<listcell><label value="@{entity.dataColeta, converter='org.zkoss.zkplus.databind.DateFormatConverter'}"
 					self="@{format(dd/MM/yyyy)}"/></listcell>
-							<listcell><label value="@{entity.tipoDeMontagem }"/></listcell>
-							<listcell><label value="@{entity.localidade }"/></listcell>
+							<listcell><label value="@{entity.taxonomia.nomeCompleto }"/></listcell>
 							<listcell>
 								<button Label="Editar" id="crudWindowBtnEdit" image="/images/editar.png">
 									<attribute name="onClick">
