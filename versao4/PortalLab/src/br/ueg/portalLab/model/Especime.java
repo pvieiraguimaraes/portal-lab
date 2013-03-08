@@ -563,4 +563,27 @@ public class Especime extends Entity {
 	public void setObservacaoTaxonomia(String observacaoTaxonomia) {
 		this.observacaoTaxonomia = observacaoTaxonomia;
 	}
+	public ItemTaxonomico getTaxonomia(){
+		if(this.getEpitetoEspecifico()!=null){
+			return this.getEpitetoEspecifico();
+		}else if(this.getGenero()!=null){
+			return this.getGenero();
+		}else if(this.getSubFamilia()!=null){
+			return this.getSubFamilia();
+		}else if(this.getFamilia()!=null){
+			return this.getFamilia();			
+		}else if(this.getSubOrdem()!=null){
+			return this.getSubOrdem();
+		}else if(this.getOrdem()!=null){
+			return this.getOrdem();
+		}else if(this.getSubClasse()!=null){
+			return this.getSubClasse();
+		}else if(this.getClasse()!=null){
+			return this.getClasse();
+		}else if(this.getFilo()!=null){
+			return this.getFilo();
+		}else {
+			return this.getReino();
+		}
+	}
 }
