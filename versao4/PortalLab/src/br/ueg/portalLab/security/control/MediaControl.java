@@ -39,15 +39,15 @@ public class MediaControl<TYPE extends EspecieMultimidia<? extends Media>> exten
 						try {
 							//especieImagemDAO.save(ei);
 						} catch (Exception e) {
-							this.getMessagesControl().addMessageError("especieImage_salvar");
+							this.getMessagesControl().addMessageError("especie"+ei.getTypeMediaSimpleName()+"_salvar");
 							e.printStackTrace();
 							return false;
 						}
 					}else{
 						if(writeImagemToDiskReturn==0)
-							this.getMessagesControl().addMessageError("especieImage_salvar");
+							this.getMessagesControl().addMessageError("especie"+ei.getTypeMediaSimpleName()+"_salvar");
 						if(writeImagemToDiskReturn==2)
-							this.getMessagesControl().addMessageError("especieImage_salvar_existe");
+							this.getMessagesControl().addMessageError("especie"+ei.getTypeMediaSimpleName()+"_salvar_existe");
 						return false;
 					}
 				}								
@@ -58,7 +58,7 @@ public class MediaControl<TYPE extends EspecieMultimidia<? extends Media>> exten
 				itemTaxonomicoDAO.update(selectedItemTaxonomicoMedia);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block				
-				this.getMessagesControl().addMessageError("especieImage_salvar");
+				this.getMessagesControl().addMessageError("especieMedia_salvar");
 				e.printStackTrace();
 				return false;
 				
