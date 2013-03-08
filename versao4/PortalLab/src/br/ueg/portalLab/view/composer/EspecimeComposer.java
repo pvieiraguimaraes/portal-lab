@@ -33,6 +33,7 @@ import org.zkoss.zul.Tab;
 import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
+import org.zkoss.zul.impl.InputElement;
 
 import br.ueg.builderSoft.control.Control;
 import br.ueg.builderSoft.model.Entity;
@@ -807,7 +808,7 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	@Override
 	public boolean doAction(String action) {
 		boolean result = false;
-		binder.saveAll();
+		//binder.saveAll();
 		if (genericControl.doAction(action, initializeEntity())) {
 			verifyListing(action);
 			// hideEditForm();
@@ -826,6 +827,12 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	public void newEntity() {
 		// TODO Auto-generated method stub
 		super.newEntity();
+	}
+	
+	public void newSearch(){
+		this.setSelectedEntity(this.initializeEntity());
+		this.genericControl.associateEntityToAttributeView(this.getSelectedEntity());
+		binder.loadAll();
 	}
 
 	/*
@@ -1328,7 +1335,31 @@ public class EspecimeComposer extends ComposerController<Especime> {
 
 	@Override
 	public boolean saveEntity() {
-		return super.saveEntity();
+		/*((InputElement)this.formEspecime.getFellow("fldGrupoEnderecoFisicoHidden")).detach();
+		((InputElement)this.formEspecime.getFellow("fldEstadoHidden")).detach();
+		((InputElement)this.formEspecime.getFellow("fldMunicipioHidden")).detach();
+		((InputElement)this.formEspecime.getFellow("fldFiloHidden")).detach();
+		((InputElement)this.formEspecime.getFellow("fldClasseHidden")).detach();
+		((InputElement)this.formEspecime.getFellow("fldSubClasseHidden")).detach();
+		((InputElement)this.formEspecime.getFellow("fldFamiliaHidden")).detach();
+		((InputElement)this.formEspecime.getFellow("fldSubFamiliaHidden")).detach();
+		((InputElement)this.formEspecime.getFellow("fldOrdemHidden")).detach();
+		((InputElement)this.formEspecime.getFellow("fldSubOrdemHidden")).detach();
+		((InputElement)this.formEspecime.getFellow("fldGeneroHidden")).detach();
+		((InputElement)this.formEspecime.getFellow("fldEpitetoEspecificoHidden")).detach();
+		this.binder.loadAll();
+		this.binderForm.loadAll();
+		// this.doAction("ASSOCIATE");
+				
+				
+				binder.loadComponent(this.getEditForm());
+				// TODO descobrir uma forma de n�o fazer isso(ler tudo, deveria
+				// funcionar s� com o comando acima,
+				// quando o formul�rio � construido automaticamente.
+				binder.loadAll();*/
+		boolean retorno =  super.saveEntity();
+		binder.saveAll();
+		return retorno;
 	}
 
 	public void setButtonsNextTab() {

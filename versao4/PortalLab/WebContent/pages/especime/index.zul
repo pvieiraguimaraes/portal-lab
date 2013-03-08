@@ -51,12 +51,10 @@
 									<row spans="2">
 										<button label="Buscar" hflex="1" onClick="controller.searchEntity()"/>
 										<button label="Nova Busca" hflex="1">
-											<attribute name="onClick"> 
+											<attribute name="onClick">
 												cmdLaboratorio.setValue(null); 
-												cmbGrupoEnderecoFisico.setValue(null);
-												tbCodigoColeta.setValue(null);
-												tbCodigoCatalogo.setValue(null);
-												tbNumeroDeTombo.setValue(null);
+												cmbGrupoEnderecoFisico.setValue(null); 
+												controller.newSearch();
 											</attribute>
 										</button>
 									</row>
