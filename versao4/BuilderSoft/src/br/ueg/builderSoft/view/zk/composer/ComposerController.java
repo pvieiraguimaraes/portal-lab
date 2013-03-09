@@ -26,13 +26,13 @@ import org.zkoss.zul.Listcell;
 import org.zkoss.zul.Listhead;
 import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Window;
+import org.zkoss.zul.impl.InputElement;
 
 import br.ueg.builderSoft.control.Control;
 import br.ueg.builderSoft.control.GenericControl;
 import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.util.annotation.AttributeView;
 import br.ueg.builderSoft.util.constant.MessagesType;
-import br.ueg.builderSoft.util.control.IListingControl;
 import br.ueg.builderSoft.util.control.ListingControl;
 import br.ueg.builderSoft.util.control.MessagesControl;
 import br.ueg.builderSoft.util.reflection.Reflection;
@@ -696,6 +696,11 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 				return false;
 			}
 			return !this.getSelectedEntity().isNew();
+		}
+		
+		protected void setDisabled(String name, boolean b){
+			InputElement comp = (InputElement) this.getEditForm().getFellow(name);
+			comp.setDisabled(b);
 		}
 		
 		public void resetFields(){
