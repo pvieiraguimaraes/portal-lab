@@ -21,7 +21,7 @@
 				        			<div hflex="1"/>
 				        		</hlayout>
 				        		<hlayout >
-				        			<combobox id="cmdLaboratorio" hflex="1" selectedItem="@{controller.fldLaboratorio }"
+				        			<combobox id="cmbLaboratorio" hflex="1" selectedItem="@{controller.fldLaboratorio }"
 				        			model="@{controller.laboratorioList }" >
 					        			<attribute name="onChange">
 					        				cmbGrupoEnderecoFisico.setRawValue(null);
@@ -29,7 +29,7 @@
 					        			</attribute>
 									</combobox>
 				        			<combobox hflex="1" id="cmbGrupoEnderecoFisico"
-				        				model="@{controller.grupoEnderecoFisicoList, load-when='cmdLaboratorio.onChange'}"
+				        				model="@{controller.grupoEnderecoFisicoList, load-when='cmbLaboratorio.onChange'}"
 				        				selectedItem = "@{controller.fldGrupoEnderecoFisico }"/>
 				        			<textbox id="fldGrupoEnderecoFisicoHidden" value="@{controller.fldGrupoEnderecoFisico }" visible="false"/>
 				        			<hlayout hflex="1">

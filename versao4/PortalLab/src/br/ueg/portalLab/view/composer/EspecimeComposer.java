@@ -245,7 +245,7 @@ public class EspecimeComposer extends ComposerController<Especime> {
 
 	@Wire
 	protected Combobox cmbGrupoEnderecoFisico;
-
+	
 	@Wire
 	protected Listbox divListBoxColetores;
 	
@@ -788,6 +788,7 @@ public class EspecimeComposer extends ComposerController<Especime> {
 		// funcionar s� com o comando acima,
 		// quando o formul�rio � construido automaticamente.
 		binder.loadAll();
+		this.setDisabled("cmbLaboratorio", true);
 		// binder.saveAll();
 		this.showEditForm();
 
@@ -1477,5 +1478,6 @@ public class EspecimeComposer extends ComposerController<Especime> {
 			controlEspecime.removeChild(showImage);
 			showImage = null;
 		}
-	}
+	}	
+	
 }
