@@ -26,9 +26,11 @@ public class MediaControl<TYPE extends EspecieMultimidia<? extends Media>> exten
 		GenericDAO<TYPE> especieMediaDAO = (GenericDAO<TYPE>) SpringFactory.getInstance().getBean("genericDAO",GenericDAO.class);
 		GenericDAO<ItemTaxonomico> itemTaxonomicoDAO = (GenericDAO<ItemTaxonomico>) SpringFactory.getInstance().getBean("genericDAO",GenericDAO.class);
 		
+		String typeName = "";
 		
 		if(especieMediasToSaveSet!=null){
 			for(TYPE ei: especieMediasToSaveSet){
+				typeName = ei.getTypeMediaSimpleName();
 				if(ei.isNew()){
 					ei.setItemTaxonomico(selectedItemTaxonomicoMedia);
 					
@@ -65,7 +67,7 @@ public class MediaControl<TYPE extends EspecieMultimidia<? extends Media>> exten
 			}
 			//remove as imagens removidas
 			itemTaxonomicoDAO.refresh(selectedItemTaxonomicoMedia);
-			for(TYPE itemEspecieMedia : new ArrayList<TYPE>(especieMediaSavedSet)){
+			for(TYPE itemEspecieMedia : new ArrayList<TYPE>((Set<TYPE>)selectedItemTaxonomicoMedia.getSetMediaByTypeName(typeName))){
 				for(TYPE vEspecieImagem: especieMediasToSaveSet){
 					if(itemEspecieMedia.getId().equals(vEspecieImagem.getId())){
 						especieMediaExiste = true;
@@ -80,8 +82,8 @@ public class MediaControl<TYPE extends EspecieMultimidia<? extends Media>> exten
 						this.getMessagesControl().addMessageError("especie"+itemEspecieMedia.getTypeMediaSimpleName()+"_remove");
 						return false;
 					}else if(deleteMediaFromDiscReturn==2){
-						this.getMessagesControl().addMessageError("especie"+itemEspecieMedia.getTypeMediaSimpleName()+"_remove_ano_existe");
-						return false;
+						this.getMessagesControl().addMessageError("especie"+itemEspecieMedia.getTypeMediaSimpleName()+"_remove_nao_existe");
+						return true;
 					}
 					//TODO EspecieImagem remover imagem do diret�rio
 				}
