@@ -1,6 +1,8 @@
 package br.ueg.portalLab.model;
 
 import java.awt.event.InvocationEvent;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,6 +15,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+
+import org.zkoss.image.Image;
+import org.zkoss.util.media.Media;
 
 import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.util.annotation.Attribute;
@@ -132,6 +137,20 @@ public class ItemTaxonomico extends Entity {
 	public void setImagens(Set<EspecieImagem> imagens) {
 		this.imagens = imagens;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public  Set<EspecieMultimidia<?>> getSetMediaByTypeName(String typeName){
+		Set<EspecieMultimidia<?>> setMedia = new HashSet<EspecieMultimidia<?>>(0);
+		
+		if(typeName.equalsIgnoreCase("image")){
+			
+				setMedia.addAll(this.getImagens());
+			
+			return setMedia;
+		}
+		return setMedia;
+	}
+	
 	public String getNomeCompleto(){
 		String retorno = null;
 		String separator = System.getProperty("file.separator");

@@ -36,6 +36,7 @@ import br.ueg.portalLab.model.GrupoEnderecoFisico;
 import br.ueg.portalLab.model.ItemGeografico;
 import br.ueg.portalLab.model.ItemTaxonomico;
 import br.ueg.portalLab.model.Laboratorio;
+import br.ueg.portalLab.security.control.MediaControl;
 import br.ueg.portalLab.util.control.EspecimeValidatorControl;
 
 @Service
@@ -115,16 +116,19 @@ public class EspecimeControl extends Control<Especime> {
 		Especime entity = (Especime) this.getMapFields().get("entity");
 		Set<EspecieImagem> especieImagens = (Set<EspecieImagem>) this.getMapFields().get("especieImagem");
 		ItemTaxonomico selectedItemTaxonomicoMedia = (ItemTaxonomico) this.getMapFields().get("selectedItemTaxonomicoMedia");
-		
+		MediaControl<EspecieImagem> imageControl = new MediaControl<>();
+		imageControl.setMessagesControl(this.getMessagesControl());
 
 		if(!entity.isNew()){
 			retorno = saveEspecieImagem(especieImagens, selectedItemTaxonomicoMedia);	
+			//retorno = imageControl.saveEspecieMedia(especieImagens, selectedItemTaxonomicoMedia, selectedItemTaxonomicoMedia.getImagens());
 			if(retorno){
 				retorno =  super.actionSave(subControllerManager);
 								
 			}
 		}else{
 			retorno = saveEspecieImagem(especieImagens, selectedItemTaxonomicoMedia);
+			//retorno = imageControl.saveEspecieMedia(especieImagens, selectedItemTaxonomicoMedia, selectedItemTaxonomicoMedia.getImagens());
 			if(retorno){
 				retorno = this.saveDeterminadoresForNewEntity(entity, subControllerManager);					
 			}			
@@ -154,7 +158,7 @@ public class EspecimeControl extends Control<Especime> {
 		
 		GenericDAO<EspecieImagem> especieImagemDAO = (GenericDAO<EspecieImagem>) SpringFactory.getInstance().getBean("genericDAO",GenericDAO.class);
 		GenericDAO<ItemTaxonomico> itemTaxonomicoDAO = (GenericDAO<ItemTaxonomico>) SpringFactory.getInstance().getBean("genericDAO",GenericDAO.class);
-		
+		this.refreshItemTaxonomico(selectedItemTaxonomicoMedia);
 		
 		if(especieImagens!=null){
 			for(EspecieImagem ei: especieImagens){
@@ -219,7 +223,15 @@ public class EspecimeControl extends Control<Especime> {
 		}
 		return retorno;
 	}
-	
+	public ItemTaxonomico refreshItemTaxonomico(ItemTaxonomico it){
+		if(it==null) return null;
+		GenericDAO<ItemTaxonomico> itemTaxonomicoDAO = (GenericDAO<ItemTaxonomico>) SpringFactory.getInstance().getBean("genericDAO",GenericDAO.class);
+		//itemTaxonomicoDAO.refresh(it);
+		ItemTaxonomico it2 = new ItemTaxonomico();
+		it2.setId(it.getId());
+		it = itemTaxonomicoDAO.findByEntity(it2).get(0);
+		return it;
+	}
 	
 	@SuppressWarnings("unchecked")
 	public Set<EspecieImagem> getEspecieImagemFromItemTaxonomico(ItemTaxonomico it){
