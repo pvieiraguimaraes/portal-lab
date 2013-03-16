@@ -30,7 +30,7 @@
 												cmbGrupoEnderecoFisico.setRawValue(null);
 											</attribute>
 										</combobox>
-										<label value="Grupo Endereço" hflex="1"/>
+										<label value="Coleção" hflex="1"/>
 										<combobox hflex="1"
 											id="cmbGrupoEnderecoFisico"
 											model="@{controller.grupoEnderecoFisicoList, load-when='cmdLaboratorio.onChange'}"
@@ -77,7 +77,7 @@
 						>
 						<listhead id="divListhead">
 							<listheader label="Cód. Catálogo" align="center"  width="100px" />
-							<listheader label="Grupo Endereço" align="center"  width="180px" />
+							<listheader label="Coleção" align="center"  width="180px" />
 							<listheader label="Cód. Coleta" align="center" width="100px" />
 							<listheader label="Data" align="center" width="80px" />														
 							<listheader label="Taxonomia" align="left"  />
