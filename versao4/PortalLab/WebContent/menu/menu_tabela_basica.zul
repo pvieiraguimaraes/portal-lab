@@ -41,10 +41,10 @@
         	
         <menu id="tabBibliografia"	label="Bibliografia" >
         	<menupopup>
-	    		<menuitem id="tabCadTipoDeBibliografia"	 href="/pages/especime/"	label="Tipo de Bibliografia"/>
-			    <menuitem id="tabCadAutor"		 href="/pages/especime/"			label="Autor"/>
-			    <menuitem id="tabCadBibliografia"	 href="/pages/especime/"		label="Bibliografia"/>
-			    <menuitem id="tabCadAplicacaoEconomica"	 href="/pages/especime/"	label="Aplicação Econômica"/>
+	    		<menuitem id="tabCadTipoDeBibliografia"	 href="/pages/tipobibliografia/"	label="Tipo de Bibliografia"/>
+			    <menuitem id="tabCadAutor"		 href="/pages/autor/"			label="Autor"/>
+			    <menuitem id="tabCadBibliografia"	 href="/pages/bibliografia/"		label="Bibliografia"/>
+			    <menuitem id="tabCadAplicacaoEconomica"	 href="/pages/aplicacaoeconomica/"	label="Aplicação Econômica"/>
 			</menupopup>
 		</menu>
         
