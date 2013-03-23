@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?page title="Cadastros básicos" contentType="text/html;charset=UTF-8"?>
+
+	<menubar id="tbMenu" orient="horizontal" width="100%">
+	    
+	    <menu id="tabColeta" 		label="Coleta">
+	     	<menupopup>
+	     		<menuitem id="tabCadMetodo"  href="/pages/metodo/" 					label="Método"/>
+			    <menuitem id="tabCadTipoDeMontagem"  href="/pages/tipodemontagem/"			label="Tipo de Montagem"/>
+			    <menuitem id="tabCadFenologia"	 href="/pages/fenologia/"			label="Fenologia" />
+			    <menuitem id="tabCadEstagioDesenvolvimento"  href="/pages/estagiodesenvolvimento/"	label="Estágio de Desenvolvimento" />
+			    <menuitem id="tabCadDeterminador"	 href="/pages/determinador/"		label="Determinador" />
+			    <menuitem id="tabCadColetor"	 href="/pages/coletor/"				label="Coletor" />
+			</menupopup>    
+        </menu>
+          
+        <menu id="tabGeografia"		label="Geografia">
+        	<menupopup>   
+        		<menuitem id="tabCadMassaDAgua"  href="/pages/massadagua/"				label="Massa D'Agua"/>
+			    <menuitem id="tabCadDatum"		 href="/pages/datum/" 			label="Datum"/>
+			    <menuitem id="tabCadNivelGeografico"  href="/pages/nivelgeografico/"			label="Nível Geográfico"/>
+			    <menuitem id="tabCadItemGeografico"	 href="/pages/itemgeografico/"		label="Item Geográfico"/>
+			</menupopup>
+		</menu> 			
+        
+        <menu id="tabTaxonoia"		label="Taxonomia" >
+        	<menupopup>	
+        		<menuitem id="tabCadNivelTaxonomico"	 href="/pages/niveltaxonomico/"		label="Nível Taxonômico"/>
+			    <menuitem id="tabCadItemTaxonomico"		 href="/pages/itemtaxonomico/"	label="Item Taxonômico" />
+        	</menupopup>
+        </menu>
+        
+        <menu id="tabDiversos"		label="Diversas" >
+        	<menupopup>    	
+        		<menuitem id="tabCadCategoria" 		 href="/pages/categoria/"		label="Categoria de Usuário"/>
+			    <menuitem id="tabCadLaboratorio"	 href="/pages/laboratorio/"			label="Laboratório"/>
+			    <menuitem id="tabCadGrupoEnderecoFisico"	 href="/pages/grupoenderecofico/"	label="Grupo de Endereço Físico"/>
+        	</menupopup>
+        </menu>
+        	
+        <menu id="tabBibliografia"	label="Bibliografia" >
+        	<menupopup>
+	    		<menuitem id="tabCadTipoDeBibliografia"	 href="/pages/especime/"	label="Tipo de Bibliografia"/>
+			    <menuitem id="tabCadAutor"		 href="/pages/especime/"			label="Autor"/>
+			    <menuitem id="tabCadBibliografia"	 href="/pages/especime/"		label="Bibliografia"/>
+			    <menuitem id="tabCadAplicacaoEconomica"	 href="/pages/especime/"	label="Aplicação Econômica"/>
+			</menupopup>
+		</menu>
+        
+    </menubar>
+

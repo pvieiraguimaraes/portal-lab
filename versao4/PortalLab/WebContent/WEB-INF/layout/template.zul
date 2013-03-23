@@ -3,13 +3,24 @@
 <?page title="Sistema de Catalogação da Biodiversidade do Cerrado"?>
 
 <zk xmlns:n="native">
-	<div id="message"/>
+	<div id="menssage"/>
 	<style src="/css/default.css" />
 	<div sclass="topo-banner" width="100%">
 		<image src="/images/topo_banner.png" />
 	</div>
-	<div id="content" self="@{insert(content)}" sclass="content" />
-	<separator height="4px"></separator>
+	<borderlayout>
+			<west width="180px" flex="false" border="none"
+				collapsible="false" splittable="false" self="@{insert(menuLateral)}"/>
+			<center>
+				<borderlayout>
+					<north collapsible="false" border="none"
+						flex="false" splittable="false" self="@{insert(menuTopo)}">
+					</north>
+						<center id="content" self="@{insert(content)}" sclass="content" />
+				</borderlayout>
+			</center>
+	</borderlayout>
+	 <separator height="4px"></separator>
 	<div sclass="mo_footer">
 		Copyright 2012 UEG. All rights reserved.
 	</div>

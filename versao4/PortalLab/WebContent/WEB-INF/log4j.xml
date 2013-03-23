@@ -19,7 +19,12 @@
     <priority value="error" />
     <appender-ref ref="console" />
   </category>
+<<<<<<< .mine
   
+<category name="org.hibernate">
+  <priority value="DEBUG"/>
+</category>
+ 
 <!-- Descomentar para ativar o debug do Hibernate e mostrar todas querys
      checar antes se o parâmetro show_sql estiver "true" 
  

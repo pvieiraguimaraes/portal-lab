@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?page title="Cadastros básicos" contentType="text/html;charset=UTF-8"?>
+
+	<menubar id="tbMenu" orient="horizontal" width="100%">
+	    <menuitem id="tbCadUsuario" 			href="/pages/usuario/" label="Usuários"/>
+	    <menuitem id="tabCadGrupoUsuario"	href="/pages/cadseguranca/grupousuario/" label="Grupo de Usuários"/>
+		<menuitem id="tabCadFuncionalidades" href="/pages/cadseguranca/funcionalidade/"	label="Funcionalidade"/>
+		<menuitem id="tabCadCasoDeUso"	href="/pages/cadseguranca/casodeuso/"	label="Caso de Usos"/>
+	</menubar>
+
