@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?page title="Cadastros básicos" contentType="text/html;charset=UTF-8"?>
+
+
+	<menubar id="mainMenu" orient="vertical" >
+	    <menuitem id="cadEspecime" height="30px"  href="/pages/especime/"  label="Cadastro de Espécimes" />
+        <menuitem id="cadTabBasicas" height="30px" href="/pages/coletor/"	  label="Manter Tabelas Básicas" />
+        <menuitem id="cadManterUsua" height="30px"	href="/pages/cadseguranca/grupousuario/"  label="Manter Usuários              " />
+	</menubar>
+
+

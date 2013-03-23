@@ -1,8 +1,11 @@
 <?page title="Manutenção de Item Taxonômico" contentType="text/html;charset=UTF-8" ?>
-<?init class="org.zkoss.zk.ui.util.Composition" arg0="/WEB-INF/layout/inner_page.zul"?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/WEB-INF/layout/template.zul"?>
 
 <?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
 <zk>
+	<include id="menuLateral" self="@{define(menuLateral)}" src="/menu/menu_lateral.zul" />
+<include id="menuTopo" self="@{define(menuTopo)}" src="/menu/menu_tabela_basica.zul" />
+
 	<window  self="@{define(content)}" title="Manutenção de Itens Taxonômicos" border="none" id="itemTaxonomico"
 		apply="br.ueg.portalLab.view.composer.ItemTaxonomicoComposer"  height="540px">
 		<borderlayout>
