@@ -90,9 +90,9 @@ public class Colecao extends Entity {
 
 	@Override
 	public String toString(){
-		String lab = this.getLaboratorio().getNome();
-		if(lab !=null){
-			return lab.concat(" - ").concat(this.getNome());
+		String sigla = this.getSigla();
+		if(sigla !=null){
+			return this.getNome().concat("(").concat(this.getSigla()).concat(")");
 		}else{
 			return this.getNome();
 		}
