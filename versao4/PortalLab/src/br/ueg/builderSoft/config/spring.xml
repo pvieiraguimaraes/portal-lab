@@ -154,10 +154,10 @@
 		<security:intercept-url access="UC_NIVELTAXONOMICO" pattern="/pages/niveltaxonomico/**" />
 		<security:intercept-url access="UC_TIPOBIBLIOGRAFIA" pattern="/pages/tipobibliografia/**" />
 		<security:intercept-url access="UC_TIPODEMONTAGEM" pattern="/pages/tipodemontagem/**" />
-		<security:intercept-url access="UC_USUARIO" pattern="/pages/usuario/**" />
-		<security:intercept-url access="UC_CASOUSO" pattern="/pages/cadseguranca/casodeuso/**" />
-		<security:intercept-url access="UC_FUNCIONALIDADE" pattern="/pages/cadseguranca/funcionalidade/**" />
-		<security:intercept-url access="UC_GRUPOUSUARIO" pattern="/pages/cadseguranca/grupousuario/**" />
+		<security:intercept-url access="UC_SEG_USUARIO" pattern="/pages/usuario/**" />
+		<security:intercept-url access="UC_SEG_CASODEUSO" pattern="/pages/cadseguranca/casodeuso/**" />
+		<security:intercept-url access="UC_SEG_FUNCIONALIDADE" pattern="/pages/cadseguranca/funcionalidade/**" />
+		<security:intercept-url access="UC_SEG_GRUPOUSUARIO" pattern="/pages/cadseguranca/grupousuario/**" />
 		
 
 		<security:form-login login-page="/pages/seguranca/acesso.zul" always-use-default-target="false"
