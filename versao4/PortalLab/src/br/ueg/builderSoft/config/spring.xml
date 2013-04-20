@@ -134,6 +134,7 @@
 
 	<security:http access-decision-manager-ref="urlAccessDecisionManager" access-denied-page="/pages/seguranca/accessDenied.zul"
 		auto-config="true">
+		<security:intercept-url access="UC_ESPECIME" pattern="/pages/especime/**" />
 		<security:intercept-url access="UC_APLICACAOECONOMICA" pattern="/pages/aplicacaoeconomica/**" />
 		<security:intercept-url access="UC_AUTOR" pattern="/pages/autor/**" />
 		<security:intercept-url access="UC_BIBLIOGRAFIA" pattern="/pages/bibliografia/**" />
@@ -153,7 +154,10 @@
 		<security:intercept-url access="UC_NIVELTAXONOMICO" pattern="/pages/niveltaxonomico/**" />
 		<security:intercept-url access="UC_TIPOBIBLIOGRAFIA" pattern="/pages/tipobibliografia/**" />
 		<security:intercept-url access="UC_TIPODEMONTAGEM" pattern="/pages/tipodemontagem/**" />
-<!-- 		<security:intercept-url access="UC_USUARIO" pattern="/pages/usuario/**" /> -->
+		<security:intercept-url access="UC_USUARIO" pattern="/pages/usuario/**" />
+		<security:intercept-url access="UC_CASOUSO" pattern="/pages/cadseguranca/casodeuso/**" />
+		<security:intercept-url access="UC_FUNCIONALIDADE" pattern="/pages/cadseguranca/funcionalidade/**" />
+		<security:intercept-url access="UC_GRUPOUSUARIO" pattern="/pages/cadseguranca/grupousuario/**" />
 		
 
 		<security:form-login login-page="/pages/seguranca/acesso.zul" always-use-default-target="false"
