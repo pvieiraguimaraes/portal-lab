@@ -15,8 +15,8 @@ import br.ueg.builderSoft.util.annotation.Attribute;
 
 @javax.persistence.Entity
 @SuppressWarnings("serial")
-@Table(name="grupo_endereco")
-public class GrupoEnderecoFisico extends Entity {
+@Table(name="colecao")
+public class Colecao extends Entity {
 
 
 
@@ -30,10 +30,10 @@ public class GrupoEnderecoFisico extends Entity {
 
 	@Id()
 	@GeneratedValue
-	@Column(name = "id_grupo")
+	@Column(name = "id_colecao")
 	private Long id;
 	
-	@Column(name = "nome", length=100)
+	@Column(name = "nome_cole", length=100)
 	@Attribute(Required = true, SearchField = true)
 	private String nome;
 	
@@ -42,6 +42,10 @@ public class GrupoEnderecoFisico extends Entity {
 	@JoinColumn(name = "id_laboratorio", insertable = true, updatable = true, nullable=true)
 	@Attribute(Required = true, SearchField = false)
 	private Laboratorio laboratorio; 
+	
+	@Column(name="sigla", length=10)
+	@Attribute(Required = true, SearchField = true)
+	private String sigla;
 	
 	
 	
@@ -70,9 +74,28 @@ public class GrupoEnderecoFisico extends Entity {
 		this.laboratorio = laboratorio;
 	}
 
+	/**
+	 * @return the sigla
+	 */
+	public String getSigla() {
+		return sigla;
+	}
+
+	/**
+	 * @param sigla the sigla to set
+	 */
+	public void setSigla(String sigla) {
+		this.sigla = sigla;
+	}
+
 	@Override
 	public String toString(){
-		return this.getNome();
+		String lab = this.getLaboratorio().getNome();
+		if(lab !=null){
+			return lab.concat(" - ").concat(this.getNome());
+		}else{
+			return this.getNome();
+		}
 	}
 	
 }

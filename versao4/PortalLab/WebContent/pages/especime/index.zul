@@ -28,14 +28,14 @@
 											selectedItem="@{controller.fldLaboratorio }"
 											model="@{controller.laboratorioList }">
 											<attribute name="onChange">
-												cmbGrupoEnderecoFisico.setRawValue(null);
+												cmbColecao.setRawValue(null);
 											</attribute>
 										</combobox>
 										<label value="Coleção" hflex="1"/>
 										<combobox hflex="1"
-											id="cmbGrupoEnderecoFisico"
-											model="@{controller.grupoEnderecoFisicoList, load-when='cmdLaboratorio.onChange'}"
-											selectedItem="@{controller.fldGrupoEnderecoFisico }" />
+											id="cmbColecao"
+											model="@{controller.colecaoList, load-when='cmdLaboratorio.onChange'}"
+											selectedItem="@{controller.fldColecao }" />
 										
 									</row>
 									<row>								
@@ -54,7 +54,7 @@
 										<button label="Nova Busca" hflex="1">
 											<attribute name="onClick">
 												cmdLaboratorio.setValue(null); 
-												cmbGrupoEnderecoFisico.setValue(null); 
+												cmbColecao.setValue(null); 
 												controller.newSearch();
 											</attribute>
 										</button>
@@ -89,7 +89,7 @@
 										controller.editEntity();
 							</attribute>
 							<listcell><label value="@{entity.codigoCatalogo }"/></listcell>
-							<listcell><label value="@{entity.grupoEnderecoFisico}" /></listcell>
+							<listcell><label value="@{entity.colecao}" /></listcell>
 							<listcell><label value="@{entity.codigoColeta }"/></listcell>
 							<listcell><label value="@{entity.dataColeta, converter='org.zkoss.zkplus.databind.DateFormatConverter'}"
 					self="@{format(dd/MM/yyyy)}"/></listcell>

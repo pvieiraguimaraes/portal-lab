@@ -8,30 +8,33 @@ import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.util.annotation.AttributeView;
 import br.ueg.builderSoft.util.control.MessagesControl;
 import br.ueg.builderSoft.view.zk.composer.TabelaComposerController;
-import br.ueg.portalLab.model.GrupoEnderecoFisico;
+import br.ueg.portalLab.model.Colecao;
 import br.ueg.portalLab.model.Laboratorio;
 import br.ueg.portalLab.model.Usuario;
 
 @org.springframework.stereotype.Component
 @Scope("desktop")
-public class GrupoEnderecoFisicoComposer extends TabelaComposerController<Usuario> {
+public class colecaoComposer extends TabelaComposerController<Usuario> {
 	
 
 	private static final long serialVersionUID = 2603898097401656666L;
 
 
-	@AttributeView(key = "nome", isEntityValue = true, fieldType = String.class, isVisible=true, caption="grupoenderecofisico_nomeColumn")
+	@AttributeView(key = "nome", isEntityValue = true, fieldType = String.class, isVisible=true, caption="colecao_sigla_Column")
 	private String fldNome;
+	
+	@AttributeView(key = "sigla", isEntityValue = true, fieldType = String.class, isVisible=true, caption="colecao_sigla_Column")
+	private String fldSigla;
 		
 	
-	@AttributeView(key = "laboratorio", isEntityValue = true, fieldType = Laboratorio.class, isVisible=true, caption="grupoenderecofisico_LaboratorioColumn")
+	@AttributeView(key = "laboratorio", isEntityValue = true, fieldType = Laboratorio.class, isVisible=true, caption="colecao_LaboratorioColumn")
 	private Laboratorio fldLaboratorio;
 	
 
 	@SuppressWarnings("rawtypes")
 	@Override
 	public Class getEntityClass() {
-		return GrupoEnderecoFisico.class; 
+		return Colecao.class; 
 	}
 
 	
@@ -57,6 +60,22 @@ public class GrupoEnderecoFisicoComposer extends TabelaComposerController<Usuari
 	
 	public BindingListModelList<Entity> getListLaboratorio(){
 		return this.getFKEntityModel("fldLaboratorio");
+	}
+
+
+	/**
+	 * @return the fldSigla
+	 */
+	public String getFldSigla() {
+		return fldSigla;
+	}
+
+
+	/**
+	 * @param fldSigla the fldSigla to set
+	 */
+	public void setFldSigla(String fldSigla) {
+		this.fldSigla = fldSigla;
 	}
 
 

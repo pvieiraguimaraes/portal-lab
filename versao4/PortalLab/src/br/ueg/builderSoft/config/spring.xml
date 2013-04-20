@@ -58,7 +58,7 @@
     			<value>br.ueg.portalLab.model.EstagioDesenvolvimento</value>
     			<value>br.ueg.portalLab.model.MassaDAgua</value>
     			<value>br.ueg.portalLab.model.Laboratorio</value>
-    			<value>br.ueg.portalLab.model.GrupoEnderecoFisico</value>
+    			<value>br.ueg.portalLab.model.Colecao</value>
     			<value>br.ueg.portalLab.model.Usuario</value>
     			<value>br.ueg.portalLab.model.TipoBibliografia</value>
     			<value>br.ueg.portalLab.model.Autor</value>
@@ -143,7 +143,7 @@
 		<security:intercept-url access="UC_DETERMINADOR" pattern="/pages/determinador/**" />
 		<security:intercept-url access="UC_ESTAGIODESENVOLVIMENTO" pattern="/pages/estagiodesenvolvimento/**" />
 		<security:intercept-url access="UC_FENOLOGIA" pattern="/pages/fenologia/**" />
-		<security:intercept-url access="UC_GRUPOENDERECOFISICO" pattern="/pages/grupoenderecofisico/**" />
+		<security:intercept-url access="UC_COLECAO" pattern="/pages/colecao/**" />
 		<security:intercept-url access="UC_ITEMGEOGRAFICO" pattern="/pages/itemgeografico/**" />
 		<security:intercept-url access="UC_ITEMTAXONOMICO" pattern="/pages/itemtaxonomico/**" />
 		<security:intercept-url access="UC_LABORATORIO" pattern="/pages/laboratorio/**" />
