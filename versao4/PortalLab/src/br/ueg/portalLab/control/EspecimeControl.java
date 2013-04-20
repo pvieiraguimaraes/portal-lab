@@ -32,7 +32,7 @@ import br.ueg.portalLab.model.EspecieImagem;
 import br.ueg.portalLab.model.Especime;
 import br.ueg.portalLab.model.EspecimeDeterminador;
 import br.ueg.portalLab.model.Estacao;
-import br.ueg.portalLab.model.GrupoEnderecoFisico;
+import br.ueg.portalLab.model.Colecao;
 import br.ueg.portalLab.model.ItemGeografico;
 import br.ueg.portalLab.model.ItemTaxonomico;
 import br.ueg.portalLab.model.Laboratorio;
@@ -120,15 +120,15 @@ public class EspecimeControl extends Control<Especime> {
 		imageControl.setMessagesControl(this.getMessagesControl());
 
 		if(!entity.isNew()){
-			retorno = saveEspecieImagem(especieImagens, selectedItemTaxonomicoMedia);	
-			//retorno = imageControl.saveEspecieMedia(especieImagens, selectedItemTaxonomicoMedia, selectedItemTaxonomicoMedia.getImagens());
+			//retorno = saveEspecieImagem(especieImagens, selectedItemTaxonomicoMedia);	
+			retorno = imageControl.saveEspecieMedia(especieImagens, selectedItemTaxonomicoMedia, selectedItemTaxonomicoMedia.getImagens());
 			if(retorno){
 				retorno =  super.actionSave(subControllerManager);
 								
 			}
 		}else{
-			retorno = saveEspecieImagem(especieImagens, selectedItemTaxonomicoMedia);
-			//retorno = imageControl.saveEspecieMedia(especieImagens, selectedItemTaxonomicoMedia, selectedItemTaxonomicoMedia.getImagens());
+			//retorno = saveEspecieImagem(especieImagens, selectedItemTaxonomicoMedia);
+			retorno = imageControl.saveEspecieMedia(especieImagens, selectedItemTaxonomicoMedia, selectedItemTaxonomicoMedia.getImagens());
 			if(retorno){
 				retorno = this.saveDeterminadoresForNewEntity(entity, subControllerManager);					
 			}			
@@ -365,22 +365,22 @@ public class EspecimeControl extends Control<Especime> {
 		return this.getListToEntityField(auxList);
 	}
 	/**
-	 * @return GenericDAO<GrupoEnderecoFisico> DAO
+	 * @return GenericDAO<Colecao> DAO
 	 */
-	private GenericDAO<GrupoEnderecoFisico> getGrupoEnderecoFisicoDAO() {
-		return (GenericDAO<GrupoEnderecoFisico>)SpringFactory.getInstance().getBean("genericDAO", GenericDAO.class);
+	private GenericDAO<Colecao> getColecaoDAO() {
+		return (GenericDAO<Colecao>)SpringFactory.getInstance().getBean("genericDAO", GenericDAO.class);
 	}
 	
 	
 	
 	@SuppressWarnings("unchecked")
-	public List<GrupoEnderecoFisico> getGrupoEnderecoFisicoList(Laboratorio lab){
-		GenericDAO<GrupoEnderecoFisico> grupoEnderecoFisicoDAO = this.getGrupoEnderecoFisicoDAO();
-		GrupoEnderecoFisico gef = new GrupoEnderecoFisico();
+	public List<Colecao> getColecaoList(Laboratorio lab){
+		GenericDAO<Colecao> colecaoDAO = this.getColecaoDAO();
+		Colecao gef = new Colecao();
 		gef.setLaboratorio(lab);
-		List<GrupoEnderecoFisico> findByEntity = grupoEnderecoFisicoDAO.findByEntity(gef);
+		List<Colecao> findByEntity = colecaoDAO.findByEntity(gef);
 		Collections.sort(findByEntity);
-		//List<GrupoEnderecoFisico> findByEntity = grupoEnderecoFisicoDAO.getListFK(gef.getClass());
+		//List<Colecao> findByEntity = colecaoDAO.getListFK(gef.getClass());
 		return findByEntity;
 	}
 	

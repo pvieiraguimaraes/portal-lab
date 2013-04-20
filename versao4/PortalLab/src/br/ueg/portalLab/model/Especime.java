@@ -40,7 +40,7 @@ public class Especime extends Entity {
 	@ManyToOne(optional = true, fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_grupo_endereco_fisico", insertable = true, updatable = true, nullable=true)
 	@Attribute(Required = false, SearchField = false)
-	private GrupoEnderecoFisico grupoEnderecoFisico; 
+	private Colecao grupoEnderecoFisico; 
 	
 	@Column(name = "codigo_catalogo", length=20, nullable=false)
 	@Attribute(Required = true, SearchField = true)
@@ -252,11 +252,11 @@ public class Especime extends Entity {
 		this.laboratorio = laboratorio;
 	}
 
-	public GrupoEnderecoFisico getGrupoEnderecoFisico() {
+	public Colecao getGrupoEnderecoFisico() {
 		return grupoEnderecoFisico;
 	}
 
-	public void setGrupoEnderecoFisico(GrupoEnderecoFisico grupoEnderecoFisico) {
+	public void setGrupoEnderecoFisico(Colecao grupoEnderecoFisico) {
 		this.grupoEnderecoFisico = grupoEnderecoFisico;
 	}
 

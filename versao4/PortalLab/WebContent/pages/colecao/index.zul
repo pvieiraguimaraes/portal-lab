@@ -10,7 +10,7 @@
 <include id="menuLateral" self="@{define(menuLateral)}" src="/menu/menu_lateral.zul" />
 <include id="menuTopo" self="@{define(menuTopo)}" src="/menu/menu_tabela_basica.zul" />
 
-<crudWindow self="@{define(content)}" id="crudGrupoEnderecoFisico" apply="${grupoEnderecoFisicoComposer}"   listBoxSize="8"  height="450px" titulo="Manter Grupo de Endereço Físico" composer="@{controller}">
+<crudWindow self="@{define(content)}" id="crudColecao" apply="${colecaoComposer}"   listBoxSize="8"  height="450px" titulo="Coleção Físico" composer="@{controller}">
 		<div id="form">
 			<grid>
 	            <columns>
@@ -32,8 +32,12 @@
 	                </row>
 	                <row>
 	                    <label value="Nome:" />
-	                    <textbox value="@{controller.fldNome}" maxlength="100" width = "98%"/>                    
-	                </row>	                
+	                    <textbox value="@{controller.fldNome}" maxlength="100" width = "98%"/>
+	                </row>
+	                <row>
+	                    <label value="Sigla:" />
+	                    <textbox value="@{controller.fldSigla}" maxlength="10" width = "148px" />
+	                </row>	                	                	                 
 	            </rows>
 	        </grid>
 		</div>
@@ -42,10 +46,12 @@
 				<listhead id="listhead">
 					<listheader label="Laboratorio" align="left" sort="auto(laboratorio.nome)" />
 					<listheader label="Nome" align="left" sort="auto(nome)"  />
+					<listheader label="Sigla" align="left" sort="auto(nome)" />
 				</listhead>
 				<listitem id="listitem">
 					<listcell label="@{entity.laboratorio.nome}" />
-					<listcell label="@{entity.nome}" />		
+					<listcell label="@{entity.nome}" />	
+					<listcell label="@{entity.sigla }" />	
 				</listitem>
 			</listbox>
 		</div>		

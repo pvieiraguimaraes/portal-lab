@@ -35,7 +35,7 @@
         	<menupopup>    	
         		<menuitem id="tabCadCategoria" 		 href="/pages/categoria/"		label="Categoria de Usuário"/>
 			    <menuitem id="tabCadLaboratorio"	 href="/pages/laboratorio/"			label="Laboratório"/>
-			    <menuitem id="tabCadGrupoEnderecoFisico"	 href="/pages/grupoenderecofico/"	label="Grupo de Endereço Físico"/>
+			    <menuitem id="tabCadColecao"	 href="/pages/colecao/"	label="Coleção"/>
         	</menupopup>
         </menu>
         	

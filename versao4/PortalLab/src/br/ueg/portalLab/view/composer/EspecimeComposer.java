@@ -53,7 +53,7 @@ import br.ueg.portalLab.model.EspecimeDeterminador;
 import br.ueg.portalLab.model.Estacao;
 import br.ueg.portalLab.model.EstagioDesenvolvimento;
 import br.ueg.portalLab.model.Fenologia;
-import br.ueg.portalLab.model.GrupoEnderecoFisico;
+import br.ueg.portalLab.model.Colecao;
 import br.ueg.portalLab.model.ItemGeografico;
 import br.ueg.portalLab.model.ItemTaxonomico;
 import br.ueg.portalLab.model.Laboratorio;
@@ -96,8 +96,8 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	@AttributeView(key = "laboratorio", isEntityValue = true, fieldType = Laboratorio.class, isVisible = true, caption = "especime_laboratorioColumn", isSearchField=true)
 	private Laboratorio fldLaboratorio;
 
-	@AttributeView(key = "grupoEnderecoFisico", isEntityValue = true, fieldType = GrupoEnderecoFisico.class, isVisible = true, caption = "especime_grupoEnderecoFisicoColumn", isSearchField=true)
-	private GrupoEnderecoFisico fldGrupoEnderecoFisico;
+	@AttributeView(key = "colecao", isEntityValue = true, fieldType = Colecao.class, isVisible = true, caption = "especime_colecaoColumn", isSearchField=true)
+	private Colecao fldColecao;
 
 	@AttributeView(key = "codigoCatalogo", isEntityValue = true, fieldType = String.class, isVisible = true, caption = "especime_codigoCatalogoColumn", isSearchField=true)
 	private String fldCodigoCatalogo;
@@ -244,7 +244,7 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	protected Window controlEspecime;
 
 	@Wire
-	protected Combobox cmbGrupoEnderecoFisico;
+	protected Combobox cmbColecao;
 	
 	@Wire
 	protected Listbox divListBoxColetores;
@@ -292,8 +292,8 @@ public class EspecimeComposer extends ComposerController<Especime> {
 		if (selectedEntity != null) {
 			super.setSelectedEntity(selectedEntity);
 			this.getEspecimeControl().setSelectedEspecime(selectedEntity);
-			// if(selectedEntity!=null && cmbGrupoEnderecoFisico!=null){
-			// binder.loadAttribute(cmbGrupoEnderecoFisico, "model");
+			// if(selectedEntity!=null && cmbColecao!=null){
+			// binder.loadAttribute(cmbColecao, "model");
 			// }
 		}
 	}
@@ -318,13 +318,13 @@ public class EspecimeComposer extends ComposerController<Especime> {
 		this.fldLaboratorio = fldLaboratorio;
 	}
 
-	public GrupoEnderecoFisico getFldGrupoEnderecoFisico() {
-		return fldGrupoEnderecoFisico;
+	public Colecao getFldColecao() {
+		return fldColecao;
 	}
 
-	public void setFldGrupoEnderecoFisico(
-			GrupoEnderecoFisico fldGrupoEnderecoFisico) {
-		this.fldGrupoEnderecoFisico = fldGrupoEnderecoFisico;
+	public void setFldColecao(
+			Colecao fldColecao) {
+		this.fldColecao = fldColecao;
 	}
 
 	public String getFldCodigoCatalogo() {
@@ -751,16 +751,15 @@ public class EspecimeComposer extends ComposerController<Especime> {
 		return coletoresList;
 	}
 
-	public ListModel<GrupoEnderecoFisico> getGrupoEnderecoFisicoList() {
-		BindingListModelSet<GrupoEnderecoFisico> resultList = new BindingListModelSet<GrupoEnderecoFisico>(
-				new HashSet<GrupoEnderecoFisico>(0), true);
-		;
-		List<GrupoEnderecoFisico> grupoEnderecoFisicoList = this
-				.getEspecimeControl().getGrupoEnderecoFisicoList(
+	public ListModel<Colecao> getColecaoList() {
+		BindingListModelSet<Colecao> resultList = new BindingListModelSet<Colecao>(
+				new HashSet<Colecao>(0), true);		
+		List<Colecao> colecaoList = this
+				.getEspecimeControl().getColecaoList(
 						this.getFldLaboratorio());
 
-		resultList = new BindingListModelSet<GrupoEnderecoFisico>(
-				new HashSet<GrupoEnderecoFisico>(grupoEnderecoFisicoList), true);
+		resultList = new BindingListModelSet<Colecao>(
+				new HashSet<Colecao>(colecaoList), true);
 
 		return resultList;
 	}
@@ -793,8 +792,8 @@ public class EspecimeComposer extends ComposerController<Especime> {
 		this.showEditForm();
 
 		// if(this.getSelectedEntity()!=null&&
-		// this.getSelectedEntity().getGrupoEnderecoFisico()!=null){
-		// cmbGrupoEnderecoFisico.setValue(this.getSelectedEntity().getGrupoEnderecoFisico().getNome());
+		// this.getSelectedEntity().getColecao()!=null){
+		// cmbColecao.setValue(this.getSelectedEntity().getColecao().getNome());
 		// }
 		return true;
 	}
@@ -855,9 +854,9 @@ public class EspecimeComposer extends ComposerController<Especime> {
 		super.showEditForm();
 
 		Textbox tb = (Textbox) this.getEditForm().getFellow(
-				"fldGrupoEnderecoFisicoHidden");
+				"fldColecaoHidden");
 		Combobox cb = (Combobox) this.getEditForm().getFellow(
-				"cmbGrupoEnderecoFisico");
+				"cmbColecao");
 		cb.setValue(tb.getValue());
 
 		// estado
@@ -1337,7 +1336,7 @@ public class EspecimeComposer extends ComposerController<Especime> {
 
 	@Override
 	public boolean saveEntity() {
-		/*((InputElement)this.formEspecime.getFellow("fldGrupoEnderecoFisicoHidden")).detach();
+		/*((InputElement)this.formEspecime.getFellow("fldColecaoHidden")).detach();
 		((InputElement)this.formEspecime.getFellow("fldEstadoHidden")).detach();
 		((InputElement)this.formEspecime.getFellow("fldMunicipioHidden")).detach();
 		((InputElement)this.formEspecime.getFellow("fldFiloHidden")).detach();

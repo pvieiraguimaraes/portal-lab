@@ -24,14 +24,14 @@
 				        			<combobox id="cmbLaboratorio" hflex="1" selectedItem="@{controller.fldLaboratorio }"
 				        			model="@{controller.laboratorioList }" >
 					        			<attribute name="onChange">
-					        				cmbGrupoEnderecoFisico.setRawValue(null);
+					        				cmbColecao.setRawValue(null);
 					        				controller.setCodigoCatalogoOnZul();
 					        			</attribute>
 									</combobox>
-				        			<combobox hflex="1" id="cmbGrupoEnderecoFisico"
-				        				model="@{controller.grupoEnderecoFisicoList, load-when='cmbLaboratorio.onChange'}"
-				        				selectedItem = "@{controller.fldGrupoEnderecoFisico }"/>
-				        			<textbox id="fldGrupoEnderecoFisicoHidden" value="@{controller.fldGrupoEnderecoFisico }" visible="false"/>
+				        			<combobox hflex="1" id="cmbColecao"
+				        				model="@{controller.colecaoList, load-when='cmbLaboratorio.onChange'}"
+				        				selectedItem = "@{controller.fldColecao }"/>
+				        			<textbox id="fldColecaoHidden" value="@{controller.fldColecao }" visible="false"/>
 				        			<hlayout hflex="1">
 				        				<label value="Data da Coleta:"/>
 				        				<datebox hflex="1" value="@{controller.fldDataColeta }"/>

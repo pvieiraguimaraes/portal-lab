@@ -26,6 +26,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.LazyInitializationException;
 import org.zkoss.image.AImage;
 import org.zkoss.image.Image;
 import org.zkoss.util.media.Media;
@@ -220,8 +221,8 @@ public abstract class EspecieMultimidia<TYPE extends Media> extends Entity {
 		String diretorioImagem = ConfigPortalLab.getInstancia().getMediaWebPath();
 		ItemTaxonomico itemTaxonomico2 = this.getItemTaxonomico();
 		String nomeCompleto  = "";
-		if(itemTaxonomico2!=null){
-			nomeCompleto = itemTaxonomico2.getNomeCompleto();
+		if(itemTaxonomico2!=null){ 
+			nomeCompleto = itemTaxonomico2.getNomeCompleto();			
 		}
 		String auxPath = url?separator.concat(diretorioImagem):"";
 		
