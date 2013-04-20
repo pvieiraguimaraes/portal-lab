@@ -38,7 +38,7 @@ public class Usuario extends Entity {
 	@Attribute(Required = true, SearchField = true)
 	private String nome;
 	
-	@Column(name = "CPF", length=11, unique=true)
+	@Column(name = "CPF", length=11)
 	@Attribute(Required = false, SearchField = true)
 	private String CPF;
 	
