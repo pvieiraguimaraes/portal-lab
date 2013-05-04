@@ -6,10 +6,7 @@
 			    <tabs id="tabs" width="150px" >
 			        <tab id="cadColeta" 			label="Coleta"  selected="true"/>
 			        <tab id="cadGeografia" 			label="Geografia"/>
-			        <tab id="cadTaxonomia"			label="Taxonomia" />
-			        <tab id="cadMultimidia"			label="Multimídia"/>
-			        <tab id="cadConteudoDidatico"	label="Conteúdo Didático" />
-			        <tab id="cadBibliografia"		label="Bibliografia" />			        
+			        <tab id="cadTaxonomia"			label="Taxonomia" />			        
 			    </tabs>
 			    <tabpanels>
 			        <tabpanel>
@@ -519,90 +516,7 @@
 								<textbox id="fldEpitetoEspecificoHidden" value="@{controller.fldEpitetoEspecifico }" visible="false"/>
 							</div>	        	
 				        </vlayout>				        	
-					</tabpanel>
-					 <tabpanel>
-						 <hlayout>
-						 	<label value="Selecione o item Taxonomico para ver os itens multímidia:"/>
-						 	<combobox  id="cmbSelectedItemTaxonomicoMedia" model="@{controller.listItemTaxonomicoMedia, load-when='cmbEpitetoEspecifico.onChange, cmbGenero.onChange, cmbFamilia.onChange, cmbSubFamilia.onChange, cmbOrdem.onChange, cmbSubOrdem.onChange, cmbClasse.onChange, cmbSubClasse.onChange, cmbFilo.onChange, cmbReino.onChange' }"
-						 	selectedItem = "@{controller.fldSelectedItemTaxonomicoMedia }">
-						 		<comboitem value="@{each }" />
-						 	</combobox>
-						 </hlayout>
-				        <groupbox id="gbImagem" mold="3d" open="true">
-			                <attribute name="onOpen"><![CDATA[
-							    arrowImagem.setSclass("open-" + self.isOpen());
-							]]></attribute>
-			                <caption>
-			                    <div id="arrowImagem" class="open-false">Imagens</div>
-			                </caption>
-			                <hbox>
-			                    <button  label="Selecionar Imagem" upload="true,maxsize=5000" onUpload="controller.addImage(event)"/>
-			                    <label id="camimhoImagem" value="@{controller.especieImagem.caminho }"/>
-			                    <label value="Estação do ano" />
-			                    <combobox model="@{controller.estacaoList }" id="cmbEstacao"></combobox>
-			                    <button label="Adicionar" onClick="controller.adicionarImagem()"/>			                    
-			                </hbox>
-			                <hbox xmlns:h="native">
-				                <image content="@{controller.especieImagem.thumbMedia }" width="300px" id="imgEspecie" >
-					                <attribute name="onClick">
-					                	controller.openImage();
-					                </attribute>					                
-				                </image>				                
-				                <listbox 
-				                	model="@{controller.EspecieImagemList, load-when='cmbSelectedItemTaxonomicoMedia.onChange' }"
-				                	selectedItem="@{controller.especieImagem }"
-				                	id="lbEspecimeImagem"
-				                	width="500px"
-				                >
-				                	<listhead>
-				                		<listheader label="Imagem"/>
-				                		<listheader label="Estação" width="100px"/>
-				                		<listheader label="Operação" width="80px"/>
-				                	</listhead>
-				                	<listitem self="@{each=entity }" value="@{entity }">
-				                		<listcell label="@{entity.caminho }"/>
-				                		<listcell label="@{entity.estacao.descricao }" />
-				                		<listcell>
-				                			<button label="Excluir" onClick="controller.removeImagem()"/>
-				                		</listcell>
-				                	</listitem>
-				                </listbox>			                
-			                </hbox>
-			                
-			            </groupbox>
-				       <groupbox id="gbVideo" mold="3d" open="false">
-			                <attribute name="onOpen"><![CDATA[
-							    arrowVideo.setSclass("open-" + self.isOpen());
-							]]></attribute>
-			                <caption>
-			                    <div id="arrowVideo" class="open-false">Vídeos</div>
-			                </caption>
-			                <hbox>
-			                    <label value="Directory:" />
-			                    <textbox value="/home/zk/projects" />
-			                </hbox>
-			                <checkbox label="Compress archived files" />
-			            </groupbox>
-				        <groupbox id="gbSom" mold="3d" open="false">
-			                <attribute name="onOpen"><![CDATA[
-							    arrowSom.setSclass("open-" + self.isOpen());
-							]]></attribute>
-			                <caption>
-			                    <div id="arrowSom" class="open-false">Som</div>
-			                </caption>
-			                <hbox>
-			                    <label value="Directory:" />
-			                    <textbox value="/home/zk/projects" />
-			                </hbox>
-			                <checkbox label="Compress archived files" />
-			            </groupbox>
-					</tabpanel>
-					 <tabpanel>
-				        conteúdo didático
-					</tabpanel>
-					 <tabpanel>
-				        Bibliografia
-					</tabpanel>
+					</tabpanel>					 
 				</tabpanels>
 			</tabbox>
 			<vlayout width="170px">

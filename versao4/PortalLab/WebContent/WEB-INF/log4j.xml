@@ -19,7 +19,6 @@
     <priority value="error" />
     <appender-ref ref="console" />
   </category>
-<<<<<<< .mine
   
 <category name="org.hibernate">
   <priority value="DEBUG"/>

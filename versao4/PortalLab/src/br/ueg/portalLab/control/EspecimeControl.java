@@ -1,10 +1,5 @@
 package br.ueg.portalLab.control;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -16,9 +11,7 @@ import java.util.Set;
 import org.hibernate.Hibernate;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-import org.zkoss.util.media.Media;
 
-import br.ueg.builderSoft.config.ConfigPortalLab;
 import br.ueg.builderSoft.control.Control;
 import br.ueg.builderSoft.control.SubControllerManager;
 import br.ueg.builderSoft.model.Entity;
@@ -28,15 +21,13 @@ import br.ueg.builderSoft.util.control.MessagesControl;
 import br.ueg.builderSoft.util.control.SubController;
 import br.ueg.builderSoft.util.reflection.Reflection;
 import br.ueg.builderSoft.util.sets.SpringFactory;
-import br.ueg.portalLab.model.EspecieImagem;
+import br.ueg.portalLab.model.Colecao;
 import br.ueg.portalLab.model.Especime;
 import br.ueg.portalLab.model.EspecimeDeterminador;
 import br.ueg.portalLab.model.Estacao;
-import br.ueg.portalLab.model.Colecao;
 import br.ueg.portalLab.model.ItemGeografico;
 import br.ueg.portalLab.model.ItemTaxonomico;
 import br.ueg.portalLab.model.Laboratorio;
-import br.ueg.portalLab.security.control.MediaControl;
 import br.ueg.portalLab.util.control.EspecimeValidatorControl;
 
 @Service
@@ -114,24 +105,11 @@ public class EspecimeControl extends Control<Especime> {
 			SubControllerManager<Especime> subControllerManager) {
 		boolean retorno = false;
 		Especime entity = (Especime) this.getMapFields().get("entity");
-		Set<EspecieImagem> especieImagens = (Set<EspecieImagem>) this.getMapFields().get("especieImagem");
-		ItemTaxonomico selectedItemTaxonomicoMedia = (ItemTaxonomico) this.getMapFields().get("selectedItemTaxonomicoMedia");
-		MediaControl<EspecieImagem> imageControl = new MediaControl<>();
-		imageControl.setMessagesControl(this.getMessagesControl());
-
+		
 		if(!entity.isNew()){
-			//retorno = saveEspecieImagem(especieImagens, selectedItemTaxonomicoMedia);	
-			retorno = imageControl.saveEspecieMedia(especieImagens, selectedItemTaxonomicoMedia, selectedItemTaxonomicoMedia.getImagens());
-			if(retorno){
-				retorno =  super.actionSave(subControllerManager);
-								
-			}
+				retorno =  super.actionSave(subControllerManager);				
 		}else{
-			//retorno = saveEspecieImagem(especieImagens, selectedItemTaxonomicoMedia);
-			retorno = imageControl.saveEspecieMedia(especieImagens, selectedItemTaxonomicoMedia, selectedItemTaxonomicoMedia.getImagens());
-			if(retorno){
 				retorno = this.saveDeterminadoresForNewEntity(entity, subControllerManager);					
-			}			
 		}
 		return retorno;
 	}
@@ -151,99 +129,6 @@ public class EspecimeControl extends Control<Especime> {
 		return retorno;
 	}
 	
-	public boolean saveEspecieImagem(Set<EspecieImagem> especieImagens,ItemTaxonomico selectedItemTaxonomicoMedia){
-		boolean retorno = true;
-		if(selectedItemTaxonomicoMedia==null ) return false;
-		if(selectedItemTaxonomicoMedia.getId().equals(0L)) return true;
-		
-		GenericDAO<EspecieImagem> especieImagemDAO = (GenericDAO<EspecieImagem>) SpringFactory.getInstance().getBean("genericDAO",GenericDAO.class);
-		GenericDAO<ItemTaxonomico> itemTaxonomicoDAO = (GenericDAO<ItemTaxonomico>) SpringFactory.getInstance().getBean("genericDAO",GenericDAO.class);
-		this.refreshItemTaxonomico(selectedItemTaxonomicoMedia);
-		
-		if(especieImagens!=null){
-			for(EspecieImagem ei: especieImagens){
-				if(ei.isNew()){
-					ei.setItemTaxonomico(selectedItemTaxonomicoMedia);
-					
-					ei.setNome(ei.getMedia().getName());
-					
-					int writeImagemToDiskReturn = ei.writeMediaToDisk();
-					if(writeImagemToDiskReturn==1){
-						/*try {
-							//especieImagemDAO.save(ei);
-						} catch (Exception e) {
-							this.getMessagesControl().addMessageError("especieImage_salvar");
-							e.printStackTrace();
-							return false;
-						}*/
-					}else{
-						if(writeImagemToDiskReturn==0)
-							this.getMessagesControl().addMessageError("especieImage_salvar");
-						if(writeImagemToDiskReturn==2)
-							this.getMessagesControl().addMessageError("especieImage_salvar_existe");
-						return false;
-					}
-				}								
-			}
-			
-			boolean especieImagemExiste = false;;
-			try {
-				itemTaxonomicoDAO.update(selectedItemTaxonomicoMedia);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block				
-				this.getMessagesControl().addMessageError("especieImage_salvar");
-				e.printStackTrace();
-				return false;
-				
-			}
-			//remove as imagens removidas
-			itemTaxonomicoDAO.refresh(selectedItemTaxonomicoMedia);
-			for(EspecieImagem itemEspecieImage : new ArrayList<EspecieImagem>(selectedItemTaxonomicoMedia.getImagens())){
-				for(EspecieImagem vEspecieImagem: especieImagens){
-					if(itemEspecieImage.getId().equals(vEspecieImagem.getId())){
-						especieImagemExiste = true;
-						break;
-					}
-				}
-				if(!especieImagemExiste){
-					int deleteImagemFromDiscReturn = itemEspecieImage.deleteMediaFromDisk();
-					if(deleteImagemFromDiscReturn==1){
-						especieImagemDAO.delete(itemEspecieImage);
-					}else if(deleteImagemFromDiscReturn==0){
-						this.getMessagesControl().addMessageError("especieImage_remove");
-						return false;
-					}else if(deleteImagemFromDiscReturn==2){
-						this.getMessagesControl().addMessageError("especieImage_remove_ano_existe");
-						return true;
-					}
-					//TODO EspecieImagem remover imagem do diret�rio
-				}
-				especieImagemExiste = false;
-			}
-		}
-		return retorno;
-	}
-	public ItemTaxonomico refreshItemTaxonomico(ItemTaxonomico it){
-		if(it==null) return null;
-		GenericDAO<ItemTaxonomico> itemTaxonomicoDAO = (GenericDAO<ItemTaxonomico>) SpringFactory.getInstance().getBean("genericDAO",GenericDAO.class);
-		//itemTaxonomicoDAO.refresh(it);
-		ItemTaxonomico it2 = new ItemTaxonomico();
-		it2.setId(it.getId());
-		it = itemTaxonomicoDAO.findByEntity(it2).get(0);
-		return it;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public Set<EspecieImagem> getEspecieImagemFromItemTaxonomico(ItemTaxonomico it){
-		if(it==null) return new HashSet<EspecieImagem>();
-		GenericDAO<ItemTaxonomico> itemTaxonomicoDAO = (GenericDAO<ItemTaxonomico>) SpringFactory.getInstance().getBean("genericDAO",GenericDAO.class);
-		//itemTaxonomicoDAO.refresh(it);
-		ItemTaxonomico it2 = new ItemTaxonomico();
-		it2.setId(it.getId());
-		it = itemTaxonomicoDAO.findByEntity(it2).get(0);
-		return it.getImagens();
-	}
-
 	private Especime selectedEspecime;
 	
 	
@@ -370,9 +255,7 @@ public class EspecimeControl extends Control<Especime> {
 	private GenericDAO<Colecao> getColecaoDAO() {
 		return (GenericDAO<Colecao>)SpringFactory.getInstance().getBean("genericDAO", GenericDAO.class);
 	}
-	
-	
-	
+		
 	@SuppressWarnings("unchecked")
 	public List<Colecao> getColecaoList(Laboratorio lab){
 		GenericDAO<Colecao> colecaoDAO = this.getColecaoDAO();

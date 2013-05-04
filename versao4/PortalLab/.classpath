@@ -5,7 +5,7 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="/BuilderSoft/lib/jsf-api.jar"/>
 	<classpathentry kind="lib" path="/BuilderSoft/lib/sqljdbc4.jar"/>
-	<classpathentry kind="lib" path="/BuilderSoft/lib/zcommon.jar" sourcepath="/media/dados/programas/ZK/zk-src-6.0.1-FL-2012-03-21.zip"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/zcommon.jar" sourcepath="F:/programas/ZK/zk-src-6.0.1-FL-2012-03-21.zip"/>
 	<classpathentry kind="lib" path="/BuilderSoft/lib/zel.jar"/>
 	<classpathentry kind="lib" path="/BuilderSoft/lib/zhtml.jar"/>
 	<classpathentry kind="lib" path="/BuilderSoft/lib/zk.jar" sourcepath="/media/dados/programas/ZK/zk-src-6.0.1-FL-2012-03-21.zip"/>
@@ -13,13 +13,14 @@
 	<classpathentry kind="lib" path="/BuilderSoft/lib/zkplus.jar" sourcepath="E:/programas/zk/zk-src-6.0.1-FL-2012-03-21.zip"/>
 	<classpathentry kind="lib" path="/BuilderSoft/lib/zkspring-core-3.0.jar"/>
 	<classpathentry kind="lib" path="/BuilderSoft/lib/zkspring-webflow-3.0.jar"/>
-	<classpathentry kind="lib" path="/BuilderSoft/lib/zul.jar"/>
+	<classpathentry kind="lib" path="/BuilderSoft/lib/zul.jar" sourcepath="F:/programas/ZK/zk-src-6.5.1.1/zk-src-6.5.1.1"/>
 	<classpathentry kind="lib" path="/BuilderSoft/lib/zweb.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jta-1.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jasperreports.jar"/>
 	<classpathentry kind="lib" path="/BuilderSoft-security/lib/aopalliance-1.0.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-digester-1.8.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/groovy-all-1.5.5.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jsoup-1.7.2.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.jboss.ide.eclipse.as.core.server.runtime.runtimeTarget/JBoss 7.1 Runtime">
 		<attributes>
 			<attribute name="owner.project.facets" value="jst.web"/>
