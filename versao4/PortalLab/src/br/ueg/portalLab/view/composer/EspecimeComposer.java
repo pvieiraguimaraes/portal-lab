@@ -14,8 +14,6 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.zkoss.image.AImage;
-import org.zkoss.image.Image;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.UploadEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -226,11 +224,6 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	@AttributeView(key = "observacaoTaxonomia", isEntityValue = true, fieldType = String.class, isVisible = true, caption = "especime_observacaoTaxonomiaColumn")
 	private String fldObservacaoTaxonomia;
 
-	@AttributeView(key = "especieImagem", isEntityValue = false, fieldType = Set.class, isVisible = true, caption = "especime_imagemColumn")
-	private Set<EspecieImagem> fldEspecieImagens = new HashSet<EspecieImagem>(0);
-	@AttributeView(key = "selectedItemTaxonomicoMedia", isEntityValue = false, fieldType = ItemTaxonomico.class, isVisible = false)
-	private ItemTaxonomico fldSelectedItemTaxonomicoMedia;
-
 	@Autowired
 	protected EspecimeControl especimeControl;
 
@@ -251,8 +244,6 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	
 	@Wire
 	protected Textbox fldCatalogoCodigo;
-
-	protected EspecieMultimidia<Image> especieImagem = new EspecieImagem();
 
 	protected AnnotateDataBinder binderForm;
 	/**
@@ -845,12 +836,6 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void showEditForm() {
-		// TODO Auto-generated method stub
-		this.setFldSelectedItemTaxonomicoMedia(null);
-		especieImagem = new EspecieImagem();
-		Listbox lb = (Listbox) this.getEditForm().getFellow("lbEspecimeImagem");
-		lb.setModel(new BindingListModelList(new ArrayList<Entity>(), true));
-
 		super.showEditForm();
 
 		Textbox tb = (Textbox) this.getEditForm().getFellow(
@@ -1210,14 +1195,6 @@ public class EspecimeComposer extends ComposerController<Especime> {
 		this.fldImprecisao = fldImprecisao;
 	}
 
-	public Set<EspecieImagem> getFldEspecieImagens() {
-		return fldEspecieImagens;
-	}
-
-	public void setFldEspecieImagens(Set<EspecieImagem> fldEspecieImagens) {
-		this.fldEspecieImagens = fldEspecieImagens;
-	}
-
 	public ListModel<Autor> getAutorList() {
 		BindingListModelSet<Autor> coletoresList = new BindingListModelSet<Autor>(
 				new HashSet<Autor>(0), true);
@@ -1245,119 +1222,12 @@ public class EspecimeComposer extends ComposerController<Especime> {
 
 	/* fim guia taxonomia */
 
-	/* inicio guia multimidia */
-	public boolean addImage(UploadEvent event) {
-
-		org.zkoss.util.media.Media media = event.getMedia();
-		((Button) event.getTarget()).setLabel(media.getName());
-		if (media instanceof org.zkoss.image.Image) {
-			org.zkoss.zul.Image image = new org.zkoss.zul.Image();
-			image.setContent((Image) media);
-
-			EspecieMultimidia<Image> ei = new EspecieImagem();
-			ei.setMedia((AImage) media);
-
-			this.setEspecieImagem(ei);
-			this.binderForm.loadComponent(this.getEditForm().getFellow(
-					"imgEspecie"));
-
-		} else {
-			Messagebox.show("Somente imagem podem ser inclu�das");
-		}
-
-		return true;
-	}
-
-	public EspecieMultimidia<Image> getEspecieImagem() {
-		return especieImagem;
-	}
-
-	public void setEspecieImagem(EspecieMultimidia<Image> imagem) {
-		this.especieImagem = imagem;
-		this.binderForm.loadComponent(this.getEditForm()
-				.getFellow("imgEspecie"));
-	}
-
 	public BindingListModelList<Entity> getEstacaoList() {
 		return this.getEntityModel(this.getEspecimeControl().getEstacaoList());
 	}
 
-	public ListModel<EspecieImagem> getEspecieImagemList() {
-		BindingListModelSet<EspecieImagem> especimeImagemList;//= new BindingListModelSet<EspecieImagem>(new HashSet<EspecieImagem>(0), true);
-
-		especimeImagemList = new BindingListModelSet<EspecieImagem>(
-				this.getFldEspecieImagens(), true);
-
-		return especimeImagemList;
-	}
-
-	public void adicionarImagem() {
-		Combobox cb = (Combobox) this.getEditForm().getFellow("cmbEstacao");
-		Listbox lb = (Listbox) this.getEditForm().getFellow("lbEspecimeImagem");
-		// if(lb.getSelectedItem()!=null){
-		ListModelSet<Object> lm = (ListModelSet<Object>) lb.getModel();// TODO
-																		// Tratar
-																		// quando
-																		// não
-																		// está
-																		// definido
-																		// o
-																		// itemtaxonomico
-		EspecieMultimidia<Image> ei = new EspecieImagem();
-		ei.setControleInsercaoPadroa(false);
-		ei.setMedia(this.getEspecieImagem().getMedia());
-		if (cb.getSelectedItem() != null)
-			ei.setEstacao((Estacao) cb.getSelectedItem().getValue());
-		ei.setId(Long.valueOf(lb.getModel().getSize() + 1));
-
-		lm.add(ei);
-		/*
-		 * }else{ this.getControl().getMessagesControl().addMessageError(
-		 * "selecione_item_taxonomico_primeiro"); }
-		 */
-
-	}
-
-	public ItemTaxonomico getFldSelectedItemTaxonomicoMedia() {
-		if (this.fldSelectedItemTaxonomicoMedia == null) {
-			this.fldSelectedItemTaxonomicoMedia = new ItemTaxonomico();
-			this.fldSelectedItemTaxonomicoMedia.setId(0L);
-		}
-		return fldSelectedItemTaxonomicoMedia;
-	}
-
-	public void setFldSelectedItemTaxonomicoMedia(
-			ItemTaxonomico fldSelectedItemTaxonomicoMedia) {
-		this.fldSelectedItemTaxonomicoMedia = fldSelectedItemTaxonomicoMedia;
-		this.fldEspecieImagens = this.getEspecimeControl()
-				.getEspecieImagemFromItemTaxonomico(
-						this.fldSelectedItemTaxonomicoMedia);
-	}
-
 	@Override
-	public boolean saveEntity() {
-		/*((InputElement)this.formEspecime.getFellow("fldColecaoHidden")).detach();
-		((InputElement)this.formEspecime.getFellow("fldEstadoHidden")).detach();
-		((InputElement)this.formEspecime.getFellow("fldMunicipioHidden")).detach();
-		((InputElement)this.formEspecime.getFellow("fldFiloHidden")).detach();
-		((InputElement)this.formEspecime.getFellow("fldClasseHidden")).detach();
-		((InputElement)this.formEspecime.getFellow("fldSubClasseHidden")).detach();
-		((InputElement)this.formEspecime.getFellow("fldFamiliaHidden")).detach();
-		((InputElement)this.formEspecime.getFellow("fldSubFamiliaHidden")).detach();
-		((InputElement)this.formEspecime.getFellow("fldOrdemHidden")).detach();
-		((InputElement)this.formEspecime.getFellow("fldSubOrdemHidden")).detach();
-		((InputElement)this.formEspecime.getFellow("fldGeneroHidden")).detach();
-		((InputElement)this.formEspecime.getFellow("fldEpitetoEspecificoHidden")).detach();
-		this.binder.loadAll();
-		this.binderForm.loadAll();
-		// this.doAction("ASSOCIATE");
-				
-				
-				binder.loadComponent(this.getEditForm());
-				// TODO descobrir uma forma de n�o fazer isso(ler tudo, deveria
-				// funcionar s� com o comando acima,
-				// quando o formul�rio � construido automaticamente.
-				binder.loadAll();*/
+	public boolean saveEntity() {		
 		boolean retorno =  super.saveEntity();
 		//binderForm.saveAll();
 		return retorno;
@@ -1366,7 +1236,7 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	public void setButtonsNextTab() {
 		Tabbox tabBox = getTabboxEspecime();
 		Tab tabSelected = tabBox.getSelectedTab();
-		if (tabSelected.getId().equals("cadMultimidia")) {
+		if (tabSelected.getId().equals("cadTaxonomia")) {
 			formEspecime.getFellow("btnSalvar").setVisible(true);
 			formEspecime.getFellow("btnNextTab").setVisible(false);
 		} else {
@@ -1374,7 +1244,7 @@ public class EspecimeComposer extends ComposerController<Especime> {
 			formEspecime.getFellow("btnNextTab").setVisible(true);
 		}
 
-		if (tabSelected.getId().equals("cadBibliografia"))
+		if (tabSelected.getId().equals("cadTaxonomia"))
 			((Button) getFellow(formEspecime, "btnNextTab")).setDisabled(true);
 		else
 			((Button) getFellow(formEspecime, "btnNextTab")).setDisabled(false);
@@ -1449,34 +1319,5 @@ public class EspecimeComposer extends ComposerController<Especime> {
 			return resultList;
 		}
 		return resultList;
-	}
-
-	public void openImage() {
-		if (this.showImage == null) {
-			this.showImage = getFormByName("imageView");
-
-			// this.formEspecime.setParent(this.controlEspecime);
-			// this.controlEspecime.appendChild(this.formEspecime);
-
-			AnnotateDataBinder binder = new AnnotateDataBinder(this.showImage);
-			binder.setLoadOnSave(false);
-			binder.bindBean("controller", this);
-			binder.loadComponent(this.showImage);
-			showImage.setMode(Window.MODAL);
-			showImage.setVisible(true);
-			showImage.doModal();
-
-		}
-
-	}
-
-	public void closeImage() {
-		if (this.showImage != null) {
-			showImage.setVisible(false);
-			showImage.detach();
-			controlEspecime.removeChild(showImage);
-			showImage = null;
-		}
 	}	
-	
 }
