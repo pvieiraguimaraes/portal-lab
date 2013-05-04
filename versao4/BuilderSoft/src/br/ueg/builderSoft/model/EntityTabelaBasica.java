@@ -10,8 +10,6 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
-
-
 import br.ueg.builderSoft.util.annotation.Attribute;
 
 @javax.persistence.Entity
@@ -53,5 +51,9 @@ public abstract class EntityTabelaBasica extends Entity {
 	public String toString(){
 		return this.getDescricao();
 	}
-
+	
+	@Override
+	protected String getColumnCompare(){
+		return String.valueOf(getDescricao());
+	}
 }
