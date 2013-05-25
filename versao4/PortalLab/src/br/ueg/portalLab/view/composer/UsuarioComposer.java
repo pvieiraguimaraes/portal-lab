@@ -35,10 +35,6 @@ import br.ueg.portalLab.security.model.UsuarioPermissao;
 @Scope("desktop")
 public class UsuarioComposer extends TabelaComposerController<Usuario> {
 	
-	
-
-
-
 	@AttributeView(key = "nome", isEntityValue = true, fieldType = String.class, isVisible=true, caption="usuario_nomeColumn")
 	private String fldNome;
 	
@@ -383,4 +379,16 @@ public class UsuarioComposer extends TabelaComposerController<Usuario> {
 		getUsuarioControl().setSelectedCasoDeUso(selectedCasoDeUso);
 		this.binder.loadComponent(dualList);
 	}
+
+
+	@Override
+	public void showEditForm() {
+		if(getSelectedEntity().getId() != null && getSelectedEntity().getId() != 0){
+			setFldSenha("");
+			binder.loadAll();
+		}
+		super.showEditForm();
+	}
+	
+	
 }

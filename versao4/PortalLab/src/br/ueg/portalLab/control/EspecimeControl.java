@@ -349,19 +349,19 @@ public class EspecimeControl extends Control<Especime> {
 		return (GenericDAO<Especime>) SpringFactory.getInstance().getBean("genericDAO", GenericDAO.class);
 	}
 	
-	public String getLastLabList(Laboratorio lab){
+	public String getLastCollectionList(Colecao col){
 		List<Especime> list = null;
-		if(lab != null){
+		if(col != null){
 			GenericDAO<Especime> especimeDAO = this.getEspecimeDAO();
-			String qry = "select top 1 CAST(SUBSTRING(e.codigo_catalogo, CHARINDEX('.', e.codigo_catalogo)+1, LEN(e.codigo_catalogo)) AS INT) as num_catalogo from especime e where codigo_catalogo LIKE '" + lab.getSigla() + "%' order by CAST(SUBSTRING(e.codigo_catalogo, CHARINDEX('.', e.codigo_catalogo)+1, LEN(e.codigo_catalogo)) AS INT) desc";
+			String qry = "select top 1 CAST(SUBSTRING(e.codigo_catalogo, CHARINDEX('.', e.codigo_catalogo)+1, LEN(e.codigo_catalogo)) AS INT) as num_catalogo from especime e where codigo_catalogo LIKE '" + col.getSigla() + "%' order by CAST(SUBSTRING(e.codigo_catalogo, CHARINDEX('.', e.codigo_catalogo)+1, LEN(e.codigo_catalogo)) AS INT) desc";
 			System.out.println(qry);
 			list = especimeDAO.findByNativeSQL(qry);
 		}
-		return this.getCodigoCatalogoName(lab, list);
+		return this.getCodigoCatalogoName(col, list);
 	}
 	
-	private String getCodigoCatalogoName(Laboratorio lab, List<Especime> list){
-		String codigoColeta = lab.getSigla() + ".";
+	private String getCodigoCatalogoName(Colecao col, List<Especime> list){
+		String codigoColeta = col.getSigla() + ".";
 		if(list == null || list.isEmpty()){
 			codigoColeta += 1;
 		} else {

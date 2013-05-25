@@ -59,7 +59,7 @@ public class Usuario extends Entity {
 	private String login;
 	
 	@Column(name = "senha", length=20, nullable = false)
-	@Attribute(Required = true, SearchField = false)
+	@Attribute(Required = false, SearchField = false)
 	private String senha;
 	
 	@Column(name = "status" ,nullable = false, columnDefinition="tinyint default 1")

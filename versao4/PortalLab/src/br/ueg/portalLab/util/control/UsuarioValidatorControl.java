@@ -20,8 +20,9 @@ public class UsuarioValidatorControl extends ValidatorControl {
 	
 	@Override
 	public boolean doAction(HashMap<String, Object> mapFields, String action) {
-		
-		return this.valideCPF((Usuario) (Entity) mapFields.get("entity"));
+		Boolean valideCPF = this.valideCPF((Usuario) (Entity) mapFields.get("entity"));
+		Boolean valideSenha = this.valideSenha((Usuario) (Entity) mapFields.get("entity"), action);
+		return (valideCPF && valideSenha);
 	}
 	public boolean valideCPF(Usuario usuario){
 		boolean retorno = true;
@@ -29,6 +30,21 @@ public class UsuarioValidatorControl extends ValidatorControl {
 			if(usuario.getCPF()==null || (usuario.getCPF()!=null && usuario.getCPF().equals(""))){
 				retorno = false;
 				messagesControl.addMessageError("usuario_cpf_obrigatorio_categoria");				
+			}
+		}
+		return retorno;
+	}
+	
+	public boolean valideSenha(Usuario usuario, String action){
+		boolean retorno = true;
+		if(usuario.isNew()){
+			if(usuario.getSenha() == null || usuario.getSenha().equals("")){
+				retorno = false;
+				messagesControl.addMessageError("usuario_senha");
+			}
+			if(usuario.getSenha() == null || usuario.getSenha().length() < 5){
+				retorno = false;
+				messagesControl.addMessageError("usuario_senha_tamanho");
 			}
 		}
 		return retorno;

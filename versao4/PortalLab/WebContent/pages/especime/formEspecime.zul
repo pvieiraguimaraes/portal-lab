@@ -22,12 +22,15 @@
 				        			model="@{controller.laboratorioList }" >
 					        			<attribute name="onChange">
 					        				cmbColecao.setRawValue(null);
-					        				controller.setCodigoCatalogoOnZul();
 					        			</attribute>
 									</combobox>
 				        			<combobox hflex="1" id="cmbColecao"
 				        				model="@{controller.colecaoList, load-when='cmbLaboratorio.onChange'}"
-				        				selectedItem = "@{controller.fldColecao }"/>
+				        				selectedItem = "@{controller.fldColecao }">
+				        				<attribute name="onChange">
+					        				controller.setCodigoCatalogoOnZul();
+					        			</attribute>
+				        			</combobox>
 				        			<textbox id="fldColecaoHidden" value="@{controller.fldColecao }" visible="false"/>
 				        			<hlayout hflex="1">
 				        				<label value="Data da Coleta:"/>
