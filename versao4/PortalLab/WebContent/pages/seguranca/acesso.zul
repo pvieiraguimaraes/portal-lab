@@ -27,7 +27,7 @@
 										j_password.setValue(EncryptPassword.encrypt(event.getValue()));		
 									]]></attribute>
 								</textbox>
-								<textbox id="j_password" name="j_password" visible="true"/>
+								<textbox id="j_password" name="j_password" visible="false"/>
 							</div>
 						</row>
 						<row spans="2" if="${not empty param.error}">
