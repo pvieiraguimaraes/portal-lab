@@ -23,7 +23,7 @@ public class EncryptUtils {
 			user.setSenha(EncryptPassword.encrypt(user.getSenha()));
 			
 			try {
-				usuarioDAO.save(user);
+				usuarioDAO.update(user);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
