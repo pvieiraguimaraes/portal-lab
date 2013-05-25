@@ -120,12 +120,13 @@ public class ItemTaxonomico extends Entity {
 	public String toString(){
 		String retorno = "";
 		//System.err.println(this.getNome());
-		try{
+		/*try{
 			retorno = this.getNivelTaxonomico().getNome();
 		}catch(Exception e){
 			//e.printStackTrace();
-		}
-		return retorno+" "+this.getNome();
+		}*/
+		//return retorno+" "+this.getNome();
+		return this.getNome();
 	}
 
 

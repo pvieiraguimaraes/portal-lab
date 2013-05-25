@@ -140,7 +140,7 @@
 							<separator></separator>
 							<vlayout>
 								<label value="Observações"/>
-								<textbox value="@{controller.fldObservacao }" rows="5" cols="90" width="99%" maxlength="500" />
+								<textbox value="@{controller.fldObservacao }" rows="5" cols="90" width="99%" maxlength="1000" />
 							</vlayout>							
 						</vlayout>
 			        </tabpanel>
@@ -252,7 +252,7 @@
 					        	<groupbox hflex="1" height="194px">
 					        			<caption><label value="Observações"/></caption>
 					        			<vlayout>
-					        			<textbox value="@{controller.fldObservacaoGeografria }" rows="11" width="100%" maxlength="500"/>
+					        			<textbox value="@{controller.fldObservacaoGeografria }" rows="11" width="100%" maxlength="1000"/>
 					        			</vlayout>
 					        	</groupbox>
 							</hlayout>			        	
@@ -503,7 +503,7 @@
 								</vlayout>
 							</hlayout>
 							<label value="Observações" />
-								<textbox rows="3" width="100%" value="@{controller.fldObservacaoTaxonomia }" maxlength="500" />
+								<textbox rows="3" width="100%" value="@{controller.fldObservacaoTaxonomia }" maxlength="1000" />
 							<div visible="false">
 								<textbox id="fldFiloHidden" value="@{controller.fldFilo }" visible="false"/>
 								<textbox id="fldClasseHidden" value="@{controller.fldClasse }" visible="false"/>
