@@ -7,9 +7,11 @@ import java.util.Set;
 import org.springframework.stereotype.Service;
 
 import br.ueg.builderSoft.control.Control;
+import br.ueg.builderSoft.control.SubControllerManager;
 import br.ueg.builderSoft.persistence.GenericDAO;
 import br.ueg.builderSoft.util.control.MessagesControl;
 import br.ueg.builderSoft.util.control.SubController;
+import br.ueg.builderSoft.util.encrypt.EncryptPassword;
 import br.ueg.builderSoft.util.sets.SpringFactory;
 import br.ueg.portalLab.model.Usuario;
 import br.ueg.portalLab.security.model.CasoDeUso;
@@ -21,7 +23,7 @@ import br.ueg.portalLab.util.control.UsuarioValidatorControl;
 
 @Service
 public class UsuarioControl extends Control<Usuario> {
-
+	
 	private Usuario selectedUsuario;
 	
 	private CasoDeUso selectedCasoDeUso;
@@ -46,6 +48,12 @@ public class UsuarioControl extends Control<Usuario> {
 		return validators;
 	}
 	
+	@Override
+	public boolean actionSave(SubControllerManager<Usuario> subControllerManager) {
+		Usuario entity = (Usuario) this.mapFields.get("entity");	
+		this.setSenhaUsuario(entity);
+		return super.actionSave(subControllerManager);
+	}
 	
 	public boolean isFuncionalidadePresenteUsuario(Funcionalidade funcionalidade){
 		if(selectedUsuario== null) return false;
@@ -63,6 +71,7 @@ public class UsuarioControl extends Control<Usuario> {
 	/**
 	 * @return GenericDAO<CasoDeUsoFuncionalidade> GenericDAO para manipular CasoDeUsoFuncionalidade
 	 */
+	@SuppressWarnings({ "unchecked", "unused" })
 	private GenericDAO<CasoDeUsoFuncionalidade> getCasoDeUsoFuncionalidadeDAO() {
 		return (GenericDAO<CasoDeUsoFuncionalidade>)SpringFactory.getInstance().getBean("genericDAO", GenericDAO.class);
 	}
@@ -136,6 +145,19 @@ public class UsuarioControl extends Control<Usuario> {
 		}
 		
 		return listGrupoUsuario;
+	}
+	
+	private void setSenhaUsuario(Usuario entity){
+		if(!entity.isNew()){
+			if(entity.getSenha().equals("")){
+				Usuario auxUser = getPersistence().getByID(entity, entity.getId());
+				entity.setSenha(auxUser.getSenha());
+			} else {
+				entity.setSenha(EncryptPassword.encrypt(entity.getSenha()));
+			}
+		} else {
+			entity.setSenha(EncryptPassword.encrypt(entity.getSenha()));
+		}	
 	}
 		
 	

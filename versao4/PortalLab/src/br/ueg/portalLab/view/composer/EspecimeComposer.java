@@ -761,8 +761,8 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	}
 	
 	public void setCodigoCatalogoOnZul(){
-		Laboratorio lab = this.getFldLaboratorio();
-		setFldCodigoCatalogo(this.getEspecimeControl().getLastLabList(lab));
+		Colecao col = this.getFldColecao();
+		setFldCodigoCatalogo(this.getEspecimeControl().getLastCollectionList(col));
 		binderForm.loadAll();
 	}
 
