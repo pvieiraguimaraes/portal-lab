@@ -780,6 +780,7 @@ public class EspecimeComposer extends ComposerController<Especime> {
 		// quando o formul�rio � construido automaticamente.
 		binder.loadAll();
 		this.setDisabled("cmbLaboratorio", true);
+		this.setDisabled("cmbColecao", true);
 		// binder.saveAll();
 		this.showEditForm();
 
