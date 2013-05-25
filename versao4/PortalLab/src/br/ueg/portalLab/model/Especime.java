@@ -94,7 +94,7 @@ public class Especime extends Entity {
 			)
 	private Set<Coletor> coletores = new HashSet<Coletor>(0);
 	
-	@Column(name = "observacao", length=500, nullable=true)
+	@Column(name = "observacao", length=1000, nullable=true)
 	@Attribute(Required = false, SearchField = true)
 	private String observacao;
 	
@@ -149,7 +149,7 @@ public class Especime extends Entity {
 	@Attribute(Required = false, SearchField = false)
 	private Datum datum;
 	
-	@Column(name = "observacao_geografia", length=500, nullable=true)
+	@Column(name = "observacao_geografia", length=1000, nullable=true)
 	@Attribute(Required = false, SearchField = true)
 	private String observacaoGeografria;
 	
@@ -220,7 +220,7 @@ public class Especime extends Entity {
 			)
 	private Set<Autor> autores = new HashSet<Autor>(0);
 	
-	@Column(name = "observacao_taxonomia", length=500, nullable=true)
+	@Column(name = "observacao_taxonomia", length=1000, nullable=true)
 	@Attribute(Required = false, SearchField = true)
 	private String observacaoTaxonomia;
 	
