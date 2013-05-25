@@ -25,6 +25,18 @@ import br.ueg.builderSoft.util.annotation.Attribute;
 @javax.persistence.Entity
 @Table(name = "nivel_taxonomico")
 public class NivelTaxonomico extends Entity {
+	
+	public static final int ID_NIVEL_REINO = 1;
+	public static final int ID_NIVEL_FILO = 2;
+	public static final int ID_NIVEL_CLASSE = 3;
+	public static final int ID_NIVEL_SUB_CLASSE = 4;
+	public static final int ID_NIVEL_FAMILIA = 11;
+	public static final int ID_NIVEL_SUB_FAMILIA = 12;
+	public static final int ID_NIVEL_ORDEM = 13;
+	public static final int ID_NIVEL_SUB_ORDEM = 14;
+	public static final int ID_NIVEL_GENERO = 15;
+	public static final int ID_NIVEL_EPITETO_ESPECIFICO = 16;
+	
 
 	@Id
 	@GeneratedValue

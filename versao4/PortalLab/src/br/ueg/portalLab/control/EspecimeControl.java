@@ -327,11 +327,11 @@ public class EspecimeControl extends Control<Especime> {
 		return list;
 	}
 	
-	public List<ItemTaxonomico> getFilhoList(ItemTaxonomico pai){
+	public List<ItemTaxonomico> getFilhoList(ItemTaxonomico pai, int nivel){
 		List<ItemTaxonomico> list = null;
 		if(pai!=null){
 			GenericDAO<ItemTaxonomico> itemTaxonomicoDAO = this.getItemTaxonomicoDAO();
-			String qry = "from ItemTaxonomico i where i.pai="+pai.getId()+" order by i.nome";
+			String qry = "from ItemTaxonomico i where i.pai="+pai.getId()+" and i.nivelTaxonomico="+String.valueOf(nivel)+" order by i.nome";
 			list = itemTaxonomicoDAO.findByHQL(qry);
 		}
 		if(list==null) new ArrayList<ItemTaxonomico>(0);

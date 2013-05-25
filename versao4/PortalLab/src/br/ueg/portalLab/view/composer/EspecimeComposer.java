@@ -57,6 +57,7 @@ import br.ueg.portalLab.model.ItemTaxonomico;
 import br.ueg.portalLab.model.Laboratorio;
 import br.ueg.portalLab.model.MassaDAgua;
 import br.ueg.portalLab.model.MetodoColeta;
+import br.ueg.portalLab.model.NivelTaxonomico;
 import br.ueg.portalLab.model.Sexo;
 import br.ueg.portalLab.model.TipoDeMontagem;
 
@@ -1081,27 +1082,27 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	}
 
 	public List<ItemTaxonomico> getFiloList() {
-		return this.getEspecimeControl().getFilhoList(this.getFldReino());
+		return this.getEspecimeControl().getFilhoList(this.getFldReino(), NivelTaxonomico.ID_NIVEL_FILO);
 	}
 
 	public List<ItemTaxonomico> getClasseList() {
-		return this.getEspecimeControl().getFilhoList(this.getFldFilo());
+		return this.getEspecimeControl().getFilhoList(this.getFldFilo(), NivelTaxonomico.ID_NIVEL_CLASSE);
 	}
 
 	public List<ItemTaxonomico> getSubClasseList() {
-		return this.getEspecimeControl().getFilhoList(this.getFldClasse());
+		return this.getEspecimeControl().getFilhoList(this.getFldClasse(), NivelTaxonomico.ID_NIVEL_SUB_CLASSE);
 	}
 
 	public List<ItemTaxonomico> getOrdemList() {
 		ArrayList<ItemTaxonomico> resultList = new ArrayList<ItemTaxonomico>(0);
 
 		List<ItemTaxonomico> filhoList2 = this.getEspecimeControl()
-				.getFilhoList(this.getFldSubClasse());
-		if (filhoList2 != null) {
+				.getFilhoList(this.getFldSubClasse(), NivelTaxonomico.ID_NIVEL_ORDEM);
+		if (filhoList2 != null && filhoList2.size()>0) {
 			resultList.addAll(filhoList2);
 		} else {
 			List<ItemTaxonomico> filhoList = this.getEspecimeControl()
-					.getFilhoList(this.getFldClasse());
+					.getFilhoList(this.getFldClasse(), NivelTaxonomico.ID_NIVEL_ORDEM);
 			if (filhoList != null)
 				resultList.addAll(filhoList);
 		}
@@ -1110,19 +1111,19 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	}
 
 	public List<ItemTaxonomico> getSubOrdemList() {
-		return this.getEspecimeControl().getFilhoList(this.getFldOrdem());
+		return this.getEspecimeControl().getFilhoList(this.getFldOrdem(), NivelTaxonomico.ID_NIVEL_SUB_ORDEM);
 	}
 
 	public List<ItemTaxonomico> getFamiliaList() {
 		ArrayList<ItemTaxonomico> resultList = new ArrayList<ItemTaxonomico>(0);
 
 		List<ItemTaxonomico> filhoList2 = this.getEspecimeControl()
-				.getFilhoList(this.getFldSubOrdem());
-		if (filhoList2 != null) {
+				.getFilhoList(this.getFldSubOrdem(), NivelTaxonomico.ID_NIVEL_FAMILIA);
+		if (filhoList2 != null && filhoList2.size()>0) {
 			resultList.addAll(filhoList2);
 		} else {
 			List<ItemTaxonomico> filhoList = this.getEspecimeControl()
-					.getFilhoList(this.getFldOrdem());
+					.getFilhoList(this.getFldOrdem(), NivelTaxonomico.ID_NIVEL_FAMILIA);
 			if (filhoList != null)
 				resultList.addAll(filhoList);
 		}
@@ -1131,19 +1132,19 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	}
 
 	public List<ItemTaxonomico> getSubFamiliaList() {
-		return this.getEspecimeControl().getFilhoList(this.getFldFamilia());
+		return this.getEspecimeControl().getFilhoList(this.getFldFamilia(), NivelTaxonomico.ID_NIVEL_SUB_FAMILIA);
 	}
 
 	public List<ItemTaxonomico> getGeneroList() {
 		ArrayList<ItemTaxonomico> resultList = new ArrayList<ItemTaxonomico>(0);
 
 		List<ItemTaxonomico> filhoList2 = this.getEspecimeControl()
-				.getFilhoList(this.getFldSubFamilia());
-		if (filhoList2 != null) {
+				.getFilhoList(this.getFldSubFamilia(), NivelTaxonomico.ID_NIVEL_GENERO);
+		if (filhoList2 != null && filhoList2.size()>0) {
 			resultList.addAll(filhoList2);
 		} else {
 			List<ItemTaxonomico> filhoList = this.getEspecimeControl()
-					.getFilhoList(this.getFldFamilia());
+					.getFilhoList(this.getFldFamilia(), NivelTaxonomico.ID_NIVEL_GENERO);
 			if (filhoList != null)
 				resultList.addAll(filhoList);
 		}
@@ -1152,7 +1153,7 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	}
 
 	public List<ItemTaxonomico> getEpitetoEspecificoList() {
-		return this.getEspecimeControl().getFilhoList(this.getFldGenero());
+		return this.getEspecimeControl().getFilhoList(this.getFldGenero(), NivelTaxonomico.ID_NIVEL_EPITETO_ESPECIFICO);
 	}
 
 	public ListModel<EspecimeDeterminador> getEspecimeDeterminadorList() {
