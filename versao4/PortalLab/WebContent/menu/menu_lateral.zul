@@ -7,6 +7,7 @@
 	    <menuitem id="UC_ESPECIME" height="30px"  href="/pages/especime/"  label="Cadastro de Espécimes" />
         <menuitem id="UC_COLETOR" height="30px" href="/pages/coletor/"	  label="Manter Tabelas Básicas" />
         <menuitem id="UC_SEG_GRUPOUSUARIO" height="30px"	href="/pages/cadseguranca/grupousuario/"  label="Manter Usuários              " />
+        <menuitem label="Sair" href="../../j_spring_security_logout"/>
 	</menubar>
 
 
