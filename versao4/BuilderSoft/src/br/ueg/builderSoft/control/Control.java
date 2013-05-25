@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.persistence.DataIntegrityViolationException;
 import br.ueg.builderSoft.persistence.GenericDAO;
-import br.ueg.builderSoft.util.constant.ControllerType;
 import br.ueg.builderSoft.util.control.AbstractValidatorControl;
 import br.ueg.builderSoft.util.control.ListingControl;
 import br.ueg.builderSoft.util.control.MessagesControl;
@@ -33,7 +32,7 @@ public class Control<E extends Entity>{
 
 
 
-	private HashMap<String, Object> mapFields;
+	protected HashMap<String, Object> mapFields;
 	private MessagesControl messagesControl;
 	//construtores do subcontroller mandaram algo +
 	//controlador principal para fazer modificaçães
