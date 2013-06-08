@@ -4,7 +4,7 @@
 
 <zk>
 <zscript>
-  Executions.sendRedirect("/pages/especime/");
+  Executions.sendRedirect("/pages/especime/");  
 </zscript>
 
 </zk>

@@ -140,11 +140,13 @@
 									</listbox>
 				        		</vlayout>
 							</groupbox>
-							<separator></separator>
+							<separator/>
 							<vlayout>
 								<label value="Observações"/>
 								<textbox value="@{controller.fldObservacao }" rows="5" cols="90" width="99%" maxlength="1000" />
-							</vlayout>							
+							</vlayout>	
+							<separator/>
+							<checkbox label="Publicar Coleta" checked="@{controller.fldPublicarColeta}"/>						
 						</vlayout>
 			        </tabpanel>
 			        <tabpanel>
@@ -258,7 +260,9 @@
 					        			<textbox value="@{controller.fldObservacaoGeografria }" rows="11" width="100%" maxlength="1000"/>
 					        			</vlayout>
 					        	</groupbox>
-							</hlayout>			        	
+							</hlayout>	
+							<separator/>
+							<checkbox label="Publicar Geografia" checked="@{controller.fldPublicarGeografia}"/>		        	
 				        </vlayout>
 					</tabpanel>
 					<tabpanel>

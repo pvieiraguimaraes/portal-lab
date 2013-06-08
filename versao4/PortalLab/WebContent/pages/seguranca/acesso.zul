@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?page title="Acesso ao Sistema ao Portal Virtual do Cerrado" contentType="text/html;charset=UTF-8"?>
 <zk xmlns:h="native">
-
+	
+	<script type="text/javascript" src="/scripts/scripts.js"/>
+	
 	<zscript>
 	<![CDATA[
-		import br.ueg.builderSoft.util.encrypt.EncryptPassword;				 
+		import br.ueg.builderSoft.util.encrypt.EncryptPassword;		
 	]]>
 	</zscript>
 	
@@ -12,7 +14,7 @@
 		mode="modal" position="center" onCreate="j_username.focus();">
 		<groupbox>
 			<caption>Acesso</caption>
-			<h:form id="f" name="f" action="/PortalLab/j_spring_security_check" method="POST" onSubmit="">
+			<h:form name="f" action="/PortalLab/j_spring_security_check" method="POST" onsubmit="submitFormAcesso(500, event, this)">
 				<grid>
 					<rows>
 						<row>
@@ -22,11 +24,8 @@
 						<row>
 							<label value="Senha:" onClick="password.focus();" />
 							<div>
-								<textbox id="password" type="password" name="password" >
-									<attribute name="onChanging"><![CDATA[
-										j_password.setValue(EncryptPassword.encrypt(event.getValue()));		
-									]]></attribute>
-								</textbox>
+								<textbox id="password" type="password" name="password" onOK="submitForm();"/>
+									
 								<textbox id="j_password" name="j_password" visible="false"/>
 							</div>
 						</row>
@@ -35,7 +34,7 @@
 						</row>
 						<row spans="2">
 							<hbox>
-								<h:input id="submit" name="submit" type="submit" value="Login"/>
+								<button onClick="submitForm();" label="Login"/>
 								<h:input type="reset" value="Redefinir" />
 							</hbox>
 						</row>
@@ -43,5 +42,17 @@
 				</grid>
 			</h:form>
 		</groupbox>
+		<zscript>
+		<![CDATA[
+			public void encryptPassword(){
+				j_password.setValue(EncryptPassword.encrypt(password.getValue()));	
+			}
+			
+			public void submitForm(){
+				encryptPassword();	
+				Clients.evalJavaScript("document.forms[0].submit();");
+			}
+		]]>
+		</zscript>
 	</window>
 </zk>
