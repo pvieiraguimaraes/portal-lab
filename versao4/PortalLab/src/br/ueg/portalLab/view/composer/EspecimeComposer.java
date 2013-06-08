@@ -224,6 +224,12 @@ public class EspecimeComposer extends ComposerController<Especime> {
 
 	@AttributeView(key = "observacaoTaxonomia", isEntityValue = true, fieldType = String.class, isVisible = true, caption = "especime_observacaoTaxonomiaColumn")
 	private String fldObservacaoTaxonomia;
+	
+	@AttributeView(key = "publicarColeta", isEntityValue = true, fieldType = Boolean.class, isVisible = true, caption = "especime_publicarColetaColumn")
+	private Boolean fldPublicarColeta;
+	
+	@AttributeView(key = "publicarGeografia", isEntityValue = true, fieldType = Boolean.class, isVisible = true, caption = "especime_publicarGeografiaColumn")
+	private Boolean fldPublicarGeografia;
 
 	@Autowired
 	protected EspecimeControl especimeControl;
@@ -621,6 +627,22 @@ public class EspecimeComposer extends ComposerController<Especime> {
 
 	public void setFldObservacaoTaxonomia(String fldObservacaoTaxonomia) {
 		this.fldObservacaoTaxonomia = fldObservacaoTaxonomia;
+	}
+
+	public Boolean getFldPublicarColeta() {
+		return fldPublicarColeta;
+	}
+
+	public void setFldPublicarColeta(Boolean fldPublicarColeta) {
+		this.fldPublicarColeta = fldPublicarColeta;
+	}
+
+	public Boolean getFldPublicarGeografia() {
+		return fldPublicarGeografia;
+	}
+
+	public void setFldPublicarGeografia(Boolean fldPublicarGeografia) {
+		this.fldPublicarGeografia = fldPublicarGeografia;
 	}
 
 	public String getFldBuscaLocal() {

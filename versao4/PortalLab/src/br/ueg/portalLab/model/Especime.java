@@ -16,11 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-
 import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.util.annotation.Attribute;
-import br.ueg.portalLab.security.model.UsuarioPermissao;
 
 @javax.persistence.Entity
 @SuppressWarnings("serial")
@@ -224,8 +221,13 @@ public class Especime extends Entity {
 	@Attribute(Required = false, SearchField = true)
 	private String observacaoTaxonomia;
 	
+	@Column(name = "publicar_coleta", updatable=true, nullable=false)
+	@Attribute(Required = true, SearchField = true)
+	private Boolean publicarColeta;
 	
-	
+	@Column(name = "publicar_geografia", updatable=true, nullable=false)
+	@Attribute(Required = true, SearchField = true)
+	private Boolean publicarGeografia;
 	
 	public Long getId() {
 		return this.id;
@@ -585,5 +587,21 @@ public class Especime extends Entity {
 		}else {
 			return this.getReino();
 		}
+	}
+
+	public Boolean getPublicarColeta() {
+		return publicarColeta;
+	}
+
+	public void setPublicarColeta(Boolean publicarColeta) {
+		this.publicarColeta = publicarColeta;
+	}
+
+	public Boolean getPublicarGeografia() {
+		return publicarGeografia;
+	}
+
+	public void setPublicarGeografia(Boolean publicarGeografia) {
+		this.publicarGeografia = publicarGeografia;
 	}
 }
