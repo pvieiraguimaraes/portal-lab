@@ -71,6 +71,7 @@
     			<value>br.ueg.portalLab.model.Especime</value>
     			<value>br.ueg.portalLab.model.EspecimeDeterminador</value>
     			<value>br.ueg.portalLab.model.EspecieImagem</value>
+    			<value>br.ueg.portalLab.model.Glossario</value>
     		</list>
     	</property>
     	<property name="hibernateProperties">
