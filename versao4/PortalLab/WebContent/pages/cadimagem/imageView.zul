@@ -3,7 +3,7 @@
 <window position="left,top">
 <vlayout>
 <label value="Clique na Imagem para fechar"/>
-<image content="@{controller.especieImagem.media }" onClick="controller.closeImage()"> </image>
+<image content="@{controller.especieImagem.media }" onClick="controller.closeImage()" width="100%"> </image>
 </vlayout>
 </window>
 </zk>

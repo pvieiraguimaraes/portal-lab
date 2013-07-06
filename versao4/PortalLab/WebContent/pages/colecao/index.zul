@@ -1,4 +1,4 @@
-<?page title="Manutenção de Grupo de Endereço Físico" contentType="text/html;charset=UTF-8"?>
+<?page title="Manutenção de Coleções" contentType="text/html;charset=UTF-8"?>
 
 <?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
 <?init class="org.zkoss.zk.ui.util.Composition" arg0="/WEB-INF/layout/template.zul"?>
@@ -10,7 +10,7 @@
 <include id="menuLateral" self="@{define(menuLateral)}" src="/menu/menu_lateral.zul" />
 <include id="menuTopo" self="@{define(menuTopo)}" src="/menu/menu_tabela_basica.zul" />
 
-<crudWindow self="@{define(content)}" id="crudColecao" apply="${colecaoComposer}"   listBoxSize="8"  height="450px" titulo="Coleção Físico" composer="@{controller}">
+<crudWindow self="@{define(content)}" id="crudColecao" apply="${colecaoComposer}"   listBoxSize="8"  height="450px" titulo="Coleção" composer="@{controller}">
 		<div id="form">
 			<grid>
 	            <columns>
