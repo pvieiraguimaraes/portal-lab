@@ -52,7 +52,7 @@ public abstract class EspecieMultimidia<TYPE extends Media> extends Entity {
 		
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_itta_mult", insertable = true, updatable = true, nullable=true)
-	@Attribute(Required = true, SearchField = false)
+	@Attribute(Required = true, SearchField = true)
 	protected ItemTaxonomico itemTaxonomico;
 	
 	/**
@@ -60,14 +60,15 @@ public abstract class EspecieMultimidia<TYPE extends Media> extends Entity {
 	 * inclui o nome do arquivo de midia
 	 */
 	@Column(name="caminho_mult", length=1000, nullable=false)
-	@Attribute(Required = true, SearchField=false)
+	@Attribute(Required = true, SearchField=true)
 	protected String nome;
 	
 	@ManyToOne(optional = true, fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_esta_mult", insertable = true, updatable = true, nullable=true)
-	@Attribute(Required = false, SearchField = false)
+	@Attribute(Required = false, SearchField = true)
 	protected Estacao estacao;
 		
+	@Attribute(Required = false, SearchField = false)
 	@Transient
 	protected TYPE media ;
 
@@ -118,7 +119,9 @@ public abstract class EspecieMultimidia<TYPE extends Media> extends Entity {
 	}
 
 	public void setMedia(TYPE media) {
-		this.setNome(media.getName());
+		if(media!=null){
+			this.setNome(media.getName());
+		}
 		this.media = media;
 	}
 

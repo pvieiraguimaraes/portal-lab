@@ -1,0 +1,71 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="Manutenção de Imagens" border="normal">
+		<hlayout>
+		  <vbox width="320px">
+			<div style="text-align:center;" visible="@{crudCadImagemController.selectedEntity.isNew }"><label style="font-weight:bold">Selecione os dados para localizar uma imagem.</label></div>				
+			<tree id="treeItemTaxonomicoForm"
+				rows="10" 
+				hflex="1" 
+				model="@{crudCadImagemController.itemTaxonomicoTreeModel}"
+				onSelect="crudCadImagemController.selectItemTaxonomicoForm()"							
+				width = "300px" 
+				visible="@{crudCadImagemController.selectedEntity.isNew }"
+				>									
+				<treecols>
+					<treecol label="Item Taxonômico" />
+				</treecols>
+				<template name="model">
+			        <treeitem open="true">
+			            <treerow>
+			                <treecell>
+	
+			                		<label value="${each.nivelTaxonomico.nome }" sclass="titulo-coluna"/>
+			                		<label value="${each.nome }"/>
+	
+			                </treecell> 
+	
+			            </treerow>				            
+			        </treeitem>
+			    </template>							
+			</tree>
+			<label sclass="titulo-coluna" visible="@{crudCadImagemController.isEdit }">Item Taxonômico</label>
+			<label 	value="@{crudCadImagemController.fldItemTaxonomico.nomeCompleto }" 
+									visible="@{crudCadImagemController.isEdit }"
+									/>
+		</vbox>
+		<vlayout>
+				<hbox>								
+					<label sclass="titulo-coluna" value="Estação do ano:" />
+					<combobox model="@{controller.estacaoList }"
+						selectedItem="@{controller.fldEstacao }"
+						id="cmbEstacao"
+						hflex="1"
+						visible="@{crudCadImagemController.selectedEntity.isNew }">
+					</combobox>
+					<label 	value="@{crudCadImagemController.fldEstacao }"
+							visible="@{crudCadImagemController.selectedEntity.isEdit }"/>
+					<button label="Selecionar Imagem"
+							upload="true,maxsize=5000" 
+							onUpload="controller.addImage(event)" 
+							visible="@{crudCadImagemController.selectedEntity.isNew }"
+							/>
+					
+				</hbox>
+				<label id="camimhoImagem"
+						value="@{controller.especieImagem.caminho }" />
+				<image content="@{controller.especieImagem.thumbMedia }"
+				width="300px"
+					id="imgEspecie">
+					<attribute name="onClick">
+						controller.openImage();
+					</attribute>
+				</image>				
+				<hlayout width="100%">
+					<button id="btnSalvar" label="Salvar" hflex="1" onClick="controller.saveEntity()"/>
+					<button id="btnCancelEdit" label="Cancelar" hflex="1" onClick="controller.cancelEditEntity()"/>
+				</hlayout>
+			</vlayout>
+		</hlayout>
+	</window>
+</zk>
