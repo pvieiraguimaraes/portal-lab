@@ -2,6 +2,7 @@ package br.ueg.builderSoft.persistence;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -17,9 +18,14 @@ import org.hibernate.collection.internal.PersistentSet;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.LogicalExpression;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.exception.GenericJDBCException;
+import org.hibernate.exception.JDBCConnectionException;
+import org.zkoss.lang.Exceptions;
 
 import br.ueg.builderSoft.model.Entity;
+import br.ueg.builderSoft.util.SendMailImpl;
 import br.ueg.builderSoft.util.reflection.Reflection;
+import br.ueg.builderSoft.util.sets.Config;
 
 
 /**
@@ -45,15 +51,23 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 		}
 		return currentSession;
 	}	
+	
+	protected void resetSession() {
+		this.currentSession = null;
+	}
 
 	@Override
-	public long save(E entity) throws Exception {
+	public long save(E entity, Boolean... exceptionOccurred) throws Exception {
 		long retorno = 0L;
 		Transaction ta=null;
 		try{
 			ta =this.getSession().beginTransaction();
 			retorno = (Long)this.getSession().save(entity);
 			ta.commit();
+		} catch (GenericJDBCException e) {
+			treatJDBCException(ta, exceptionOccurred, "save", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred});
+		} catch (JDBCConnectionException e) {
+			treatJDBCException(ta, exceptionOccurred, "save", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred});
 		}catch(org.hibernate.exception.ConstraintViolationException e){
 			e.printStackTrace();
 			if(ta!=null) ta.rollback();
@@ -82,13 +96,65 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 		return retorno;
 	}
 
+	protected Object treatJDBCException(Transaction ta,
+			Boolean[] exceptionOccurred, String methodName, 
+			 Class<?>[] parametersClass, Object[] parameters) {
+		if (ta != null) {
+			try {
+				ta.rollback();
+			}catch (Exception e ) {
+				//do nothing
+			}
+		}
+		this.resetSession();
+		if (exceptionOccurred.length == 0 || !exceptionOccurred[0]) {
+			try {
+				Thread.sleep(5000);
+				//wait(5000);
+				exceptionOccurred = new Boolean[]{Boolean.TRUE};
+				Method method;
+				method = this.getClass().getMethod(methodName, parametersClass);
+				return method.invoke(this, parameters);
+			} catch (InterruptedException ex) {
+				throw createRuntimeException();
+			} catch (NoSuchMethodException e) {
+				throw createRuntimeException();
+			} catch (SecurityException e) {
+				throw createRuntimeException();
+			} catch (IllegalAccessException e) {
+				throw createRuntimeException();
+			} catch (IllegalArgumentException e) {
+				throw createRuntimeException();
+			} catch (InvocationTargetException e) {
+				throw createRuntimeException();
+			}
+		} else {
+			throw createRuntimeException();
+			//TODO enviar e-mail
+		}
+	}
+	
+	private RuntimeException createRuntimeException() {
+		RuntimeException runtimeException = new RuntimeException("Problema de conexão com a base de dados. O Administrador do sistema já foi notificado!");
+		try {
+			new SendMailImpl("Problema de acesso ao banco: " + Exceptions.getBriefStackTrace(runtimeException), new Config().getKey("email.to")).start();
+		} catch (Exception e) {
+			//do nothing
+		}
+		return runtimeException;
+	}
+
 	@Override
-	public void update(E entity) throws Exception {
+	public void update(E entity, Boolean... exceptionOccurred) throws Exception {
 		Transaction ta=null;
 		try{
 			ta =this.getSession().beginTransaction();
 			this.getSession().merge(entity);
 			ta.commit();
+		} catch (GenericJDBCException e) {
+			treatJDBCException(ta, exceptionOccurred, "update", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred});
+		} catch (JDBCConnectionException e) {
+			treatJDBCException(ta, exceptionOccurred, "update", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred});
 		}catch(org.hibernate.exception.ConstraintViolationException e){
 			e.printStackTrace();
 			if(ta!=null) ta.rollback();
@@ -115,14 +181,20 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 	}
 
 	@Override
-	public void delete(E entity) {
+	public void delete(E entity, Boolean... exceptionOccurred) {
 		//hibernateTemplate.delete(entity);
 		Transaction ta =this.getSession().beginTransaction();
-		getSession().clear();
-		this.getSession().delete(entity);
-		ta.commit();
-		//this.getSession().flush();
-		this.getSession().close();
+		try {
+			getSession().clear();
+			this.getSession().delete(entity);
+			ta.commit();
+			//this.getSession().flush();
+			this.getSession().close();
+		} catch (GenericJDBCException e) {
+			treatJDBCException(ta, exceptionOccurred, "delete", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred});
+		} catch (JDBCConnectionException e) {
+			treatJDBCException(ta, exceptionOccurred, "delete", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred});
+		}
 		
 	}
 	public void refresh(E entity){
@@ -161,7 +233,7 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<E> findByCriteria(E entity, String value) {
+	public List<E> findByCriteria(E entity, String value, Boolean... exceptionOccurred) {
 		List<E> searchs = new ArrayList<E>();
 		if(entity==null) return searchs;
 		Session session = this.getSession();
@@ -188,26 +260,37 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 			criteria.add(conds[0]);
 		}
 		
-		
-		searchs.addAll(criteria.list());
-		HashSet<E> h = new HashSet<E>(searchs);
-		searchs.clear();
-		searchs.addAll(h);
-		return searchs;
+		try {
+			searchs.addAll(criteria.list());
+			HashSet<E> h = new HashSet<E>(searchs);
+			searchs.clear();
+			searchs.addAll(h);
+			return searchs;
+		}  catch (GenericJDBCException e) {
+			return (List<E>) treatJDBCException(null, exceptionOccurred, "findByCriteria", new Class[]{entity.getClass(), value.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, value, exceptionOccurred});
+		} catch (JDBCConnectionException e) {
+			return (List<E>) treatJDBCException(null, exceptionOccurred, "findByCriteria", new Class[]{entity.getClass(), value.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, value, exceptionOccurred});
+		}
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<E> findByHQL(E entity, String value) {
-		List<E> searchs = new ArrayList<E>();
-		for (int i = 0; i < entity.getSearchColumnTable(entity).size(); i++) {
-			String hql = "from " + entity.getClass().getSimpleName() + " where "+ entity.getSearchColumnTable(entity).get(i) +" like '%"+value+"%'";
-			Session session = this.getSession();
-			//session.flush();
-			Query qry = session.createQuery(hql);
-			searchs.addAll(qry.list());
+	public List<E> findByHQL(E entity, String value, Boolean... exceptionOccurred) {
+		try {
+			List<E> searchs = new ArrayList<E>();
+			for (int i = 0; i < entity.getSearchColumnTable(entity).size(); i++) {
+				String hql = "from " + entity.getClass().getSimpleName() + " where "+ entity.getSearchColumnTable(entity).get(i) +" like '%"+value+"%'";
+				Session session = this.getSession();
+				//session.flush();
+				Query qry = session.createQuery(hql);
+				searchs.addAll(qry.list());
+			}
+			return searchs;
+		} catch (GenericJDBCException e) {
+			return (List<E>) treatJDBCException(null, exceptionOccurred, "findByHQL", new Class[]{entity.getClass(), value.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, value, exceptionOccurred});
+		} catch (JDBCConnectionException e) {
+			return (List<E>) treatJDBCException(null, exceptionOccurred, "findByHQL", new Class[]{entity.getClass(), value.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, value, exceptionOccurred});
 		}
-		return searchs;
 	}
 	
 	/**
@@ -216,15 +299,21 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 	 * @return List<E> lista de entidades localizadas pela Query HQL
 	 */
 	@SuppressWarnings("unchecked")
-	public List<E> findByHQL(String qry){
-		Session session = this.getSession();
-		//session.flush();
-		Query vQry = session.createQuery(qry);
-		return vQry.list();
+	public List<E> findByHQL(String qry, Boolean... exceptionOccurred){
+		try {
+			Session session = this.getSession();
+			//session.flush();
+			Query vQry = session.createQuery(qry);
+			return vQry.list();
+		} catch (GenericJDBCException e) {
+			return (List<E>) treatJDBCException(null, exceptionOccurred, "findByHQL", new Class[]{qry.getClass(), exceptionOccurred.getClass()}, new Object[]{qry, exceptionOccurred});
+		} catch (JDBCConnectionException e) {
+			return (List<E>) treatJDBCException(null, exceptionOccurred, "findByHQL", new Class[]{qry.getClass(), exceptionOccurred.getClass()}, new Object[]{qry, exceptionOccurred});
+		}
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<E> findByEntity(Entity entity){
+	public List<E> findByEntity(Entity entity, Boolean... exceptionOccurred){
 		//List<E> searchs = new ArrayList<E>();
 		
 		Session session = this.getSession();
@@ -274,47 +363,83 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 
 		
 		//session.flush();		
-		return criteria.list();
+		try {
+			return criteria.list();
+		} catch (GenericJDBCException e) {
+			return (List<E>) treatJDBCException(null, exceptionOccurred, "findByEntity", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred});
+		} catch (JDBCConnectionException e) {
+			return (List<E>) treatJDBCException(null, exceptionOccurred, "findByEntity", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred});
+		}
 		
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<E> getList(E entity) {
-		Criteria criteria = this.getSession().createCriteria(entity.getClass());
-		return (List<E>) criteria.list();
+	public List<E> getList(E entity, Boolean... exceptionOccurred) {
+		try {
+			Criteria criteria = this.getSession().createCriteria(entity.getClass());
+			return (List<E>) criteria.list();
+		} catch (GenericJDBCException e) {
+			return (List<E>) treatJDBCException(null, exceptionOccurred, "getList", new Class[]{Class.class, exceptionOccurred.getClass()}, new Object[]{entity.getClass(), exceptionOccurred});
+		} catch (JDBCConnectionException e) {
+			return (List<E>) treatJDBCException(null, exceptionOccurred, "getList", new Class[]{Class.class, exceptionOccurred.getClass()}, new Object[]{entity.getClass(), exceptionOccurred});
+		}
 	}
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public List<E> getList(Class entity){
-		Criteria criteria = this.getSession().createCriteria(entity);
-		return (List<E>) criteria.list();
+	public List<E> getList(Class entity, Boolean... exceptionOccurred){
+		try {
+			Criteria criteria = this.getSession().createCriteria(entity);
+			return (List<E>) criteria.list();
+		} catch (GenericJDBCException e) {//JDBCConnectionException
+			return (List<E>) treatJDBCException(null, exceptionOccurred, "getList", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred});
+		} catch (JDBCConnectionException e) {
+			return (List<E>) treatJDBCException(null, exceptionOccurred, "getList", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred});
+		}	
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public List getListFK(Class<E> entity) {
-		Criteria criteria = this.getSession().createCriteria(entity.getClass());
-		return (List<E>) criteria.list();
-		//return hibernateTemplate.loadAll(entity);
+	public List getListFK(Class<E> entity, Boolean... exceptionOccurred) {
+		try {
+			Criteria criteria = this.getSession().createCriteria(entity.getClass());
+			return (List<E>) criteria.list();
+			//return hibernateTemplate.loadAll(entity);
+		} catch (GenericJDBCException e) {
+			return (List<E>) treatJDBCException(null, exceptionOccurred, "getListFK", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred});
+		} catch (JDBCConnectionException e) {
+			return (List<E>) treatJDBCException(null, exceptionOccurred, "getListFK", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred});
+		}
 	}
 	
 	@SuppressWarnings("unchecked")
-	public E getByID(E entity, Long id){
-		List<E> searchs = new ArrayList<E>();
-		Session session = this.getSession();
-		Criteria criteria = session.createCriteria(entity.getClass()).add(Restrictions.idEq(id));
-		//session.flush();
-		searchs = criteria.list();
-		if(searchs.size()>0){
-			return searchs.get(0);
+	public E getByID(E entity, Long id, Boolean... exceptionOccurred){
+		try {
+			List<E> searchs = new ArrayList<E>();
+			Session session = this.getSession();
+			Criteria criteria = session.createCriteria(entity.getClass()).add(Restrictions.idEq(id));
+			//session.flush();
+			searchs = criteria.list();
+			if(searchs.size()>0){
+				return searchs.get(0);
+			}
+			return null;
+		} catch (GenericJDBCException e) {
+			return (E) treatJDBCException(null, exceptionOccurred, "getByID", new Class[]{entity.getClass(), id.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, id, exceptionOccurred});
+		} catch (JDBCConnectionException e) {
+			return (E) treatJDBCException(null, exceptionOccurred, "getByID", new Class[]{entity.getClass(), id.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, id, exceptionOccurred});
 		}
-		return null;
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<E> findByNativeSQL(String sql){
-		Session session = this.getSession();
-		return session.createSQLQuery(sql).list();
+	public List<E> findByNativeSQL(String sql, Boolean... exceptionOccurred){
+		try {
+			Session session = this.getSession();
+			return session.createSQLQuery(sql).list();
+		} catch (GenericJDBCException e) {
+			return (List<E>) treatJDBCException(null, exceptionOccurred, "getListFK", new Class[]{sql.getClass(), exceptionOccurred.getClass()}, new Object[]{sql, exceptionOccurred});
+		} catch (JDBCConnectionException e) {
+			return (List<E>) treatJDBCException(null, exceptionOccurred, "getListFK", new Class[]{sql.getClass(), exceptionOccurred.getClass()}, new Object[]{sql, exceptionOccurred});
+		}
 	}
 
 }
