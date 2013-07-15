@@ -24,9 +24,6 @@ public class SendMailImpl extends SendMail {
 		this.emailTo = emailTo;
 	}
 
-	/**
-	 * @see br.edu.aee.Portal.utils.SendMail#send()
-	 */
 	@Override
 	public void send() {
 		try {
