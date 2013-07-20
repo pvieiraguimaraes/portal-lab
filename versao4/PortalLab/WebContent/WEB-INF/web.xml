@@ -62,7 +62,7 @@
 	</servlet>
 	<servlet-mapping>
 	    <servlet-name>fileServlet2</servlet-name>
-	    <url-pattern>/portal/*</url-pattern>
+	    <url-pattern>/portal1/*</url-pattern>
 	</servlet-mapping>
 
 	<servlet-mapping>

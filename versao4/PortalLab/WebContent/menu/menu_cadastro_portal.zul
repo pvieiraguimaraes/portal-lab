@@ -3,11 +3,10 @@
 <?page title="Cadastros do Portal" contentType="text/html;charset=UTF-8"?>
 
 	<menubar id="menubar" orient="horizontal" width="100%" apply="br.ueg.builderSoft.security.view.composer.MenuBarComposer">
-	    <menu id="tabColeta" 		label="Coleta">
+	    <menu id="tabColeta" 		label="Multimídia">
 	     	<menupopup>
-	     		<menuitem id="UC_CADIMAGEM"  		href="/pages/cadimagem/" 				label="Cadastro de Imagem"/>
-			    <menuitem id="UC_TIPODEMONTAGEM"  	href="/pages/tipodemontagem/"			label="Tipo de Montagem"/>
-			    <menuitem id="UC_FENOLOGIA"	 		href="/pages/fenologia/"				label="Fenologia" />
+	     		<menuitem id="UC_CADIMAGEM"  		href="/pages/cadimagem/" 				label="Cadastro de Imagem"/>			   
+	     		<menuitem id="UC_CADGLOSSARIO" 		href="/pages/glossario/" 				label="Cadastro de Glossário"/>
 			</menupopup>    
         </menu>
     </menubar>
