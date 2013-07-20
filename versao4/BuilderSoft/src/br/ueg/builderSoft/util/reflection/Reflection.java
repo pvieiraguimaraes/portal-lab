@@ -48,6 +48,19 @@ public class Reflection {
 	public static void setFieldValue(Object entity, String fieldName, Object fieldValue) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {		
 		Reflection.setFieldValue(entity, fieldName, fieldValue, fieldValue.getClass());
 	}
+	
+	/** Método que seta o valor do atributo em null
+	 * @param entity
+	 * @param fieldName
+	 * @throws SecurityException
+	 * @throws NoSuchMethodException
+	 * @throws IllegalArgumentException
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 */
+	public static void setFieldNull(Object entity, String fieldName) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException{
+		Reflection.setFieldValue(entity, fieldName, null, Reflection.getFieldClass(entity, fieldName));
+	}
 	/**
 	 * Mï¿½todo que executa o mï¿½todo get*Field* por reflection.
 	 * @param entity

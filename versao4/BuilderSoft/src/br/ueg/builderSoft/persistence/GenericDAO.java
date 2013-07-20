@@ -257,7 +257,9 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 			}
 			criteria.add(orExp);
 		}else{
-			criteria.add(conds[0]);
+			if(conds.length>0){
+				criteria.add(conds[0]);
+			}
 		}
 		
 		try {
