@@ -706,7 +706,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 		public void resetFields(){
 			for (ManagedBeanField field : this.getListColumns()) {
 				try {
-					Reflection.setFieldValue(this, field.getFieldName(),null);
+					Reflection.setFieldNull(this, field.getFieldName());
 				} catch (SecurityException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

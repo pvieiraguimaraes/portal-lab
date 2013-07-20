@@ -293,7 +293,8 @@ public class GenericControl <E extends Entity> {
 					e.printStackTrace();
 				} catch (NoSuchMethodException e) {
 					result = false;
-					e.printStackTrace();
+					//e.printStackTrace();
+					System.err.println("Método não existe");
 				} catch (IllegalAccessException e) {
 					result = false;
 					e.printStackTrace();
