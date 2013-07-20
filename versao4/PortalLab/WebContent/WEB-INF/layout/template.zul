@@ -9,8 +9,13 @@
 		<image src="/images/topo_banner.png" />
 	</div>
 	<borderlayout>
-			<west width="180px" flex="false" border="none"
-				collapsible="false" splittable="false" self="@{insert(menuLateral)}"/>
+			<west
+				id="menuEsquerdo" 
+				width="180px" flex="false" border="none"
+				collapsible="true" splittable="true" 
+				self="@{insert(menuLateral)}" 
+				onCreate="br.ueg.portalLab.view.composer.MenuStateComposer.updateMenu(self)"
+				onOpen="br.ueg.portalLab.view.composer.MenuStateComposer.changeMenuSate()"/>
 			<center>
 				<borderlayout>
 					<north collapsible="false" border="none"

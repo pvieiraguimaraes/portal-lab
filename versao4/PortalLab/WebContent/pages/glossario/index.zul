@@ -8,7 +8,7 @@
 <zk xmlns:w="http://www.zkoss.org/2005/zk/client">
 
 <include id="menuLateral" self="@{define(menuLateral)}" src="/menu/menu_lateral.zul" />
-<include id="menuTopo" self="@{define(menuTopo)}" src="/menu/menu_tabela_basica.zul" />
+<include id="menuTopo" self="@{define(menuTopo)}" src="/menu/menu_cadastro_portal.zul" />
 
 <crudWindow self="@{define(content)}" id="crudGlossario" apply="${glossarioComposer}" listBoxSize="8"  height="450px" titulo="Manter Glossário" composer="@{controller}">
 		<div id="form">

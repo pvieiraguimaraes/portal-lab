@@ -6,11 +6,13 @@
 
 <zk xmlns:w="http://www.zkoss.org/2005/zk/client">
 
+<include id="menuLateral" self="@{define(menuLateral)}" src="/menu/menu_lateral.zul" />
+<include id="menuTopo" self="@{define(menuTopo)}" src="/menu/menu_cadastro_portal.zul" />
 
 <window self="@{define(content)}" id="crudCadImagem" apply="${cadImagemComposer}"  title="Cadastro de Imagens">
-<borderlayout height="550px">
+<borderlayout height="450px">
 				<west>
-					<vlayout width="400px">	
+					<vlayout width="300px">	
 							<separator></separator>
 							<div style="text-align:center;"><label style="font-weight:bold">Selecione os dados para localizar uma imagem.</label></div>				
 							<tree id="treeItemTaxonomicoBusca"
@@ -18,7 +20,7 @@
 								hflex="1" 
 								model="@{crudCadImagemController.itemTaxonomicoTreeModel}"
 								onSelect="crudCadImagemController.selectItemTaxonomicoBusca()"							
-								width = "300px" 
+								width = "290px" 
 								
 								>									
 								<treecols>
@@ -47,8 +49,10 @@
 							</combobox>
 						</hlayout>
 						<hlayout><label hflex="1">Nome do Arquivo: </label><textbox value="@{controller.fldNome }" hflex="1"></textbox></hlayout>					
-						<button label="Buscar" hflex="1" onClick="controller.searchEntity()"/>
-						<button label="Nova Imagem" onClick="controller.newEntity()" id="crudWindowBtnNew" image="../../images/editar.png" width="200px"/>										
+						<hlayout>
+							<button label="Buscar" hflex="1" onClick="controller.searchEntity()"/>
+							<button label="Nova Imagem" onClick="controller.newEntity()" id="crudWindowBtnNew" image="../../images/editar.png" width="200px"/>
+						</hlayout>										
 					</vlayout>
 				</west>
 		<center>
@@ -61,8 +65,9 @@
 						onSelect="controller.selectEntity()"
 						mold="paging" 
 						id="especimeImagemListbox"
-						height="300px"
+						height="400px"
 						width="98%"
+						pageSize="11"
 						>
 						<listhead id="divListhead">
 							<listheader label="Estação"   align="left"   width="100px"/>
@@ -99,13 +104,10 @@
 								</button>
 							</listcell>
 						</listitem>
-					</listbox>
-				
+					</listbox>				
 				</div>
 			</vlayout>
 		</center>
 	</borderlayout>
-	</window>
-	
-	
+	</window>	
 </zk>
