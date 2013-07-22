@@ -65,9 +65,9 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 			retorno = (Long)this.getSession().save(entity);
 			ta.commit();
 		} catch (GenericJDBCException e) {
-			treatJDBCException(ta, exceptionOccurred, "save", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred});
+			treatJDBCException(ta, exceptionOccurred, "save", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred}, e);
 		} catch (JDBCConnectionException e) {
-			treatJDBCException(ta, exceptionOccurred, "save", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred});
+			treatJDBCException(ta, exceptionOccurred, "save", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred}, e);
 		}catch(org.hibernate.exception.ConstraintViolationException e){
 			e.printStackTrace();
 			if(ta!=null) ta.rollback();
@@ -98,7 +98,7 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 
 	protected Object treatJDBCException(Transaction ta,
 			Boolean[] exceptionOccurred, String methodName, 
-			 Class<?>[] parametersClass, Object[] parameters) {
+			 Class<?>[] parametersClass, Object[] parameters, Exception ex) {
 		if (ta != null) {
 			try {
 				ta.rollback();
@@ -115,29 +115,28 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 				Method method;
 				method = this.getClass().getMethod(methodName, parametersClass);
 				return method.invoke(this, parameters);
-			} catch (InterruptedException ex) {
-				throw createRuntimeException();
+			} catch (InterruptedException e) {
+				throw createRuntimeException(e);
 			} catch (NoSuchMethodException e) {
-				throw createRuntimeException();
+				throw createRuntimeException(e);
 			} catch (SecurityException e) {
-				throw createRuntimeException();
+				throw createRuntimeException(e);
 			} catch (IllegalAccessException e) {
-				throw createRuntimeException();
+				throw createRuntimeException(e);
 			} catch (IllegalArgumentException e) {
-				throw createRuntimeException();
+				throw createRuntimeException(e);
 			} catch (InvocationTargetException e) {
-				throw createRuntimeException();
+				throw createRuntimeException(e);
 			}
 		} else {
-			throw createRuntimeException();
-			//TODO enviar e-mail
+			throw createRuntimeException(ex);
 		}
 	}
 	
-	private RuntimeException createRuntimeException() {
+	private RuntimeException createRuntimeException(Exception ex) {
 		RuntimeException runtimeException = new RuntimeException("Problema de conexão com a base de dados. O Administrador do sistema já foi notificado!");
 		try {
-			new SendMailImpl("Problema de acesso ao banco: " + Exceptions.getBriefStackTrace(runtimeException), new Config().getKey("email.to")).start();
+			new SendMailImpl("Problema de acesso ao banco("+ex.getMessage()+"):" + Exceptions.getBriefStackTrace(runtimeException), new Config().getKey("email.to")).start();
 		} catch (Exception e) {
 			//do nothing
 		}
@@ -152,9 +151,9 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 			this.getSession().merge(entity);
 			ta.commit();
 		} catch (GenericJDBCException e) {
-			treatJDBCException(ta, exceptionOccurred, "update", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred});
+			treatJDBCException(ta, exceptionOccurred, "update", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred}, e);
 		} catch (JDBCConnectionException e) {
-			treatJDBCException(ta, exceptionOccurred, "update", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred});
+			treatJDBCException(ta, exceptionOccurred, "update", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred}, e);
 		}catch(org.hibernate.exception.ConstraintViolationException e){
 			e.printStackTrace();
 			if(ta!=null) ta.rollback();
@@ -191,9 +190,9 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 			//this.getSession().flush();
 			this.getSession().close();
 		} catch (GenericJDBCException e) {
-			treatJDBCException(ta, exceptionOccurred, "delete", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred});
+			treatJDBCException(ta, exceptionOccurred, "delete", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred}, e);
 		} catch (JDBCConnectionException e) {
-			treatJDBCException(ta, exceptionOccurred, "delete", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred});
+			treatJDBCException(ta, exceptionOccurred, "delete", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred}, e);
 		}
 		
 	}
@@ -269,9 +268,9 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 			searchs.addAll(h);
 			return searchs;
 		}  catch (GenericJDBCException e) {
-			return (List<E>) treatJDBCException(null, exceptionOccurred, "findByCriteria", new Class[]{entity.getClass(), value.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, value, exceptionOccurred});
+			return (List<E>) treatJDBCException(null, exceptionOccurred, "findByCriteria", new Class[]{entity.getClass(), value.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, value, exceptionOccurred}, e);
 		} catch (JDBCConnectionException e) {
-			return (List<E>) treatJDBCException(null, exceptionOccurred, "findByCriteria", new Class[]{entity.getClass(), value.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, value, exceptionOccurred});
+			return (List<E>) treatJDBCException(null, exceptionOccurred, "findByCriteria", new Class[]{entity.getClass(), value.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, value, exceptionOccurred}, e);
 		}
 	}
 
@@ -289,9 +288,9 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 			}
 			return searchs;
 		} catch (GenericJDBCException e) {
-			return (List<E>) treatJDBCException(null, exceptionOccurred, "findByHQL", new Class[]{entity.getClass(), value.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, value, exceptionOccurred});
+			return (List<E>) treatJDBCException(null, exceptionOccurred, "findByHQL", new Class[]{entity.getClass(), value.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, value, exceptionOccurred}, e);
 		} catch (JDBCConnectionException e) {
-			return (List<E>) treatJDBCException(null, exceptionOccurred, "findByHQL", new Class[]{entity.getClass(), value.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, value, exceptionOccurred});
+			return (List<E>) treatJDBCException(null, exceptionOccurred, "findByHQL", new Class[]{entity.getClass(), value.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, value, exceptionOccurred}, e);
 		}
 	}
 	
@@ -308,9 +307,9 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 			Query vQry = session.createQuery(qry);
 			return vQry.list();
 		} catch (GenericJDBCException e) {
-			return (List<E>) treatJDBCException(null, exceptionOccurred, "findByHQL", new Class[]{qry.getClass(), exceptionOccurred.getClass()}, new Object[]{qry, exceptionOccurred});
+			return (List<E>) treatJDBCException(null, exceptionOccurred, "findByHQL", new Class[]{qry.getClass(), exceptionOccurred.getClass()}, new Object[]{qry, exceptionOccurred}, e);
 		} catch (JDBCConnectionException e) {
-			return (List<E>) treatJDBCException(null, exceptionOccurred, "findByHQL", new Class[]{qry.getClass(), exceptionOccurred.getClass()}, new Object[]{qry, exceptionOccurred});
+			return (List<E>) treatJDBCException(null, exceptionOccurred, "findByHQL", new Class[]{qry.getClass(), exceptionOccurred.getClass()}, new Object[]{qry, exceptionOccurred}, e);
 		}
 	}
 	
@@ -368,9 +367,9 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 		try {
 			return criteria.list();
 		} catch (GenericJDBCException e) {
-			return (List<E>) treatJDBCException(null, exceptionOccurred, "findByEntity", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred});
+			return (List<E>) treatJDBCException(null, exceptionOccurred, "findByEntity", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred}, e);
 		} catch (JDBCConnectionException e) {
-			return (List<E>) treatJDBCException(null, exceptionOccurred, "findByEntity", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred});
+			return (List<E>) treatJDBCException(null, exceptionOccurred, "findByEntity", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred}, e);
 		}
 		
 	}
@@ -382,9 +381,9 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 			Criteria criteria = this.getSession().createCriteria(entity.getClass());
 			return (List<E>) criteria.list();
 		} catch (GenericJDBCException e) {
-			return (List<E>) treatJDBCException(null, exceptionOccurred, "getList", new Class[]{Class.class, exceptionOccurred.getClass()}, new Object[]{entity.getClass(), exceptionOccurred});
+			return (List<E>) treatJDBCException(null, exceptionOccurred, "getList", new Class[]{Class.class, exceptionOccurred.getClass()}, new Object[]{entity.getClass(), exceptionOccurred}, e);
 		} catch (JDBCConnectionException e) {
-			return (List<E>) treatJDBCException(null, exceptionOccurred, "getList", new Class[]{Class.class, exceptionOccurred.getClass()}, new Object[]{entity.getClass(), exceptionOccurred});
+			return (List<E>) treatJDBCException(null, exceptionOccurred, "getList", new Class[]{Class.class, exceptionOccurred.getClass()}, new Object[]{entity.getClass(), exceptionOccurred}, e);
 		}
 	}
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -393,9 +392,9 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 			Criteria criteria = this.getSession().createCriteria(entity);
 			return (List<E>) criteria.list();
 		} catch (GenericJDBCException e) {//JDBCConnectionException
-			return (List<E>) treatJDBCException(null, exceptionOccurred, "getList", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred});
+			return (List<E>) treatJDBCException(null, exceptionOccurred, "getList", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred}, e);
 		} catch (JDBCConnectionException e) {
-			return (List<E>) treatJDBCException(null, exceptionOccurred, "getList", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred});
+			return (List<E>) treatJDBCException(null, exceptionOccurred, "getList", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred}, e);
 		}	
 	}
 	
@@ -406,9 +405,9 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 			return (List<E>) criteria.list();
 			//return hibernateTemplate.loadAll(entity);
 		} catch (GenericJDBCException e) {
-			return (List<E>) treatJDBCException(null, exceptionOccurred, "getListFK", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred});
+			return (List<E>) treatJDBCException(null, exceptionOccurred, "getListFK", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred}, e);
 		} catch (JDBCConnectionException e) {
-			return (List<E>) treatJDBCException(null, exceptionOccurred, "getListFK", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred});
+			return (List<E>) treatJDBCException(null, exceptionOccurred, "getListFK", new Class[]{entity.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, exceptionOccurred}, e);
 		}
 	}
 	
@@ -425,9 +424,9 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 			}
 			return null;
 		} catch (GenericJDBCException e) {
-			return (E) treatJDBCException(null, exceptionOccurred, "getByID", new Class[]{entity.getClass(), id.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, id, exceptionOccurred});
+			return (E) treatJDBCException(null, exceptionOccurred, "getByID", new Class[]{entity.getClass(), id.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, id, exceptionOccurred}, e);
 		} catch (JDBCConnectionException e) {
-			return (E) treatJDBCException(null, exceptionOccurred, "getByID", new Class[]{entity.getClass(), id.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, id, exceptionOccurred});
+			return (E) treatJDBCException(null, exceptionOccurred, "getByID", new Class[]{entity.getClass(), id.getClass(), exceptionOccurred.getClass()}, new Object[]{entity, id, exceptionOccurred}, e);
 		}
 	}
 	
@@ -438,9 +437,9 @@ public class GenericDAO<E extends Entity> implements IGenericDAO<E>{
 			Session session = this.getSession();
 			return session.createSQLQuery(sql).list();
 		} catch (GenericJDBCException e) {
-			return (List<E>) treatJDBCException(null, exceptionOccurred, "getListFK", new Class[]{sql.getClass(), exceptionOccurred.getClass()}, new Object[]{sql, exceptionOccurred});
+			return (List<E>) treatJDBCException(null, exceptionOccurred, "getListFK", new Class[]{sql.getClass(), exceptionOccurred.getClass()}, new Object[]{sql, exceptionOccurred}, e);
 		} catch (JDBCConnectionException e) {
-			return (List<E>) treatJDBCException(null, exceptionOccurred, "getListFK", new Class[]{sql.getClass(), exceptionOccurred.getClass()}, new Object[]{sql, exceptionOccurred});
+			return (List<E>) treatJDBCException(null, exceptionOccurred, "getListFK", new Class[]{sql.getClass(), exceptionOccurred.getClass()}, new Object[]{sql, exceptionOccurred}, e);
 		}
 	}
 
