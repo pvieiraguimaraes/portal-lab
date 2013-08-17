@@ -57,6 +57,10 @@ public class ItemTaxonomico extends Entity {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "itemTaxonomico",cascade = CascadeType.ALL)// mappedBy indica o atributo da entidade many	
 	private Set<EspecieImagem> imagens;
 	
+	@Attribute(Required=false, SearchField = true)
+	@Column(name="caracteristica_ittax", length=4000)
+	private String caracteristica;
+	
 	public ItemTaxonomico() {}
 	
 
@@ -139,6 +143,22 @@ public class ItemTaxonomico extends Entity {
 		this.imagens = imagens;
 	}
 	
+	/**
+	 * @return the caracteristica
+	 */
+	public String getCaracteristica() {
+		return caracteristica;
+	}
+
+
+	/**
+	 * @param caracteristica the caracteristica to set
+	 */
+	public void setCaracteristica(String caracteristica) {
+		this.caracteristica = caracteristica;
+	}
+
+
 	@SuppressWarnings("unchecked")
 	public  Set<EspecieMultimidia<?>> getSetMediaByTypeName(String typeName){
 		Set<EspecieMultimidia<?>> setMedia = new HashSet<EspecieMultimidia<?>>(0);

@@ -37,6 +37,10 @@ public class NivelTaxonomico extends Entity {
 	public static final int ID_NIVEL_GENERO = 15;
 	public static final int ID_NIVEL_EPITETO_ESPECIFICO = 16;
 	
+	public static final int ID_NIVEL_TRIBO = 28;
+	public static final int ID_NIVEL_SUB_TRIBO = 29;
+	public static final int ID_NIVEL_SUB_GENERO = 30;
+	
 
 	@Id
 	@GeneratedValue

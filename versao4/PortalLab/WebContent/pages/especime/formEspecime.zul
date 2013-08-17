@@ -366,19 +366,56 @@
 									        			width="100%"
 									        			>
 									        			<attribute name="onChange">
+									        				cmbTribo.setRawValue(null);
+									        			</attribute>
+													</combobox>													
+												</row>	
+												
+												<row>
+													<label value="Tribo" />
+													<combobox id="cmbTribo" 
+									        			model="@{controller.triboList, load-when='cmbFamilia.onChange, cmbSubFamilia.onChange' }"  
+									        			selectedItem="@{controller.fldTribo }"
+									        			width="100%"
+									        			>
+									        			<attribute name="onChange">
+									        				cmbSubTribo.setRawValue(null);
 									        				cmbGenero.setRawValue(null);
 									        			</attribute>
 													</combobox>													
-												</row>												
+													<label value="Sub-Tribo" />
+													<combobox id="cmbSubTribo"  
+									        			model="@{controller.subTriboList, load-when='cmbTribo.onChange' }"  
+									        			selectedItem="@{controller.fldSubTribo }"
+									        			width="100%"
+									        			>
+									        			<attribute name="onChange">
+									        				cmbGenero.setRawValue(null);
+									        			</attribute>
+													</combobox>													
+												</row>
+												
+																							
 												<row>
 													<label value="Gênero" />
 													<combobox id="cmbGenero" 
-									        			model="@{controller.generoList, load-when='cmbFamilia.onChange, cmbSubFamilia.onChange' }"  
+									        			model="@{controller.generoList, load-when='cmbTribo.onChange, cmbSubTribo.onChange, cmbFamilia.onChange, cmbSubFamilia.onChange' }"  
 									        			selectedItem="@{controller.fldGenero }"
 									        			width="100%"
 									        			>
 									        			<attribute name="onChange">
-									        				cmbEpitetoEspecifico.setRawValue(null);
+									        				cmbSubGenero.setRawValue(null);
+									        				cmbEpitetoEspecifico.setRawValue(null);	
+									        			</attribute>
+													</combobox>	
+													<label value="Sub-Gênero" />
+													<combobox id="cmbSubGenero"  
+									        			model="@{controller.subSubGeneroList, load-when='cmbGenero.onChange' }"  
+									        			selectedItem="@{controller.fldSubTribo }"
+									        			width="100%"
+									        			>
+									        			<attribute name="onChange">
+									        				cmbEpitetoEspecifico.setRawValue(null);									        				
 									        			</attribute>
 													</combobox>													
 												</row>
@@ -386,7 +423,7 @@
 													<label value="Ep. Específico" />
 													<cell colspan="2">
 														<combobox id="cmbEpitetoEspecifico"  
-									        			model="@{controller.epitetoEspecificoList, load-when='cmbGenero.onChange' }"  
+									        			  
 									        			selectedItem="@{controller.fldEpitetoEspecifico }"
 									        			width="100%"
 									        			>

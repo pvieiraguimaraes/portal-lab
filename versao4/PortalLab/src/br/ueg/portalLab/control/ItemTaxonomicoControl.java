@@ -74,7 +74,13 @@ public class ItemTaxonomicoControl<E extends Entity>  extends Control<E> {
 		
 		String qry = "";
 		if(ntPai!=null){
-			qry = "from NivelTaxonomico i where i.pai="+ntPai.getId();
+			qry = "from NivelTaxonomico i where i.pai="+ntPai.getId();			
+			if(ntPai.getObrigatorio()==false && ntPai.getPai()!=null && ntPai.getPai()!=null && ntPai.getPai().getPai()!=null){
+				qry = qry+" or i.pai="+ntPai.getPai().getPai().getPai().getId();
+			}
+			if(ntPai.getObrigatorio()==false && ntPai.getPai()!=null ){
+				qry = qry+" or i.pai="+ntPai.getPai().getId();
+			}
 		}else{
 			qry = "from NivelTaxonomico i where i.pai is null";
 		}

@@ -183,6 +183,16 @@ public class Especime extends Entity {
 	private ItemTaxonomico subFamilia;
 	
 	@ManyToOne(optional = true, fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_tribo", insertable = true, updatable = true, nullable=true)
+	@Attribute(Required = false, SearchField = false)
+	private ItemTaxonomico tribo;
+	
+	@ManyToOne(optional = true, fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_sub_tribo", insertable = true, updatable = true, nullable=true)
+	@Attribute(Required = false, SearchField = false)
+	private ItemTaxonomico subTribo;
+	
+	@ManyToOne(optional = true, fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_ordem", insertable = true, updatable = true, nullable=true)
 	@Attribute(Required = false, SearchField = false)
 	private ItemTaxonomico ordem;
@@ -196,6 +206,11 @@ public class Especime extends Entity {
 	@JoinColumn(name = "id_genero", insertable = true, updatable = true, nullable=true)
 	@Attribute(Required = false, SearchField = false)
 	private ItemTaxonomico genero;
+	
+	@ManyToOne(optional = true, fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_sub_genero", insertable = true, updatable = true, nullable=true)
+	@Attribute(Required = false, SearchField = false)
+	private ItemTaxonomico subGenero;
 	
 	@ManyToOne(optional = true, fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_epiteto_especifico", insertable = true, updatable = true, nullable=true)

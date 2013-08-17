@@ -199,6 +199,12 @@ public class EspecimeComposer extends ComposerController<Especime> {
 
 	@AttributeView(key = "subFamilia", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true, caption = "especime_subFamiliaColumn")
 	private ItemTaxonomico fldSubFamilia;
+	
+	@AttributeView(key = "tribo", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true, caption = "especime_triboColumn")
+	private ItemTaxonomico fldTribo;
+	
+	@AttributeView(key = "subTribo", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true, caption = "especime_subTriboColumn")
+	private ItemTaxonomico fldSubTribo;
 
 	@AttributeView(key = "ordem", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true, caption = "especime_ordemColumn")
 	private ItemTaxonomico fldOrdem;
@@ -208,6 +214,9 @@ public class EspecimeComposer extends ComposerController<Especime> {
 
 	@AttributeView(key = "genero", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true, caption = "especime_generoColumn")
 	private ItemTaxonomico fldGenero;
+	
+	@AttributeView(key = "subGenero", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true, caption = "especime_subGeneroColumn")
+	private ItemTaxonomico fldSubGenero;
 
 	@AttributeView(key = "epitetoEspecifico", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true, caption = "especime_epitetoEspecificoColumn")
 	private ItemTaxonomico fldEpitetoEspecifico;
@@ -570,6 +579,48 @@ public class EspecimeComposer extends ComposerController<Especime> {
 
 	public void setFldSubFamilia(ItemTaxonomico fldSubFamilia) {
 		this.fldSubFamilia = fldSubFamilia;
+	}
+
+	/**
+	 * @return the fldTribo
+	 */
+	public ItemTaxonomico getFldTribo() {
+		return fldTribo;
+	}
+
+	/**
+	 * @param fldTribo the fldTribo to set
+	 */
+	public void setFldTribo(ItemTaxonomico fldTribo) {
+		this.fldTribo = fldTribo;
+	}
+
+	/**
+	 * @return the fldSubTribo
+	 */
+	public ItemTaxonomico getFldSubTribo() {
+		return fldSubTribo;
+	}
+
+	/**
+	 * @param fldSubTribo the fldSubTribo to set
+	 */
+	public void setFldSubTribo(ItemTaxonomico fldSubTribo) {
+		this.fldSubTribo = fldSubTribo;
+	}
+
+	/**
+	 * @return the fldSubGenero
+	 */
+	public ItemTaxonomico getFldSubGenero() {
+		return fldSubGenero;
+	}
+
+	/**
+	 * @param fldSubGenero the fldSubGenero to set
+	 */
+	public void setFldSubGenero(ItemTaxonomico fldSubGenero) {
+		this.fldSubGenero = fldSubGenero;
 	}
 
 	public ItemTaxonomico getFldOrdem() {
@@ -1157,22 +1208,64 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	public List<ItemTaxonomico> getSubFamiliaList() {
 		return this.getEspecimeControl().getFilhoList(this.getFldFamilia(), NivelTaxonomico.ID_NIVEL_SUB_FAMILIA);
 	}
-
-	public List<ItemTaxonomico> getGeneroList() {
+	
+	public List<ItemTaxonomico> getTriboList() {
 		ArrayList<ItemTaxonomico> resultList = new ArrayList<ItemTaxonomico>(0);
 
 		List<ItemTaxonomico> filhoList2 = this.getEspecimeControl()
-				.getFilhoList(this.getFldSubFamilia(), NivelTaxonomico.ID_NIVEL_GENERO);
+				.getFilhoList(this.getFldSubFamilia(), NivelTaxonomico.ID_NIVEL_TRIBO);
 		if (filhoList2 != null && filhoList2.size()>0) {
 			resultList.addAll(filhoList2);
 		} else {
 			List<ItemTaxonomico> filhoList = this.getEspecimeControl()
+					.getFilhoList(this.getFldFamilia(), NivelTaxonomico.ID_NIVEL_TRIBO);
+			if (filhoList != null)
+				resultList.addAll(filhoList);
+		}
+
+		return resultList;
+	}
+	
+	public List<ItemTaxonomico> getSubTriboList() {
+		return this.getEspecimeControl().getFilhoList(this.getFldTribo(), NivelTaxonomico.ID_NIVEL_SUB_TRIBO);
+	}
+
+	public List<ItemTaxonomico> getGeneroList() {
+		ArrayList<ItemTaxonomico> resultList = new ArrayList<ItemTaxonomico>(0);
+
+		List<ItemTaxonomico> filhoList = this.getEspecimeControl()
+				.getFilhoList(this.getFldSubTribo(), NivelTaxonomico.ID_NIVEL_GENERO);
+		
+		if (filhoList != null && filhoList.size()>0) {
+			resultList.addAll(filhoList);
+		} 
+		
+		if(filhoList != null && filhoList.size()==0) {
+			filhoList = this.getEspecimeControl()
+					.getFilhoList(this.getFldTribo(), NivelTaxonomico.ID_NIVEL_GENERO);
+			if (filhoList != null)
+				resultList.addAll(filhoList);
+		}
+		
+		if(filhoList != null && filhoList.size()==0) {
+			filhoList = this.getEspecimeControl()
+					.getFilhoList(this.getFldSubFamilia(), NivelTaxonomico.ID_NIVEL_GENERO);
+			if (filhoList != null)
+				resultList.addAll(filhoList);
+		}
+		
+		if(filhoList != null && filhoList.size()==0) {
+			filhoList = this.getEspecimeControl()
 					.getFilhoList(this.getFldFamilia(), NivelTaxonomico.ID_NIVEL_GENERO);
 			if (filhoList != null)
 				resultList.addAll(filhoList);
 		}
 
 		return resultList;
+	}
+	
+	public List<ItemTaxonomico> getSubGeneroList() {
+		return this.getEspecimeControl().getFilhoList(this.getFldTribo(), NivelTaxonomico.ID_NIVEL_SUB_GENERO);
 	}
 
 	public List<ItemTaxonomico> getEpitetoEspecificoList() {
