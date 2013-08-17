@@ -65,7 +65,7 @@
 						                </row>
 						                <row>
 						                	<label value="Características"/>
-						                	<textbox rows="5" cols="70"/>
+						                	<textbox rows="5" cols="70" value="@{itemTaxonomicoController.fldCaracteristica }"/>
 						                </row>
 						            </rows>
 						        </grid>

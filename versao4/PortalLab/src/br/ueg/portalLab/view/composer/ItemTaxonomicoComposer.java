@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Set;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,7 @@ import org.zkoss.zul.Window;
 
 import br.ueg.builderSoft.control.Control;
 import br.ueg.builderSoft.model.Entity;
+import br.ueg.builderSoft.util.Utils;
 import br.ueg.builderSoft.util.annotation.AttributeView;
 import br.ueg.builderSoft.util.control.MessagesControl;
 import br.ueg.builderSoft.util.sets.SpringFactory;
@@ -45,6 +47,9 @@ public class ItemTaxonomicoComposer extends ComposerController<ItemTaxonomico> {
 	
 	@AttributeView(key = "filhosItensTaxonomicos", isEntityValue = true, fieldType = Set.class, isVisible=true, caption="itemtaxonomico_filhosColum")
 	private Set<ItemTaxonomico> fldFilhosItensTaxonomicos;
+	
+	@AttributeView(key = "caracteristica", isEntityValue = true, fieldType = String.class, isVisible=true, caption="itemtaxonomico_caracteristicaColum")
+	private String fldCaracteristica;
 
 	@Autowired
 	protected Control<ItemTaxonomico> controlItemTaxonomico;
@@ -116,7 +121,7 @@ public class ItemTaxonomicoComposer extends ComposerController<ItemTaxonomico> {
 	}
 
 	public void setFldNivelTaxonomico(NivelTaxonomico fldNivelTaxonomico) {
-		this.fldNivelTaxonomico = fldNivelTaxonomico;
+		this.fldNivelTaxonomico = Utils.initializeAndUnproxy(fldNivelTaxonomico);
 	}
 
 	/**
@@ -138,6 +143,20 @@ public class ItemTaxonomicoComposer extends ComposerController<ItemTaxonomico> {
 	 */
 	public void setFldFilhosItensTaxonomicos(Set<ItemTaxonomico> filhos) {
 		this.fldFilhosItensTaxonomicos = filhos;
+	}
+
+	/**
+	 * @return the fldCaracteristica
+	 */
+	public String getFldCaracteristica() {
+		return fldCaracteristica;
+	}
+
+	/**
+	 * @param fldCaracteristica the fldCaracteristica to set
+	 */
+	public void setFldCaracteristica(String fldCaracteristica) {
+		this.fldCaracteristica = fldCaracteristica;
 	}
 
 	public boolean getPodeExcluir(){
