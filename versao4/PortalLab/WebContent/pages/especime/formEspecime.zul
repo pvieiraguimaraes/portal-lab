@@ -320,6 +320,7 @@
 									        			>
 									        			<attribute name="onChange">
 									        				cmbOrdem.setRawValue(null);
+									        				
 									        			</attribute>
 													</combobox>
 													
@@ -399,7 +400,7 @@
 												<row>
 													<label value="Gênero" />
 													<combobox id="cmbGenero" 
-									        			model="@{controller.generoList, load-when='cmbTribo.onChange, cmbSubTribo.onChange, cmbFamilia.onChange, cmbSubFamilia.onChange' }"  
+									        			model="@{controller.generoList, load-when='cmbTribo.onChange, cmbSubTribo.onChange, cmbFamilia.onChange, cmbSubFamilia.onChange' }"
 									        			selectedItem="@{controller.fldGenero }"
 									        			width="100%"
 									        			>
@@ -410,8 +411,8 @@
 													</combobox>	
 													<label value="Sub-Gênero" />
 													<combobox id="cmbSubGenero"  
-									        			model="@{controller.subSubGeneroList, load-when='cmbGenero.onChange' }"  
-									        			selectedItem="@{controller.fldSubTribo }"
+									        			model="@{controller.subGeneroList, load-when='cmbGenero.onChange' }"  
+									        			selectedItem="@{controller.fldSubGenero }"
 									        			width="100%"
 									        			>
 									        			<attribute name="onChange">
@@ -423,7 +424,7 @@
 													<label value="Ep. Específico" />
 													<cell colspan="2">
 														<combobox id="cmbEpitetoEspecifico"  
-									        			  
+									        			model="@{controller.epitetoEspecificoList, load-when='cmbGenero.onChange, cmbSubGenero.onChange' }"    
 									        			selectedItem="@{controller.fldEpitetoEspecifico }"
 									        			width="100%"
 									        			>
@@ -553,10 +554,17 @@
 								<textbox id="fldClasseHidden" value="@{controller.fldClasse }" visible="false"/>
 								<textbox id="fldSubClasseHidden" value="@{controller.fldSubClasse }" visible="false"/>
 								<textbox id="fldFamiliaHidden" value="@{controller.fldFamilia }" visible="false"/>
+								
+								<textbox id="fldTriboHidden" value="@{controller.fldTribo }" visible="false"/>
+								<textbox id="fldSubTriboHidden" value="@{controller.fldSubTribo }" visible="false"/>
+								
 								<textbox id="fldSubFamiliaHidden" value="@{controller.fldSubFamilia }" visible="false"/>
 								<textbox id="fldOrdemHidden" value="@{controller.fldOrdem }" visible="false"/>
 								<textbox id="fldSubOrdemHidden" value="@{controller.fldSubOrdem }" visible="false"/>
 								<textbox id="fldGeneroHidden" value="@{controller.fldGenero }" visible="false"/>
+								
+								<textbox id="fldSubGeneroHidden" value="@{controller.fldSubGenero }" visible="false"/>
+								
 								<textbox id="fldEpitetoEspecificoHidden" value="@{controller.fldEpitetoEspecifico }" visible="false"/>
 							</div>	        	
 				        </vlayout>				        	

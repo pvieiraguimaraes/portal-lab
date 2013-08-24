@@ -22,7 +22,7 @@ public class ProcessPPTHTMLGames {
 
 	public static void main(String[] args) {
 		String path = "C:\\Users\\Guiliano\\Desktop\\temp\\";
-		String file = "Hymenoptera.zip";
+		String file = "Quiz-Hymenoptera.zip";
 		
 		String fileSeparator = System.getProperty("file.separator");
 		
