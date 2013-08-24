@@ -47,5 +47,6 @@
 	<classpathentry kind="lib" path="/BuilderSoft/lib/hibernate-validator-4.2.0.Final.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/BuilderSoft"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/BuilderSoft-security"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-email-1.3.1.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
