@@ -43,7 +43,8 @@ public class ValidatorControl extends AbstractValidatorControl {
 						Object fieldValue = Reflection.getFieldValue(entity, currentField.getName());
 						String bundleErroColumn =classeName.concat("_").concat(currentField.getName());
 						if(!messagesControl.existsErrorMessage(bundleErroColumn)){
-							bundleErroColumn = Reflection.getClassName(reflectedClass).toLowerCase().concat("_").concat(currentField.getName());
+							//bundleErroColumn = Reflection.getClassName(reflectedClass).toLowerCase().concat("_").concat(currentField.getName());
+							bundleErroColumn = classeName.toLowerCase().concat("_").concat(currentField.getName());
 						}
 						if (fieldValue == null || fieldValue.equals("")) {
 							isValide = false;
