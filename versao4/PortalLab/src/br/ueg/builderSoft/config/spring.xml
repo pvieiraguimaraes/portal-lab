@@ -71,6 +71,7 @@
     			<value>br.ueg.portalLab.model.Especime</value>
     			<value>br.ueg.portalLab.model.EspecimeDeterminador</value>
     			<value>br.ueg.portalLab.model.EspecieImagem</value>
+    			<value>br.ueg.portalLab.model.FichaTecnica</value>
     			<value>br.ueg.portalLab.model.Glossario</value>
     		</list>
     	</property>
@@ -160,6 +161,7 @@
 		<security:intercept-url access="UC_SEG_FUNCIONALIDADE" pattern="/pages/cadseguranca/funcionalidade/**" />
 		<security:intercept-url access="UC_SEG_GRUPOUSUARIO" pattern="/pages/cadseguranca/grupousuario/**" />
 		<security:intercept-url access="UC_CADIMAGEM" pattern="/pages/cadimagem/**" />
+		<security:intercept-url access="UC_CADFICHATECNICA" pattern="/pages/cadfichatecnica/**" />
 
 		<security:form-login login-page="/pages/seguranca/acesso.zul" always-use-default-target="false"
 			default-target-url='/index.zul' authentication-failure-url="/pages/seguranca/acesso.zul?error=1" />

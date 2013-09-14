@@ -1,9 +1,9 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Manutenção de Imagens" border="normal">
+	<window title="Manutenção de Ficha Técnica" border="normal">
 		<hlayout>
 		  <vbox width="320px">
-			<div style="text-align:center;" visible="@{crudCadMediaController.selectedEntity.isNew }"><label style="font-weight:bold">Selecione os dados para localizar uma imagem.</label></div>				
+			<div style="text-align:center;" visible="@{crudCadMediaController.selectedEntity.isNew }"><label style="font-weight:bold">Selecione o item taxonômico da ficha.</label></div>				
 			<tree id="treeItemTaxonomicoForm"
 				rows="10" 
 				hflex="1" 
@@ -35,16 +35,7 @@
 									/>
 		</vbox>
 		<vlayout>
-				<hbox>								
-					<label sclass="titulo-coluna" value="Estação do ano:" />
-					<combobox model="@{controller.estacaoList }"
-						selectedItem="@{controller.fldEstacao }"
-						id="cmbEstacao"
-						hflex="1"
-						visible="@{crudCadMediaController.selectedEntity.isNew }">
-					</combobox>
-					<label 	value="@{crudCadMediaController.fldEstacao }"
-							visible="@{crudCadMediaController.selectedEntity.isEdit }"/>
+				<hbox>																		
 					<button label="Selecionar Imagem"
 							upload="true,maxsize=5000" 
 							onUpload="controller.addImage(event)" 

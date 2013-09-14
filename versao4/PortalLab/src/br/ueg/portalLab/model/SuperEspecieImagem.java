@@ -9,36 +9,41 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import javax.persistence.DiscriminatorValue;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
 import org.jboss.logging.Logger;
 import org.zkoss.image.AImage;
 import org.zkoss.image.Image;
+import org.zkoss.util.media.Media;
 
 import br.ueg.builderSoft.config.ConfigPortalLab;
 import br.ueg.portalLab.utils.ImageUtil;
 
-@javax.persistence.Entity
-@DiscriminatorValue("imagem")
-public class EspecieImagem extends EspecieMultimidia<Image> {
+@MappedSuperclass
+@Inheritance(strategy=InheritanceType.JOINED)
+public abstract class SuperEspecieImagem<TYPE extends Media> extends EspecieMultimidia<TYPE> {
+	
 
-	private static final String ESPECIES_DEFAULT_IMG_NAME = "especies.jpg";
+	protected static final String ESPECIES_DEFAULT_IMG_NAME = "especies.jpg";
 
 	@Transient
-	private Image thumbMedia;
+	protected TYPE thumbMedia;
 
 	private static final long serialVersionUID = 1962064058618011238L;
 
-	public EspecieImagem(String caminho) {
+	public SuperEspecieImagem(String caminho) {
 		this.setNome(caminho);
 	}
 
-	public EspecieImagem() {
+	public SuperEspecieImagem() {
 			this.nome = ESPECIES_DEFAULT_IMG_NAME;
 	}
 
 	@Override
-	public Image getFileFromCaminho() {
+	public TYPE getFileFromCaminho() {
 		return getFileFromCaminho(1, this.getNome());
 	}
 	
@@ -47,8 +52,8 @@ public class EspecieImagem extends EspecieMultimidia<Image> {
 	 * @param type
 	 * @return Image a partir do nome do arquivo
 	 */
-	public Image getFileFromCaminho(int type, String fileName){
-		Image imageAux = null;
+	public TYPE getFileFromCaminho(int type, String fileName){
+		TYPE imageAux = null;
 		InputStream is = null;;
 		if (fileName != null && fileName.length() > 0) {
 
@@ -74,7 +79,7 @@ public class EspecieImagem extends EspecieMultimidia<Image> {
 	
 					 is = new FileInputStream(file);
 				}
-				imageAux = (Image) new AImage(this.getNome(), is);
+				imageAux = (TYPE) new AImage(this.getNome(), is);
 
 			} catch (IOException e) {
 				System.err.println(e.getCause());
@@ -88,7 +93,7 @@ public class EspecieImagem extends EspecieMultimidia<Image> {
 		return imageAux;
 	}
 	@SuppressWarnings("unchecked")
-	public Image getThumbMedia() {
+	public TYPE getThumbMedia() {
 		if(this.thumbMedia!=null){
 			return thumbMedia;
 		}else{
@@ -103,7 +108,7 @@ public class EspecieImagem extends EspecieMultimidia<Image> {
 	}
 
 	@Override
-	public Image getDefaultMedia() {
+	public TYPE getDefaultMedia() {
 		String diretorioImagem = ConfigPortalLab.getInstancia()
 				.getDireitorioMedia();
 		String separator = System.getProperty("file.separator");
@@ -113,11 +118,11 @@ public class EspecieImagem extends EspecieMultimidia<Image> {
 		System.err.println("diretorioImagem:" + diretorioImagem);
 
 		try {
-			media = (Image) new AImage(diretorioImagem.concat(separator)
+			media = (TYPE) new AImage(diretorioImagem.concat(separator)
 					.concat(ESPECIES_DEFAULT_IMG_NAME));
 		} catch (IOException e) {
 			e.printStackTrace();
-			media = (Image) new org.zkoss.zul.Image();
+			media = (TYPE) new org.zkoss.zul.Image();
 		}
 		return media;
 	}
