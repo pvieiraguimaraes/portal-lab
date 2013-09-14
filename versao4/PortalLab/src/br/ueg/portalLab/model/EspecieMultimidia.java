@@ -39,10 +39,10 @@ import br.ueg.builderSoft.util.annotation.Attribute;
 
 @SuppressWarnings("serial")
 @MappedSuperclass
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="tipo", discriminatorType=DiscriminatorType.STRING)
-@DiscriminatorValue("  ")
-@Table(name="especie_multimidia")
+@Inheritance(strategy=InheritanceType.JOINED)
+//@DiscriminatorColumn(name="tipo", discriminatorType=DiscriminatorType.STRING)
+//@DiscriminatorValue("  ")
+//@Table(name="especie_multimidia")
 public abstract class EspecieMultimidia<TYPE extends Media> extends Entity {
 
 	@Id()
@@ -68,7 +68,7 @@ public abstract class EspecieMultimidia<TYPE extends Media> extends Entity {
 	@Attribute(Required = false, SearchField = true)
 	protected Estacao estacao;
 		
-	@Attribute(Required = false, SearchField = false)
+	@Attribute(Required = true, SearchField = false)
 	@Transient
 	protected TYPE media ;
 
@@ -248,15 +248,7 @@ public abstract class EspecieMultimidia<TYPE extends Media> extends Entity {
 	 * @return retorno o diretorio que sera utilizado para separar ot tipo de multimidia dentro da
 	 * pasta do item taxonomico associado ao mulitmidia.
 	 */
-	public String getTypeMediaSimpleName(){
-		//return this.media.getClass().getSimpleName().toLowerCase();
-		Type genericSuperclass = this.getClass().getGenericSuperclass();	    
-	    ParameterizedType pt = (ParameterizedType) genericSuperclass;
-	    Type type = pt.getActualTypeArguments()[0];
-	    String[] tipo = type.toString().split("\\.");
-	    	    	    
-		return tipo[tipo.length-1].toLowerCase();
-	}
+	public abstract String getTypeMediaSimpleName();
 	
 	/**
 	 * @return String url da imagem direto da aplicação de media

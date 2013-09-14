@@ -164,8 +164,8 @@ public class ItemTaxonomico extends Entity {
 		Set<EspecieMultimidia<?>> setMedia = new HashSet<EspecieMultimidia<?>>(0);
 		
 		if(typeName.equalsIgnoreCase("image")){
-			
-				setMedia.addAll(this.getImagens());
+				//TODO mudança superEspecieImagem
+				setMedia.addAll((Collection<? extends EspecieMultimidia<?>>) this.getImagens());
 			
 			return setMedia;
 		}

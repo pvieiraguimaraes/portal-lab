@@ -1,4 +1,4 @@
-<?page title="Manutenção de Cadastro de Imagens" contentType="text/html;charset=UTF-8"?>
+<?page title="Manutenção de Ficha Técnicas" contentType="text/html;charset=UTF-8"?>
 
 <?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
 <?init class="org.zkoss.zk.ui.util.Composition" arg0="/WEB-INF/layout/template.zul"?>
@@ -9,7 +9,7 @@
 <include id="menuLateral" self="@{define(menuLateral)}" src="/menu/menu_lateral.zul" />
 <include id="menuTopo" self="@{define(menuTopo)}" src="/menu/menu_cadastro_portal.zul" />
 
-<window self="@{define(content)}" id="crudCadMedia" apply="${cadImagemComposer}"  title="Cadastro de Imagens">
+<window self="@{define(content)}" id="crudCadMedia" apply="${cadFichaTecnicaComposer}"  title="Manutenção de Ficha Técnicas">
 <borderlayout height="450px">
 				<west>
 					<vlayout width="300px">	
@@ -40,14 +40,7 @@
 							        </treeitem>
 							    </template>							
 							</tree>							
-						<hlayout>
-							<label hflex="1" style="text-align:right">Estação: </label>
-							<combobox hflex="1" model="@{controller.estacaoList }"
-								selectedItem="@{controller.fldEstacaoBusca }"
-								onSelect="crudCadMediaController.selectEstacaoBusca()"
-								id="cmbEstacaoBusca">
-							</combobox>
-						</hlayout>
+						
 						<hlayout><label hflex="1">Nome do Arquivo: </label><textbox value="@{controller.fldNome }" hflex="1"></textbox></hlayout>					
 						<hlayout>
 							<button label="Buscar" hflex="1" onClick="controller.searchEntity()"/>
@@ -58,7 +51,7 @@
 		<center>
 			<vlayout>
 				<separator></separator>
-				<div style="text-align:center;"><label style="font-weight:bold">Lista de Imagens localizadas.</label></div>
+				<div style="text-align:center;"><label style="font-weight:bold">Lista de Fichas localizadas.</label></div>
 				<div id="divResult2">
 					<listbox model="@{controller.listEntity}"
 						selectedItem="@{controller.selectedEntity}" 
@@ -70,7 +63,6 @@
 						pageSize="11"
 						>
 						<listhead id="divListhead">
-							<listheader label="Estação"   align="left"   width="100px"/>
 							<listheader label="Taxonomia" align="left"  />
 							<listheader label="Operações" align="center" width="160px" />							
 						</listhead>
@@ -78,7 +70,6 @@
 							<attribute name="onDoubleClick">
 										controller.editEntity();
 							</attribute>
-							<listcell><label value="@{entity.estacao }"/></listcell>
 							<listcell><label value="@{entity.itemTaxonomico.nomeCompleto }"/></listcell>
 							<listcell>
 								<button Label="Editar" id="crudWindowBtnEdit" image="/images/editar.png">
