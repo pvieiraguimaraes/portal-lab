@@ -2,6 +2,9 @@ package br.ueg.builderSoft.util.reflection;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
 
 /**
  * Procurar um nome melhoar para essa classe
@@ -93,5 +96,42 @@ public class Reflection {
 	      }
 	    return FQClassName;
 	}
-
+	  /**
+		 * Retorna o {@link Type} representando o parâmetro Generics da classe na posição solicitada
+		 * 
+		 * @param clazz classe com Generics
+		 * @param parameterIndex índice do parâmetro Generics
+		 * @return {@link Type} Parametrizado no índice solicitado
+	 * @throws Exception 
+		 */
+		public static Type getParameterizedType(Class<?> clazz, int parameterIndex) throws Exception {
+			Type genericSuperClass = clazz.getGenericSuperclass();
+			Class<?> clazz2 = clazz;
+			while (!(genericSuperClass instanceof ParameterizedType)) {
+				clazz2 = clazz2.getSuperclass();
+				genericSuperClass = clazz2.getGenericSuperclass();
+			}
+			ParameterizedType classParameter = (ParameterizedType) genericSuperClass;
+			try {
+				return classParameter.getActualTypeArguments()[parameterIndex];
+			} catch (ArrayIndexOutOfBoundsException e) {
+				throw new Exception("Verify you Class implementation of " + clazz.getName() + " there isn't a Generics in index " + parameterIndex + ", implement one!", e);
+			}
+		}
+		
+		/**
+		 * Retorna o parâmetro Generics da classe na posição solicitada já convertido em classe
+		 * 
+		 * @param clazz classe com Generics
+		 * @param parameterIndex índice do parâmetro Generics
+		 * @return classe do Tipo Parametrizado
+		 * @throws Exception 
+		 */
+		public static Class<?> getParameterizedTypeClass(Class<?> clazz, int parameterIndex) throws Exception {
+			Type parameterizedType = getParameterizedType(clazz, parameterIndex);
+			if (parameterizedType instanceof TypeVariable) {
+				throw new IllegalArgumentException("It is not possible to convert into Class the class parameter ".concat(clazz.getName()));
+			}
+			return (Class<?>) parameterizedType;
+		}
 }
