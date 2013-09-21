@@ -73,6 +73,8 @@
     			<value>br.ueg.portalLab.model.EspecieImagem</value>
     			<value>br.ueg.portalLab.model.FichaTecnica</value>
     			<value>br.ueg.portalLab.model.Glossario</value>
+    			<value>br.ueg.portalLab.model.Agrupador</value>
+    			<value>br.ueg.portalLab.model.AgrupadorItensTaxonomicos</value>
     		</list>
     	</property>
     	<property name="hibernateProperties">
