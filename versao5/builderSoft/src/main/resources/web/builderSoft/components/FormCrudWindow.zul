@@ -1,0 +1,52 @@
+<zk>
+<window id="crudFormWindow"  border="none" width="700px" xmlns:c="client"
+					closable="false"  action="show: slideDown;hide: slideUp" apply="${controller}" sizable="false" onCancel="controller.hideEditFormConfirmation()">
+ <attribute c:name="onClose"><![CDATA[
+					        event.stop();
+					        var w = this;
+					        jq(this).slideUp(600, function() {
+					            w.sendAU_(event);
+					            flowDown(event.target._left, event.target._top);
+					        });
+					    ]]></attribute>   
+					    <zscript><![CDATA[        
+					        void winClose() {
+					            Clients.evalJavaScript("flowDown()");           
+					            //viewFormEdit="false";
+					        }
+					    ]]></zscript>					
+	    <vlayout>
+	       <div id="divFields"></div>
+	        <hlayout>
+	            <button id="formCrudWindowBtnSave" label="Salvar" hflex="1" > <attribute name="onClick">
+	            controller.doAction("SAVE");
+	            </attribute>
+	            </button>
+	            <button id="btnCancelEdit" label="Cancelar" hflex="1" onClick="controller.cancelEditEntity()"/>
+	        </hlayout>
+	    </vlayout>
+	</window>
+	<!-- Animation of creating window -->
+    <script type="text/javascript"><![CDATA[
+        function flowDown(wleft, wtop) {
+            var w = jq('$win'), b = jq('$newEntityButton');
+            //Minimize from the Window to the order button
+            jq('<div class="minimize" />').appendTo("body").css({
+                left : wleft,
+                top : wtop,
+                width : w.width(),
+                height : 10
+            });
+            p = b.offset();
+            jq('.minimize').animate({
+                left : p.left + b.width() / 2,
+                top : p.top + b.height() / 2,
+                width : 0,
+                height : 0
+            }, function() {
+                jq(this).remove();
+            });
+        }
+    ]]></script>
+	
+</zk>
