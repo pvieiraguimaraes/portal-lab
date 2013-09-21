@@ -1,0 +1,39 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="Manutenção de Integrantes da Equipe" border="normal">
+		<hlayout>
+		  <vbox width="320px">
+			<div style="text-align:center;" ><label style="font-weight:bold">Preencha os dados do Integrante.</label></div>				
+			
+			<label sclass="titulo-coluna" >Nome</label>
+			<textbox value="@{crudCadMediaController.fldNome }" width="318px"/>
+			<label sclass="titulo-coluna" >Descrição</label>
+			<textbox value="@{crudCadMediaController.fldDescricao }" rows="6" cols="60" maxlength="275"/>
+			<label sclass="titulo-coluna">Link para o currículo Lattes</label>
+			<textbox value="@{crudCadMediaController.fldLinkLates}" width="318px"/>
+			
+		</vbox>
+		<vlayout>
+				<hbox>																		
+					<button label="Selecionar Foto"
+							upload="true,maxsize=5000" 
+							onUpload="controller.addImage(event)" 
+							
+							/>
+					
+				</hbox>
+				<image content="@{controller.integranteEquipe.thumbMedia }"
+				height="120px" 
+					id="imgIntegrante">
+					<attribute name="onClick">
+						controller.openImage();
+					</attribute>
+				</image>				
+				<hlayout width="100%">
+					<button id="btnSalvar" label="Salvar" hflex="1" onClick="controller.saveEntity()"/>
+					<button id="btnCancelEdit" label="Cancelar" hflex="1" onClick="controller.cancelEditEntity()"/>
+				</hlayout>
+			</vlayout>
+		</hlayout>
+	</window>
+</zk>
