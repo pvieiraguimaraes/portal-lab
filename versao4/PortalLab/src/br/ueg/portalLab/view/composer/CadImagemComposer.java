@@ -12,7 +12,7 @@ import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.util.annotation.AttributeView;
 import br.ueg.builderSoft.util.sets.SpringFactory;
 import br.ueg.portalLab.control.CadImagemControl;
-import br.ueg.portalLab.control.CadMediaControl;
+import br.ueg.portalLab.control.SuperCadImageControl;
 import br.ueg.portalLab.model.EspecieImagem;
 import br.ueg.portalLab.model.EspecieMultimidia;
 import br.ueg.portalLab.model.Estacao;
@@ -84,7 +84,7 @@ public class CadImagemComposer extends SuperCadImagemComposer {
 	@Override
 	public Control<EspecieImagem<Image>> getControl() {
 		if (this.cadImagemControl == null) {
-			this.cadImagemControl = (CadMediaControl) SpringFactory
+			this.cadImagemControl = (SuperCadImageControl) SpringFactory
 					.getInstance().getBean("cadImagemControl",CadImagemControl.class);
 		}
 		return this.cadImagemControl;

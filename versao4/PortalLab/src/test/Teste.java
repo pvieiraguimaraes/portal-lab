@@ -44,7 +44,7 @@ public class Teste {
 	}
 	public static void testeEspecieImagem(){
 		EspecieMultimidia<org.zkoss.image.Image> ei = new EspecieImagem();
-		ei.setNome("d:\\programas\\PortalLab\\Jellyfish.jpg");
+		ei.setFileName("d:\\programas\\PortalLab\\Jellyfish.jpg");
 		
 		ei.getMedia();
 		System.out.println("X:"+ei.getMedia().getName());

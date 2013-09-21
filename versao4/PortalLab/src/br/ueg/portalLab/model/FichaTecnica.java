@@ -17,6 +17,13 @@ public class FichaTecnica<Image> extends SuperEspecieImagem {
 		return "ficha_tecnica";
 	}
 	
+	/* (non-Javadoc)
+	 * @see br.ueg.portalLab.model.EntityMedia#getDefaultMediaName()
+	 */
+	@Override
+	public String getDefaultMediaName() {
+		return  "ficha_tecnica.jpg";
+	}
 	
 
 }
