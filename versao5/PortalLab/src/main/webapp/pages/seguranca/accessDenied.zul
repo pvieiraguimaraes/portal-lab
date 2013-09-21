@@ -1,0 +1,7 @@
+<?page title="Acesso Negado" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="Acesso Negado" border="normal">
+		Acesso negado. Você não tem permissão para acessar esta página
+		ou funcionalidade do sistema.
+	</window>
+</zk>

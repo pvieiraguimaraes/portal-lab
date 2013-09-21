@@ -1,0 +1,113 @@
+<?page title="Manutenção de Cadastro de Imagens" contentType="text/html;charset=UTF-8"?>
+
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/WEB-INF/layout/template.zul"?>
+
+
+<zk xmlns:w="http://www.zkoss.org/2005/zk/client">
+
+<include id="menuLateral" self="@{define(menuLateral)}" src="/menu/menu_lateral.zul" />
+<include id="menuTopo" self="@{define(menuTopo)}" src="/menu/menu_cadastro_portal.zul" />
+
+<window self="@{define(content)}" id="crudCadMedia" apply="${cadImagemComposer}"  title="Cadastro de Imagens">
+<borderlayout height="450px">
+				<west>
+					<vlayout width="300px">	
+							<separator></separator>
+							<div style="text-align:center;"><label style="font-weight:bold">Selecione os dados para localizar uma imagem.</label></div>				
+							<tree id="treeItemTaxonomicoBusca"
+								rows="10" 
+								hflex="1" 
+								model="@{crudCadMediaController.itemTaxonomicoTreeModel}"
+								onSelect="crudCadMediaController.selectItemTaxonomicoBusca()"							
+								width = "290px" 
+								
+								>									
+								<treecols>
+									<treecol label="Item Taxonômico" />
+								</treecols>
+								<template name="model">
+							        <treeitem open="true">
+							            <treerow>
+							                <treecell>
+			
+							                		<label value="${each.nivelTaxonomico.nome }" sclass="titulo-coluna"/>
+							                		<label value="${each.nome }"/>
+			
+							                </treecell> 
+
+							            </treerow>				            
+							        </treeitem>
+							    </template>							
+							</tree>							
+						<hlayout>
+							<label hflex="1" style="text-align:right">Estação: </label>
+							<combobox hflex="1" model="@{controller.estacaoList }"
+								selectedItem="@{controller.fldEstacaoBusca }"
+								onSelect="crudCadMediaController.selectEstacaoBusca()"
+								id="cmbEstacaoBusca">
+							</combobox>
+						</hlayout>
+						<hlayout><label hflex="1">Nome do Arquivo: </label><textbox value="@{controller.fldNome }" hflex="1"></textbox></hlayout>					
+						<hlayout>
+							<button label="Buscar" hflex="1" onClick="controller.searchEntity()"/>
+							<button label="Nova Imagem" onClick="controller.newEntity()" id="crudWindowBtnNew" image="../../images/editar.png" width="200px"/>
+						</hlayout>										
+					</vlayout>
+				</west>
+		<center>
+			<vlayout>
+				<separator></separator>
+				<div style="text-align:center;"><label style="font-weight:bold">Lista de Imagens localizadas.</label></div>
+				<div id="divResult2">
+					<listbox model="@{controller.listEntity}"
+						selectedItem="@{controller.selectedEntity}" 
+						onSelect="controller.selectEntity()"
+						mold="paging" 
+						id="especimeImagemListbox"
+						height="400px"
+						width="98%"
+						pageSize="11"
+						>
+						<listhead id="divListhead">
+							<listheader label="Estação"   align="left"   width="100px"/>
+							<listheader label="Taxonomia" align="left"  />
+							<listheader label="Operações" align="center" width="160px" />							
+						</listhead>
+						<listitem self="@{each=entity}" id="divListitem">
+							<attribute name="onDoubleClick">
+										controller.editEntity();
+							</attribute>
+							<listcell><label value="@{entity.estacao }"/></listcell>
+							<listcell><label value="@{entity.itemTaxonomico.nomeCompleto }"/></listcell>
+							<listcell>
+								<button Label="Editar" id="crudWindowBtnEdit" image="/images/editar.png">
+									<attribute name="onClick">
+									    controller.setSelectedEntity(null);
+										self.getParent().getParent().setSelected(true);
+										Events.sendEvent(especimeImagemListbox,new Event("onSelect",especimeImagemListbox));
+										controller.editEntity();
+									</attribute>
+								</button>						
+								<button Label="Excluir" id="crudWindowBtnDelete" image="/images/lixeira.png">
+								<attribute name="onClick"><![CDATA[
+		 						self.getParent().getParent().setSelected(true); 
+		 						Events.sendEvent(especimeImagemListbox,new Event("onSelect",especimeImagemListbox));
+								Messagebox.show("Confirmar a exclusão???", "Confirmar?", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, new org.zkoss.zk.ui.event.EventListener() { 
+								    public void onEvent(Event evt) throws InterruptedException { 
+								        if (evt.getName().equals("onOK")) { 
+		 						        	controller.doAction("DELETE"); 
+								        } 
+		 						    } 
+		 						}); 
+								]]></attribute>
+								</button>
+							</listcell>
+						</listitem>
+					</listbox>				
+				</div>
+			</vlayout>
+		</center>
+	</borderlayout>
+	</window>	
+</zk>

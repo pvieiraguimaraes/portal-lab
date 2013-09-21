@@ -1,0 +1,61 @@
+<?page title="Manutenção de Coleções" contentType="text/html;charset=UTF-8"?>
+
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/WEB-INF/layout/template.zul"?>
+<?component name="crudWindow" class="br.ueg.builderSoft.view.zk.component.composite.CrudWindow" ?>
+
+
+<zk xmlns:w="http://www.zkoss.org/2005/zk/client">
+
+<include id="menuLateral" self="@{define(menuLateral)}" src="/menu/menu_lateral.zul" />
+<include id="menuTopo" self="@{define(menuTopo)}" src="/menu/menu_tabela_basica.zul" />
+
+<crudWindow self="@{define(content)}" id="crudColecao" apply="${colecaoComposer}"   listBoxSize="8"  height="450px" titulo="Coleção" composer="@{controller}">
+		<div id="form">
+			<grid>
+	            <columns>
+	                <column width="120px" />
+	                <column align="left" />	
+	            </columns>
+	            <rows>
+	            	<row>
+	                	<label value="Laboratório" />
+	                	<combobox name="cmdProgramado"
+	                		id="cmbProgramado" 
+	                		model="@{controller.ListLaboratorio}" 
+	                		selectedItem="@{controller.fldLaboratorio}"
+	                		autodrop="true"
+	                		
+	                		>
+	                		<comboitem self="@{each=laboratorio}" label="@{laboratorio.nome}" value="@{laboratorio}"/>	
+	                	</combobox>
+	                </row>
+	                <row>
+	                    <label value="Nome:" />
+	                    <textbox value="@{controller.fldNome}" maxlength="100" width = "98%"/>
+	                </row>
+	                <row>
+	                    <label value="Sigla:" />
+	                    <textbox value="@{controller.fldSigla}" maxlength="10" width = "148px" />
+	                </row>	                	                	                 
+	            </rows>
+	        </grid>
+		</div>
+		<div id="result">
+			<listbox>
+				<listhead id="listhead">
+					<listheader label="Laboratorio" align="left" sort="auto(laboratorio.nome)" />
+					<listheader label="Nome" align="left" sort="auto(nome)"  />
+					<listheader label="Sigla" align="left" sort="auto(nome)" />
+				</listhead>
+				<listitem id="listitem">
+					<listcell label="@{entity.laboratorio.nome}" />
+					<listcell label="@{entity.nome}" />	
+					<listcell label="@{entity.sigla }" />	
+				</listitem>
+			</listbox>
+		</div>		
+	</crudWindow>
+	
+	
+</zk>

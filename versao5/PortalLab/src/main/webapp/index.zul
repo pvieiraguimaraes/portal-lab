@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?page title="Cadastros básicos" contentType="text/html;charset=UTF-8"?>
+
+<zk>
+<zscript>
+  Executions.sendRedirect("/pages/especime/");  
+</zscript>
+
+</zk>
