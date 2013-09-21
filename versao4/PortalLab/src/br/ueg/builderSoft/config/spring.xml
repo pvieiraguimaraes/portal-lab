@@ -75,6 +75,7 @@
     			<value>br.ueg.portalLab.model.Glossario</value>
     			<value>br.ueg.portalLab.model.Agrupador</value>
     			<value>br.ueg.portalLab.model.AgrupadorItensTaxonomicos</value>
+    			<value>br.ueg.portalLab.model.IntegranteEquipe</value>
     		</list>
     	</property>
     	<property name="hibernateProperties">

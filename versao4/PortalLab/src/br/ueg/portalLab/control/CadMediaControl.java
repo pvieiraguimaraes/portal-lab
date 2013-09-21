@@ -28,21 +28,21 @@ public class CadMediaControl<T extends EntityMedia<?>> extends
 	public boolean actionDelete(SubControllerManager<T> subControllerManager) {
 		T entity = (T) this.getMapFields().get("entity");
 		
-		int deleteImagemFromDiscReturn = entity.deleteMediaFromDisk();
+		int deleteMediaFromDiscReturn = entity.deleteMediaFromDisk();
 		
-		boolean imageExcluida = false;
+		boolean mediaExcluida = false;
 		
-		if(deleteImagemFromDiscReturn==1){
-			imageExcluida = true;
-		}else if(deleteImagemFromDiscReturn==0){
+		if(deleteMediaFromDiscReturn==1){
+			mediaExcluida = true;
+		}else if(deleteMediaFromDiscReturn==0){
 			this.getMessagesControl().addMessageError(textClassName+"_remove");
-			imageExcluida = false;
-		}else if(deleteImagemFromDiscReturn==2){
+			mediaExcluida = false;
+		}else if(deleteMediaFromDiscReturn==2){
 			this.getMessagesControl().addMessageError(textClassName+"_remove_nao_existe");
-			imageExcluida = true;
+			mediaExcluida = true;
 		}
 		
-		if(imageExcluida){
+		if(mediaExcluida){
 			return super.actionDelete(subControllerManager);
 		}
 		
@@ -66,6 +66,10 @@ public class CadMediaControl<T extends EntityMedia<?>> extends
 
 	protected ArrayList<String> addFilterTextToActionFindByCriteria(T entity) {
 		ArrayList<String> condicoes = new ArrayList<String>();
+		String nome = entity.getFileName();
+		if(nome!=null && !nome.equals("")){
+			condicoes.add("nome like '%".concat(nome).concat("%'"));			
+		}
 		return condicoes;
 	}
 
@@ -80,13 +84,7 @@ public class CadMediaControl<T extends EntityMedia<?>> extends
 			textClassName = entity.getClass().getSimpleName();
 			String sql = "from "+textClassName+" e";
 			
-			condicoes.addAll(this.addFilterTextToActionFindByCriteria(entity));
-			
-			String nome = entity.getFileName();
-			if(nome!=null && !nome.equals("")){
-				condicoes.add("nome like '%".concat(nome).concat("%'"));			
-			}
-			
+			condicoes.addAll(this.addFilterTextToActionFindByCriteria(entity));			
 			
 			if(condicoes.size()>0){
 				boolean primeiro = true;
