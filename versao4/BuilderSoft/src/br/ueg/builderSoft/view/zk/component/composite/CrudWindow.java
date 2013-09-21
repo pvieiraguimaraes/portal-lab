@@ -41,7 +41,6 @@ public class CrudWindow extends Window implements IFormWindow {
 	@Wire
 	private Div divResult;
 
-	@SuppressWarnings("unused")
 	@Wire
 	private Div divForm;
 

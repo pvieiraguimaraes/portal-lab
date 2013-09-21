@@ -16,15 +16,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.databind.AnnotateDataBinder;
 import org.zkoss.zkplus.databind.BindingListModelList;
 import org.zkoss.zul.Div;
-import org.zkoss.zul.Listcell;
 import org.zkoss.zul.Listhead;
 import org.zkoss.zul.Listitem;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 import org.zkoss.zul.impl.InputElement;
 
@@ -620,6 +622,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 		 * @param field nome do atributo que contem a entidade extrangeira(chave estrangeir)
 		 * @return BindingListModelList<Entity> BindingListModelList com a lista de entidade do field especificado
 		 */
+		@SuppressWarnings("unchecked")
 		public BindingListModelList<Entity> getFKEntityModel(String field) {
 			
 
@@ -724,5 +727,25 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 					e.printStackTrace();
 				}
 			}
+		}
+		
+		public void hideEditFormConfirmation(){
+			showMessageConfirmation("Tem certeza que deseja sair?", getHideEditFormEvent());
+		}
+		
+		@SuppressWarnings({ "unchecked" })
+	    protected void showMessageConfirmation(String message, EventListener event) {
+	            Messagebox.show(message, "Confirmação", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, event);
+	    }
+		
+		private EventListener getHideEditFormEvent(){
+			EventListener event = new EventListener() {
+	            public void onEvent(Event evt) throws InterruptedException {
+	                if (evt.getName().equals("onOK")) {
+	                       hideEditForm();
+	                }
+		        }
+			};
+			return event;
 		}
 }
