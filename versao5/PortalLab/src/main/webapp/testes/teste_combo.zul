@@ -1,0 +1,17 @@
+<zk>
+	<window border="normal" title="Auto-complete"
+		apply="test.TestComposer">
+		<vlayout>
+			<combobox model="${dictModel}" itemRenderer="${renderer}"
+				id="cb" autodrop="true" />
+			<combobox model="${dictModel}" itemRenderer="${renderer}"
+				id="cb2" autodrop="true" />
+			<textbox id="texto" value="teste de texto" />
+			<label id="msg" />
+			<listbox>
+				<listitem label="Teste" />
+				<listitem label="teste2" />
+			</listbox>
+		</vlayout>
+	</window>
+</zk>

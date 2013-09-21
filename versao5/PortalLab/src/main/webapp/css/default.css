@@ -1,0 +1,99 @@
+.container,.z-menubar-hor,.z-menubar-ver {
+    border: 1px solid #D8D8D8;
+}
+
+.z-loading {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	filter: alpha(opacity = 60);
+	opacity: .6;
+	zoom: 1;
+	background: #E0E1E3;
+}
+
+.z-menubar-hor {
+    width: 580px;
+}
+.z-menubar-ver {
+    border-right: 0 none;
+    width: 100%;
+    height: 100%;
+}
+ 
+.container {
+    padding: 5px;
+}
+ 
+.z-menu-item-body {
+    padding: 5px 2px;
+}
+.z-menubar-ver .z-menu-body,
+.z-menubar-ver .z-menu-item-body {
+    width: 140px !important;
+}
+ 
+.z-menubar-ver .z-menu-item-body .z-menu-item-inner-m,
+.z-menubar-ver .z-menu-body .z-menu-item-inner-m,
+.z-menubar-ver .z-menu-item-body .z-menu-inner-m,
+.z-menubar-ver .z-menu-body .z-menu-inner-m {
+    text-align: left;
+}
+.topo-banner{
+	background-color: #00A2E8;
+}
+.mo_head {
+    font-size: 24px;
+    font-weight: normal;
+    color: #F26522;
+    margin-bottom: 0px;
+}
+ 
+.mo_footer {
+    background: #00A2E8;
+    width: 100%;
+    height: 20px;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+.titulo{
+	text-align: center;
+	font-weight: bolder;
+	font-style: italic;
+}
+
+.titulo-coluna{
+	font-weight: bolder;
+}
+
+.z-window-embedded .z-window-embedded-header{
+	text-align: left;
+	font-weight: bold;
+	font-size: 1em;
+}
+.window-transparent{
+	background-color: transparent;
+}
+
+
+div.z-listbox-body .z-listcell  {
+	padding: 0px;
+}
+
+/* Group box título */
+.z-groupbox-3d .open-false,
+.z-groupbox-3d .open-true {
+  background: url('/PortalLab/images/arrow.png') no-repeat right 0;
+  height: 16px;  
+  padding-right: 20px;
+  font-weight: bold; 
+} 
+.z-groupbox-3d div.open-false {
+  background-position: right -16px;
+}
+.z-groupbox-colpsd .block {
+  display: block;
+}

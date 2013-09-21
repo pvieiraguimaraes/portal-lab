@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?page title="Cadastros básicos" contentType="text/html;charset=UTF-8"?>
+
+
+	<menubar id="menubar" orient="vertical" apply="br.ueg.builderSoft.security.view.composer.MenuBarComposer" >
+	    <menuitem id="UC_ESPECIME" height="30px"  href="/pages/especime/"  label="Cadastro de Espécimes" />
+        <menuitem id="UC_COLETOR" height="30px" href="/pages/coletor/"	  label="Manter Tabelas Básicas" />
+        <menuitem id="UC_CADIMAGEM" height="30px" href="/pages/cadimagem/"	  label="Cadastros do Portal" />
+        <menuitem id="UC_SEG_GRUPOUSUARIO" height="30px"	href="/pages/cadseguranca/grupousuario/"  label="Manter Usuários              " />
+        <menuitem label="Sair" href="../../j_spring_security_logout"/>
+	</menubar>
+
+

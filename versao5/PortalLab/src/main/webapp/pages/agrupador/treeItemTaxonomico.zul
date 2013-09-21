@@ -1,0 +1,35 @@
+<window id="winItensTaxonomicos" title="Itens Taxonomicos" closable="true" mode="popup" border="normal" 
+onCancel="winItensTaxonomicos.detach()" position="center, center" apply="${agrupadorItemComposer}">
+	<tree id="treeItemTaxonomico"
+	rows="10" 
+	width="500px"
+	model="@{controller.itemTaxonomicoTreeModel}" 
+	onSelect="controller.selectEntity()"					
+	>									
+		<treecols>
+			<treecol label="Item Taxonômico"/>
+			<treecol label="Operações" align="center" hflex="min"/>
+		</treecols>
+		<template name="model">
+	        <treeitem open="true">
+	            <treerow>
+	                <treecell>
+
+	                		<label value="${each.nivelTaxonomico.nome }" sclass="titulo-coluna"/>
+	                		<label value="${each.nome }"/>
+
+	                </treecell> 
+	                <treecell>
+	                	<button label="Adicionar ao Agrupador">
+		                	<attribute name="onClick">
+	                			((Treeitem)self.getParent().getParent().getParent()).setSelected(true);
+	                			controller.saveAgrupadorItemTaxonomico();
+	                		</attribute>
+	                	</button>
+	                </treecell>				                	
+	            </treerow>				            
+	        </treeitem>
+	    </template>							
+	</tree>
+	<button label="Fechar" onClick="winItensTaxonomicos.detach()"/>
+</window>

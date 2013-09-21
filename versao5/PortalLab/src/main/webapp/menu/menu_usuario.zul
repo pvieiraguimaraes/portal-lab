@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?page title="Cadastros básicos" contentType="text/html;charset=UTF-8"?>
+
+	<menubar id="menubar" orient="horizontal" width="100%" apply="br.ueg.builderSoft.security.view.composer.MenuBarComposer" >
+	    <menuitem id="UC_SEG_USUARIO"			href="/pages/usuario/" label="Usuários"/>
+	    <menuitem id="UC_SEG_GRUPOUSUARIO"	href="/pages/cadseguranca/grupousuario/" label="Grupo de Usuários"/>
+		<menuitem id="UC_SEG_FUNCIONALIDADE" href="/pages/cadseguranca/funcionalidade/"	label="Funcionalidade"/>
+		<menuitem id="UC_SEG_CASODEUSO"	href="/pages/cadseguranca/casodeuso/"	label="Caso de Usos"/>
+	</menubar>
+

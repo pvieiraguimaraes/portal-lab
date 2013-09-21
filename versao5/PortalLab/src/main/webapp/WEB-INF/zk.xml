@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Created by ZK Studio
+-->
+
+<zk>
+	<device-config>
+		<device-type>ajax</device-type>
+		<timeout-uri>/timeout.zul</timeout-uri><!-- An empty URL can cause the browser to reload the same URL -->
+	</device-config>
+	
+	<library-property>
+    	<name>org.zkoss.web.preferred.locale</name>
+    <value>pt_BR</value>
+    
+    <library-property>
+    	<name>org.zkoss.util.logging.config.file</name>
+    <value>/WEB-INF/zk-log.properties</value>
+</library-property>
+</library-property>
+
+<system-config>
+    <label-location>/WEB-INF/classes/br/ueg/builderSoft/config/messages.properties</label-location>
+</system-config>
+	
+<!--
+	<listener>
+        <listener-class>"br.aee.boletimFrequencia.zk.HibernateListeners</listener-class>
+   </listener>
+   -->
+</zk>

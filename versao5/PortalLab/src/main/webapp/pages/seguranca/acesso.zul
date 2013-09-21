@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Acesso ao Sistema ao Portal Virtual do Cerrado" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+	
+	<script type="text/javascript" src="/scripts/scripts.js"/>
+	
+	<zscript>
+	<![CDATA[
+		import br.ueg.builderSoft.util.encrypt.EncryptPassword;		
+	]]>
+	</zscript>
+	
+	<window id="logonwin" title="Aceso ao Sistema Portal Virtual do Cerrado" border="normal" width="300px"
+		mode="modal" position="center" onCreate="j_username.focus();">
+		<groupbox>
+			<caption>Acesso</caption>
+			<h:form name="f" action="/PortalLab/j_spring_security_check" method="POST" onsubmit="submitFormAcesso(500, event, this)">
+				<grid>
+					<rows>
+						<row>
+							<label value="Usuário:" onClick="j_username.focus();" />
+							<textbox id="j_username" name="j_username" />
+						</row>
+						<row>
+							<label value="Senha:" onClick="password.focus();" />
+							<div>
+								<textbox id="password" type="password" name="password" onOK="submitForm();"/>
+									
+								<textbox id="j_password" name="j_password" visible="false"/>
+							</div>
+						</row>
+						<row spans="2" if="${not empty param.error}">
+							<hbox style="color: red;">Dados inválidos!</hbox>
+						</row>
+						<row spans="2">
+							<hbox>
+								<button onClick="submitForm();" label="Login"/>
+								<h:input type="reset" value="Redefinir" />
+							</hbox>
+						</row>
+					</rows>
+				</grid>
+			</h:form>
+		</groupbox>
+		<zscript>
+		<![CDATA[
+			public void encryptPassword(){
+				j_password.setValue(EncryptPassword.encrypt(password.getValue()));	
+			}
+			
+			public void submitForm(){
+				encryptPassword();	
+				Clients.evalJavaScript("document.forms[0].submit();");
+			}
+		]]>
+		</zscript>
+	</window>
+</zk>

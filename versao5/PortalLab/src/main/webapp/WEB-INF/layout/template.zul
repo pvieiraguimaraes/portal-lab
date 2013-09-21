@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?page title="Sistema de Catalogação da Biodiversidade do Cerrado"?>
+
+<zk xmlns:n="native">
+	<div id="menssage"/>
+	<style src="/css/default.css" />
+	<div sclass="topo-banner" width="100%">
+		<image src="/images/topo_banner.png" />
+	</div>
+	<borderlayout>
+			<west
+				id="menuEsquerdo" 
+				width="180px" flex="false" border="none"
+				collapsible="true" splittable="true" 
+				self="@{insert(menuLateral)}" 
+				onCreate="br.ueg.portalLab.view.composer.MenuStateComposer.updateMenu(self)"
+				onOpen="br.ueg.portalLab.view.composer.MenuStateComposer.changeMenuSate()"/>
+			<center>
+				<borderlayout>
+					<north collapsible="false" border="none"
+						flex="false" splittable="false" self="@{insert(menuTopo)}">
+					</north>
+						<center id="content" self="@{insert(content)}" sclass="content" />
+				</borderlayout>
+			</center>
+	</borderlayout>
+	 <separator height="4px"></separator>
+	<div sclass="mo_footer">
+		Copyright 2012 UEG. All rights reserved.
+	</div>
+</zk>
