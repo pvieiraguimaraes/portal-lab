@@ -1,6 +1,6 @@
 <zk>
 <window id="crudFormWindow"  border="none" width="700px" xmlns:c="client"
-					closable="false"  action="show: slideDown;hide: slideUp" apply="${controller}" sizable="false">
+					closable="false"  action="show: slideDown;hide: slideUp" apply="${controller}" sizable="false" onCancel="controller.hideEditFormConfirmation()">
  <attribute c:name="onClose"><![CDATA[
 					        event.stop();
 					        var w = this;
