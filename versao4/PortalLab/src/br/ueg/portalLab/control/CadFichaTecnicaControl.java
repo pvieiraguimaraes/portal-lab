@@ -8,6 +8,6 @@ import br.ueg.portalLab.model.FichaTecnica;
 @SuppressWarnings("serial")
 @Component
 @Scope("prototype")
-public class CadFichaTecnicaControl extends CadMediaControl<FichaTecnica<Image>> {
+public class CadFichaTecnicaControl extends SuperCadImageControl<FichaTecnica<Image>> {
 	
 }

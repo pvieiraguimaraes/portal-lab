@@ -34,7 +34,7 @@ public class MediaControl<TYPE extends EspecieMultimidia<? extends Media>> exten
 				if(ei.isNew()){
 					ei.setItemTaxonomico(selectedItemTaxonomicoMedia);
 					
-					ei.setNome(ei.getMedia().getName());
+					ei.setFileName(ei.getMedia().getName());
 					
 					int writeImagemToDiskReturn = ei.writeMediaToDisk();
 					if(writeImagemToDiskReturn==1){

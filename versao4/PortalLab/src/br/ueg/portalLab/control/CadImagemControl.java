@@ -7,10 +7,11 @@ import org.springframework.stereotype.Service;
 
 import br.ueg.builderSoft.util.reflection.Reflection;
 import br.ueg.portalLab.model.EspecieImagem;
+import br.ueg.portalLab.model.EspecieMultimidia;
 
 
 @Service
-public class CadImagemControl extends CadMediaControl<EspecieImagem> {
+public class CadImagemControl extends SuperCadImageControl<EspecieImagem> {
 	
 	/*public CadImagemControl() {
 		super();
@@ -23,8 +24,9 @@ public class CadImagemControl extends CadMediaControl<EspecieImagem> {
 	}*/
 	@Override
 	protected ArrayList<String> addFilterTextToActionFindByCriteria(EspecieImagem entity){
+		ArrayList<String> list = super.addFilterTextToActionFindByCriteria(entity);
 		String idEstacao = entity.getEstacao()==null?"":String.valueOf(entity.getEstacao().getId());
-		ArrayList<String> list = new ArrayList<String>(0);
+		
 		if(!idEstacao.equals("")){
 			list.add("e.estacao=".concat(idEstacao));
 		}

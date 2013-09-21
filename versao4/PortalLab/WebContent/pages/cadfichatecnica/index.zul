@@ -14,7 +14,7 @@
 				<west>
 					<vlayout width="300px">	
 							<separator></separator>
-							<div style="text-align:center;"><label style="font-weight:bold">Selecione os dados para localizar uma imagem.</label></div>				
+							<div style="text-align:center;"><label style="font-weight:bold">Selecione os dados para localizar uma Ficha Técnica.</label></div>				
 							<tree id="treeItemTaxonomicoBusca"
 								rows="10" 
 								hflex="1" 

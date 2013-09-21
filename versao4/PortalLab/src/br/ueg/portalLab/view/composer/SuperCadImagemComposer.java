@@ -27,7 +27,7 @@ import br.ueg.builderSoft.util.reflection.Reflection;
 import br.ueg.builderSoft.util.sets.SpringFactory;
 import br.ueg.builderSoft.view.zk.composer.ComposerController;
 import br.ueg.portalLab.control.CadImagemControl;
-import br.ueg.portalLab.control.CadMediaControl;
+import br.ueg.portalLab.control.SuperCadImageControl;
 import br.ueg.portalLab.control.ItemTaxonomicoControl;
 import br.ueg.portalLab.model.EspecieImagem;
 import br.ueg.portalLab.model.ItemTaxonomico;
@@ -38,7 +38,7 @@ public abstract class SuperCadImagemComposer<TYPE extends SuperEspecieImagem<Ima
 		ComposerController<TYPE> {
 
 //	@Autowired
-	protected CadMediaControl cadImagemControl;
+	protected SuperCadImageControl cadImagemControl;
 	@Wire
 	protected Window crudCadMedia;
 	@Wire
@@ -51,7 +51,7 @@ public abstract class SuperCadImagemComposer<TYPE extends SuperEspecieImagem<Ima
 	private ItemTaxonomico itemTaxonomicoSelected;
 	@AttributeView(key = "itemTaxonomico", isEntityValue = true, fieldType = ItemTaxonomico.class, isVisible = true, caption = "especieImagem_Column", isSearchField = true)
 	private ItemTaxonomico fldItemTaxonomico;
-	@AttributeView(key = "nome", isEntityValue = true, fieldType = String.class, isVisible = true, caption = "especieImagem_nome_Column", isSearchField = true)
+	@AttributeView(key = "fileName", isEntityValue = true, fieldType = String.class, isVisible = true, caption = "especieImagem_nome_Column", isSearchField = true)
 	private String fldNome;
 	private Treeitem treeSelectedItem;
 	private SuperEspecieImagem superEspecieImagem = null;
@@ -268,7 +268,7 @@ public abstract class SuperCadImagemComposer<TYPE extends SuperEspecieImagem<Ima
 		this.superEspecieImagem = imagem;
 		
 		this.setFldMedia(this.superEspecieImagem.getMedia());
-		this.setFldNome(this.superEspecieImagem.getNome());
+		this.setFldNome(this.superEspecieImagem.getFileName());
 		
 		this.binderForm.loadComponent(this.getEditForm()
 				.getFellow("imgEspecie"));

@@ -7,7 +7,7 @@ import org.zkoss.util.media.Media;
 
 import br.ueg.builderSoft.util.control.MessagesControl;
 import br.ueg.builderSoft.util.control.ValidatorControl;
-import br.ueg.portalLab.model.EspecieMultimidia;
+import br.ueg.portalLab.model.EntityMedia;
 
 public class CadMediaValidatorControl extends ValidatorControl {
 
@@ -23,15 +23,15 @@ public class CadMediaValidatorControl extends ValidatorControl {
 	@Override
 	public boolean doAction(HashMap<String, Object> mapFields, String action) {
 		if(action.equalsIgnoreCase("SAVE")){
-			return this.validCadMedia((EspecieMultimidia<Media>) mapFields.get("entity"));
+			return this.validCadMedia((EntityMedia<Media>) mapFields.get("entity"));
 		}else{
 			return true;
 		}
 	}
-	public boolean validCadMedia(EspecieMultimidia<Media> especieMultimidia){
+	public boolean validCadMedia(EntityMedia<Media> entityMedia){
 		boolean retorno = true;
-		if( (especieMultimidia.getNome()!=null && especieMultimidia.getNome().equals("") ) ||
-			(especieMultimidia.getNome()!=null && especieMultimidia.getNome().equalsIgnoreCase("especies.jpg"))	
+		if( (entityMedia.getFileName()!=null && entityMedia.getFileName().equals("") ) ||
+			(entityMedia.getFileName()!=null && entityMedia.getFileName().equalsIgnoreCase(entityMedia.getDefaultMediaName()))	
 		){
 			retorno = false;
 			messagesControl.addMessageError("especieimagem_imagem");				

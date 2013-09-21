@@ -27,24 +27,34 @@ import br.ueg.portalLab.utils.ImageUtil;
 public abstract class SuperEspecieImagem<TYPE extends Media> extends EspecieMultimidia<TYPE> {
 	
 
-	protected static final String ESPECIES_DEFAULT_IMG_NAME = "especies.jpg";
-
 	@Transient
 	protected TYPE thumbMedia;
 
 	private static final long serialVersionUID = 1962064058618011238L;
 
 	public SuperEspecieImagem(String caminho) {
-		this.setNome(caminho);
+		this.setFileName(caminho);
+	}
+	
+	
+
+	/* (non-Javadoc)
+	 * @see br.ueg.portalLab.model.EntityMedia#getDefaultMediaName()
+	 */
+	@Override
+	public String getDefaultMediaName() {
+		return  "especies.jpg";
 	}
 
+
+
 	public SuperEspecieImagem() {
-			this.nome = ESPECIES_DEFAULT_IMG_NAME;
+			this.fileName = this.getDefaultMediaName();
 	}
 
 	@Override
 	public TYPE getFileFromCaminho() {
-		return getFileFromCaminho(1, this.getNome());
+		return getFileFromCaminho(1, this.getFileName());
 	}
 	
 	/**
@@ -79,7 +89,7 @@ public abstract class SuperEspecieImagem<TYPE extends Media> extends EspecieMult
 	
 					 is = new FileInputStream(file);
 				}
-				imageAux = (TYPE) new AImage(this.getNome(), is);
+				imageAux = (TYPE) new AImage(this.getFileName(), is);
 
 			} catch (IOException e) {
 				System.err.println(e.getCause());
@@ -97,9 +107,9 @@ public abstract class SuperEspecieImagem<TYPE extends Media> extends EspecieMult
 		if(this.thumbMedia!=null){
 			return thumbMedia;
 		}else{
-			thumbMedia = this.getFileFromCaminho(2,this.getNome());
+			thumbMedia = this.getFileFromCaminho(2,this.getFileName());
 			if(thumbMedia!=null){
-				this.setNome(thumbMedia.getName());
+				this.setFileName(thumbMedia.getName());
 			}else{
 				thumbMedia = this.getDefaultMedia();
 			}
@@ -119,7 +129,7 @@ public abstract class SuperEspecieImagem<TYPE extends Media> extends EspecieMult
 
 		try {
 			media = (TYPE) new AImage(diretorioImagem.concat(separator)
-					.concat(ESPECIES_DEFAULT_IMG_NAME));
+					.concat(this.getDefaultMediaName()));
 		} catch (IOException e) {
 			e.printStackTrace();
 			media = (TYPE) new org.zkoss.zul.Image();

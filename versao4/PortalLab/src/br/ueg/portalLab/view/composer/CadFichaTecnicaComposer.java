@@ -8,7 +8,7 @@ import br.ueg.builderSoft.control.Control;
 import br.ueg.builderSoft.util.sets.SpringFactory;
 import br.ueg.portalLab.control.CadFichaTecnicaControl;
 import br.ueg.portalLab.control.CadImagemControl;
-import br.ueg.portalLab.control.CadMediaControl;
+import br.ueg.portalLab.control.SuperCadImageControl;
 import br.ueg.portalLab.model.EspecieImagem;
 import br.ueg.portalLab.model.FichaTecnica;
 
@@ -32,7 +32,7 @@ public class CadFichaTecnicaComposer extends SuperCadImagemComposer {
 	@Override
 	public Control<FichaTecnica<Image>> getControl() {
 		if (this.cadImagemControl == null) {
-			this.cadImagemControl = (CadMediaControl) SpringFactory
+			this.cadImagemControl = (SuperCadImageControl) SpringFactory
 					.getInstance().getBean("cadFichaTecnicaControl",CadFichaTecnicaControl.class);
 		}
 		return this.cadImagemControl;
