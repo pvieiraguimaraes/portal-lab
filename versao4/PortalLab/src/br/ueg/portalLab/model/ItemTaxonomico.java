@@ -1,6 +1,5 @@
 package br.ueg.portalLab.model;
 
-import java.awt.event.InvocationEvent;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,9 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
-
-import org.zkoss.image.Image;
-import org.zkoss.util.media.Media;
 
 import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.util.annotation.Attribute;

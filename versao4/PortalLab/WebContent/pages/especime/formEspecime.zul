@@ -1,6 +1,6 @@
 <zk>
 <window id="formEspecime" title="Formulário de Manutenção Especime" border="normal" xmlns:c="client"
-					closable="false"   visible="true" width="1050px">
+					closable="false"   visible="true" width="1050px" onCancel="controller.hideEditFormConfirmation();">
 	<hlayout>		
 			<tabbox id="tb" orient="horizontal" onSelect="controller.setButtonsNextTab()" width="850px">
 			    <tabs id="tabs" width="150px" >

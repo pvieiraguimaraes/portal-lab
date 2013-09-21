@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.zkoss.zk.ui.Executions;
-import org.zkoss.zk.ui.event.UploadEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zkplus.databind.AnnotateDataBinder;
 import org.zkoss.zkplus.databind.BindingListModelList;
@@ -24,14 +23,11 @@ import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.ListModel;
-import org.zkoss.zul.ListModelSet;
 import org.zkoss.zul.Listbox;
-import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
-import org.zkoss.zul.impl.InputElement;
 
 import br.ueg.builderSoft.control.Control;
 import br.ueg.builderSoft.model.Entity;
@@ -41,17 +37,14 @@ import br.ueg.builderSoft.util.sets.SpringFactory;
 import br.ueg.builderSoft.view.zk.composer.ComposerController;
 import br.ueg.portalLab.control.EspecimeControl;
 import br.ueg.portalLab.model.Autor;
+import br.ueg.portalLab.model.Colecao;
 import br.ueg.portalLab.model.Coletor;
 import br.ueg.portalLab.model.Datum;
 import br.ueg.portalLab.model.Determinador;
-import br.ueg.portalLab.model.EspecieImagem;
-import br.ueg.portalLab.model.EspecieMultimidia;
 import br.ueg.portalLab.model.Especime;
 import br.ueg.portalLab.model.EspecimeDeterminador;
-import br.ueg.portalLab.model.Estacao;
 import br.ueg.portalLab.model.EstagioDesenvolvimento;
 import br.ueg.portalLab.model.Fenologia;
-import br.ueg.portalLab.model.Colecao;
 import br.ueg.portalLab.model.ItemGeografico;
 import br.ueg.portalLab.model.ItemTaxonomico;
 import br.ueg.portalLab.model.Laboratorio;
@@ -908,7 +901,7 @@ public class EspecimeComposer extends ComposerController<Especime> {
 	 * @see
 	 * br.ueg.builderSoft.view.zk.composer.ComposerController#showEditForm()
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({ })
 	@Override
 	public void showEditForm() {
 		super.showEditForm();
@@ -1042,7 +1035,7 @@ public class EspecimeComposer extends ComposerController<Especime> {
 
 		removeSelectedItem(cb);
 	}
-
+	
 	public void removeColetor() {
 		Combobox cb = (Combobox) this.getEditForm().getFellow(
 				"cmbColetorListAvaliable");
