@@ -71,4 +71,21 @@ public class ConfigPortalLab extends Config {
 		}
 		return retorno;
 	}
+
+	public int getIntegranteImageWidth(){
+		String height = this.getKey("integranteWidth");
+		int retorno = 160;
+		if(height!=null){
+			retorno = Integer.parseInt(height);
+		}
+		return retorno;
+	}
+	public int getIntegranteImageHeight(){
+		String height = this.getKey("integranteHeight");
+		int retorno = 120;
+		if(height!=null){
+			retorno = Integer.parseInt(height);
+		}
+		return retorno;
+	}
 }

@@ -3,53 +3,48 @@ package br.ueg.portalLab.model;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 
-import javax.persistence.DiscriminatorValue;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
-import org.jboss.logging.Logger;
 import org.zkoss.image.AImage;
 import org.zkoss.image.Image;
-import org.zkoss.util.media.Media;
 
 import br.ueg.builderSoft.config.ConfigPortalLab;
 import br.ueg.portalLab.utils.ImageUtil;
 
-// Qualquer mudança nessa classe deve ser verificando impacto na classe IntegranteEquipe 
+//@javax.persistence.Entity
+
+@SuppressWarnings("serial")
 @MappedSuperclass
 @Inheritance(strategy=InheritanceType.JOINED)
-public abstract class SuperEspecieImagem<TYPE extends Media> extends EspecieMultimidia<TYPE> {
-	
+//@DiscriminatorColumn(name="tipo", discriminatorType=DiscriminatorType.STRING)
+//@DiscriminatorValue("  ")
+//@Table(name="especie_multimidia")
+public abstract class EntityImage<TYPE extends Image> extends EntityMedia<TYPE> {
 
+	
 	@Transient
 	protected TYPE thumbMedia;
 
 	private static final long serialVersionUID = 1962064058618011238L;
 
-	public SuperEspecieImagem(String caminho) {
+	public EntityImage(String caminho) {
 		this.setFileName(caminho);
 	}
 	
 	
 
-	/* (non-Javadoc)
-	 * @see br.ueg.portalLab.model.EntityMedia#getDefaultMediaName()
-	 */
-	@Override
-	public String getDefaultMediaName() {
-		return  "especies.jpg";
-	}
 
 
-
-	public SuperEspecieImagem() {
+	public EntityImage() {
 			this.fileName = this.getDefaultMediaName();
 	}
 
@@ -157,6 +152,8 @@ public abstract class SuperEspecieImagem<TYPE extends Media> extends EspecieMult
 			try {					
 				// nome doa rquivo da imagem do thumb
 				String absoluteFilePathThumb = getFileThumbImageName();
+				//apaga caso já exista para substituir
+				deleteFileFromDisk(absoluteFilePathThumb);
 				
 				InputStream streamMedia = this.getMedia().getStreamData();
 								
@@ -181,7 +178,8 @@ public abstract class SuperEspecieImagem<TYPE extends Media> extends EspecieMult
 
 	protected String getFileThumbImageName() {
 		return getDirectoryMedia(true) + "thumb_"
-				+ this.getMedia().getName();
+				//+ this.getMedia().getName();
+				+ this.getFileName();
 	}
 
 	

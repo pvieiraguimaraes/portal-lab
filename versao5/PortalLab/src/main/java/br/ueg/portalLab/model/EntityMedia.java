@@ -32,7 +32,7 @@ public abstract class EntityMedia<TYPE extends Media> extends Entity {
 	 * O caminho incui o caminho completo, isso � 
 	 * inclui o nome do arquivo de midia
 	 */
-	@Column(name="caminho_mult", length=1000, nullable=false)
+	@Column(name="caminho", length=1000, nullable=false)
 	@Attribute(Required = true, SearchField=true)
 	protected String fileName;
 	
@@ -56,7 +56,7 @@ public abstract class EntityMedia<TYPE extends Media> extends Entity {
 	 * @param file
 	 * @return
 	 */
-	private static String getExtension(String pathfile) {
+	public static String getExtension(String pathfile) {
 		String ext = pathfile.substring(pathfile.lastIndexOf('.') + 1);
 		return ext;
 	}
@@ -131,7 +131,22 @@ public abstract class EntityMedia<TYPE extends Media> extends Entity {
 	 * @param url indica se é para retornar camiha de url ou de sistema operacional, true-> url, false-> sistema
 	 * @return String Caminho do path de imagem
 	 */
-	public abstract String getContextPathMedia(boolean endWithSeparator, boolean url) ;
+	public String getContextPathMedia(boolean endWithSeparator, boolean url) {
+		String separator = System.getProperty("file.separator");
+		String diretorioImagem = ConfigPortalLab.getInstancia().getMediaWebPath();		
+		
+		String auxPath = url?separator.concat(diretorioImagem):"";
+		
+		String contextPathMedia = auxPath
+				.concat(separator)
+				.concat(this.getTypeMediaSimpleName())
+				.concat(separator)
+				.concat(endWithSeparator ? separator : "");
+		if(url){
+			contextPathMedia = contextPathMedia.replace(separator, "/");
+		}
+		return contextPathMedia;
+	}
 
 	/** 
 	 * @param endWithSeparator indica se é para adicionar o separador de diretório no final
@@ -196,7 +211,8 @@ public abstract class EntityMedia<TYPE extends Media> extends Entity {
 
 	protected String getFileMediaName() {
 		return getDirectoryMedia(true)
-				+ this.getMedia().getName();
+				//+ this.getMedia().getName();
+				+ this.getFileName();
 	}
 
 	/**
@@ -262,7 +278,9 @@ public abstract class EntityMedia<TYPE extends Media> extends Entity {
 			InputStream streamMedia = this.getMedia().getStreamData();
 	
 			// Nome do arquivo da imgem original
-			String absoluteFilePath = getFileMediaName();			
+			String absoluteFilePath = getFileMediaName();
+			//apaga caso j� exista para substituir
+			deleteFileFromDisk(absoluteFilePath);
 	
 			// grava o arquivo da imagem postada
 			retorno = writeInputStreamToDisk(absoluteFilePath, streamMedia);
