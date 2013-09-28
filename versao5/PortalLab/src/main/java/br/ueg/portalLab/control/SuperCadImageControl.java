@@ -22,10 +22,12 @@ public class SuperCadImageControl<T extends EspecieMultimidia> extends CadMediaC
 	public SuperCadImageControl(){
 		super();
 		try {
-			textClassName = Reflection.getParameterizedTypeClass(this.getClass(), 0).getSimpleName();
+			Class<?> parameterizedTypeClass = Reflection.getParameterizedTypeClass(this.getClass(), 0);
+			textClassName = parameterizedTypeClass!=null?parameterizedTypeClass.getSimpleName():"padrao";
 		} catch (Exception e) {
 			System.out.println("ERRO: CadImageControlConstructor");
-			e.printStackTrace();
+			//e.printStackTrace();
+			textClassName="padrao";
 		}
 	}
 	protected ArrayList<String> addFilterTextToActionFindByCriteria(T entity) {
