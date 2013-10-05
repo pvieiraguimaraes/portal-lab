@@ -1,7 +1,7 @@
 /**
  * 
  */
-package br.ueg.portalLab.control.jogos.cruzada.logica;
+package br.ueg.portalLab.view.component.jogos.cruzadas;
 
 import java.util.HashMap;
 
