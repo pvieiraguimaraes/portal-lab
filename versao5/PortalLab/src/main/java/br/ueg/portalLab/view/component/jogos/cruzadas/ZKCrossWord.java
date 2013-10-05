@@ -9,7 +9,6 @@ import org.zkoss.zul.Hlayout;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Vlayout;
 
-import br.ueg.portalLab.control.jogos.cruzada.logica.CrossWordLogical;
 import br.ueg.portalLab.model.jogo.cruzada.Answer;
 import br.ueg.portalLab.model.jogo.cruzada.CrossWord;
 import br.ueg.portalLab.model.jogo.cruzada.Square;

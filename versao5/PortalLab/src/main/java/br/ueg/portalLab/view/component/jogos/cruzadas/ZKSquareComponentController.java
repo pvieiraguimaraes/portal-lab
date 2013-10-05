@@ -10,6 +10,7 @@ import org.zkoss.zul.Textbox;
 import br.ueg.portalLab.model.jogo.cruzada.Answer;
 import br.ueg.portalLab.model.jogo.cruzada.Square;
 import br.ueg.portalLab.model.jogo.cruzada.TypeAnswer;
+import br.ueg.portalLab.utils.FormaterText;
 
 public class ZKSquareComponentController {
 
