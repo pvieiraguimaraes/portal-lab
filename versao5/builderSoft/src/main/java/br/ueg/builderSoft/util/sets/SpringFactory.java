@@ -18,7 +18,7 @@ public class SpringFactory extends ClassPathXmlApplicationContext {
 	 */
 	public static ClassPathXmlApplicationContext getInstance() {
 		if (instance == null) {
-			instance = new ClassPathXmlApplicationContext("br/ueg/builderSoft/config/spring.xml");
+			instance = new ClassPathXmlApplicationContext("classpath:/br/ueg/builderSoft/config/spring.xml");
 			instance.getBeanFactory().registerScope("session", new SessionScope());
 		} 
 		return instance;
