@@ -1,0 +1,9 @@
+<?page title="" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window position="left,top">
+<vlayout>
+<label value="Clique na Ficha para fechar"/>
+<image content="@{controller.especieImagem.mediaVerso }" onClick="controller.closeImage()" width="100%"> </image>
+</vlayout>
+</window>
+</zk>

@@ -88,4 +88,21 @@ public class ConfigPortalLab extends Config {
 		}
 		return retorno;
 	}
+	
+	public int getFichaTecnicaWidth(){
+		String height = this.getKey("fichatecnicaWidth");
+		int retorno = 308;
+		if(height!=null){
+			retorno = Integer.parseInt(height);
+		}
+		return retorno;
+	}
+	public int getFichaTecnicaHeight(){
+		String height = this.getKey("fichatecnicaHeight");
+		int retorno = 180;
+		if(height!=null){
+			retorno = Integer.parseInt(height);
+		}
+		return retorno;
+	}
 }
