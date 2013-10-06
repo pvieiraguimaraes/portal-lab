@@ -5,7 +5,7 @@
 		  <vbox width="320px">
 			<div style="text-align:center;" visible="@{crudCadMediaController.selectedEntity.isNew }"><label style="font-weight:bold">Selecione o item taxonômico da ficha.</label></div>				
 			<tree id="treeItemTaxonomicoForm"
-				rows="10" 
+				rows="23" 
 				hflex="1" 
 				model="@{crudCadMediaController.itemTaxonomicoTreeModel}"
 				onSelect="crudCadMediaController.selectItemTaxonomicoForm()"							
@@ -36,20 +36,36 @@
 		</vbox>
 		<vlayout>
 				<hbox>																		
-					<button label="Selecionar Imagem"
+					<button label="Selecionar Frente"
 							upload="true,maxsize=5000" 
 							onUpload="controller.addImage(event)" 
 							visible="@{crudCadMediaController.selectedEntity.isNew }"
 							/>
 					
 				</hbox>
-				<label id="camimhoImagem"
-						value="@{controller.especieImagem.caminho }" />
+				<label sclass="titulo-coluna">Ficha Técnica - Frente</label>
 				<image content="@{controller.especieImagem.thumbMedia }"
 				width="300px"
 					id="imgEspecie">
 					<attribute name="onClick">
 						controller.openImage();
+					</attribute>
+				</image>
+				<html><hr></hr></html>
+				<hbox>																		
+					<button label="Selecionar Verso"
+							upload="true,maxsize=5000" 
+							onUpload="controller.addImageVerso(event)" 
+							visible="@{crudCadMediaController.selectedEntity.isNew }"
+							/>
+					
+				</hbox>				
+				<label sclass="titulo-coluna">Ficha Técnica - Verso</label>
+				<image content="@{controller.especieImagem.thumbMediaVerso }"
+				width="300px"
+					id="imgEspecieVerso">
+					<attribute name="onClick">
+						controller.openImageVerso();
 					</attribute>
 				</image>				
 				<hlayout width="100%">

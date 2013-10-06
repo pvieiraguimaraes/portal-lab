@@ -55,7 +55,7 @@ public abstract class SuperEspecieImagem<TYPE extends Media> extends EspecieMult
 
 	@Override
 	public TYPE getFileFromCaminho() {
-		return getFileFromCaminho(1, this.getFileName());
+		return getFileFromCaminho(1, this.getFileName(), this.media);
 	}
 	
 	/**
@@ -63,7 +63,7 @@ public abstract class SuperEspecieImagem<TYPE extends Media> extends EspecieMult
 	 * @param type
 	 * @return Image a partir do nome do arquivo
 	 */
-	public TYPE getFileFromCaminho(int type, String fileName){
+	public TYPE getFileFromCaminho(int type, String fileName, Media vMedia){
 		TYPE imageAux = null;
 		InputStream is = null;;
 		if (fileName != null && fileName.length() > 0) {
@@ -79,8 +79,8 @@ public abstract class SuperEspecieImagem<TYPE extends Media> extends EspecieMult
 				}
 				if(this.isNew()){
 					InputStream streamMedia ;
-					if(this.media!=null){
-						streamMedia = this.media.getStreamData();
+					if(vMedia!=null){
+						streamMedia = vMedia.getStreamData();
 					}else{
 						streamMedia = this.getDefaultMedia().getStreamData();
 					}
@@ -90,7 +90,7 @@ public abstract class SuperEspecieImagem<TYPE extends Media> extends EspecieMult
 	
 					 is = new FileInputStream(file);
 				}
-				imageAux = (TYPE) new AImage(this.getFileName(), is);
+				imageAux = (TYPE) new AImage(/*this.getFileName()*/aux+fileName, is);
 
 			} catch (IOException e) {
 				System.err.println(e.getCause());
@@ -108,9 +108,9 @@ public abstract class SuperEspecieImagem<TYPE extends Media> extends EspecieMult
 		if(this.thumbMedia!=null){
 			return thumbMedia;
 		}else{
-			thumbMedia = this.getFileFromCaminho(2,this.getFileName());
+			thumbMedia = this.getFileFromCaminho(2,this.getFileName(), this.media);
 			if(thumbMedia!=null){
-				this.setFileName(thumbMedia.getName());
+				//this.setFileName(thumbMedia.getName());
 			}else{
 				thumbMedia = this.getDefaultMedia();
 			}

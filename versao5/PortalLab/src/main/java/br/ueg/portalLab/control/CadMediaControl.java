@@ -71,7 +71,7 @@ public class CadMediaControl<T extends EntityMedia> extends
 		ArrayList<String> condicoes = new ArrayList<String>();
 		String nome = entity.getFileName();
 		if(nome!=null && !nome.equals("")){
-			condicoes.add("nome like '%".concat(nome).concat("%'"));			
+			condicoes.add("fileName like '%".concat(nome).concat("%'"));			
 		}
 		return condicoes;
 	}

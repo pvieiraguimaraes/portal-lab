@@ -54,7 +54,7 @@ public abstract class SuperCadImagemComposer<TYPE extends SuperEspecieImagem<Ima
 	@AttributeView(key = "fileName", isEntityValue = true, fieldType = String.class, isVisible = true, caption = "especieImagem_nome_Column", isSearchField = true)
 	private String fldNome;
 	private Treeitem treeSelectedItem;
-	private SuperEspecieImagem superEspecieImagem = null;
+	protected TYPE superEspecieImagem = null;
 	@AttributeView(key = "media", isEntityValue = true, fieldType = Media.class, isVisible = true, caption = "especieImagem_Column", isSearchField = false)
 	private Media fldMedia;
 
@@ -200,6 +200,16 @@ public abstract class SuperCadImagemComposer<TYPE extends SuperEspecieImagem<Ima
 		return retorno;		
 	}
 
+	@Override
+	public Class getEntityClass() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void newEntity() {
+		this.superEspecieImagem = this.getGenericTypeImage();
+		super.newEntity();
+	}
 	/**
 	 * @return the treeSelectedItem
 	 */
@@ -238,15 +248,12 @@ public abstract class SuperCadImagemComposer<TYPE extends SuperEspecieImagem<Ima
 		org.zkoss.util.media.Media media = event.getMedia();
 		((Button) event.getTarget()).setLabel(media.getName());
 		if (media instanceof org.zkoss.image.Image) {
-			org.zkoss.zul.Image image = new org.zkoss.zul.Image();
-			image.setContent((Image) media);
 	
-			TYPE ei = this.getGenericTypeImage();
+			TYPE ei = this.getGenericTypeImage();//this.getEspecieImagem();
 			ei.setMedia((AImage) media);
 	
 			this.setEspecieImagem(ei);
-			this.binderForm.loadComponent(this.getEditForm().getFellow(
-					"imgEspecie"));
+			this.binderForm.loadComponent(this.getEditForm().getFellow("imgEspecie"));
 	
 		} else {
 			Messagebox.show("Somente imagem podem ser incluídas");
@@ -255,7 +262,7 @@ public abstract class SuperCadImagemComposer<TYPE extends SuperEspecieImagem<Ima
 		return true;
 	}
 
-	public SuperEspecieImagem getEspecieImagem() {
+	public TYPE getEspecieImagem() {
 		if(this.getFldMedia()==null){
 			superEspecieImagem.setMedia(superEspecieImagem.getFileFromCaminho());
 		}else{
@@ -270,8 +277,7 @@ public abstract class SuperCadImagemComposer<TYPE extends SuperEspecieImagem<Ima
 		this.setFldMedia(this.superEspecieImagem.getMedia());
 		this.setFldNome(this.superEspecieImagem.getFileName());
 		
-		this.binderForm.loadComponent(this.getEditForm()
-				.getFellow("imgEspecie"));
+		//this.binderForm.loadComponent(this.getEditForm().getFellow("imgEspecie"));
 	}
 
 	public void openImage() {
