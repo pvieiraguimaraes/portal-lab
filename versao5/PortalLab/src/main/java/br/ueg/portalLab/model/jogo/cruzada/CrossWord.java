@@ -22,7 +22,7 @@ public class CrossWord extends Entity{
 
 	@Id()
 	@GeneratedValue
-	@Column(name = "id_cruzadinha")
+	@Column(name = "id_cruz")
 	private Long id;
 	@Column(name = "nome")
 	@Attribute(Required = true, SearchField = true)
@@ -31,7 +31,7 @@ public class CrossWord extends Entity{
 	private int crossXDimension; /// Colunas
 	@Column(name = "dimensao_y_linhas")
 	private int crossYDimension; /// Linhas
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="crosword", targetEntity=Answer.class)
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="crossword", targetEntity=Answer.class)
 	private List<Answer> answers = new ArrayList<Answer>();
 	@Transient
 	private HashMap<String,Square> squares = new HashMap<String,Square>();
