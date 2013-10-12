@@ -19,7 +19,7 @@
 						<hlayout><label hflex="1">Nome do Integrante: </label><textbox value="@{controller.fldNomeBusca }" hflex="1"></textbox></hlayout>					
 						<hlayout>
 							<button label="Buscar" hflex="1" onClick="controller.searchEntity()"/>
-							<button label="Nova Imagem" onClick="controller.newEntity()" id="crudWindowBtnNew" image="../../images/editar.png" width="200px"/>
+							<button label="Novo Integrante" onClick="controller.newEntity()" id="crudWindowBtnNew" image="../../images/editar.png" width="200px"/>
 						</hlayout>										
 					</vlayout>
 				</west>

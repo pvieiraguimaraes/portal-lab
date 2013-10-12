@@ -8,8 +8,8 @@
 	     		<menuitem id="UC_CADIMAGEM"  		href="/pages/cadimagem/" 				label="Cadastro de Imagem"/>
 	     		<menuitem id="UC_CADFICHATECNICA"	href="/pages/cadfichatecnica/"			label="Cadastro de Fichas Técncias"/>
 	     		<menuitem id="UC_CADGLOSSARIO" 		href="/pages/glossario/" 				label="Cadastro de Glossário"/>
-	     		<menuitem  							href="/pages/cadintegrante/" 			label="Cadastro de Integrantes da Equipe"/>
-	     		<menuitem 							href="/pages/agrupador/" 				label="Cadastro de Agrupadores de Item Taxónomico"/>
+	     		<menuitem id="UC_CADINTEGRANTE"		href="/pages/cadintegrante/" 			label="Cadastro de Integrantes da Equipe"/>
+	     		<menuitem id="UC_CADAGRUPADOR"		href="/pages/agrupador/" 				label="Cadastro de Agrupadores de Item Taxónomico"/>
 			</menupopup>    
         </menu>
     </menubar>
