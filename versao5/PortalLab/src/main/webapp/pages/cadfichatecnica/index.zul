@@ -44,7 +44,7 @@
 										
 						<hlayout>
 							<button label="Buscar" hflex="1" onClick="controller.searchEntity()"/>
-							<button label="Nova Imagem" onClick="controller.newEntity()" id="crudWindowBtnNew" image="../../images/editar.png" width="200px"/>
+							<button label="Nova Ficha Técnica" onClick="controller.newEntity()" id="crudWindowBtnNew" image="../../images/editar.png" width="200px"/>
 						</hlayout>										
 					</vlayout>
 				</west>

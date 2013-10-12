@@ -34,7 +34,8 @@ public class CadMediaValidatorControl extends ValidatorControl {
 			(entityMedia.getFileName()!=null && entityMedia.getFileName().equalsIgnoreCase(entityMedia.getDefaultMediaName()))	
 		){
 			retorno = false;
-			messagesControl.addMessageError("especieimagem_imagem");				
+			String entityName = entityMedia.getClass().getSimpleName().toLowerCase();
+			messagesControl.addMessageError(entityName+"_imagem");				
 		}
 		return retorno;
 	}
