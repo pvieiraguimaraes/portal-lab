@@ -1,0 +1,8 @@
+####Este projeto serve para adicionar ao MAVEN local as dependencias ####
+####que não existem em repositorios									 ####
+
+Para adicionar as dependencias ao MAVEN local basta executar o:
+-mvn: install
+verifique na pasta .m2 do seu usuário se foram criados as dependencias:
+com\microsoft\sqlserver\sqljdbc4
+biz\source_code\miniTemplator
