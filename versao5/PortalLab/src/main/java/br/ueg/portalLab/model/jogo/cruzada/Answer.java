@@ -22,7 +22,7 @@ public class Answer extends Entity{
 
 	@Id()
 	@GeneratedValue
-	@Column(name = "id_cruzadinha")
+	@Column(name = "id_resp")
 	private Long id;
 	@Enumerated
 	@Column(name="tipo")
