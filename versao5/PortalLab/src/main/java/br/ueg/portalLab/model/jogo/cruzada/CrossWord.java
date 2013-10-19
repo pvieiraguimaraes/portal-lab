@@ -28,24 +28,24 @@ public class CrossWord extends Entity{
 	@Attribute(Required = true, SearchField = true)
 	private String name;
 	@Column(name = "dimensao_x_colunas")
-	private int crossXDimension; /// Colunas
+	private Integer crossXDimension; /// Colunas
 	@Column(name = "dimensao_y_linhas")
-	private int crossYDimension; /// Linhas
+	private Integer crossYDimension; /// Linhas
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="crossword", targetEntity=Answer.class)
 	private List<Answer> answers = new ArrayList<Answer>();
 	@Transient
 	private HashMap<String,Square> squares = new HashMap<String,Square>();
 	
-	public int getCrossXDimension() {
+	public Integer getCrossXDimension() {
 		return crossXDimension;
 	}
-	public void setCrossXDimension(int crossXDimension) {
+	public void setCrossXDimension(Integer crossXDimension) {
 		this.crossXDimension = crossXDimension;
 	}
-	public int getCrossYDimension() {
+	public Integer getCrossYDimension() {
 		return crossYDimension;
 	}
-	public void setCrossYDimension(int crossYDimension) {
+	public void setCrossYDimension(Integer crossYDimension) {
 		this.crossYDimension = crossYDimension;
 	}
 	public List<Answer> getAnswers() {

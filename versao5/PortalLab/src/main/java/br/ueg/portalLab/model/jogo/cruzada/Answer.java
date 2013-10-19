@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.Hibernate;
+
 import br.ueg.builderSoft.model.Entity;
 
 @SuppressWarnings("serial")
@@ -110,4 +112,30 @@ public class Answer extends Entity{
 		this.id = id;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (Hibernate.getClass(this) != Hibernate.getClass(obj))
+			return false;
+		Entity other = (Entity) obj;
+		if (getId() == null) {
+			if (other.getId() != null)
+				return false;
+			///VALIDAÇÃO PARA FUNCIONAR MODO ADMINISTRADOR DA CRUZADINHA
+			if (other instanceof Answer)
+			{
+				if(this.getStartPositionX() != ((Answer) other).getStartPositionX() ||
+				   this.getStartPositionY() != ((Answer) other).getStartPositionY() 	
+				)
+					return false;
+			}
+			///VALIDÇÃO PARA FUNCIONAR MODO ADMINISTRADOR DA CRUZADINHA END
+			
+		} else if (!getId().equals(other.getId()))
+			return false;
+		return true;
+	}
 }
