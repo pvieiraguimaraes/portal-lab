@@ -22,10 +22,10 @@
 	                	<label value="Laboratório" />
 	                	<combobox name="cmdProgramado"
 	                		id="cmbProgramado" 
-	                		model="@{controller.ListLaboratorio}" 
+	                		model="@{controller.laboratorioList}" 
 	                		selectedItem="@{controller.fldLaboratorio}"
 	                		autodrop="true"
-	                		
+	                		style="width: 200px"
 	                		>
 	                		<comboitem self="@{each=laboratorio}" label="@{laboratorio.nome}" value="@{laboratorio}"/>	
 	                	</combobox>

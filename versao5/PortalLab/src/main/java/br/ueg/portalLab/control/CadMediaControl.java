@@ -55,8 +55,12 @@ public class CadMediaControl<T extends EntityMedia> extends
 	@Override
 	public boolean actionSave(SubControllerManager<T> subControllerManager) {
 		T entity = (T) this.getMapFields().get("entity");
-		entity.writeMediaToDisk();
-		return super.actionSave(subControllerManager);
+		
+		boolean retorno = super.actionSave(subControllerManager);
+		if(retorno){
+			entity.writeMediaToDisk();
+		}
+		return retorno;
 	}
 
 	@Override
