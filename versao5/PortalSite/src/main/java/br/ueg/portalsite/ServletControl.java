@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import biz.source_code.miniTemplator.MiniTemplator;
+import br.ueg.portalsite.utils.ParserGlossario;
 
 @SuppressWarnings("serial")
 public class ServletControl extends HttpServlet {
@@ -19,6 +20,7 @@ public class ServletControl extends HttpServlet {
 	private String separator;
 	private String path;
 	private String pathMedia;
+	private ParserGlossario parserGlossario = new ParserGlossario();
 	
 	public ServletControl() {
 		super();
@@ -60,7 +62,9 @@ public class ServletControl extends HttpServlet {
 			GeneratorPage generator = new GeneratorPage(page, getPathTemplate(page), templator, pathMedia);
 			templateAux = generator.generatePage();
 			
-			templator.setVariable("content", templateAux.generateOutput());
+			
+			
+			templator.setVariable("content", this.parserGlossario.processaHTML(templateAux.generateOutput()));
 			
 			htmlResult = templator.generateOutput();
 			
