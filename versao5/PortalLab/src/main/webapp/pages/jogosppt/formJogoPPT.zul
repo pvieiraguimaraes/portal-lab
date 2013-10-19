@@ -1,0 +1,36 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="Manutenção de Jogos em Power Point" border="normal">
+		<hlayout>
+		  <vbox width="320px">
+			<div style="text-align:center;" ><label style="font-weight:bold">Preencha os dados do Jogo.</label></div>				
+			
+			<label sclass="titulo-coluna" >Nome</label>
+			<textbox value="@{controller.fldNome }" width="318px"/>
+			<label sclass="titulo-coluna" >Descrição</label>
+			<textbox value="@{controller.fldDescricao }" rows="6" cols="60" maxlength="275"/>						
+		</vbox>
+		<vlayout>
+				<hbox>																		
+					<button label="Selecionar aquivo Zip"
+							upload="true,maxsize=20000" 
+							onUpload="controller.addZip(event)" 
+							
+							/>
+					
+				</hbox>
+				<image content="@{controller.selectedEntity.thumbMedia }"
+				height="120px" 
+					id="imgIntegrante">
+					<attribute name="onClick">
+						controller.openImage();
+					</attribute>
+				</image>				
+				<hlayout width="100%">
+					<button id="btnSalvar" label="Salvar" hflex="1" onClick="controller.saveEntity()"/>
+					<button id="btnCancelEdit" label="Cancelar" hflex="1" onClick="controller.cancelEditEntity()"/>
+				</hlayout>
+			</vlayout>
+		</hlayout>
+	</window>
+</zk>
