@@ -39,6 +39,9 @@ public class ItemTaxonomicoComposer extends ComposerController<ItemTaxonomico> {
 	@AttributeView(key = "nome", isEntityValue = true, fieldType = String.class, isVisible=true, caption="itemtaxonomico_nomeColumn")
 	private String fldNome;
 	
+	@AttributeView(key = "nomePopular", isEntityValue = true, fieldType = String.class, isVisible=true, caption="itemtaxonomico_nomePopularColumn")
+	private String fldNomePopular;
+	
 	@AttributeView(key = "nivelTaxonomico", isEntityValue = true, fieldType =NivelTaxonomico.class, isVisible=true, caption="itemtaxonomico_nivelColumn")
 	private NivelTaxonomico fldNivelTaxonomico;
 	
@@ -157,6 +160,14 @@ public class ItemTaxonomicoComposer extends ComposerController<ItemTaxonomico> {
 	 */
 	public void setFldCaracteristica(String fldCaracteristica) {
 		this.fldCaracteristica = fldCaracteristica;
+	}
+
+	public String getFldNomePopular() {
+		return fldNomePopular;
+	}
+
+	public void setFldNomePopular(String fldNomePopular) {
+		this.fldNomePopular = fldNomePopular;
 	}
 
 	public boolean getPodeExcluir(){

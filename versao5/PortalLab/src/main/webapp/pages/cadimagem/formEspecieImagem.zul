@@ -33,6 +33,8 @@
 			<label 	value="@{crudCadMediaController.fldItemTaxonomico.nomeCompleto }" 
 									visible="@{crudCadMediaController.isEdit }"
 									/>
+			<hlayout> <label sclass="titulo-coluna" value="Imagem representativa"/>
+			<checkbox checked="@{crudCadMediaController.fldRepresentativa }"></checkbox></hlayout>
 		</vbox>
 		<vlayout>
 				<hbox>								

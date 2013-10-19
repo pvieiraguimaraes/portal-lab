@@ -1,8 +1,16 @@
 package br.ueg.portalLab.model;
 
+import javax.persistence.Column;
+
+import br.ueg.builderSoft.util.annotation.Attribute;
+
 @javax.persistence.Entity
 public class EspecieImagem<Image> extends SuperEspecieImagem {
 
+	@Attribute(Required=false, SearchField = true)
+	@Column(name="representativa")
+	private Boolean representativa = new Boolean(false);
+	
 	/**
 	 * 
 	 */
@@ -11,6 +19,14 @@ public class EspecieImagem<Image> extends SuperEspecieImagem {
 	@Override
 	public String getTypeMediaSimpleName() {
 		return "image";
+	}
+
+	public Boolean getRepresentativa() {
+		return representativa;
+	}
+
+	public void setRepresentativa(Boolean representativa) {
+		this.representativa = representativa;
 	}
 
 }

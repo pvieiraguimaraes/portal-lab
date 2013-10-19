@@ -25,13 +25,14 @@ public class ColecaoComposer extends TabelaComposerController<Colecao> {
 	@AttributeView(key = "nome", isEntityValue = true, fieldType = String.class, isVisible=true, caption="colecao_nomeColumn")
 	private String fldNome;
 	
-	@AttributeView(key = "sigla", isEntityValue = true, fieldType = String.class, isVisible=true, caption="colecao_siglaColumn", component=ComponentType.RADIO_BUTTON)
+	@AttributeView(key = "sigla", isEntityValue = true, fieldType = String.class, isVisible=true, caption="colecao_siglaColumn", component=ComponentType.INPUT_TEXT)
 	private String fldSigla;
 	
 	@AttributeView(key = "laboratorio", isEntityValue = true, fieldType = Laboratorio.class, isVisible=true, caption="colecao_laboratorioColumn")
 	private Laboratorio fldLaboratorio;
 			
-
+	@AttributeView(key = "descricao", isEntityValue = true, fieldType = String.class, isVisible=true, caption="colecao_siglaColumn", component=ComponentType.INPUT_TEXT_AREA)
+	private String fldDescricao;
 
 	/**
 	 * 
@@ -83,6 +84,16 @@ public class ColecaoComposer extends TabelaComposerController<Colecao> {
 	
 	public BindingListModelList<Entity> getLaboratorioList() {
 		return this.getFKEntityModel("fldLaboratorio");
+	}
+
+
+	public String getFldDescricao() {
+		return fldDescricao;
+	}
+
+
+	public void setFldDescricao(String fldDescricao) {
+		this.fldDescricao = fldDescricao;
 	}
 
 }

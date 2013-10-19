@@ -64,6 +64,10 @@
 						                    <textbox value="@{itemTaxonomicoController.fldNome}" maxlength="50" width = "98%"/>                    
 						                </row>
 						                <row>
+						                    <label value="Nome Popular:" />
+						                    <textbox value="@{itemTaxonomicoController.fldNomePopular}" maxlength="50" width = "98%"/>                    
+						                </row>
+						                <row>
 						                	<label value="Características"/>
 						                	<textbox rows="5" cols="70" value="@{itemTaxonomicoController.fldCaracteristica }"/>
 						                </row>
@@ -108,7 +112,7 @@
 				                <treecell  onDoubleClick="itemTaxonomicoController.editEntity()">
 
 				                		<label value="${each.nivelTaxonomico.nome }" sclass="titulo-coluna"/>
-				                		<label value="${each.nome }"/>
+				                		<label value="${each.nomePopularCompleto }"/>
 
 				                </treecell> 
 				                <treecell>

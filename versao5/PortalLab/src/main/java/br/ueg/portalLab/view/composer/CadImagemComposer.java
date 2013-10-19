@@ -5,7 +5,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.zkoss.image.Image;
 import org.zkoss.zkplus.databind.BindingListModelList;
+import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Tree;
 
 import br.ueg.builderSoft.control.Control;
 import br.ueg.builderSoft.model.Entity;
@@ -28,6 +30,12 @@ public class CadImagemComposer extends SuperCadImagemComposer {
 	
 	@AttributeView(key = "estacao", isEntityValue = true, fieldType = Estacao.class, isVisible = true, caption = "especieImagem_estacao_Column", isSearchField=true)
 	private Estacao fldEstacao;
+	
+	@AttributeView(key = "representativa", isEntityValue = true, fieldType = Boolean.class, isVisible = true, caption = "especieImagem_representativa_Column", isSearchField=true)
+	private Boolean fldRepresentativa;
+	
+	@AttributeView(key = "representativaBusca", isEntityValue = false, fieldType = Boolean.class, isVisible = true, caption = "especieImagem_representativa_Column", isSearchField=true)
+	private Boolean fldRepresentativaBusca;
 	
 	/**
 	 * @return the fldEstacao
@@ -57,6 +65,14 @@ public class CadImagemComposer extends SuperCadImagemComposer {
 		this.fldEstacao = fldEstacao;
 	}
 
+	public Boolean getFldRepresentativa() {
+		return fldRepresentativa;
+	}
+
+	public void setFldRepresentativa(Boolean fldRepresentativa) {
+		this.fldRepresentativa = fldRepresentativa;
+	}
+
 	public void selectEstacaoBusca(){
 		Combobox CBEstacao = (Combobox)this.crudCadMedia.getFellow("cmbEstacaoBusca");
 		Estacao estacaoField;
@@ -69,6 +85,14 @@ public class CadImagemComposer extends SuperCadImagemComposer {
 	}
 	public BindingListModelList<Entity> getEstacaoList() {
 		return this.getFKEntityModel("fldEstacao");
+	}
+
+	public Boolean getFldRepresentativaBusca() {
+		return fldRepresentativaBusca;
+	}
+
+	public void setFldRepresentativaBusca(Boolean fldRepresentativaBusca) {
+		this.fldRepresentativaBusca = fldRepresentativaBusca;
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -88,5 +112,14 @@ public class CadImagemComposer extends SuperCadImagemComposer {
 					.getInstance().getBean("cadImagemControl",CadImagemControl.class);
 		}
 		return this.cadImagemControl;
+	}
+	
+	public boolean searchEntity() {
+		
+		Checkbox represen = (Checkbox)this.crudCadMedia.getFellow("representatividadeBusca");
+		this.setFldRepresentativa(represen.isChecked());
+		
+		boolean retorno = super.searchEntity();
+		return retorno;		
 	}
 }
