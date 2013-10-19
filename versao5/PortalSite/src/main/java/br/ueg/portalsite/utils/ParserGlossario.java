@@ -27,10 +27,10 @@ Map glossario = new HashMap();
 		initGlossario();
 	}
 	private void initGlossario() {
-		glossario = new HashMap();
+		this.glossario = new HashMap();
 		List<Glossario> list = this.getListEntity(new Glossario());
-		for (Glossario glossario : list) {
-			this.glossario.put(glossario.getNome(),glossario.getDescricao());
+		for (Glossario gloss : list) {
+			this.glossario.put(gloss.getNome(),gloss.getDescricao());
 		}
 		this.codificaGlossario();
 	}
@@ -81,7 +81,6 @@ Map glossario = new HashMap();
 	}
 	
 	public void printProcessado(){
-		initGlossario();
 	try {
 		BufferedReader in = new BufferedReader(new FileReader("F:/temp/portal/conheca_o_cerrado.htm"));
 		String conteudoHtml = this.readFile(in);
@@ -100,6 +99,7 @@ Map glossario = new HashMap();
 		String strProcessada="";
 		String glossarioValue="";
 		//System.out.println(str);
+		initGlossario();
 		String[] palavra = conteudoText.split(" ");
 		for (int i=0; i< palavra.length;i++) {
 			glossarioValue=this.getGlossario(palavra[i]);

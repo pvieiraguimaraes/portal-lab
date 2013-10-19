@@ -4,8 +4,9 @@ import java.io.IOException;
 import java.util.List;
 
 import biz.source_code.miniTemplator.MiniTemplator;
+import br.ueg.builderSoft.util.Utils;
 import br.ueg.portalLab.model.IntegranteEquipe;
-import br.ueg.portalsite.test.PersonControl;
+import br.ueg.portalsite.control.PersonControl;
 
 public class GeneratorPage {
 
@@ -15,8 +16,7 @@ public class GeneratorPage {
 	protected String path;
 	protected String pathMedia;
 	
-	protected String separator = System.getProperty("file.separator");
-	protected String folderTeam = "integrante_equipe";
+	protected String folderTeam = "integrante_equipe/";
 
 	public GeneratorPage() {
 	}
@@ -65,7 +65,7 @@ public class GeneratorPage {
 		List<IntegranteEquipe> list = control.getTeam();
 		for (IntegranteEquipe integrante : list) {
 			temp.setVariable("curriculum", integrante.getLinkLates());
-			temp.setVariable("picture", pathMedia + folderTeam + separator + integrante.getFileName());
+			temp.setVariable("picture", pathMedia + folderTeam + Utils.translateName(integrante.getFileName()));
 			temp.setVariable("description", integrante.getDescricao());
 			temp.addBlock("person");
 		}
