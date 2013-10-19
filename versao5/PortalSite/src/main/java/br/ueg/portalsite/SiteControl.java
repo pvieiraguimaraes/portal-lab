@@ -1,5 +1,6 @@
 package br.ueg.portalsite;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.ueg.builderSoft.model.Entity;
@@ -23,9 +24,11 @@ public class SiteControl<E extends Entity> {
 
 	@SuppressWarnings("unchecked")
 	public List<E> getListEntity(Entity entity) {
-		List<E> resultList = genericDAO.getListFK(
-				(Class<Entity>) entity.getClass(), true);
-		resultList = (List<E>) genericDAO.getList(entity, null);
+		List<E> resultList =  new ArrayList<>();
+		if (entity != null) {
+			genericDAO.getSession().close();
+			resultList = (List<E>) genericDAO.getList(entity, null);
+		}
 		return resultList;
 	}
 

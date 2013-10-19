@@ -31,7 +31,7 @@ public class ServletControl extends HttpServlet {
     	servletContext = getServletContext();
     	separator = System.getProperty("file.separator");
 		path = servletContext.getRealPath("/");
-		pathMedia = "C:\\" + "portallab" + separator + "media" + separator;
+		pathMedia = "media/";
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -44,6 +44,8 @@ public class ServletControl extends HttpServlet {
 	}
 	
 	private String getPathTemplate(String templateName){
+		if(templateName == "index")
+			return path + separator + templateName + ".html";
 		return path + separator + "templates" + separator + templateName + ".html";
 	}
 	
