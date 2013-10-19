@@ -37,6 +37,10 @@
 	                <row>
 	                    <label value="Sigla:" />
 	                    <textbox value="@{controller.fldSigla}" maxlength="10" width = "148px" />
+	                </row>
+	                <row>
+	                	<label value="Descrição"/>
+	                	<textbox rows="5" cols="70" value="@{controller.fldDescricao }"/>
 	                </row>	                	                	                 
 	            </rows>
 	        </grid>

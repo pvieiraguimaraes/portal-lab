@@ -25,10 +25,15 @@ public class CadImagemControl extends SuperCadImageControl<EspecieImagem> {
 	protected ArrayList<String> addFilterTextToActionFindByCriteria(EspecieImagem entity){
 		ArrayList<String> list = super.addFilterTextToActionFindByCriteria(entity);
 		String idEstacao = entity.getEstacao()==null?"":String.valueOf(entity.getEstacao().getId());
+		Boolean representativo = entity.getRepresentativa();
 		
 		if(!idEstacao.equals("")){
 			list.add("e.estacao=".concat(idEstacao));
 		}
+		if(representativo!=null){
+			list.add("e.representativa="+representativo.toString());
+		}
+
 		
 		return list;
 		

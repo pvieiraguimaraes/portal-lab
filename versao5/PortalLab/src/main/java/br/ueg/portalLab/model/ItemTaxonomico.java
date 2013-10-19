@@ -57,6 +57,10 @@ public class ItemTaxonomico extends Entity {
 	@Column(name="caracteristica_ittax", length=4000)
 	private String caracteristica;
 	
+	@Attribute(Required=true, SearchField = true)
+	@Column(name="nome_popular_ittax", length=100)
+	private String nomePopular;
+	
 	public ItemTaxonomico() {}
 	
 
@@ -128,6 +132,12 @@ public class ItemTaxonomico extends Entity {
 		//return retorno+" "+this.getNome();
 		return this.getNome();
 	}
+	
+	public String getNomePopularCompleto(){
+		String nomePopular2 = this.getNomePopular();
+		nomePopular2 = nomePopular2!=null?nomePopular2:"";
+		return nomePopular2+"( "+this.getNome()+" )";
+	}
 
 
 	public Set<EspecieImagem> getImagens() {
@@ -152,6 +162,16 @@ public class ItemTaxonomico extends Entity {
 	 */
 	public void setCaracteristica(String caracteristica) {
 		this.caracteristica = caracteristica;
+	}
+
+
+	public String getNomePopular() {
+		return nomePopular;
+	}
+
+
+	public void setNomePopular(String nomePopular) {
+		this.nomePopular = nomePopular;
 	}
 
 

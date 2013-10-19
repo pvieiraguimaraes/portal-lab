@@ -43,6 +43,10 @@ public class Colecao extends Entity {
 	@Attribute(Required = true, SearchField = false)
 	private Laboratorio laboratorio; 
 	
+	@Attribute(Required=false, SearchField = true)
+	@Column(name="descricao_cole", length=4000)
+	private String descricao;
+	
 	@Column(name="sigla", length=10)
 	@Attribute(Required = true, SearchField = true)
 	private String sigla;
@@ -86,6 +90,14 @@ public class Colecao extends Entity {
 	 */
 	public void setSigla(String sigla) {
 		this.sigla = sigla;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 	@Override

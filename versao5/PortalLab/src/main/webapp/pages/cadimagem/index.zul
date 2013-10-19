@@ -49,6 +49,7 @@
 							</combobox>
 						</hlayout>
 						<hlayout><label hflex="1">Nome do Arquivo: </label><textbox value="@{controller.fldNome }" hflex="1"></textbox></hlayout>					
+						<hlayout><label hflex="1">Representativa: </label><checkbox id="representatividadeBusca" checked="@{controller.fldRepresentativaBusca }" hflex="1"/></hlayout>
 						<hlayout>
 							<button label="Buscar" hflex="1" onClick="controller.searchEntity()"/>
 							<button label="Nova Imagem" onClick="controller.newEntity()" id="crudWindowBtnNew" image="../../images/editar.png" width="200px"/>
@@ -72,6 +73,7 @@
 						<listhead id="divListhead">
 							<listheader label="Estação"   align="left"   width="100px"/>
 							<listheader label="Taxonomia" align="left"  />
+							<listheader label="Representativa"   align="left"  width="100px"/>
 							<listheader label="Operações" align="center" width="160px" />							
 						</listhead>
 						<listitem self="@{each=entity}" id="divListitem">
@@ -80,6 +82,7 @@
 							</attribute>
 							<listcell><label value="@{entity.estacao }"/></listcell>
 							<listcell><label value="@{entity.itemTaxonomico.nomeCompleto }"/></listcell>
+							<listcell><label value="@{entity.representativa, converter='br.ueg.builderSoft.view.zk.converter.BooleanFormatConverter' }"/></listcell>
 							<listcell>
 								<button Label="Editar" id="crudWindowBtnEdit" image="/images/editar.png">
 									<attribute name="onClick">
