@@ -102,7 +102,7 @@ public class GenericControl <E extends Entity> {
 	public final boolean doAction(String action, E entity) {
 		boolean result = false;
 		this.mapManagerBeanToEntity(entity, this.view, false);
-		HashMap<String, Object> map = this.createMapFields(entity);
+		HashMap<String, Object> map = this.createMapFields(entity);//
 		
 		//para fazer busca por entity
 		E searchEntity = null;
@@ -189,7 +189,7 @@ public class GenericControl <E extends Entity> {
 							}
 							
 							if(exists){
-								//verificar se é para atribuir todos os campos ou apenas os campos de buscas.
+								//verificar se ï¿½ para atribuir todos os campos ou apenas os campos de buscas.
 								if (onlySearchViewAttribute == false ||										 
 									(onlySearchViewAttribute && field.getAnnotation(br.ueg.builderSoft.util.annotation.AttributeView.class).isSearchField() )
 									) {
@@ -294,7 +294,7 @@ public class GenericControl <E extends Entity> {
 				} catch (NoSuchMethodException e) {
 					result = false;
 					//e.printStackTrace();
-					System.err.println("Método não existe");
+					System.err.println("Mï¿½todo nï¿½o existe");
 				} catch (IllegalAccessException e) {
 					result = false;
 					e.printStackTrace();
