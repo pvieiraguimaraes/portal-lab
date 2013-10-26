@@ -9,6 +9,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jsoup.Jsoup;
 
@@ -95,18 +97,29 @@ Map glossario = new HashMap();
 		String conteudoHtml = html;
 		String conteudoText = this.extractText(conteudoHtml);
 		
+		String ls = System.getProperty("line.separator");
+		
+		conteudoHtml = conteudoHtml.replaceAll(ls, " ");
+		
 		String str;
 		String strProcessada="";
 		String glossarioValue="";
-		//System.out.println(str);
+		
 		initGlossario();
 		String[] palavra = conteudoText.split(" ");
+		Pattern pattern = Pattern.compile("<p.*?>(.*?)</p>");
 		for (int i=0; i< palavra.length;i++) {
 			glossarioValue=this.getGlossario(palavra[i]);
 			if(glossarioValue!=null && !glossarioValue.isEmpty()){
-				conteudoHtml=conteudoHtml.replaceAll(this.tiraPontos(palavra[i]), "<a href=\"#\" class=\"tooltipGlossario\"><em><strong>"+codificaGlossario(palavra[i])+"</em></strong><span>"+glossarioValue+"</span></a>");
+				Matcher m = pattern.matcher(conteudoHtml);
+				while(m.find()){
+					String s = m.group(0);
+					String saux = s;
+//					System.out.println(s);
+					s = s.replaceAll(this.tiraPontos(palavra[i]), "<a href=\"#\" class=\"tooltip-glossario\" title=\""+ glossarioValue +"\">"+codificaGlossario(palavra[i])+"</a>");
+					conteudoHtml=conteudoHtml.replaceAll(saux,s);
+				}
 			}
-			
 		}
 		conteudoHtml = conteudoHtml.replaceAll("###", "");
 		return conteudoHtml;
