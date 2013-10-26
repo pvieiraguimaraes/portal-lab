@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jsoup.Jsoup;
 
@@ -81,10 +83,20 @@ public class TesteParser {
 		String glossarioValue="";
 		//System.out.println(str);
 		String[] palavra = conteudoText.split(" ");
+		Pattern pattern = Pattern.compile("<p.*?>(.*?)</p>");
+		System.out.println(conteudoHtml);
 		for (int i=0; i< palavra.length;i++) {
 			glossarioValue=this.getGlossario(palavra[i]);
 			if(glossarioValue!=null && !glossarioValue.isEmpty()){
-				conteudoHtml=conteudoHtml.replaceAll(this.tiraPontos(palavra[i]), "<a href=\"#\" class=\"tooltip\"><em><strong>"+codificaGlossario(palavra[i])+"</em></strong><span>"+glossarioValue+"</span></a>");
+				Matcher m = pattern.matcher(conteudoHtml);
+				while(m.find()){
+					String s = m.group(0);
+					String saux = s;
+					System.out.println(s);
+					s = s.replaceAll(this.tiraPontos(palavra[i]), "<a href=\"#\" class=\"tooltip\"><em><strong>"+codificaGlossario(palavra[i])+"</em></strong><span>"+glossarioValue+"</span></a>");
+					conteudoHtml=conteudoHtml.replaceAll(saux,s);
+				}
+				//conteudoHtml=conteudoHtml.replaceAll(this.tiraPontos(palavra[i]), "<a href=\"#\" class=\"tooltip\"><em><strong>"+codificaGlossario(palavra[i])+"</em></strong><span>"+glossarioValue+"</span></a>");
 			}
 			
 		}
