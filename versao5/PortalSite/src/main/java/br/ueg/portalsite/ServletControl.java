@@ -64,8 +64,6 @@ public class ServletControl extends HttpServlet {
 			GeneratorPage generator = new GeneratorPage(page, getPathTemplate(page), templator, pathMedia);
 			templateAux = generator.generatePage();
 			
-			
-			
 			templator.setVariable("content", this.parserGlossario.processaHTML(templateAux.generateOutput()));
 			
 			htmlResult = templator.generateOutput();

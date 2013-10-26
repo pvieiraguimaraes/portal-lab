@@ -11,6 +11,8 @@
     // tooltip 
     $('.tooltip-equipe').tooltip()
 
+    // tooltip glossario
+    $('.tooltip-glossario').tooltip()
   
     $('body').scrollspy()
 
