@@ -3,7 +3,9 @@
  */
 package br.ueg.builderSoft.util;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
+import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.text.DecimalFormat;
 import java.text.Normalizer;
@@ -27,27 +29,27 @@ import org.zkoss.zk.ui.Executions;
 public class Utils {
 	
 	/**
-	 * Método que retorna string com a primeira letra em maiúscula, o restante permanece o mesmo.
+	 * Mï¿½todo que retorna string com a primeira letra em maiï¿½scula, o restante permanece o mesmo.
 	 * 
 	 * @param str valor
-	 * @return valor com a primeira letra em maiúsculo
+	 * @return valor com a primeira letra em maiï¿½sculo
 	 */
 	public static String firstToUpperCase(String str) {
 		return str.substring(0, 1).toUpperCase().concat(str.substring(1));
 	}
 	
 	/**
-	 * Método que retorna string com a primeira letra em minúscula, o restante permanece o mesmo.
+	 * Mï¿½todo que retorna string com a primeira letra em minï¿½scula, o restante permanece o mesmo.
 	 * 
 	 * @param str valor
-	 * @return valor com a primeira letra em minúscula
+	 * @return valor com a primeira letra em minï¿½scula
 	 */
 	public static String firstToLowerCase(String str) {
 		return str.substring(0, 1).toLowerCase().concat(str.substring(1));
 	}
 	
 	/**
-	 * Método que adiciona "." no final da palavra caso ela não seja vazia
+	 * Mï¿½todo que adiciona "." no final da palavra caso ela nï¿½o seja vazia
 	 * 
 	 * @param str string
 	 * @return palavra com "." concatenado
@@ -63,7 +65,7 @@ public class Utils {
 	}
 	
 	/**
-	 * Método que criptografa palavra em MD5
+	 * Mï¿½todo que criptografa palavra em MD5
 	 * 
 	 * @param source palavra
 	 * @return palavra criptografada
@@ -81,7 +83,7 @@ public class Utils {
 	}
 	
 	/**
-	 * Método que retira todos caracteres especiais e acentuação
+	 * Mï¿½todo que retira todos caracteres especiais e acentuaï¿½ï¿½o
 	 * 
 	 * @param source palavra
 	 * @return palavra sem caracteres especiais e acentos
@@ -92,7 +94,7 @@ public class Utils {
 	}
 	
 	/**
-	 * Método que retira todos "_" (underline) e coloca as palavras
+	 * Mï¿½todo que retira todos "_" (underline) e coloca as palavras
 	 * que seguem em case sensitive
 	 * 
 	 * @param source palavra
@@ -111,7 +113,7 @@ public class Utils {
 	}
 	
 	/**
-	 * Método que retorna sempre uma string, mesmo que vazia
+	 * Mï¿½todo que retorna sempre uma string, mesmo que vazia
 	 * 
 	 * @param str palavra
 	 * @return palavra ou string vazia
@@ -124,12 +126,12 @@ public class Utils {
 	}
 	
 	/**
-	 * Método que faz a subtraçãoo dos meses, ou seja,
-	 * retorna a diferença entre duas datas por meses
+	 * Mï¿½todo que faz a subtraï¿½ï¿½oo dos meses, ou seja,
+	 * retorna a diferenï¿½a entre duas datas por meses
 	 * 
 	 * @param start data inicial
 	 * @param end data final
-	 * @return diferença de meses entre as datas
+	 * @return diferenï¿½a de meses entre as datas
 	 */
 	public static int subtractMonths(Date start, Date end) {
 		Calendar startCalendar = Calendar.getInstance();
@@ -143,7 +145,7 @@ public class Utils {
 	
 	
 	/**
-	 * Método que retorna o valor em moeda, inserindo o simbolo antes
+	 * Mï¿½todo que retorna o valor em moeda, inserindo o simbolo antes
 	 * 
 	 * @param symbol simbolo a ser inserido
 	 * @param value valor
@@ -155,9 +157,9 @@ public class Utils {
 	}
 	
 	/**
-	 * Método que formata a data no padrão enviado
+	 * Mï¿½todo que formata a data no padrï¿½o enviado
 	 * 
-	 * @param format formato da data (padrão)
+	 * @param format formato da data (padrï¿½o)
 	 * @param date data a ser formatada
 	 * @return data formatada
 	 */
@@ -167,7 +169,7 @@ public class Utils {
 	}
 	
 	/**
-	 * Método que inicializa o proxy do hibernate.
+	 * Mï¿½todo que inicializa o proxy do hibernate.
 	 * 
 	 * @param entity entidade com proxy do hibernate
 	 * @return entidade instanciada
@@ -184,5 +186,19 @@ public class Utils {
         }
         return entity;
     }
+    
+    /**MÃ©todo que codifica a String para o padrÃ£o ISO-8859-1
+     * @param name
+     * @return String codificada.
+     */
+    public static String translateName(String name){
+		String aux = null;
+		try {
+			aux = URLEncoder.encode(name, "ISO-8859-1");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return aux;
+	}
 
 }
