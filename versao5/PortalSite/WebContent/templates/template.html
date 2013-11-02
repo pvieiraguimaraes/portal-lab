@@ -11,6 +11,9 @@
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/settings.css" rel="stylesheet">
 <link href="css/superfish.css" rel="stylesheet">
+
+<link rel="stylesheet" href="css/liteaccordion.css">
+
 <!--Le Google Fonts-->
 <link href='http://fonts.googleapis.com/css?family=Droid+Sans+Mono'
 	rel='stylesheet' type='text/css'>
@@ -36,11 +39,37 @@
 	<!-- Le javascript
 ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script src="js/jquery.js"></script>
-	<script src="js/jquerytool.js"></script>
-	<script src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/jquery.js"></script>
+<!-- 	<script type="text/javascript" src="js/jquerytool.js"></script> -->
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/hoverIntent.js"></script>
+	<script type="text/javascript" src="js/liteaccordion.jquery.js"></script>
+	
 	<script src="js/application.js"></script>
+	
+	
+	<script>
+            (function($, d) {
+                $('#one').liteAccordion({
+                        onTriggerSlide : function() {
+                            this.find('figcaption').fadeOut();
+                        },
+                        onSlideAnimComplete : function() {
+                            this.find('figcaption').fadeIn();
+                        },
+                        autoPlay : true,
+                        pauseOnHover : true,
+                        theme : 'stitch',
+                        rounded : true,
+                        enumerateSlides : true
+                }).find('figcaption:first').show();
+                $('#two').liteAccordion();
+                $('#three').liteAccordion({ theme : 'dark', rounded : true, enumerateSlides : true, firstSlide : 2, linkable : true, easing: 'easeInOutQuart' });
+                $('#four').liteAccordion({ theme : 'light', firstSlide : 3, easing: 'easeOutBounce', activateOn: 'mouseover' });
+                
+            })(jQuery, document);
 
+            
+        </script>
 </body>
 </html>
