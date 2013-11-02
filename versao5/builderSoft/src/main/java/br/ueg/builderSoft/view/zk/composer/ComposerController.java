@@ -423,12 +423,16 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 		}
 		
 		public void showEditForm(){
+			showEditForm(getEditForm());
+		}
+		
+		public void showEditForm(Window win){
 			//String casoDeUso=Reflection.getClassName(this.getEntityClass()).toLowerCase();
 			//Window win = (Window) Executions.createComponents("/"+casoDeUso+"/"+casoDeUso+"_form.zul", null, null);
 			
-			getEditForm().setMode(Window.MODAL);
-			getEditForm().setVisible(true);
-			getEditForm().doModal();
+			win.setMode(Window.MODAL);
+			win.setVisible(true);
+			win.doModal();
 	        //win.doModal();
 		}
 		
@@ -735,7 +739,7 @@ public abstract class ComposerController<E extends Entity> extends GenericForwar
 		
 		@SuppressWarnings({ "unchecked" })
 	    protected void showMessageConfirmation(String message, EventListener event) {
-	            Messagebox.show(message, "Confirmação", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, event);
+	            Messagebox.show(message, "Confirmaï¿½ï¿½o", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, event);
 	    }
 		
 		private EventListener getHideEditFormEvent(){

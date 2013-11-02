@@ -36,5 +36,9 @@ public class PropertiesReader {
 		}
 		return searchFields;
 	}
+	
+	public String getValue(String key){
+		return this.bundle.getString(key.toLowerCase());
+	}
 
 }

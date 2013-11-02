@@ -12,12 +12,10 @@ import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 import java.util.regex.Pattern;
 
 import org.hibernate.Hibernate;
 import org.hibernate.proxy.HibernateProxy;
-import org.zkoss.zk.ui.Executions;
 
 /**
  * Classe de utilitarios
@@ -201,4 +199,17 @@ public class Utils {
 		return aux;
 	}
 
+    public static boolean isInteger( String s ) {    
+  	  
+        boolean d = true;    
+      
+        for ( int i = 0; i < s.length(); i++ ) {   
+            if ( !Character.isDigit( s.charAt(i) ) ) {    
+                d = false;    
+                break;    
+            }    
+        }    
+      
+        return d;  
+    }
 }
