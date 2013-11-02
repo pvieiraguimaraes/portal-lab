@@ -1,5 +1,8 @@
 package br.ueg.builderSoft.control;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -8,13 +11,21 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import br.ueg.builderSoft.model.Entity;
+import br.ueg.builderSoft.model.interfaces.AttributesMedia;
 import br.ueg.builderSoft.persistence.DataIntegrityViolationException;
 import br.ueg.builderSoft.persistence.GenericDAO;
+import br.ueg.builderSoft.util.Utils;
+import br.ueg.builderSoft.util.annotation.Image;
+import br.ueg.builderSoft.util.annotation.Media;
 import br.ueg.builderSoft.util.control.AbstractValidatorControl;
 import br.ueg.builderSoft.util.control.ListingControl;
 import br.ueg.builderSoft.util.control.MessagesControl;
 import br.ueg.builderSoft.util.control.SubController;
 import br.ueg.builderSoft.util.control.ValidatorControl;
+import br.ueg.builderSoft.util.medias.Images;
+import br.ueg.builderSoft.util.medias.Medias;
+import br.ueg.builderSoft.util.reflection.Reflection;
+import br.ueg.builderSoft.util.sets.Config;
 import br.ueg.builderSoft.util.sets.SpringFactory;
 
 @SuppressWarnings("unchecked")
@@ -95,7 +106,11 @@ public class Control<E extends Entity>{
 		this.mapFields = mapFields;
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public HashMap<String, Object> getMapFields(){
+		if(mapFields == null){
+			mapFields = new HashMap();
+		}
 		return this.mapFields;
 	}
 
@@ -111,7 +126,7 @@ public class Control<E extends Entity>{
 			boolean result = false;
 			try{
 				if (getPersistence().save(entity) != 0) {
-					result = true;
+					result = saveMedias(entity);
 				} 
 			}catch(DataIntegrityViolationException e){
 				e.printStackTrace();
@@ -125,6 +140,90 @@ public class Control<E extends Entity>{
 		} else {
 			return actionUpdate(subControllerManager);
 		}
+	}
+	
+	@SuppressWarnings("resource")
+	private Boolean saveMedias(E entity){
+		Boolean flag = true;
+		if(entity instanceof AttributesMedia){
+			AttributesMedia en = (AttributesMedia) entity;
+			for(Field f : Reflection.getAnnotatedFields(entity, Media.class)){
+				try {
+					f.setAccessible(true);
+					Object obj = f.get(entity);
+					Media mediaAnnot = f.getAnnotation(Media.class);
+					if(obj != null){
+						InputStream media = (InputStream) obj;
+						if(f.getAnnotation(Image.class) != null){
+							media = prepareImage(media, f.getAnnotation(Image.class));					
+							InputStream thumb = createThumb(media, f.getAnnotation(Image.class));
+							if(thumb != null){
+								flag = Medias.writeInputStreamToDisk(en.getBasePath() + en.getRelativePath() + mediaAnnot.value() + "_thumb.png", thumb);
+							}
+						}
+
+						flag = Medias.writeInputStreamToDisk(en.getBasePath() + en.getRelativePath() + mediaAnnot.value() + ".png", media);
+					}
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+					flag = false;
+				} 
+			}
+		}
+		return flag;
+	}
+	
+	private InputStream prepareImage(InputStream image, Image annot) throws IOException{
+		Config conf = new Config();
+		
+		Integer width;
+		Integer height;
+		
+		if(Utils.isInteger(annot.width())){
+			width = Integer.parseInt(annot.width());
+		} else {
+			width = Integer.parseInt(conf.getKey(annot.width()));
+		}
+		
+		if(Utils.isInteger(annot.height())){
+			height = Integer.parseInt(annot.height());
+		} else {
+			height = Integer.parseInt(conf.getKey(annot.height()));
+		}
+		
+		if(width != 0 && height != 0){
+			return Images.scaleImage(image, width, height);
+		} else{
+			return Images.convertToPNG(image);
+		}
+		
+	}
+	
+	private InputStream createThumb(InputStream image, Image annot) throws IOException{
+		Config conf = new Config();
+		
+		InputStream thumb = null;
+		
+		if(annot.thumb() && !annot.thumbHeight().isEmpty() && !annot.thumbWidth().isEmpty()){
+			Integer twidth;
+			Integer theight;
+			
+			if(Utils.isInteger(annot.thumbWidth())){
+				twidth = Integer.parseInt(annot.thumbWidth());
+			} else {
+				twidth = Integer.parseInt(conf.getKey(annot.thumbWidth()));
+			}
+			
+			if(Utils.isInteger(annot.thumbHeight())){
+				theight = Integer.parseInt(annot.thumbHeight());
+			} else {
+				theight = Integer.parseInt(conf.getKey(annot.thumbHeight()));
+			}
+			
+			thumb = Images.scaleImage(image, twidth, theight);
+		}
+		return thumb;
 	}
 	
 	/**

@@ -1,10 +1,18 @@
 package br.ueg.builderSoft.util.reflection;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang3.ArrayUtils;
+
+import br.ueg.builderSoft.model.Entity;
 
 /**
  * Procurar um nome melhoar para essa classe
@@ -52,7 +60,7 @@ public class Reflection {
 		Reflection.setFieldValue(entity, fieldName, fieldValue, fieldValue.getClass());
 	}
 	
-	/** M�todo que seta o valor do atributo em null
+	/** M�todo que seta o valor do atributo em null
 	 * @param entity
 	 * @param fieldName
 	 * @throws SecurityException
@@ -133,5 +141,40 @@ public class Reflection {
 				throw new IllegalArgumentException("It is not possible to convert into Class the class parameter ".concat(clazz.getName()));
 			}
 			return (Class<?>) parameterizedType;
+		}
+		
+		/**
+		 * Retorna uma lista de Fields que contém a anotação especificada.
+		 * 
+		 * @param entity entidade a ser percorrida
+		 * @param step Annotation a ser procurada
+		 * @return Lista de Fields
+		 * @author Fernando
+		 */
+		public static List<Field> getAnnotatedFields(Entity entity, Class<? extends Annotation> step) {
+			ArrayList<Field> resultList = new ArrayList<Field>();
+			for (Field field : getFields(entity.getClass())) {
+				if (field.isAnnotationPresent(step)) {
+					resultList.add(field);
+				}
+			}
+			return resultList;
+		}
+		
+		/**
+		 * Retorna uma lista de Fields de uma classe.
+		 * 
+		 * @param entity entidade extraída os Fields
+		 * @return Array de Fields
+		 * @author Fernando
+		 */
+		public static Field[] getFields(Class<?> classEntity) {
+			Field[] fields = classEntity.getDeclaredFields();
+			Class<?> superclass = classEntity.getSuperclass();
+			while (superclass != null) {
+				fields = ArrayUtils.addAll(fields, superclass.getDeclaredFields());
+				superclass = superclass.getSuperclass();
+			}
+			return fields;
 		}
 }
