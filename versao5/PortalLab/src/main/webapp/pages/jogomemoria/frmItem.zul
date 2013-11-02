@@ -1,0 +1,27 @@
+<zk
+	<window id="winModal" position="center,center" closable="true" apply="${agrupadorItemComposer}">
+		<tree id="treeItemTaxonomicoForm"
+			rows="10" 
+			hflex="1" 
+			model="@{crudCadImagemController.itemTaxonomicoTreeModel}"
+			onSelect="crudCadImagemController.selectItemTaxonomicoForm()"							
+			width = "300px" 
+			visible="@{crudCadImagemController.selectedEntity.isNew }"
+			>									
+			<treecols>
+				<treecol label="Item Taxonômico" />
+			</treecols>
+			<template name="model">
+		        <treeitem open="true">
+		            <treerow>
+		                <treecell>
+	                		<label value="${each.nivelTaxonomico.nome }" sclass="titulo-coluna"/>
+	                		<label value="${each.nome }"/>
+		                </treecell> 
+
+		            </treerow>				            
+		        </treeitem>
+		    </template>							
+		</tree>
+	</window>
+</zk>

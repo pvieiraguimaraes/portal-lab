@@ -1,0 +1,198 @@
+<?page title="Manutenção de Item Taxonômico" contentType="text/html;charset=UTF-8" ?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/WEB-INF/layout/template.zul"?>
+
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<zk>
+	<include id="menuLateral" self="@{define(menuLateral)}" src="/menu/menu_lateral.zul" />
+	<include id="menuTopo" self="@{define(menuTopo)}" src="/menu/menu_cadastro_portal.zul" />
+
+	<window  self="@{define(content)}" title="Manutenção de Jogos da Memória" border="none" id="memoria"
+		apply="${memoriaComposer}"  height="540px">
+		<borderlayout>
+			<north>
+				<div>
+				<grid>
+					  <rows>
+					<row>					
+					<hlayout >						
+						<button label="Novo Jogo da Memória" onClick="controller.newEntity()" id="crudWindowBtnNew" />									
+					</hlayout>
+					</row>
+					<row>
+					<window id="winMemoria" title="Formulário do Jogo da Memória " border="normal" width="460px" xmlns:c="client"
+					closable="false"  action="show: slideDown;hide: slideUp" mode="popup" visible="false" onCancel="controller.hideEditFormConfirmation()">
+					     <attribute c:name="onClose"><![CDATA[
+					        event.stop();
+					        var w = this;
+					        jq(this).slideUp(600, function() {
+					            w.sendAU_(event);
+					            flowDown(event.target._left, event.target._top);
+					        });
+					    ]]></attribute>   
+					    <zscript><![CDATA[        
+					        void winClose() {
+					            Clients.evalJavaScript("flowDown()");           
+					            //viewFormEdit="false";
+					        }
+					    ]]></zscript>
+						    <vlayout>
+						        <grid>
+						            <columns>
+						                <column width="120px" />
+						                <column align="left" />
+						
+						            </columns>
+						            <rows>
+						            	<row>
+						            		<label value="Nome:" />
+						            		<textbox value="@{controller.fldName }" width="100%"/>
+						            	</row>
+						            	<row>
+						            		<label value="Número de Peças:" />
+						            		<intbox value="@{controller.fldNumberPieces }" width="50px"/>
+						            	</row>
+						            </rows>
+						        </grid>
+						        <hlayout>
+						            <button label="Salvar" hflex="1" > 
+						            	<attribute name="onClick"><![CDATA[									
+											controller.doAction("SAVE");											
+										]]>						            
+						            	</attribute>
+						            </button>						            
+						            <button id="btnCancelEdit" label="Cancelar" hflex="1" onClick="controller.cancelEditEntity()"/>
+						        </hlayout>
+						    </vlayout>
+						</window>
+					</row>
+					</rows>
+				</grid>
+					
+				</div>
+			</north>
+			<center>
+				<vbox>
+					<hbox>
+						Nome:
+						<textbox name="fldBusca" value="@{controller.fldBusca}" />
+						<button label="Buscar" id="newEntityButton"><attribute name="onClick">
+							controller.doAction("SEARCH"); 
+							</attribute>
+						</button>
+					</hbox>
+					<hbox>
+						<listbox model="@{controller.listEntity}"
+							selectedItem="@{controller.selectedEntity}" 
+							mold="paging" id="divListBox" hflex="min">
+							<auxhead>
+								<auxheader colspan="2" label="Lista de Jogos da Memória" align="center"/>
+							</auxhead>
+							<listhead id="divListhead">			
+								<listheader label="Nome" align="center" width="200px" />						
+								<listheader label="Operações" align="center"
+									width="200px" />
+							</listhead>
+							<listitem self="@{each=entity}" id="divListitem">
+								<attribute name="onDoubleClick">
+										controller.editEntity();
+								</attribute>
+								<attribute name="onClick">
+								</attribute>		
+								<listcell>
+									<label value="@{entity.name}"/>
+								</listcell>
+								<listcell>
+									
+									<button Label="Editar" id="crudWindowBtnEdit">
+										<attribute name="onClick">
+											self.getParent().getParent().setSelected(true);
+											controller.editEntity();
+										</attribute>
+									</button>						
+									<button Label="Excluir" id="crudWindowBtnDelete">
+									<attribute name="onClick"><![CDATA[
+			 						self.getParent().getParent().setSelected(true); 
+									Messagebox.show("Confirmar a exclusão???", "Confirmar?", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, new org.zkoss.zk.ui.event.EventListener() { 
+									    public void onEvent(Event evt) throws InterruptedException { 
+									        if (evt.getName().equals("onOK")) { 
+			 						        	controller.doAction("DELETE"); 
+									        } 
+			 						    } 
+			 						}); 
+									]]></attribute>
+									</button>
+								</listcell>
+							</listitem>
+						</listbox>
+						<separator bar="true" orient="vertical" width="10px" height="100%"/>
+						<listbox id="listPecas" selectedItem="@{controller.selectedPeca}">
+							<auxhead>
+								<auxheader label="@{controller.titleItensList}" align="center"/>
+							</auxhead>
+							<listhead>
+								<listheader label="Peças">
+									<hlayout style="float:right;">
+										<button label="Adicionar" onClick="controller.showPieceForm()"/>
+										<button label="Excluir" onClick=''/>
+									</hlayout>
+								</listheader>
+							</listhead>
+							 <listitem self="@{each=item}">
+							 	<listcell label="@{item.item.nomeCompleto}"/>
+							 </listitem>
+						</listbox>
+					</hbox>
+					<window id="winPeca" title="Formulário de Peças" border="normal" width="460px" xmlns:c="client"
+					closable="false"  action="show: slideDown;hide: slideUp" mode="popup" visible="false" onCancel="self.setVisible(false)">
+					     <attribute c:name="onClose"><![CDATA[
+					        event.stop();
+					        var w = this;
+					        jq(this).slideUp(600, function() {
+					            w.sendAU_(event);
+					            flowDown(event.target._left, event.target._top);
+					        });
+					    ]]></attribute>   
+					    <zscript><![CDATA[        
+					        void winClose() {
+					            Clients.evalJavaScript("flowDown()");           
+					            //viewFormEdit="false";
+					        }
+					    ]]></zscript>
+						    <vlayout>
+						        <grid>
+						            <columns>
+						                <column width="120px" />
+						                <column align="left" />
+										<column align="left" hflex="min"/>
+						            </columns>
+						            <rows>
+						            	<row>
+						            		<label value="Imagem da Peça:" />
+						            		<textbox id="fldPathImage" width="100%"/>
+						            		<button upload="true" label="Selecionar..." onUpload="controller.setImagePiece(event);"/>
+						            	</row>
+						            	<row>
+						            		<label value="Imagem de Sucesso:" />
+						            		<textbox id="fldPathImageSucceed" width="100%"/>
+						            		<button upload="true" label="Selecionar..." onUpload="controller.setImageSucceedPiece(event);"/>
+						            	</row>
+						            </rows>
+						        </grid>
+						        <hlayout>
+						            <button label="Salvar" hflex="1" > 
+						            	<attribute name="onClick"><![CDATA[									
+											controller.doAction("SAVEPIECE");											
+										]]>						            
+						            	</attribute>
+						            </button>						            
+						            <button id="btnCancelEdit" label="Cancelar" hflex="1" onClick="winPeca.setVisible(false)"/>
+						        </hlayout>
+						    </vlayout>
+						</window>
+				</vbox>
+			</center>
+			<south>				
+			</south>
+		</borderlayout>
+	</window>
+</zk>
