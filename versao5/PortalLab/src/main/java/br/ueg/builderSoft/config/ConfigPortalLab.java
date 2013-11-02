@@ -57,6 +57,23 @@ public class ConfigPortalLab extends Config {
 		return retorno;
 	}
 	
+	public int getImageRepresentativaWidth(){
+		String width = this.getKey("imageRepresentativaWidth");
+		int retorno = 860;
+		if(width!=null){
+			retorno = Integer.parseInt(width);
+		}
+		return retorno;
+	}
+	public int getImageRepresentativaHeigth(){
+		String width = this.getKey("imageRepresentativaHeigth");
+		int retorno = 320;
+		if(width!=null){
+			retorno = Integer.parseInt(width);
+		}
+		return retorno;
+	}
+	
 	/**
 	 * @return retorna o caminho dentro da aplicação web onde estao as medias(imagens, videos, etc)
 	 */
