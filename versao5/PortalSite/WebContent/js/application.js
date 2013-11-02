@@ -20,6 +20,8 @@
     $('#myCarousel').carousel();
 
     $('.readmore').hide();
+    
+//    $('#colecoes').liteaccordion()
 
 })
 
