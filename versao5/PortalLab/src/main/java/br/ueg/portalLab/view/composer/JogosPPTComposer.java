@@ -213,9 +213,9 @@ public class JogosPPTComposer  extends
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public void showEditForm() {
-		this.binderForm.loadComponent(this.formImagem);
+	public void showEditForm() {		
 		super.showEditForm();
+		this.binderForm.loadComponent(this.formImagem);
 		//this.binderForm.loadComponent(this.getEditForm().getFellow("imgIntegrante"));
 	 }
 

@@ -276,14 +276,16 @@ public abstract class EntityMedia<TYPE extends Media> extends Entity {
 			}
 	
 			InputStream streamMedia = this.getMedia().getStreamData();
-	
-			// Nome do arquivo da imgem original
-			String absoluteFilePath = getFileMediaName();
-			//apaga caso já exista para substituir
-			deleteFileFromDisk(absoluteFilePath);
-	
-			// grava o arquivo da imagem postada
-			retorno = writeInputStreamToDisk(absoluteFilePath, streamMedia);
+			if(this.getMedia().getByteData().length>0){
+		
+				// Nome do arquivo da imgem original
+				String absoluteFilePath = getFileMediaName();
+				//apaga caso já exista para substituir
+				deleteFileFromDisk(absoluteFilePath);
+		
+				// grava o arquivo da imagem postada
+				retorno = writeInputStreamToDisk(absoluteFilePath, streamMedia);
+			}
 			
 			streamMedia = this.getMedia().getStreamData();
 			
