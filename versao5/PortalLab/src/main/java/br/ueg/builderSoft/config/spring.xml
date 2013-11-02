@@ -22,9 +22,11 @@
 		
 		
 	<context:component-scan base-package="br.ueg.portalLab.view.composer" />
+	<context:component-scan base-package="br.ueg.portalLab.view.composer.jogos.memoria" />
 	<context:component-scan base-package="br.ueg.portalLab.security.view.composer" />
 	<context:component-scan base-package="br.ueg.portalLab.security.control" />
 	<context:component-scan base-package="br.ueg.portalLab.control" />
+	<context:component-scan base-package="br.ueg.portalLab.control.jogos.memoria" />
 	<context:component-scan base-package="br.ueg.builderSoft.control" />
 	<context:component-scan base-package="org.zkoss.spring.beans.zkcomponents" />
 	<context:component-scan base-package="br.ueg.builderSoft.security.manager" />
