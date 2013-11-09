@@ -133,7 +133,9 @@
 		<security:intercept-url access="UC_CADFICHATECNICA" pattern="/pages/cadfichatecnica/**" />
 		<security:intercept-url access="UC_CADINTEGRANTE" pattern="/pages/cadintegrante/**" />
 		<security:intercept-url access="UC_CADAGRUPADOR" pattern="/pages/agrupador/**" />
+		<security:intercept-url access="UC_JOGOCRUZADINHA" pattern="/pages/jogocruzadinha/**" />
 
+		
 		<security:form-login login-page="/pages/seguranca/acesso.zul" always-use-default-target="false"
 			default-target-url='/index.zul' authentication-failure-url="/pages/seguranca/acesso.zul?error=1" />
 	</security:http>
