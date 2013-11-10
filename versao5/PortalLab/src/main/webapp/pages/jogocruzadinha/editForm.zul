@@ -1,0 +1,137 @@
+<?component name="crossword" class="br.ueg.portalLab.view.component.jogos.cruzadas.ZKCrossWordComponent" ?>
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+									<vlayout>
+										<hbox>
+											<label value="Nome:" />
+											<textbox maxlength="100"
+												value="@{controller.fldName }" />
+										</hbox>
+										<hbox id="hboxDefinicaoTamanho">
+											<hbox>
+												<label
+													value="Nº de Colunas" />
+												<combobox
+													id="cmbCrossX"
+													model="@{controller.listNumbers30 }"
+													value="@{controller.fldCrossXDimension}" readonly="true">
+														<comboitem
+															self="@{each=item}" label="@{item}" value="@{item}" />
+												</combobox>
+											</hbox>
+											<hbox>
+												<label
+													value="Nº de Linhas" />
+												<combobox
+													id="cmbCrossY"
+													model="@{controller.listNumbers30 }"
+													value="@{controller.fldCrossYDimension}" readonly="true">
+													<comboitem
+															self="@{each=item}" label="@{item}" value="@{item}" />
+												</combobox>
+											</hbox>
+											<hbox>
+												<button
+													label="Gerar Cruzadinha"
+													onClick="controller.newCrossWord()">
+												</button>
+											</hbox>
+										</hbox>
+										<separator />
+										<hbox id="crossBox">
+											<crossword id="crossword"
+												sclass="cross-container" admMode="true"
+												squareClickEvent='controller.loadSquare()'>
+												<vlayout
+													id="crosswordContainer" sclass="cross-container" />
+
+											</crossword>
+											<vbox id="crossFormBox"
+												visible="false">
+												<hbox>
+													<label
+														value="Orientação: " />
+													<combobox
+														id="comboType" readonly="true"
+														model="@{controller.answerTypes}"
+														selectedItem="@{controller.answerType}"
+														onChange="controller.loadAnswer()">
+														<comboitem
+															self="@{each=item}" label="@{item.name}" value="@{item}" />
+													</combobox>
+												</hbox>
+												<separator />
+												<vbox id="answerForm"
+													visible="false">
+													<hbox>
+														<label
+															value="Posição X:" />
+														<textbox
+															readonly="true"
+															value="@{controller.actualAnswer.startPositionX}">
+														</textbox>
+													</hbox>
+													<hbox>
+														<label
+															value="Posição Y:" />
+														<textbox
+															readonly="true"
+															value="@{controller.actualAnswer.startPositionY}" />
+													</hbox>
+													<hbox>
+														<label
+															value="Resposta:" />
+														<textbox
+															value="@{controller.actualAnswer.value}">
+														</textbox>
+													</hbox>
+													<hbox>
+														<label
+															value="Dica:" />
+														<textbox
+															value="@{controller.actualAnswer.hint}">
+														</textbox>
+													</hbox>
+													<hbox>
+														<label
+															value="Fixa:" />
+														<checkbox
+															id="checkFixed" checked="@{controller.actualAnswer.fixe}"
+															label="Fixo">
+														</checkbox>
+													</hbox>
+													<separator />
+													<button
+														label="Salvar Resposta"
+														onClick="controller.saveAnswer()">
+													</button>
+													<button
+														id="btnRemove" visible="false" label="Excluir Resposta"
+														onClick="controller.removeAnswer()">
+													</button>
+												</vbox>
+											</vbox>
+										</hbox>
+										<separator />
+										<hbox id="modosCruzadinhasForm"
+											visible="false">
+											<button
+												label="Modo de Cadastro" onClick="controller.setAdmMode()" />
+											<button
+												label="Pré-Visualizar "
+												onClick="controller.setPreviewMode()" />
+										</hbox>
+										<hlayout>
+											<button label="Salvar"
+												hflex="1">
+												<attribute name="onClick"><![CDATA[
+	controller.saveEntity();
+]]>						            
+						            	</attribute>
+											</button>
+											<button id="btnCancelEdit"
+												label="Cancelar" hflex="1"
+												onClick="controller.cancelEditEntity()" />
+										</hlayout>
+									</vlayout>
+</zk>
