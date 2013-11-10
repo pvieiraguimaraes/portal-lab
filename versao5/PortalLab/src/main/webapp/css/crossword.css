@@ -1,0 +1,69 @@
+
+/* Configura na cruzadinha o espaçamento vertical entre os quadros*/
+div.cross-container div.z-vlayout-inner {
+    padding-bottom: 0px !important;
+    margin-bottom: 0px !important;
+}
+
+/* Configura na cruzadinha o espaçamento horizontal entre os quadros*/
+div.cross-container div.z-vlayout-inner  div.z-hlayout div.z-hlayout-inner {
+    padding-right: 0 !important;
+    margin-right: 0px !important;
+    
+}
+ 
+/*Configura tamanha, altura, fonte do texto, imagem, borda dos quadrados*/
+div.cross-container div.z-vlayout-inner  div.z-hlayout div.z-hlayout-inner div {
+    width: 23px;
+    height: 23px;
+    text-align: center;
+    /*line-height: 23px;*/
+    border: 1px black solid;
+    display:table-cell;
+    vertical-align:middle;
+    /*background-image: url("../img/icon.png");*/
+}
+ 
+div.cross-container div.z-vlayout-inner  div.z-hlayout div.z-hlayout-inner div.correctSquare {
+	background: #00FF00;
+	}
+/*Configura o quadrado para quando ele estiver vazio*/
+div.cross-container div.z-vlayout-inner  div.z-hlayout div.z-hlayout-inner div:hover {
+    cursor: pointer;
+    background: #8BB0F5;
+}
+
+ 
+/* Parte em que configura o quadro para ele ficar invisÃ­vel*/
+div.cross-container div.z-vlayout-inner  div.z-hlayout div.z-hlayout-inner div.invisible {
+    padding:1px;
+    border:none;
+    background-image: none;
+}
+ 
+div.cross-container div.z-vlayout-inner  div.z-hlayout div.z-hlayout-inner div:hover.invisible {
+    cursor: default;
+    background: none;
+}
+
+/*Configura os text-box*/
+div.cross-container div.z-vlayout-inner  div.z-hlayout div.z-hlayout-inner div input.text-edit{
+	text-align: center;
+    line-height: 19px;
+    border:none;
+	width: 19px;
+	}
+	
+span.hintLabel
+{
+	
+}
+
+span.hintLabelMark
+{
+	color: blue;
+}
+
+tr.z-row-over > td.z-row-inner, tr.z-row-over > .z-cell {
+	background-image: none;
+	}
