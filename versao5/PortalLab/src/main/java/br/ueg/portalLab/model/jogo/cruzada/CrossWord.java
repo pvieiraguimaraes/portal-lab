@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -11,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import org.hibernate.annotations.Cascade;
 
 import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.util.annotation.Attribute;
@@ -31,7 +34,8 @@ public class CrossWord extends Entity{
 	private Integer crossXDimension; /// Colunas
 	@Column(name = "dimensao_y_linhas")
 	private Integer crossYDimension; /// Linhas
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="crossword", targetEntity=Answer.class)
+	@OneToMany(fetch=FetchType.EAGER, mappedBy="crossword", targetEntity=Answer.class, cascade={CascadeType.PERSIST,CascadeType.ALL})
+	@Cascade(value={org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE})
 	private List<Answer> answers = new ArrayList<Answer>();
 	@Transient
 	private HashMap<String,Square> squares = new HashMap<String,Square>();
