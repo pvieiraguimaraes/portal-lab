@@ -3,6 +3,7 @@ package br.ueg.portalLab.model.jogo.cruzada;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
@@ -19,7 +20,7 @@ import br.ueg.builderSoft.model.Entity;
 
 @SuppressWarnings("serial")
 @javax.persistence.Entity
-@Table(name="resposta_cruzadinha")
+@Table(name="cruzadinha_resposta")
 public class Answer extends Entity{
 
 	@Id()
@@ -43,8 +44,8 @@ public class Answer extends Entity{
 	Boolean answeredCorrectly = false;
 	@Transient
 	List<Square> squares = new ArrayList<Square>();
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="id_cruzadinha", nullable=false)
+	@ManyToOne(fetch=FetchType.EAGER,targetEntity=CrossWord.class,cascade={CascadeType.PERSIST})
+	@JoinColumn(name="id_cruzadinha")
 	CrossWord crossword;
 	
 	
