@@ -13,8 +13,10 @@
 			</menupopup>    
         </menu>
         <menu id="tabJogos" 		label="Jogos">
+        <menupopup>
         	<menuitem id="UC_CADJOGOSPPT"		href="/pages/jogosppt/" 				label="Cadastro de Jogos em PowerPoint"/>
         	<menuitem id="UC_JOGOCRUZADINHA"		href="/pages/jogocruzadinha/" 			label="Cadastro de Cruzadinhas"/>
+        </menupopup>	
         </menu>
     </menubar>
 
