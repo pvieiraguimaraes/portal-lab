@@ -10,8 +10,11 @@
 	     		<menuitem id="UC_CADGLOSSARIO" 		href="/pages/glossario/" 				label="Cadastro de Glossário"/>
 	     		<menuitem id="UC_CADINTEGRANTE"		href="/pages/cadintegrante/" 			label="Cadastro de Integrantes da Equipe"/>
 	     		<menuitem id="UC_CADAGRUPADOR"		href="/pages/agrupador/" 				label="Cadastro de Agrupadores de Item Taxónomico"/>
-	     		<menuitem id="UC_CADJOGOSPPT"		href="/pages/jogosppt/" 				label="Cadastro de Jogos em PowerPoint"/>
 			</menupopup>    
+        </menu>
+        <menu id="tabJogos" 		label="Jogos">
+        	<menuitem id="UC_CADJOGOSPPT"		href="/pages/jogosppt/" 				label="Cadastro de Jogos em PowerPoint"/>
+        	<menuitem id="UC_JOGOCRUZADINHA"		href="/pages/jogocruzadinha/" 			label="Cadastro de Cruzadinhas"/>
         </menu>
     </menubar>
 
