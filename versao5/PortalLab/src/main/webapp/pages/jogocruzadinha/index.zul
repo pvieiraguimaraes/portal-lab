@@ -6,7 +6,7 @@
 	<include id="menuLateral" self="@{define(menuLateral)}"
 		src="/menu/menu_lateral.zul" />
 	<include id="menuTopo" self="@{define(menuTopo)}"
-		src="/menu/menu_tabela_basica.zul" />
+		src="/menu/menu_cadastro_portal.zul" />
 	<style src="/css/crossword.css" />
 
 	<window self="@{define(content)}" title="Manutenção de Cruzadinha"
