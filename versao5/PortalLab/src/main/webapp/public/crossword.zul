@@ -1,0 +1,52 @@
+<?page title="Jogo de Palavra Cruzada"?>
+<?component name="crossword" class="br.ueg.portalLab.view.component.jogos.cruzadas.ZKCrossWordComponent" ?>
+<zk>
+<zscript>
+		<![CDATA[
+		import br.ueg.portalLab.view.component.jogos.cruzadas.ZKCrossWordComponent;
+		import br.ueg.portalLab.model.jogo.cruzada.CrossWord;
+		import br.ueg.builderSoft.util.sets.SpringFactory;
+		import br.ueg.portalLab.control.jogos.cruzada.CrossWordControl;
+		CrossWordControl control = SpringFactory.getInstance().getBean("crossWordControl",
+				CrossWordControl.class);
+		String id = Executions.getCurrent().getParameter("id");
+		if (id == null)
+			id = "-1";
+		CrossWord cruzadinha = control.getById(Long.parseLong(id) );
+		
+		if (cruzadinha == null)
+		{
+			cruzadinha = new CrossWord();
+			cruzadinha.setName("Cruzadinha não encontrada");
+		}
+		]]>
+</zscript>
+
+	<style src="/css/crossword.css" />
+	<!-- 
+		<menubar orient="horizontal">
+			  <menuitem label="TermiteCruzadinha"
+				onClick="compositor.loadCrossWordAluna2()" />
+			<menuitem label="ColeoCruzadinha"
+				onClick="compositor.loadCrossWordAluna1()" />
+		</menubar>
+		<separator />
+ 	-->
+ 
+		<crossword id="crossword" sclass="cross-container" crossword="${cruzadinha}" onCreate="self.loadCrossWord()">
+			<div align="center">
+			<label id="titleLabel" value="${cruzadinha.name}" style="font-size:14 px"/>
+			</div>
+			<grid>
+				<rows>
+					<row>
+						<vlayout id="crosswordContainer"	sclass="cross-container" />
+						<vlayout id="crosswordForm"  		sclass="cross-container">
+						</vlayout>
+					</row>
+				</rows>
+			</grid>
+         <button label="Conferir Resultado" onClick="self.getParent().submitCrossWord()"/>
+		</crossword>
+
+</zk>
