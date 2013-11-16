@@ -65,4 +65,13 @@ public class CrossWordControl extends Control<CrossWord> {
 		return retorno;
 	}
 	
+	public CrossWord getById(Long id)
+	{
+		if(id == null)
+		{
+			id = -1l;
+		}
+		return getPersistence().getByID(new CrossWord(), id, false);
+	}	
+	
 }

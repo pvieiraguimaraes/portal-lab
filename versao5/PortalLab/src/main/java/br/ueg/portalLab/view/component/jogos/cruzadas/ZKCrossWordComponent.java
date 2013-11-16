@@ -21,7 +21,8 @@ public class ZKCrossWordComponent extends Vlayout {
 	private String squareClickEvent;
 	private Square clickedSquare;
 	
-
+	
+	
 	public CrossWord getCrossword() {
 		return crossword;
 	}
@@ -31,12 +32,16 @@ public class ZKCrossWordComponent extends Vlayout {
 	}
 
 	
+	/*
+	 * 
+	@Deprecated
 	public void onCreate$crosswordContainer(Event e) {
 		CrossWord crossword = (CrossWord) getAttribute("crossword");
 		if (crossword != null) {
 			loadCrossWord(crossword);
 		}
 	}
+	*/
 
 	public Vlayout getCrossCrontainer() {
 		Vlayout crosswordContainer = (Vlayout) getFellowIfAny(CONTAINER_ID);
@@ -49,18 +54,26 @@ public class ZKCrossWordComponent extends Vlayout {
 		return crosswordContainer;
 	}
 
+	public void loadCrossWord()
+	{
+		loadCrossWord(getCrossword());
+	}
 	public void loadCrossWord(CrossWord crossword) {
-		this.crosswordController = new ZKCrossWord();
-		Vlayout croswordContainer = getCrossCrontainer();
-		this.crosswordController.setCrossComponent(this);
-		this.crosswordController.setActualContainer(croswordContainer);
-		this.crosswordForm = new ZKCrossWordForm();
-		this.crosswordController.setCrossWordForm(this.crosswordForm);
-		this.crosswordController.cronstructCrossWord(crossword, croswordContainer);
+		if(crossword != null && crossword.getAnswers() != null && !crossword.getAnswers().isEmpty()
+			&& crossword.getCrossXDimension() > 0 && crossword.getCrossYDimension() > 0) 	
+		{
+			this.crosswordController = new ZKCrossWord();
+			Vlayout croswordContainer = getCrossCrontainer();
+			this.crosswordController.setCrossComponent(this);
+			this.crosswordController.setActualContainer(croswordContainer);
+			this.crosswordForm = new ZKCrossWordForm();
+			this.crosswordController.setCrossWordForm(this.crosswordForm);
+			this.crosswordController.cronstructCrossWord(crossword, croswordContainer);
 		
-		Vlayout croswordFormContainer = getCrossFormCrontainer();
-		this.crosswordForm.setActualContainer(croswordFormContainer);
-		this.crosswordForm.cronstructForm(crossword.getAnswers(), croswordFormContainer);
+			Vlayout croswordFormContainer = getCrossFormCrontainer();
+			this.crosswordForm.setActualContainer(croswordFormContainer);
+			this.crosswordForm.cronstructForm(crossword.getAnswers(), croswordFormContainer);
+		}	
 		/*
 		///alterar este método chamando a cruzadinha
 		this.actualContainer = croswordContainer;
