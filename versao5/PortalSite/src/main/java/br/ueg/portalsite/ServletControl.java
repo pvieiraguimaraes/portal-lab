@@ -2,6 +2,7 @@ package br.ueg.portalsite;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -52,16 +53,20 @@ public class ServletControl extends HttpServlet {
 	private void run(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		MiniTemplator templator = null, templateAux = null;
 		String htmlResult = "";
+		HashMap<String, Object> parameters = new HashMap<>();
 		try {
 			templator = GeneratorPage.initTemplator(path + separator + TEMPLATE);
 			
 			String page = request.getParameter("page");
 			page  = page!=null?page:"index";
 			
+			if(page.equalsIgnoreCase("colecao"))
+				parameters.put("itemid", request.getParameter("itemid"));
+			
 			response.setCharacterEncoding("UTF-8");
 			PrintWriter out = response.getWriter();
 			
-			GeneratorPage generator = new GeneratorPage(page, getPathTemplate(page), templator, pathMedia);
+			GeneratorPage generator = new GeneratorPage(page, getPathTemplate(page), templator, pathMedia, parameters);
 			templateAux = generator.generatePage();
 			
 			templator.setVariable("content", this.parserGlossario.processaHTML(templateAux.generateOutput()));

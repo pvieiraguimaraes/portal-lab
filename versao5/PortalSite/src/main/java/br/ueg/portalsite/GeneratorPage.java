@@ -2,6 +2,7 @@ package br.ueg.portalsite;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 
 import biz.source_code.miniTemplator.MiniTemplator;
@@ -17,6 +18,8 @@ public class GeneratorPage {
 	protected String page;
 	protected String path;
 	protected String pathMedia;
+	
+	protected HashMap<String, Object> parameters;
 	
 	protected String folderTeam = "integrante_equipe/";
 
@@ -35,6 +38,15 @@ public class GeneratorPage {
 		this.templator = templator;
 		this.pathMedia = pathMedia;
 	}
+	
+	public GeneratorPage(String page, String path, MiniTemplator templator, String pathMedia, HashMap<String, Object> parameters) {
+		this.page = page;
+		this.path = path;
+		this.templator = templator;
+		this.pathMedia = pathMedia;
+		this.parameters = parameters;
+	}
+
 
 	public static MiniTemplator initTemplator(String file) {
 		MiniTemplator t = null;
@@ -76,6 +88,8 @@ public class GeneratorPage {
 			List<?> subItens = control.getSubItens(idParent);
 			if(subItens != null || !subItens.isEmpty()){
 				for (Object object : subItens) {
+					BigDecimal idSubItem = (BigDecimal) ((Object[])object)[0];
+					temp.setVariable("idSubItem", String.valueOf(idSubItem));
 					temp.setVariable("subNameItem", (String) ((Object[])object)[1]);
 					temp.addBlock("subColection");
 				}

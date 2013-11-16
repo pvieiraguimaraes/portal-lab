@@ -50,6 +50,13 @@
 		<to>index?page=colecoes</to>
 	</rule>
 
+	<!-- REGRA PARA VISUALIZAR OS DETALHES DE UM ITEM -->
+	
+	<rule>
+		<from>^/detalhecolecao/([a-z]+)$</from>
+		<to>index?page=colecoes</to>
+	</rule>
+<!-- index?page=detalhecolecao&amp;itemid=$1 -->
 	<outbound-rule>
 		<note>
 			The outbound-rule specifies that when response.encodeURL is
