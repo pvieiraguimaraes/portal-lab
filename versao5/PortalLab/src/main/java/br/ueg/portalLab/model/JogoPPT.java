@@ -326,6 +326,9 @@ public class JogoPPT extends EntityMedia<Media> {
 								line = line.replace("</a>", "");
 								line = line.replace("Primeira página Voltar Continuar Última página Texto", "");
 							}
+							if(line.contains("<title")){
+								line = line.replaceAll("<title(\\s[^>]*)?>.*?(</title>)","<title>"+this.getNome()+"</title>");
+							}
 							bw.write(line + "\n");
 						}
 					} catch (Exception e) {
