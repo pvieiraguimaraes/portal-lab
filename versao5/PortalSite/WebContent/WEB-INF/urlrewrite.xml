@@ -15,6 +15,11 @@
 		<from>/test/status/</from>
 		<to type="redirect">%{context-path}/rewrite-status</to>
 	</rule>
+	
+	<rule>
+        <from>.*</from>
+        <set type="response-header" name="Cache-Control">max-age=3600, must-revalidate</set>
+    </rule>
 
 	<!-- REGRA DE REDIREÇÃO PARA AS PÁGINAS -->
 	<rule>
@@ -53,10 +58,11 @@
 	<!-- REGRA PARA VISUALIZAR OS DETALHES DE UM ITEM -->
 	
 	<rule>
-		<from>^/detalhecolecao/([a-z]+)$</from>
-		<to>index?page=colecoes</to>
+		<from>/detalhecolecao/([0-9]+)$</from>
+		<to>index?page=detalhecolecao&amp;itemid=$1</to>
+		
 	</rule>
-<!-- index?page=detalhecolecao&amp;itemid=$1 -->
+
 	<outbound-rule>
 		<note>
 			The outbound-rule specifies that when response.encodeURL is
