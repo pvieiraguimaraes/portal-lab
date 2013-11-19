@@ -60,7 +60,7 @@ public class ServletControl extends HttpServlet {
 			String page = request.getParameter("page");
 			page  = page!=null?page:"index";
 			
-			if(page.equalsIgnoreCase("colecao"))
+			if(page.equalsIgnoreCase("detalhecolecao"))
 				parameters.put("itemid", request.getParameter("itemid"));
 			
 			response.setCharacterEncoding("UTF-8");
@@ -69,7 +69,8 @@ public class ServletControl extends HttpServlet {
 			GeneratorPage generator = new GeneratorPage(page, getPathTemplate(page), templator, pathMedia, parameters);
 			templateAux = generator.generatePage();
 			
-			templator.setVariable("content", this.parserGlossario.processaHTML(templateAux.generateOutput()));
+//			templator.setVariable("content", this.parserGlossario.processaHTML(templateAux.generateOutput()));
+			templator.setVariable("content", templateAux.generateOutput());
 			
 			htmlResult = templator.generateOutput();
 			

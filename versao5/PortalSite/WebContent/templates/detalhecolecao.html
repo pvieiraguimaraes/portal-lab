@@ -1,1 +1,38 @@
-<p>Listar aqui todos as coletas presentes para esta coleção.</p>
+<div>
+	<div class="container">
+		<h1>Itens da Coleção: ${colectionName}</h1>
+		<hr>
+	</div>
+		
+	<table class="table table-hover">
+		<thead>
+			<tr><th>Imagem</th>
+				<th>Reino</th>
+				<th>Filo</th>
+				<th>Classe</th>
+				<th>Ordem</th>
+				<th>Família</th>
+				<th>Gênero</th>
+				<th>Detalhes</th>
+			</tr>
+		</thead>
+		<tbody>
+			<!-- $BeginBlock itensColection -->
+			<tr>
+				<td><a href="#">FOTO</a></td>
+				<td>${itemReino}</td>
+				<td>${itemFilo}</td>
+				<td>${itemClasse}</td>
+				<td>${itemOrder}</td>
+				<td>${itemFamily}</td>
+				<td>${itemGenery}</td>
+				<td>
+					<a href="#">
+						<img align="middle" src="img/search.png" border="0">
+					</a>
+				</td>
+			</tr>
+			<!-- $EndBlock itensColection -->
+		</tbody>
+	</table>
+</div>

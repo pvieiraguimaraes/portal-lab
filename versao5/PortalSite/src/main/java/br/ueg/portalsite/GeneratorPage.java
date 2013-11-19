@@ -7,6 +7,7 @@ import java.util.List;
 
 import biz.source_code.miniTemplator.MiniTemplator;
 import br.ueg.builderSoft.util.Utils;
+import br.ueg.portalLab.model.Colecao;
 import br.ueg.portalLab.model.IntegranteEquipe;
 import br.ueg.portalsite.control.ItemTaxonomicoControl;
 import br.ueg.portalsite.control.PersonControl;
@@ -68,6 +69,9 @@ public class GeneratorPage {
 		case "colecoes":
 			templator = generateColections();
 			break;
+		case "detalhecolecao":
+			templator = generateDetailCollection();
+			break;
 		default:
 			templator = generateDefault();
 			break;
@@ -113,6 +117,27 @@ public class GeneratorPage {
 		return temp;
 	}
 
+	protected MiniTemplator generateDetailCollection() {
+		MiniTemplator temp = generateDefault();
+		ItemTaxonomicoControl control = new ItemTaxonomicoControl();
+		String idColection = (String) parameters.get("itemid");
+		BigDecimal bigDecimal = new BigDecimal(idColection);
+		Colecao col = control.getColectionName(Long.parseLong(idColection));
+		temp.setVariable("colectionName", col.getNome());
+		List<?> list = control.getItensOfColection(bigDecimal);
+		for (Object item : list) {
+			temp.setVariable("itemReino", (String) ((Object[])item)[0]);
+			temp.setVariable("itemFilo", (String) ((Object[])item)[1]);
+			temp.setVariable("itemClasse", (String) ((Object[])item)[2]);
+			temp.setVariable("itemOrder", (String) ((Object[])item)[3]);
+			temp.setVariable("itemFamily", (String) ((Object[])item)[4]);
+			temp.setVariable("itemGenery", (String) ((Object[])item)[5]);
+			
+			temp.addBlock("itensColection");
+		}
+		return temp;
+	}
+	
 	protected MiniTemplator generateDefault() {
 		return GeneratorPage.initTemplator(path);
 	}
