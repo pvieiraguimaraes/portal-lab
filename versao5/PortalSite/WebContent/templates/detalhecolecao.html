@@ -1,6 +1,6 @@
 <div>
-	<div class="container">
-		<h1>Itens da Coleção: ${colectionName}</h1>
+	<div class="container" style="text-align: center;">
+		<h2>Itens da Coleção </h2><h1 style="color: black;">${colectionName}</h1>
 		<hr>
 	</div>
 		
@@ -13,22 +13,24 @@
 				<th>Ordem</th>
 				<th>Família</th>
 				<th>Gênero</th>
+				<th>Epíteto Específico</th>
 				<th>Detalhes</th>
 			</tr>
 		</thead>
 		<tbody>
 			<!-- $BeginBlock itensColection -->
 			<tr>
-				<td><a href="#">FOTO</a></td>
+				<td><a href="#"><img height="50px" align="middle" src="${itemPathFoto}"></a></td>
 				<td>${itemReino}</td>
 				<td>${itemFilo}</td>
 				<td>${itemClasse}</td>
 				<td>${itemOrder}</td>
 				<td>${itemFamily}</td>
 				<td>${itemGenery}</td>
-				<td>
+				<td>${itemEptEspecify}</td>
+				<td align="center">
 					<a href="#">
-						<img align="middle" src="img/search.png" border="0">
+						<img align="middle" src="/PortalSite/img/search.png" border="0">
 					</a>
 				</td>
 			</tr>

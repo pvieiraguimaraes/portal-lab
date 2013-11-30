@@ -126,12 +126,20 @@ public class GeneratorPage {
 		temp.setVariable("colectionName", col.getNome());
 		List<?> list = control.getItensOfColection(bigDecimal);
 		for (Object item : list) {
-			temp.setVariable("itemReino", (String) ((Object[])item)[0]);
-			temp.setVariable("itemFilo", (String) ((Object[])item)[1]);
-			temp.setVariable("itemClasse", (String) ((Object[])item)[2]);
-			temp.setVariable("itemOrder", (String) ((Object[])item)[3]);
-			temp.setVariable("itemFamily", (String) ((Object[])item)[4]);
-			temp.setVariable("itemGenery", (String) ((Object[])item)[5]);
+			String path = (String) ((Object[])item)[0];
+			String estacao = (String) ((Object[])item)[1];
+			String caminho = (String) ((Object[])item)[15];
+			String pathFotoCompleto = path + (!estacao.equalsIgnoreCase("") ? "/" + estacao : "");
+			temp.setVariable("itemPathFoto", "/PortalSite/" + pathMedia + pathFotoCompleto + "/image/thumb_" + caminho);
+			
+			temp.setVariable("itemReino", (String) ((Object[])item)[5]);
+			temp.setVariable("itemFilo", (String) ((Object[])item)[6]);
+			temp.setVariable("itemClasse", (String) ((Object[])item)[7]);
+			temp.setVariable("itemOrder", (String) ((Object[])item)[8]);
+			temp.setVariable("itemFamily", (String) ((Object[])item)[9]);
+			temp.setVariable("itemGenery", (String) ((Object[])item)[10]);
+			
+			temp.setVariable("itemEptEspecify", (String) ((Object[])item)[11]);
 			
 			temp.addBlock("itensColection");
 		}
@@ -139,6 +147,7 @@ public class GeneratorPage {
 	}
 	
 	protected MiniTemplator generateDefault() {
+		templator.setVariable("absoluteSitePath", "/PortalSite/");
 		return GeneratorPage.initTemplator(path);
 	}
 	
