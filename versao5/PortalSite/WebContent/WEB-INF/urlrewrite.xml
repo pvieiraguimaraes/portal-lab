@@ -57,11 +57,15 @@
 
 	<!-- REGRA PARA VISUALIZAR OS DETALHES DE UM ITEM -->
 	
-	<rule>
-		<from>/detalhecolecao/([0-9]+)$</from>
-		<to>index?page=detalhecolecao&amp;itemid=$1</to>
-		
-	</rule>
+ 	<rule>
+        <from>detalhecolecao/([0-9]+)</from>
+        <to>index?page=detalhecolecao&amp;itemid=$1</to>
+    </rule>
+
+<!-- 	<rule> -->
+<!--         <from>/detalhecolecao?item=([0-9]+)</from> -->
+<!--         <to>index?page=detalhecolecao&amp;itemid=$1</to> -->
+<!--     </rule> -->
 
 	<outbound-rule>
 		<note>
