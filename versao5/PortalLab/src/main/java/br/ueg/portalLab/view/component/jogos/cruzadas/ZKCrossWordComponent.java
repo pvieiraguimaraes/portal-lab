@@ -59,7 +59,7 @@ public class ZKCrossWordComponent extends Vlayout {
 		loadCrossWord(getCrossword());
 	}
 	public void loadCrossWord(CrossWord crossword) {
-		if(crossword != null && crossword.getAnswers() != null && !crossword.getAnswers().isEmpty()
+		if(crossword != null && crossword.getAnswers() != null 
 			&& crossword.getCrossXDimension() > 0 && crossword.getCrossYDimension() > 0) 	
 		{
 			this.crosswordController = new ZKCrossWord();
