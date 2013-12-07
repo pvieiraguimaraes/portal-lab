@@ -165,12 +165,12 @@ public class CrossWordComposer extends ComposerController<CrossWord> {
 	}
 	
 	private boolean verifyEntityCrossword() {
-		if ((fldCrossXDimension > 0 && fldCrossYDimension <= 20)
-				&& (fldCrossXDimension) > 0 && fldCrossYDimension <= 20)
+		if ((fldCrossXDimension > 0 && fldCrossYDimension <= 30)
+				&& (fldCrossXDimension) > 0 && fldCrossYDimension <= 30)
 			return true;
 		else {
 			Messagebox
-					.show("Defina a quantidade de linhas e colunas com um número entre 1 e 20");
+					.show("Defina a quantidade de linhas e colunas com um número entre 1 e 30");
 			return false;
 		}
 	}
@@ -311,6 +311,7 @@ public class CrossWordComposer extends ComposerController<CrossWord> {
 	}
 
 	public void saveAnswer() {
+		//actualAnswer.setValue(actualAnswer.getValue().toUpperCase());
 		if (this.doAction("validateAnswer", false)) {
 			actualAnswer.setCrossword(getSelectedEntity());
 			Integer answerPosition = fldAnswers.indexOf(this.actualAnswer);

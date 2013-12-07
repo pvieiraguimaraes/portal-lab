@@ -129,7 +129,8 @@ public class Answer extends Entity{
 			if (other instanceof Answer)
 			{
 				if(this.getStartPositionX() != ((Answer) other).getStartPositionX() ||
-				   this.getStartPositionY() != ((Answer) other).getStartPositionY() 	
+				   this.getStartPositionY() != ((Answer) other).getStartPositionY() ||
+				   this.getType() !=  ((Answer) other).getType()
 				)
 					return false;
 			}
