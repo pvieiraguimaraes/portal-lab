@@ -89,7 +89,8 @@ public class CrossWordValidatorControl extends ValidatorControl {
 			letterPosition = answer.getStartPositionY() + i;
 		if (square.getValue() != null
 				&& !(square.getValue().equalsIgnoreCase(answer.getValue()
-						.substring(letterPosition - 1, letterPosition))))
+						.substring(i, i + 1))))
+			//.substring(letterPosition - 1, letterPosition) antigamente feito assim
 			return false;
 		return true;
 
