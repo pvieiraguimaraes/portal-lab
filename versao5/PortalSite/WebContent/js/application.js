@@ -21,6 +21,8 @@
 
     $('.readmore').hide();
     
+//    $('#myModal').modal('show');
+    
 //    $('#colecoes').liteaccordion()
 
 })

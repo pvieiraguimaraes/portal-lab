@@ -62,6 +62,10 @@
         <to>index?page=detalhecolecao&amp;itemid=$1</to>
     </rule>
 
+	<rule>
+        <from>detalheitemcolecao/([0-9]+)</from>
+        <to>index?page=detalheitemcolecao&amp;itemcolecaoid=$1</to>
+    </rule>
 <!-- 	<rule> -->
 <!--         <from>/detalhecolecao?item=([0-9]+)</from> -->
 <!--         <to>index?page=detalhecolecao&amp;itemid=$1</to> -->

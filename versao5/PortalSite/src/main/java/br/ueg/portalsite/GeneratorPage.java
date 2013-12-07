@@ -72,11 +72,18 @@ public class GeneratorPage {
 		case "detalhecolecao":
 			templator = generateDetailCollection();
 			break;
+		case "detalheitemcolecao":
+			templator = generateDetailItemCollection();
 		default:
 			templator = generateDefault();
 			break;
 		}
 		return templator;
+	}
+
+	private MiniTemplator generateDetailItemCollection() {
+		MiniTemplator temp = generateDefault();
+		return null;
 	}
 
 	@SuppressWarnings("null")

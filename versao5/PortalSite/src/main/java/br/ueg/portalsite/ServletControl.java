@@ -63,6 +63,9 @@ public class ServletControl extends HttpServlet {
 			if(page.equalsIgnoreCase("detalhecolecao"))
 				parameters.put("itemid", request.getParameter("itemid"));
 			
+			if(page.equalsIgnoreCase("detalheitemcolecao"))
+				parameters.put("itemcolecaoid", request.getParameter("itemcolecaoid"));
+			
 			response.setCharacterEncoding("UTF-8");
 			PrintWriter out = response.getWriter();
 			
