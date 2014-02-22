@@ -409,6 +409,10 @@ public class CrossWordComposer extends ComposerController<CrossWord> {
 		super.newEntity();
 
 	}
+	public void testCrossWord(){
+		binder.saveAll();
+		Executions.sendRedirect("/public/crossword.zul?id="+this.getSelectedEntity().getId());
+	}
 
 	private void loadEditForm() {
 		Executions.createComponents("/pages/jogocruzadinha/editForm.zul", winCrossword,null);

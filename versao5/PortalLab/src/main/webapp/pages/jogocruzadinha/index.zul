@@ -107,6 +107,14 @@
 				 						}); 
 										]]></attribute>
 										</button>
+										<button Label="Testar" id="crudWindowsBtnTestar">
+											<attribute name="onClick">
+											<![CDATA[
+												self.getParent().getParent().setSelected(true);
+												controller.testCrossWord();												
+											         ]]>
+											</attribute>
+										</button>										
 									</listcell>
 								</listitem>
 							</listbox>
