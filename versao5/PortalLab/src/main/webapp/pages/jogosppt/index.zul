@@ -39,7 +39,7 @@
 						>
 						<listhead id="divListhead">
 							<listheader label="Nome Jogo" align="left"  />
-							<listheader label="Operações" align="center" width="160px" />							
+							<listheader label="Operações" align="center" width="210px" />							
 						</listhead>
 						<listitem self="@{each=entity}" id="divListitem">
 							<attribute name="onDoubleClick">
@@ -68,6 +68,14 @@
 		 						}); 
 								]]></attribute>
 								</button>
+								<button Label="Testar" id="crudWindowsBtnTestar">
+											<attribute name="onClick">
+											<![CDATA[
+												self.getParent().getParent().setSelected(true);
+												controller.testJogoPPT();												
+											         ]]>
+											</attribute>
+										</button>
 							</listcell>
 						</listitem>
 					</listbox>				

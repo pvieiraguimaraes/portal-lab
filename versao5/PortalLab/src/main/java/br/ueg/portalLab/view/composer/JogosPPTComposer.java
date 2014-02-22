@@ -260,6 +260,11 @@ public class JogosPPTComposer  extends
 		}
 	
 	}
+	
+	public void testJogoPPT(){
+		binder.saveAll();
+		Executions.sendRedirect("/media/jogos_ppt/"+this.getSelectedEntity().getId()+"/"+this.getSelectedEntity().getMedia().getName().replace(".zip", "")+"/index.htm");
+	}
 
 	public void closeImage() {
 		if (this.showImage != null) {
