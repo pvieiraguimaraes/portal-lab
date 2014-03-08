@@ -1,8 +1,12 @@
 package br.ueg.portalLab.view.composer.jogos.memoria;
 
+import java.util.List;
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.event.UploadEvent;
+import org.zkoss.zul.Image;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
@@ -28,6 +32,8 @@ public class MemoriaComposer extends ComposerController<Memory> {
 	
 	@AttributeView(key = "piece", isEntityValue = false, fieldType = Piece.class, isVisible=true)
 	private Piece piece;
+	
+	private List<Piece> listPieces;
 	
 	private Piece selectedPeca;
 	
@@ -95,6 +101,19 @@ public class MemoriaComposer extends ComposerController<Memory> {
 		this.fldPathImageSucceed = fldPathImageSucceed;
 	}
 
+	public List<Piece> getListPieces() {
+		return listPieces;
+	}
+
+	public void setListPieces(List<Piece> listPieces) {
+		this.listPieces = listPieces;
+	}
+	
+	public void initListPieces(){
+		setListPieces(getSelectedEntity().getPieces());
+		getBinder().loadAll();
+	}
+
 	public void showPieceForm(){
 		if(getSelectedEntity() != null){
 			setPiece(new Piece());
@@ -102,14 +121,37 @@ public class MemoriaComposer extends ComposerController<Memory> {
 		}
 	}
 
+	
+	public void salvarPeca(){
+		if(doAction("SAVEPIECE")){
+			winPeca.setVisible(false);
+		}
+	}
+
 	public void setImagePiece(UploadEvent event){
-		getPiece().setImage(event.getMedia().getStreamData());
-		((Textbox) getWinPeca().getFellow("fldPathImage")).setValue(event.getMedia().getName());
+		Media media = event.getMedia();
+		if(media instanceof org.zkoss.image.Image){
+			getPiece().setImage(media.getStreamData());
+			((Image) getWinPeca().getFellow("imagePiece")).setContent((org.zkoss.image.Image) media);
+			((Textbox) getWinPeca().getFellow("fldPathImage")).setValue(media.getName());
+		}
 	}
 	
 	public void setImageSucceedPiece(UploadEvent event){
-		getPiece().setImageSucceed(event.getMedia().getStreamData());
-		((Textbox) getWinPeca().getFellow("fldPathImageSucceed")).setValue(event.getMedia().getName());
+		Media media = event.getMedia();
+		if(media instanceof org.zkoss.image.Image){
+			getPiece().setImageSucceed(media.getStreamData());
+			((Image) getWinPeca().getFellow("imageSucceedPiece")).setContent((org.zkoss.image.Image) media);
+			((Textbox) getWinPeca().getFellow("fldPathImageSucceed")).setValue(media.getName());
+		}
+	}
+	
+	public void closeWinPeca(){
+		((Image) getWinPeca().getFellow("imagePiece")).setSrc("");
+		((Textbox) getWinPeca().getFellow("fldPathImage")).setValue("");
+		((Image) getWinPeca().getFellow("imageSucceedPiece")).setSrc("");
+		((Textbox) getWinPeca().getFellow("fldPathImageSucceed")).setValue("");
+		getWinPeca().setVisible(false);
 	}
 	
 	@Override
