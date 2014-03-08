@@ -33,16 +33,10 @@ public class Piece extends Entity implements AttributesMedia {
 	@Image(height="piece_height", width="piece_width", thumb=true, thumbHeight="50", thumbWidth="50")
 	private InputStream image;
 	
-	@Column(name = "path_image")
-	private String pathImage;
-	
 	@Transient
 	@Media("image_succeed")
 	@Image(height="piece_height", width="piece_width", thumb=true, thumbHeight="50", thumbWidth="50")
 	private InputStream imageSucceed;
-	
-	@Column(name = "path_image_succeed")
-	private String pathImageSucceed;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="memory_id")
@@ -56,22 +50,6 @@ public class Piece extends Entity implements AttributesMedia {
 	@Override
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getPathImage() {
-		return pathImage;
-	}
-
-	public void setPathImage(String pathImage) {
-		this.pathImage = pathImage;
-	}
-
-	public String getPathImageSucceed() {
-		return pathImageSucceed;
-	}
-
-	public void setPathImageSucceed(String pathImageSucceed) {
-		this.pathImageSucceed = pathImageSucceed;
 	}
 
 	public Memory getMemory() {

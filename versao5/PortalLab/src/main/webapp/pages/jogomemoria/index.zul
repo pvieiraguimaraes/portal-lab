@@ -94,9 +94,10 @@
 							</listhead>
 							<listitem self="@{each=entity}" id="divListitem">
 								<attribute name="onDoubleClick">
-										controller.editEntity();
+									controller.editEntity();
 								</attribute>
 								<attribute name="onClick">
+									controller.initListPieces();
 								</attribute>		
 								<listcell>
 									<label value="@{entity.name}"/>
@@ -125,7 +126,7 @@
 							</listitem>
 						</listbox>
 						<separator bar="true" orient="vertical" width="10px" height="100%"/>
-						<listbox id="listPecas" selectedItem="@{controller.selectedPeca}">
+						<listbox id="listPecas" model="@{controller.listPieces}" selectedItem="@{controller.selectedPeca}">
 							<auxhead>
 								<auxheader label="@{controller.titleItensList}" align="center"/>
 							</auxhead>
@@ -142,7 +143,7 @@
 							 </listitem>
 						</listbox>
 					</hbox>
-					<window id="winPeca" title="Formulário de Peças" border="normal" width="460px" xmlns:c="client"
+					<window id="winPeca" title="Formulário de Peças" border="norma" width="700px" xmlns:c="client"
 					closable="false"  action="show: slideDown;hide: slideUp" mode="popup" visible="false" onCancel="self.setVisible(false)">
 					     <attribute c:name="onClose"><![CDATA[
 					        event.stop();
@@ -161,31 +162,36 @@
 						    <vlayout>
 						        <grid>
 						            <columns>
-						                <column width="120px" />
-						                <column align="left" />
-										<column align="left" hflex="min"/>
+						                <column/>
+						                <column/>
 						            </columns>
 						            <rows>
 						            	<row>
-						            		<label value="Imagem da Peça:" />
-						            		<textbox id="fldPathImage" width="100%"/>
-						            		<button upload="true" label="Selecionar..." onUpload="controller.setImagePiece(event);"/>
+						            		<hbox hflex="1">
+						            			<label value="Imagem da Peça:" />
+							            		<textbox id="fldPathImage" width="100px"/>
+							            		<button upload="true" label="Selecionar..." onUpload="controller.setImagePiece(event);"/>
+						            		</hbox>
+						            		<hbox hflex="1">
+						            			<label value="Imagem de Sucesso:" />
+							            		<textbox id="fldPathImageSucceed" width="100px"/>
+							            		<button upload="true" label="Selecionar..." onUpload="controller.setImageSucceedPiece(event);"/>
+						            		</hbox>
 						            	</row>
 						            	<row>
-						            		<label value="Imagem de Sucesso:" />
-						            		<textbox id="fldPathImageSucceed" width="100%"/>
-						            		<button upload="true" label="Selecionar..." onUpload="controller.setImageSucceedPiece(event);"/>
+						            		<image id="imagePiece" hflex="1" height="100%"/>
+						            		<image id="imageSucceedPiece" hflex="1" height="100%"/>
 						            	</row>
 						            </rows>
 						        </grid>
 						        <hlayout>
 						            <button label="Salvar" hflex="1" > 
 						            	<attribute name="onClick"><![CDATA[									
-											controller.doAction("SAVEPIECE");											
+											controller.salvarPeca();											
 										]]>						            
 						            	</attribute>
 						            </button>						            
-						            <button id="btnCancelEdit" label="Cancelar" hflex="1" onClick="winPeca.setVisible(false)"/>
+						            <button id="btnCancelEdit" label="Cancelar" hflex="1" onClick="controller.closeWinPeca()"/>
 						        </hlayout>
 						    </vlayout>
 						</window>
