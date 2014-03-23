@@ -8,12 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import br.ueg.builderSoft.config.ConfigPortalLab;
-import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.util.annotation.Attribute;
 import br.ueg.portalLab.utils.ImageUtil;
 
 @javax.persistence.Entity
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "rawtypes" })
 @Table(name="integrante_equipe")
 public class IntegranteEquipe<Image> extends EntityImage {
 
