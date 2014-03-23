@@ -2,6 +2,7 @@ package br.ueg.portalsite;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
 
@@ -9,9 +10,9 @@ import biz.source_code.miniTemplator.MiniTemplator;
 import br.ueg.builderSoft.util.Utils;
 import br.ueg.portalLab.model.Colecao;
 import br.ueg.portalLab.model.IntegranteEquipe;
-import br.ueg.portalLab.model.jogo.cruzada.CrossWord;
 import br.ueg.portalsite.control.CrossWordControl;
 import br.ueg.portalsite.control.ItemTaxonomicoControl;
+import br.ueg.portalsite.control.JogoPTTControl;
 import br.ueg.portalsite.control.PersonControl;
 
 public class GeneratorPage {
@@ -25,12 +26,24 @@ public class GeneratorPage {
 	protected HashMap<String, Object> parameters;
 
 	protected String folderTeam = "integrante_equipe/";
-
+	
 	private ItemTaxonomicoControl itemTaxonomicoControl;
 
 	private PersonControl personControl;
 
 	private CrossWordControl crossWordControl;
+	
+	private JogoPTTControl jogoPTTControl;
+	
+	public JogoPTTControl getJogoPTTControl() {
+		if(jogoPTTControl == null)
+			jogoPTTControl = new JogoPTTControl();
+		return jogoPTTControl;
+	}
+
+	public void setJogoPTTControl(JogoPTTControl jogoPTTControl) {
+		this.jogoPTTControl = jogoPTTControl;
+	}
 
 	public CrossWordControl getCrossWordControl() {
 		if (crossWordControl == null)
@@ -182,14 +195,51 @@ public class GeneratorPage {
 		MiniTemplator temp = generateDefault();
 		List<?> list = getCrossWordControl().getCrossWords();
 		for (Object item : list) {
-//			String link = (String) ((Object[]) item)[0];
+			String link = String.valueOf((BigInteger) ((Object[]) item)[0]);
 			String nome = (String) ((Object[]) item)[3];
-			temp.setVariable("linkcruzadinha", "#");
+			temp.setVariable("linkcruzadinha", link);
 			temp.setVariable("nomecruzadinha", nome);
 			temp.addBlock("cruzadinha");
 		}
+		
+		
+		list = getJogoPTTControl().getJogosPTT();
+		String jogosPpt = pathMedia + "jogos_ppt/";
+		for (Object object : list) {
+			String link = String.valueOf((BigInteger) ((Object[]) object)[0]);
+			String caminho = (String) ((Object[]) object)[1];
+			String nome = (String) ((Object[]) object)[3];
+			temp.setVariable("linkjogoppt", jogosPpt + link + "/" + caminho.replace(".zip", "")	+ "/index.htm");
+			temp.setVariable("nomejogoppt", nome);
+			temp.addBlock("jogoppt");
+		}
+		
 		return temp;
 	}
+	
+//	private MiniTemplator generateGames() {
+//		MiniTemplator temp = generateDefault();
+//
+//		List<CrossWord> crossWords = getCrossWordControl().getCrossWords();
+//		for (CrossWord crossWord : crossWords) {
+//			temp.setVariable("linkcruzadinha",
+//					String.valueOf(crossWord.getId()));
+//			temp.setVariable("nomecruzadinha", crossWord.getName());
+//			temp.addBlock("cruzadinha");
+//		}
+//
+//		List<JogoPPT> jogosPPT = getJogoPTTControl().getJogosPTT();
+//		String jogosPptUrl = pathMedia + "jogos_ppt/";
+//		for (JogoPPT jogoPPT : jogosPPT) {
+//			temp.setVariable("linkjogoppt", jogosPptUrl + jogoPPT.getId() + "/"
+//					+ jogoPPT.getMedia().getName().replace(".zip", "")
+//					+ "/index.htm");
+//			temp.setVariable("nomejogoppt", jogoPPT.getName());
+//			temp.addBlock("jogoppt");
+//		}
+//
+//		return temp;
+//	}
 
 	protected MiniTemplator generateDetailCollection() {
 		MiniTemplator temp = generateDefault();

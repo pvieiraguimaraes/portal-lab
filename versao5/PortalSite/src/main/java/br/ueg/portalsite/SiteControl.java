@@ -6,11 +6,8 @@ import java.util.List;
 import br.ueg.builderSoft.model.Entity;
 import br.ueg.builderSoft.persistence.GenericDAO;
 import br.ueg.builderSoft.util.sets.SpringFactory;
-import br.ueg.portalLab.control.ItemTaxonomicoControl;
 
 public class SiteControl<E extends Entity> {
-
-//	private ItemTaxonomicoControl<Entity> controlTaxonomico;
 
 	protected GenericDAO<Entity> genericDAO;
 
@@ -25,8 +22,6 @@ public class SiteControl<E extends Entity> {
 	}
 
 	public SiteControl() {
-//		controlTaxonomico = new ItemTaxonomicoControl<Entity>();
-//		controlTaxonomico.getRootClasseAtividade();
 		initializePersistence();
 	}
 
@@ -51,7 +46,7 @@ public class SiteControl<E extends Entity> {
 	public List<E> getListByHQL(String sql){
 		List<E> resultList =  new ArrayList<>();
 		getGenericDAO().getSession().close();
-		resultList = (List<E>) getGenericDAO().findByHQL(sql, (Boolean) null);
+		resultList = (List<E>) getGenericDAO().findByHQL(sql, null);
 		return resultList;
 	}
 	
@@ -59,7 +54,7 @@ public class SiteControl<E extends Entity> {
 	public List<?> getListByNativeSQL(String sql){
 		List<E> resultList =  new ArrayList<>();
 		getGenericDAO().getSession().close();
-		resultList = (List<E>) getGenericDAO().findByNativeSQL(sql, (Boolean) null);
+		resultList = (List<E>) getGenericDAO().findByNativeSQL(sql, null);
 		return resultList;
 	}
 
