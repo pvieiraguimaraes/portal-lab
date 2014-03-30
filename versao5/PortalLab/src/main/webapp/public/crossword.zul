@@ -7,6 +7,9 @@
 		import br.ueg.portalLab.model.jogo.cruzada.CrossWord;
 		import br.ueg.builderSoft.util.sets.SpringFactory;
 		import br.ueg.portalLab.control.jogos.cruzada.CrossWordControl;
+		
+		Boolean crosswordFound = true;
+		
 		CrossWordControl control = SpringFactory.getInstance().getBean("crossWordControl",
 				CrossWordControl.class);
 		String id = Executions.getCurrent().getParameter("id");
@@ -18,6 +21,9 @@
 		{
 			cruzadinha = new CrossWord();
 			cruzadinha.setName("Cruzadinha não encontrada");
+			cruzadinha.setCrossXDimension(0);
+			cruzadinha.setCrossYDimension(0);
+			crosswordFound = false;
 		}
 		]]>
 </zscript>
@@ -37,7 +43,7 @@
 			<div align="center">
 			<label id="titleLabel" value="${cruzadinha.name}" style="font-size:14 px"/>
 			</div>
-			<grid>
+			<grid visible="${crosswordFound}">
 				<rows>
 					<row>
 						<vlayout id="crosswordContainer"	sclass="cross-container" />
@@ -46,7 +52,7 @@
 					</row>
 				</rows>
 			</grid>
-         <button label="Conferir Resultado" onClick="self.getParent().submitCrossWord()"/>
+         <button visible="${crosswordFound}" label="Conferir Resultado" onClick="self.getParent().submitCrossWord()"/>
 		</crossword>
 
 </zk>

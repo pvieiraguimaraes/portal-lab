@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import org.hibernate.collection.internal.PersistentBag;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.zkoss.bind.annotation.BindingParam;
@@ -13,7 +12,6 @@ import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zkplus.databind.AnnotateDataBinder;
-import org.zkoss.zkplus.hibernate.HibernateUtil;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Hbox;
@@ -116,6 +114,24 @@ public class CrossWordComposer extends ComposerController<CrossWord> {
 	public Control<CrossWord> getNewControl(MessagesControl pMessagesControl) {
 		return null;
 	}
+	
+	@Override
+	public boolean saveEntity() {
+		if (getSelectedEntity() != null
+				&& getSelectedEntity().getCrossYDimension() != null && getSelectedEntity().getCrossYDimension() > 0
+				&& getSelectedEntity().getCrossXDimension() != null && getSelectedEntity().getCrossXDimension() > 0 )
+		{
+			return super.saveEntity();
+		}
+		else
+		{
+			Messagebox
+			.show("Defina a quantidade de linhas e colunas com um número entre 1 e 30 e clique em Gerar" +
+					"Cruzadinha");
+			return false;
+		}
+		
+	}
 
 	@SuppressWarnings("rawtypes")
 	@Override
@@ -165,7 +181,7 @@ public class CrossWordComposer extends ComposerController<CrossWord> {
 	}
 	
 	private boolean verifyEntityCrossword() {
-		if ((fldCrossXDimension > 0 && fldCrossYDimension <= 30)
+		if (fldCrossXDimension != null && fldCrossYDimension != null && (  fldCrossXDimension > 0 && fldCrossYDimension <= 30)
 				&& (fldCrossXDimension) > 0 && fldCrossYDimension <= 30)
 			return true;
 		else {

@@ -155,7 +155,7 @@ public class ZKCrossWord {
 							.setSclass("correctSquare");
 				} else {
 					squareController.getViewSquare(squareByAnswer.getId())
-							.setSclass("");
+							.setSclass("incorrectSquare");
 				}
 			}
 		}

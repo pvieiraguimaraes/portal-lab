@@ -1,5 +1,7 @@
 package br.ueg.portalLab.view.component.jogos.cruzadas;
 
+import java.util.HashMap;
+
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.InputEvent;
@@ -16,12 +18,14 @@ public class ZKSquareComponentController {
 
 	ZKCrossWord crossword;
 	ZKCrossWordForm crosswordForm;
+	HashMap<String,String> utimateSquaresValue = new HashMap<String,String>();
 
 	public ZKSquareComponentController(ZKCrossWord crossword) {
 		this.crossword = crossword;
 	}
 
 	public void viewSquareClick(Div div) {
+		this.utimateSquaresValue.put(div.getId(), getViewSquareValue(getSquareByViewDiv(div).getId()));
 		if (crossword.getDivSelected() != null) {
 			changeSquareToReadMode(
 					crossword.getDivSelected(),
@@ -70,12 +74,15 @@ public class ZKSquareComponentController {
 	public void changeSquareToReadMode(Div div, String value) {
 		div.getChildren().clear();
 		Label viewSquareText = new Label();
+		if (value.equals("") && this.utimateSquaresValue.containsKey(div.getId()))
+			value = this.utimateSquaresValue.get(div.getId());
 		viewSquareText.setValue(value);
 		div.appendChild(viewSquareText);
 	}
 
 	public void changeSquareToEditMode(Div viewSquare) {
 		final Div div = viewSquare;
+		
 		div.getChildren().clear();
 		final Textbox viewSquareTextbox = new Textbox();
 		viewSquareTextbox.setMaxlength(1);
