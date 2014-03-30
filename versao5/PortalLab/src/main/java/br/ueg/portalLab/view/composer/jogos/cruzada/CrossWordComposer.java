@@ -11,6 +11,7 @@ import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zkplus.databind.AnnotateDataBinder;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
@@ -428,6 +429,7 @@ public class CrossWordComposer extends ComposerController<CrossWord> {
 	public void testCrossWord(){
 		binder.saveAll();
 		Executions.sendRedirect("/public/crossword.zul?id="+this.getSelectedEntity().getId());
+		//Clients.evalJavaScript("window.open('/PortalLab/public/crossword.zul?id=" + this.getSelectedEntity().getId() + "','_blank','height=1600,width=1800')");
 	}
 
 	private void loadEditForm() {
