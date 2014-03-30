@@ -34,8 +34,8 @@ public class CrossWord extends Entity{
 	private Integer crossXDimension; /// Colunas
 	@Column(name = "dimensao_y_linhas")
 	private Integer crossYDimension; /// Linhas
-	@OneToMany(fetch=FetchType.EAGER, mappedBy="crossword", targetEntity=Answer.class, cascade={CascadeType.PERSIST,CascadeType.ALL})
-	@Cascade(value={org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+	@OneToMany(fetch=FetchType.EAGER, mappedBy="crossword", targetEntity=Answer.class,orphanRemoval=true ,cascade={CascadeType.PERSIST,CascadeType.ALL,CascadeType.REMOVE})
+	@Cascade(value={org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE,org.hibernate.annotations.CascadeType.DELETE})
 	private List<Answer> answers = new ArrayList<Answer>();
 	@Transient
 	private HashMap<String,Square> squares = new HashMap<String,Square>();

@@ -89,6 +89,8 @@
 														<label
 															value="Dica:" />
 														<textbox
+															multiline="true" width="500"
+															rows="3"
 															value="@{controller.actualAnswer.hint}">
 														</textbox>
 													</hbox>

@@ -24,9 +24,17 @@ div.cross-container div.z-vlayout-inner  div.z-hlayout div.z-hlayout-inner div {
     /*background-image: url("../img/icon.png");*/
 }
  
+/*Configura a cor dos quadrados corretos*/
 div.cross-container div.z-vlayout-inner  div.z-hlayout div.z-hlayout-inner div.correctSquare {
 	background: #00FF00;
 	}
+
+/*Configura a cor dos quadrados incorretos*/
+div.cross-container div.z-vlayout-inner  div.z-hlayout div.z-hlayout-inner div.incorrectSquare {
+	background: #FF0000;
+	}
+	
+	
 /*Configura o quadrado para quando ele estiver vazio*/
 div.cross-container div.z-vlayout-inner  div.z-hlayout div.z-hlayout-inner div:hover {
     cursor: pointer;
