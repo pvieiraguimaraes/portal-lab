@@ -29,10 +29,13 @@ public class ItemTaxonomicoControl extends SiteControl<ItemTaxonomico>{
 		return colecao;
 	}
 	
-	public List<?> getItensOfColection(BigDecimal idColection){
-		String sql = "select path, nome_estacao, id, id_colecao, id_especime, reino, filo, classe, ordem, family, " +
-				"genery, eptespecify, especime_image, id_nigeo_ittax, id_mult,caminho, id_esta_mult, id_itta_mult, representativa, rank " +
-				"from detalhe_colecao_imagem where id_colecao = '" + idColection + "'";
+	public List<?> getItensOfColection(BigDecimal idColection, Integer pagina, Integer nPagina){
+		nPagina -= nPagina;
+		String sql = "select * from (select ROW_NUMBER() over(order by linha) as ln, path, nome_estacao, id, id_colecao, id_especime, reino, filo, " +
+				"classe, ordem, family, genery, eptespecify, especime_image, id_nigeo_ittax, id_mult,caminho, id_esta_mult, id_itta_mult, representativa, rank " +
+				"from detalhe_colecao_imagem where id_colecao = '" + idColection + "')x where"
+						+ " ln between ('" + pagina + "'*'" + nPagina + "'+1) and ('" + pagina + "'*'" + nPagina + "'+'" + nPagina + "')";
+		
 		return getListByNativeSQL(sql);
 	}
 }

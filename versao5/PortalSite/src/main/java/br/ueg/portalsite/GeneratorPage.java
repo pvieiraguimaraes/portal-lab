@@ -244,10 +244,12 @@ public class GeneratorPage {
 	protected MiniTemplator generateDetailCollection() {
 		MiniTemplator temp = generateDefault();
 		String idColection = (String) parameters.get("itemid");
+		Integer pagina = Integer.parseInt((String) parameters.get("pagina"));
+		Integer nPagina = Integer.parseInt((String) parameters.get("nPagina"));
 		BigDecimal bigDecimal = new BigDecimal(idColection);
 		Colecao col = getItemTaxonomicoControl().getColectionName(Long.parseLong(idColection));
 		temp.setVariable("colectionName", col.getNome());
-		List<?> list = getItemTaxonomicoControl().getItensOfColection(bigDecimal);
+		List<?> list = getItemTaxonomicoControl().getItensOfColection(bigDecimal, pagina, nPagina);
 		for (Object item : list) {
 			String path = (String) ((Object[]) item)[0];
 			String estacao = (String) ((Object[]) item)[1];
