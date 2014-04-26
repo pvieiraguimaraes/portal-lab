@@ -60,8 +60,19 @@ public class ServletControl extends HttpServlet {
 			String page = request.getParameter("page");
 			page  = page!=null?page:"index";
 			
-			if(page.equalsIgnoreCase("detalhecolecao"))
+			if (page.equalsIgnoreCase("detalhecolecao")) {
 				parameters.put("itemid", request.getParameter("itemid"));
+				if (request.getParameter("pagina") == null
+						|| request.getParameter("pagina") == "")
+					parameters.put("pagina", "1");
+				else
+					parameters.put("pagina", request.getParameter("pagina"));
+				if (request.getParameter("nPagina") == null
+						|| request.getParameter("nPagina") == "")
+					parameters.put("nPagina", "10");
+				else
+					parameters.put("nPagina", request.getParameter("nPagina"));
+			}
 			
 			if(page.equalsIgnoreCase("detalheitemcolecao"))
 				parameters.put("itemcolecaoid", request.getParameter("itemcolecaoid"));
