@@ -50,17 +50,24 @@ public class ServletControl extends HttpServlet {
 		return path + separator + "templates" + separator + templateName + ".html";
 	}
 	
-	private void run(HttpServletRequest request, HttpServletResponse response) throws IOException{
+	private void run(HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
 		MiniTemplator templator = null, templateAux = null;
 		String htmlResult = "";
+		boolean actionAjax = false;
 		HashMap<String, Object> parameters = new HashMap<>();
 		try {
 			templator = GeneratorPage.initTemplator(path + separator + TEMPLATE);
-			
+
 			String page = request.getParameter("page");
-			page  = page!=null?page:"index";
+			String action = request.getParameter("action");
+			page = page != null ? page : "index";
+			if(action != null && action.equalsIgnoreCase("ajax"))
+				actionAjax = true;
+
+			String pathTemplate = getPathTemplate(page);
 			
-			if (page.equalsIgnoreCase("detalhecolecao")) {
+			if (page.equalsIgnoreCase("detalhecolecao") || page.equalsIgnoreCase("containerdetalhecolecao")) {
 				parameters.put("itemid", request.getParameter("itemid"));
 				if (request.getParameter("pagina") == null
 						|| request.getParameter("pagina") == "")
@@ -73,22 +80,25 @@ public class ServletControl extends HttpServlet {
 				else
 					parameters.put("nPagina", request.getParameter("nPagina"));
 			}
-			
-			if(page.equalsIgnoreCase("detalheitemcolecao"))
+
+			if (page.equalsIgnoreCase("detalheitemcolecao"))
 				parameters.put("itemcolecaoid", request.getParameter("itemcolecaoid"));
-			
+
 			response.setCharacterEncoding("UTF-8");
 			PrintWriter out = response.getWriter();
 			
-			GeneratorPage generator = new GeneratorPage(page, getPathTemplate(page), templator, pathMedia, parameters);
+			GeneratorPage generator = new GeneratorPage(page, pathTemplate, templator, pathMedia, parameters);
 			templateAux = generator.generatePage();
-			
-			templator.setVariable("content", this.parserGlossario.processaHTML(templateAux.generateOutput()));
+
+			String processaHTML = this.parserGlossario.processaHTML(templateAux.generateOutput());
+			templator.setVariable("content", processaHTML);
 			templator.setVariable("absoluteSitePath", "/PortalSite/");
-			
+
 			htmlResult = templator.generateOutput();
-			
-			out.println(htmlResult);
+			if (actionAjax)
+				out.println(processaHTML);
+			else
+				out.println(htmlResult);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
