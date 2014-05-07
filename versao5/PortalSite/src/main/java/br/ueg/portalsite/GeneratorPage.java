@@ -127,8 +127,12 @@ public class GeneratorPage {
 			break;
 		case "detalheitemcolecao":
 			templator = generateDetailItemCollection();
+			break;
 		case "jogos":
 			templator = generateGames();
+			break;
+		case "containerdetalhecolecao":
+			templator = generateAjaxDetailCollection();
 			break;
 		default:
 			templator = generateDefault();
@@ -242,29 +246,41 @@ public class GeneratorPage {
 //	}
 
 	protected MiniTemplator generateDetailCollection() {
-		MiniTemplator temp = generateDefault();
 		String idColection = (String) parameters.get("itemid");
+		
+		MiniTemplator temp = generateContainerDetailCollection(idColection);
+		Colecao col = getItemTaxonomicoControl().getColectionName(Long.parseLong(idColection));
+		temp.setVariable("colectionName", col.getNome());
+		
+		return temp;
+	}
+	
+	protected MiniTemplator generateAjaxDetailCollection() {
+		return generateContainerDetailCollection((String) parameters.get("itemid"));
+	}
+
+	private MiniTemplator generateContainerDetailCollection(String idColection) {
+		MiniTemplator temp = generateDefault();
 		Integer pagina = Integer.parseInt((String) parameters.get("pagina"));
 		Integer nPagina = Integer.parseInt((String) parameters.get("nPagina"));
 		BigDecimal bigDecimal = new BigDecimal(idColection);
-		Colecao col = getItemTaxonomicoControl().getColectionName(Long.parseLong(idColection));
-		temp.setVariable("colectionName", col.getNome());
+		
 		List<?> list = getItemTaxonomicoControl().getItensOfColection(bigDecimal, pagina, nPagina);
 		for (Object item : list) {
-			String path = (String) ((Object[]) item)[0];
-			String estacao = (String) ((Object[]) item)[1];
-			String caminho = (String) ((Object[]) item)[15];
+			String path = (String) ((Object[]) item)[1];
+			String estacao = (String) ((Object[]) item)[12];
+			String caminho = (String) ((Object[]) item)[16];
 			String pathFotoCompleto = path
 					+ (!estacao.equalsIgnoreCase("") ? "/" + estacao : "");
 			temp.setVariable("itemPathFoto", "/PortalSite/" + pathMedia
 					+ pathFotoCompleto + "/image/thumb_" + caminho);
 
-			temp.setVariable("itemReino", (String) ((Object[]) item)[5]);
-			temp.setVariable("itemFilo", (String) ((Object[]) item)[6]);
-			temp.setVariable("itemClasse", (String) ((Object[]) item)[7]);
-			temp.setVariable("itemOrder", (String) ((Object[]) item)[8]);
-			temp.setVariable("itemFamily", (String) ((Object[]) item)[9]);
-			temp.setVariable("itemGenery", (String) ((Object[]) item)[10]);
+			temp.setVariable("itemReino", (String) ((Object[]) item)[6]);
+			temp.setVariable("itemFilo", (String) ((Object[]) item)[7]);
+			temp.setVariable("itemClasse", (String) ((Object[]) item)[8]);
+			temp.setVariable("itemOrder", (String) ((Object[]) item)[9]);
+			temp.setVariable("itemFamily", (String) ((Object[]) item)[10]);
+			temp.setVariable("itemGenery", (String) ((Object[]) item)[11]);
 
 			temp.setVariable("itemEptEspecify", (String) ((Object[]) item)[11]);
 

@@ -1,11 +1,11 @@
 <div>
 	<div class="container" style="text-align: center;">
 		<h2>Itens da Coleção</h2>
-		<h1 style="color: black;">${colectionName}</h1>
+			<h1 style="color: black;">${colectionName}</h1>
 		<hr>
 	</div>
 
-	<table id="colectionsdetails" cellpadding="0" cellspacing="0" border="0" class="table table-hover bordered-table">
+	<table cellpadding="0" cellspacing="0" border="0" class="table table-hover bordered-table">
 		<thead>
 			<tr>
 				<th>Imagem</th>
@@ -19,61 +19,13 @@
 				<th>Detalhes</th>
 			</tr>
 		</thead>
-		<tbody>
-			<!-- $BeginBlock itensColection -->
-			<tr>
-				<td><a href="#"><img height="50px" align="middle"
-						src="${itemPathFoto}"></a></td>
-				<td>${itemReino}</td>
-				<td>${itemFilo}</td>
-				<td>${itemClasse}</td>
-				<td>${itemOrder}</td>
-				<td>${itemFamily}</td>
-				<td>${itemGenery}</td>
-				<td>${itemEptEspecify}</td>
-				<td align="center">
-					<a href="detalheitemcolecao/${idEspecime}" data-target="#detalhes" data-toggle="modal">
-					 	<img align="middle"	src="/PortalSite/img/search.png" border="0">
-					</a>
-				</td>
-			</tr>
-			<!-- $EndBlock itensColection -->
+		<tbody id="colectionsdetails">
+			
+			<!-- $include containerdetalhecolecao.html -->
+			
 		</tbody>
 	</table>
+	<div id="paginador" align="center"></div>
 
-	<div id="detalhes" style="width: 900px; height: 500px;" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-header">
-			<input type="button" class="close" data-dismiss="modal" aria-hidden="true">×</input>
-		</div>
-		<div class="modal-body">
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th>Imagem</th>
-						<th>Reino</th>
-						<th>Filo</th>
-						<th>Classe</th>
-						<th>Ordem</th>
-						<th>Família</th>
-						<th>Gênero</th>
-						<th>Epíteto Específico</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td><a href="#"><img height="50px" align="middle"
-								src="${itemPathFoto}"></a></td>
-						<td>${itemReino}</td>
-						<td>${itemFilo}</td>
-						<td>${itemClasse}</td>
-						<td>${itemOrder}</td>
-						<td>${itemFamily}</td>
-						<td>${itemGenery}</td>
-						<td>${itemEptEspecify}</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
-
+	<script type="text/javascript" src="../js/detalhecolecao.js"></script>
 </div>

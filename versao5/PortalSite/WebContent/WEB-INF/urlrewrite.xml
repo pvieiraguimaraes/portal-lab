@@ -62,6 +62,11 @@
         <to>index?page=detalhecolecao&amp;itemid=$1</to>
     </rule>
 
+<!--     <rule> -->
+<!--         <from>detalhecolecao/containerdetalhecolecao/~(([a-z])[a-z0-9]+)(.*)</from> -->
+<!--         <to>index?page=containerdetalhecolecao&amp;action=$1&amp;pagina=$2&amp;nPagina=$3</to> -->
+<!--     </rule> -->
+
 	<rule>
         <from>detalheitemcolecao/([0-9]+)</from>
         <to>index?page=detalheitemcolecao&amp;itemcolecaoid=$1</to>
