@@ -266,6 +266,10 @@ public class GeneratorPage {
 		BigDecimal bigDecimal = new BigDecimal(idColection);
 		
 		List<?> list = getItemTaxonomicoControl().getItensOfColection(bigDecimal, pagina, nPagina);
+		List<?> count = getItemTaxonomicoControl().getCountItensColection(bigDecimal);
+		for (Object object : count) {
+			temp.setVariable("colectionCount", String.valueOf(object));
+		}
 		for (Object item : list) {
 			String path = (String) ((Object[]) item)[1];
 			String estacao = (String) ((Object[]) item)[12];

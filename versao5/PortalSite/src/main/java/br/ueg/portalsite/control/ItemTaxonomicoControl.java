@@ -38,4 +38,9 @@ public class ItemTaxonomicoControl extends SiteControl<ItemTaxonomico>{
 		
 		return getListByNativeSQL(sql);
 	}
+	
+	public List<?> getCountItensColection(BigDecimal idColection){
+		String sql = "select COUNT(*) from detalhe_colecao_imagem where id_colecao = "+idColection;
+		return getListByNativeSQL(sql);
+	}
 }

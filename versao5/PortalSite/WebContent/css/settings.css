@@ -206,6 +206,26 @@ a {
 	color: white;
 }
 
+/*CONFIGURAÇÃO DO GIF CARREGANDO*/
+#loading {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -32px;
+	margin-top: -32px;
+	display: none;
+}
+
+/*INFO QUANTIDADE DE REGISTROS*/
+#infoTable {
+	font-size: 10px;
+	color: gray;
+}
+
+#numberByPage {
+	width: 60px;
+}
+
 /*CONFERIDO ATE AQUI*/
 a.
 tipGlossario {
