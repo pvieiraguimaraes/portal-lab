@@ -125,8 +125,8 @@ public class GeneratorPage {
 		case "detalhecolecao":
 			templator = generateDetailCollection();
 			break;
-		case "detalheitemcolecao":
-			templator = generateDetailItemCollection();
+		case "itemcolecao":
+			templator = generateItemCollection();
 			break;
 		case "jogos":
 			templator = generateGames();
@@ -141,9 +141,9 @@ public class GeneratorPage {
 		return templator;
 	}
 
-	private MiniTemplator generateDetailItemCollection() {
+	private MiniTemplator generateItemCollection() {
 		MiniTemplator temp = generateDefault();
-		return null;
+		return temp;
 	}
 
 	@SuppressWarnings("null")
@@ -205,7 +205,6 @@ public class GeneratorPage {
 			temp.setVariable("nomecruzadinha", nome);
 			temp.addBlock("cruzadinha");
 		}
-		
 		
 		list = getJogoPTTControl().getJogosPTT();
 		String jogosPpt = pathMedia + "jogos_ppt/";

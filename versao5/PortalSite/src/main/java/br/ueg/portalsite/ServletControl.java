@@ -54,16 +54,17 @@ public class ServletControl extends HttpServlet {
 			throws IOException {
 		MiniTemplator templator = null, templateAux = null;
 		String htmlResult = "";
-		boolean actionAjax = false;
+		boolean withoutTemplate = false;
 		HashMap<String, Object> parameters = new HashMap<>();
 		try {
 			templator = GeneratorPage.initTemplator(path + separator + TEMPLATE);
 
 			String page = request.getParameter("page");
-			String action = request.getParameter("action");
 			page = page != null ? page : "index";
-			if(action != null && action.equalsIgnoreCase("ajax"))
-				actionAjax = true;
+
+			//CARREGAMENTO DAS PAGINAS QUE NAO TEM TEMPLATE
+			if(page.equalsIgnoreCase("containerdetalhecolecao") || page.equalsIgnoreCase("itemcolecao"))
+				withoutTemplate = true;
 
 			String pathTemplate = getPathTemplate(page);
 			
@@ -95,7 +96,7 @@ public class ServletControl extends HttpServlet {
 			templator.setVariable("absoluteSitePath", "/PortalSite/");
 
 			htmlResult = templator.generateOutput();
-			if (actionAjax)
+			if (withoutTemplate)
 				out.println(processaHTML);
 			else
 				out.println(htmlResult);

@@ -7,7 +7,7 @@ var options = {
 	onPageChanged : function(e, oldPage, newPage) {
 		$.ajax({
 			url : "../?page=containerdetalhecolecao&itemid=" + getItemid()
-					+ "&action=ajax&pagina=" + newPage + "&nPagina=" + numberRegByPage,
+					+ "&pagina=" + newPage + "&nPagina=" + numberRegByPage,
 			success : function(result) {
 				$("#colectionsdetails").html(result);
 				$("#infoTable").html(

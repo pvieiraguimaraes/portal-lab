@@ -54,6 +54,10 @@
 		<from>/colecoes.html</from>
 		<to>index?page=colecoes</to>
 	</rule>
+	<rule>
+		<from>/itemcolecao.html</from>
+		<to>index?page=itemcolecao</to>
+	</rule>
 
 	<!-- REGRA PARA VISUALIZAR OS DETALHES DE UM ITEM -->
 	
