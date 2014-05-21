@@ -9,10 +9,33 @@
 	<td>${itemFamily}</td>
 	<td>${itemGenery}</td>
 	<td>${itemEptEspecify}</td>
-	<td align="center"><a href="detalheitemcolecao/${idEspecime}"
-		data-target="#detalhes" data-toggle="modal"> <img align="middle"
-			src="/PortalSite/img/search.png" border="0">
-	</a></td>
+	<td align="center">
+		<a href="../itemcolecao.html" data-toggle="modal" data-target="#myModal">
+			<img align="middle" src="/PortalSite/img/search.png" border="0">
+		</a>
+	</td>
 </tr>
 <!-- $EndBlock itensColection -->
 <input type="hidden" id="colectionCount" value="${colectionCount}"/>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Modal title</h4>
+			</div>
+			<div class="modal-body">
+				<div class="te">
+					THIS
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Save changes</button>
+			</div>
+		</div>
+	</div>
+</div>
