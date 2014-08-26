@@ -31,15 +31,22 @@ public class ItemTaxonomicoControl extends SiteControl<ItemTaxonomico>{
 	
 	public List<?> getItensOfColection(BigDecimal idColection, Integer pagina, Integer nPagina){
 		pagina = pagina - 1;
+//		SQL QUE DEVERÁ SER UTILIZADA QUANDO A QUANTIDADE DE ITENS REPRESENTATIVOS FOR SUFICIENTE
+//		String sql = "select * from (select ROW_NUMBER() over(order by linha) as ln, path, nome_estacao, id, id_colecao, id_especime, reino, filo, " +
+//				"classe, ordem, family, genery, eptespecify, especime_image, id_nigeo_ittax, id_mult,caminho, id_esta_mult, id_itta_mult, representativa, rank " +
+//				"from detalhe_colecao_imagem where representativa = 1 and id_colecao = " + idColection + ")x where"
+//						+ " ln between (" + pagina + "*" + nPagina + "+1) and (" + pagina + "*" + nPagina + "+" + nPagina + ")";
 		String sql = "select * from (select ROW_NUMBER() over(order by linha) as ln, path, nome_estacao, id, id_colecao, id_especime, reino, filo, " +
 				"classe, ordem, family, genery, eptespecify, especime_image, id_nigeo_ittax, id_mult,caminho, id_esta_mult, id_itta_mult, representativa, rank " +
 				"from detalhe_colecao_imagem where id_colecao = " + idColection + ")x where"
 						+ " ln between (" + pagina + "*" + nPagina + "+1) and (" + pagina + "*" + nPagina + "+" + nPagina + ")";
-		
+
 		return getListByNativeSQL(sql);
 	}
 	
 	public List<?> getCountItensColection(BigDecimal idColection){
+//		SQL QUE DEVERÁ SER UTILIZADA QUANDO A QUANTIDADE DE ITENS REPRESENTATIVOS FOR SUFICIENTE
+//		String sql = "select COUNT(*) from detalhe_colecao_imagem where representativa = 1 and id_colecao = "+idColection;
 		String sql = "select COUNT(*) from detalhe_colecao_imagem where id_colecao = "+idColection;
 		return getListByNativeSQL(sql);
 	}
