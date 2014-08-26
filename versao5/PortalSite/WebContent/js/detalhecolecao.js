@@ -5,6 +5,10 @@ var options = {
 	currentPage : initialPage,
 	totalPages : getTotalPages(),
 	onPageChanged : function(e, oldPage, newPage) {
+		$(document).ajaxSend(function() {
+			$("#loading").css("display", "inline");
+		});
+
 		$.ajax({
 			url : "../?page=containerdetalhecolecao&itemid=" + getItemid()
 					+ "&pagina=" + newPage + "&nPagina=" + numberRegByPage,
@@ -16,9 +20,6 @@ var options = {
 			}
 		});
 
-		$(document).ajaxSend(function() {
-			$("#loading").css("display", "inline");
-		});
 		$(document).ajaxComplete(function(event, request, settings) {
 			$("#loading").css("display", "none");
 		});
@@ -48,4 +49,9 @@ function getItemid() {
 	return url.substring(index + 1, url.length);
 }
 
-$('#paginador').bootstrapPaginator(options);
+function paginationPossible(options){
+	if(getTotalPages() > 1)
+		$('#paginador').bootstrapPaginator(options);
+}
+
+paginationPossible(options);
