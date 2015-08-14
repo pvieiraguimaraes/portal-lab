@@ -1,0 +1,1 @@
+<img src='http://portal-lab.googlecode.com/files/logoportal.png' alt='Logo' /> Projeto para cadastramento das espécies que compoem a biodiversidade do cerrado, previsto no Projeto Portal Virtual do Cerrado
